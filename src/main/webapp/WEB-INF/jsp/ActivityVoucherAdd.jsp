@@ -79,11 +79,10 @@ fieldset {
 </head>
 
 <body>
-<!-- <%@ include file="AdminstyleHead.jsp" %> -->
 	<form:form action="addvoucher.controller" method="post" modelAttribute="voucher" enctype="multipart/form-data" onsubmit=" return chkinput(this)">
 		<input type="hidden" name="page" value="voucher">
 
-		<form:input type="hidden" path="a_account" value="${loginMember.adminName}"/>
+		<form:input type="hidden" path="a_account" value="暫空"/>
 
 		<div class="happy">
 		<fieldset>
@@ -137,6 +136,5 @@ fieldset {
 			<button onclick="javascript:history.back()">返回</button>
 		</div>
 	</form:form>	
-	<!-- <%@ include file="AdminstyleFoot.jsp"%> -->
 </body>
 </html>

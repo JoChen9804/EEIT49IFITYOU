@@ -53,7 +53,6 @@ fieldset {
 </head>
 
 <body>
-<!-- <%@ include file="AdminstyleHead.jsp" %> -->
 	<form action="activitymain1.controller" method="post">
 		<input type="hidden" name="selec_page" value="voucher">
 		<input type="hidden" name="a_account" value="${a_account}">
@@ -107,6 +106,5 @@ fieldset {
 			<a href="activitymain.controller"><input type="button" value="返回"></a>
 		</div>
 	</form>
-	<!-- <%@ include file="AdminstyleFoot.jsp"%> -->
 </body>
 </html>

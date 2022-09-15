@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -18,27 +20,28 @@ public class ActivityVoucher implements Serializable {
 
 	@Id
 	@Column(name = "voucherid")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int voucherId;
 	
-	@Column(name = "voucher")
+	@Column(name = "voucherno")
 	private String voucherNo;
 	
-	@Column(name = "A_account")
+	@Column(name = "a_account")
 	private String A_account;
 	
-	@Column(name = "voucherTitle")
+	@Column(name = "vouchertitle")
 	private String voucherTitle;
 	
-	@Column(name = "expiryTime")
+	@Column(name = "expirytime")
 	private String expiryTime;
 	
-	@Column(name = "voucherContent")
+	@Column(name = "vouchercontent")
 	private String voucherContent;
 	
-	@Column(name = "reviseTime")
+	@Column(name = "revisetime")
 	private String reviseTime;
 	
-	@Column(name = "photoData")
+	@Column(name = "photodata")
 	private String photoData;
 	
 	public ActivityVoucher() {

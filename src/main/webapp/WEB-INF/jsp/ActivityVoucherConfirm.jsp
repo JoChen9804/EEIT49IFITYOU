@@ -48,7 +48,6 @@ fieldset {
 </style>
 </head>
 <body>
-<!-- <%@ include file="AdminstyleHead.jsp" %> -->
 	<h2>資料如下請確認</h2>
 	<form action="activitymain.controller" method="get">
 		<input type="hidden" name="selec_page" value="voucher">
@@ -109,6 +108,5 @@ fieldset {
 			<input type="submit" value="返回查詢">
 		</div>
 	</form>
-	<!-- <%@ include file="AdminstyleFoot.jsp"%> -->
 </body>
 </html>

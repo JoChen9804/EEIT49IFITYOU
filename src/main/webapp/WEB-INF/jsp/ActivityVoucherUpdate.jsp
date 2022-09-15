@@ -46,13 +46,12 @@ fieldset {
 </head>
 
 <body>
-<!-- <%@ include file="AdminstyleHead.jsp" %> -->
 <div class="happy">
 	<form:form action="updatevoucher.controller" method="post" enctype="multipart/form-data" modelAttribute="voucher">
 		<input type="hidden" name="page" value="voucher">
 		<input type="hidden" name="selec_page" value="voucher">
 		<form:input type="hidden" path="voucherId" value="${update_voucher.voucherId}"/>
-		<form:input type="hidden" path="a_account" value="${loginMember.adminName}"/>
+		<form:input type="hidden" path="a_account" value="暫空,修改"/>
 		<h2>修改優惠券</h2>
 
 		<fieldset>
@@ -110,6 +109,5 @@ fieldset {
       		$('#img1').attr('src', objectURL);
     		});
   		</script>
-  		<!-- <%@ include file="AdminstyleFoot.jsp"%> -->
 </body>
 </html>
