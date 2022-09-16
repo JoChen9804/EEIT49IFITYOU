@@ -34,7 +34,7 @@ public class ActivityFunctionController extends HttpServlet {
 	}
 
 	@PostMapping("/addvoucher.controller")
-	public String voucherAdd(@ModelAttribute ActivityVoucher voucher, String add, MultipartFile photo, Model m)
+	public String voucherAdd(@ModelAttribute(name = "voucher") ActivityVoucher voucher, String add, MultipartFile photo, Model m)
 			throws IllegalStateException, IOException {
 		if (add.equals("新增")) {
 			ActivityVoucher vAdd = new ActivityVoucher();
@@ -53,7 +53,7 @@ public class ActivityFunctionController extends HttpServlet {
 	}
 
 	@PostMapping("/updatevoucher.controller")
-	public String voucherUpdate(@ModelAttribute ActivityVoucher voucher, String update, int dataId, String oldimg, MultipartFile photo, Model m )
+	public String voucherUpdate(@ModelAttribute(name = "voucher") ActivityVoucher voucher, String update, int dataId, String oldimg, MultipartFile photo, Model m )
 			throws IllegalStateException, IOException {
 		if (update.equals("修改")) {
 			ActivityVoucher vUpdate = vSerrvice.selectById(dataId);

@@ -51,7 +51,9 @@ fieldset {
 		<input type="hidden" name="page" value="voucher">
 		<input type="hidden" name="selec_page" value="voucher">
 		<form:input type="hidden" path="voucherId" value="${update_voucher.voucherId}"/>
+		<form:input type="hidden" path="voucherNo" value="${update_voucher.voucherNo}"/>
 		<form:input type="hidden" path="a_account" value="暫空,修改"/>
+		<input type="hidden" name="dataId" value="123"/>
 		<h2>修改優惠券</h2>
 
 		<fieldset>
