@@ -28,6 +28,9 @@ public class ActivityFunctionController extends HttpServlet {
 
 	@GetMapping("/activitymain.controller")
 	public String processMainAction(Model m) {
+		
+		System.out.println(123);
+		
 		List<ActivityVoucher> voucher = vSerrvice.findAll();
 		m.addAttribute("voucher_queryAll", voucher);
 		return "ActivityVoucherQueryAll";
