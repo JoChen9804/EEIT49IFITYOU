@@ -31,6 +31,7 @@ public class ActivityFunctionController extends HttpServlet {
 		
 		System.out.println(123);
 		System.out.println(789);
+		System.out.println(456);
 		
 		List<ActivityVoucher> voucher = vSerrvice.findAll();
 		m.addAttribute("voucher_queryAll", voucher);
