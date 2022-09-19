@@ -84,7 +84,7 @@ fieldset {
 			
 			<div class="st1">
 				<label for="memo" style="float: left; margin: 3px;">圖片:</label> 
-				<img width="230" src="/Subject2_Hibernate/Path/${update_voucher.photoData}"/>
+				<img width="230" src="/Path/${update_voucher.photoData}"/>
 			</div>
 			
 			<input type="hidden" name="oldimg" value="${update_voucher.photoData}"/>

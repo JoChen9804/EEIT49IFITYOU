@@ -96,7 +96,7 @@ fieldset {
 				<label for="memo" style="float: left; margin: 3px;">圖片:</label> 
 				<br>
 				<br>
-				<img width="400" src='/Subject2_Hibernate/Path/<c:choose>
+				<img width="400" src='/Path/<c:choose>
 					<c:when test="${upd}">${update_voucher.photoData}</c:when>
 					<c:otherwise>${add_voucher.photoData}</c:otherwise>
 				</c:choose>' />
