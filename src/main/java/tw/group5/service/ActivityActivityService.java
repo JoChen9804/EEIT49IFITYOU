@@ -14,16 +14,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import tw.group5.model.ActivityVoucher;
-import tw.group5.model.ActivityVoucherRepository;
+import tw.group5.model.ActivityActivity;
+import tw.group5.model.ActivityActivityRepository;
 
 @Service
 @Transactional
-public class ActivityVoucherService {
-	
-	@Autowired
-	private ActivityVoucherRepository voucherReps;
+public class ActivityActivityService {
 
+	@Autowired
+	private ActivityActivityRepository aaRepository;
+	
 	/*
 	 * 圖片處理
 	 * 上傳檔案至資料夾並回傳檔名
@@ -49,40 +49,40 @@ public class ActivityVoucherService {
 	/*
 	 * 新增
 	 */
-	public ActivityVoucher insert(ActivityVoucher voucher) {
-		return voucherReps.save(voucher);
+	public ActivityActivity insert(ActivityActivity aa) {
+		return aaRepository.save(aa);
 	}
 	
 	/*
 	 * 修改
 	 */
-	public ActivityVoucher update(ActivityVoucher voucher) {
-		return voucherReps.save(voucher);
+	public ActivityActivity update(ActivityActivity aa) {
+		return aaRepository.save(aa);
 	}
 	
 	/*
 	 * 刪除
 	 */
-	public void delete(Integer vId) {
-		voucherReps.deleteById(vId);
+	public void delete(Integer id) {
+		aaRepository.deleteById(id);
 	}
 	
 	/*
-	 * 用id查詢
+	 * 查詢
 	 */
-	public ActivityVoucher selectById(Integer vId) {
-		Optional<ActivityVoucher> optional = voucherReps.findById(vId);
-		if(optional.isPresent()) {
-			return optional.get();
+	public ActivityActivity selectById(Integer id) {
+		Optional<ActivityActivity> op = aaRepository.findById(id);
+		if(op.isPresent()) {
+			return op.get();
 		}
 		return null;
 	}
 	
 	/*
-	 * 查詢全部資料回傳List
+	 * 查詢全部
 	 */
-	public List<ActivityVoucher> findAll(){
-		return voucherReps.findAll();
+	public List<ActivityActivity> findAll() {
+		return aaRepository.findAll();
 	}
 	
 }

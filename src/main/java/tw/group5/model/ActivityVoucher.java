@@ -27,7 +27,7 @@ public class ActivityVoucher implements Serializable {
 	private String voucherNo;
 	
 	@Column(name = "a_account")
-	private String A_account;
+	private String a_account;
 	
 	@Column(name = "vouchertitle")
 	private String voucherTitle;
@@ -62,10 +62,10 @@ public class ActivityVoucher implements Serializable {
 		this.voucherNo = voucherNo;
 	}
 	public String getA_account() {
-		return A_account;
+		return a_account;
 	}
 	public void setA_account(String a_account) {
-		A_account = a_account;
+		this.a_account = a_account;
 	}
 	public String getVoucherTitle() {
 		return voucherTitle;

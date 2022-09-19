@@ -133,7 +133,7 @@ fieldset {
 
 		<div class="sub">
 			<input type="submit" name="add" value="送出">
-			<button onclick="javascript:history.back()">返回</button>
+			<a href="activitymain.controller"><input type="button" value="返回"></a>
 		</div>
 	</form:form>	
 </body>

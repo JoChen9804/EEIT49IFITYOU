@@ -1,9 +1,6 @@
 package tw.group5.controller;
 
 import java.io.IOException;
-import java.text.Format;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServlet;
 
@@ -16,26 +13,27 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import tw.group5.model.ActivityActivity;
 import tw.group5.model.ActivityVoucher;
+import tw.group5.service.ActivityActivityService;
 import tw.group5.service.ActivityVoucherService;
 
 @Controller
 public class ActivityFunctionController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	
+	/*
+	 * voucher
+	 */
 	@Autowired
 	public ActivityVoucherService vSerrvice;
 
-	@GetMapping("/activitymain.controller")
-	public String processMainAction(Model m) {
-		
-		System.out.println(123);
-		System.out.println(789);
-		System.out.println(456);
-		
+	@GetMapping("/vouchermain.controller")
+	public String processvoucherMainAction(Model m) {
 		List<ActivityVoucher> voucher = vSerrvice.findAll();
 		m.addAttribute("voucher_queryAll", voucher);
-		return "ActivityVoucherQueryAll";
+		m.addAttribute("page", "voucher");
+		return "ActivityQueryAll";
 	}
 
 	@PostMapping("/addvoucher.controller")
@@ -46,14 +44,14 @@ public class ActivityFunctionController extends HttpServlet {
 			m.addAttribute(vAdd);
 			return "ActivityVoucherAdd";
 		} else {
-			String imgName = vSerrvice.processImg(voucher.getVoucherId(), photo);
-			voucher.setReviseTime(getTime());
+			String imgName = vSerrvice.processImg(voucher.getVoucherNo(), photo);
+			voucher.setReviseTime(vSerrvice.getTime());
 			voucher.setPhotoData(imgName);
 			if (vSerrvice.insert(voucher)!=null) {
 				m.addAttribute("add_voucher", vSerrvice.selectById(voucher.getVoucherId()));
 				return "ActivityVoucherConfirm";
 			}
-			return "ActivityVoucherQueryAll";
+			return "redirect:vouchermain.controller";
 		}
 	}
 
@@ -65,11 +63,11 @@ public class ActivityFunctionController extends HttpServlet {
 			m.addAttribute("update_voucher", vUpdate);
 			return "ActivityVoucherUpdate";
 		} else {
-			voucher.setReviseTime(getTime());
+			voucher.setReviseTime(vSerrvice.getTime());
 			if (photo.isEmpty()) {
 				voucher.setPhotoData(oldimg);
 			} else {
-				String imgName = vSerrvice.processImg(voucher.getVoucherId(), photo);
+				String imgName = vSerrvice.processImg(voucher.getVoucherNo(), photo);
 				voucher.setPhotoData(imgName);
 			}
 			if (vSerrvice.update(voucher) != null) {
@@ -77,16 +75,16 @@ public class ActivityFunctionController extends HttpServlet {
 				m.addAttribute("upd", true);
 				return "ActivityVoucherConfirm";
 			}
-			return "ActivityVoucherQueryAll";
+			return "redirect:vouchermain.controller";
 		}
 	}
 
 	@PostMapping("/deletevoucher.controller")
 	public String voucherDelete(Model m, int dataId) {
 		vSerrvice.delete(dataId);
-		List<ActivityVoucher> voucher = vSerrvice.findAll();
-		m.addAttribute("voucher_queryAll", voucher);
-		return "ActivityVoucherQueryAll";
+//		List<ActivityVoucher> voucher = vSerrvice.findAll();
+//		m.addAttribute("voucher_queryAll", voucher);
+		return "redirect:vouchermain.controller";
 	}
 
 	@PostMapping("/queryvoucher.controller")
@@ -95,11 +93,20 @@ public class ActivityFunctionController extends HttpServlet {
 		m.addAttribute("query_voucher", v);
 		return "ActivityVoucherQuery";
 	}
-
-	public String getTime() {
-		Date date = new Date(System.currentTimeMillis());
-		Format format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		return format.format(date);
+	
+	/*
+	 * Activity
+	 */
+	@Autowired
+	private ActivityActivityService aService;
+	
+	@GetMapping("/activitymain.controller")
+	public String processMainActivityAction(Model m) {
+		List<ActivityActivity> activity = aService.findAll();
+		m.addAttribute("activity_queryAll", activity);
+		m.addAttribute("page", "activity");
+		return "ActivityQueryAll";
 	}
+	
 
 }
