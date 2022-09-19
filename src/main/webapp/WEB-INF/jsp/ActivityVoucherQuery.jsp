@@ -53,7 +53,7 @@ fieldset {
 </head>
 
 <body>
-	<form action="activitymain1.controller" method="post">
+	<form action="voucherymain.controller" method="post">
 		<input type="hidden" name="selec_page" value="voucher">
 		<input type="hidden" name="a_account" value="${a_account}">
 		<input type="hidden" name="reviseTime" value="${reviseTime}">
@@ -103,7 +103,7 @@ fieldset {
 	</div>
 
 		<div class="sub">
-			<a href="activitymain.controller"><input type="button" value="返回"></a>
+			<a href=vouchermain.controller><input type="button" value="返回"></a>
 		</div>
 	</form>
 </body>

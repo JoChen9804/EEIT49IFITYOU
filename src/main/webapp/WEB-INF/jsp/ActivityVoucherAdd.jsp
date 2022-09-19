@@ -133,7 +133,7 @@ fieldset {
 
 		<div class="sub">
 			<input type="submit" name="add" value="送出">
-			<a href="activitymain.controller"><input type="button" value="返回"></a>
+			<a href="vouchermain.controller"><input type="button" value="返回"></a>
 		</div>
 	</form:form>	
 </body>

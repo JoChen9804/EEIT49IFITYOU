@@ -52,7 +52,50 @@ input {
 	
 	<script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
 
-	<div id="show"></div>
+	<!-- <div id="show"></div> -->
+	
+	<H2 style="display: inline">優惠券總覽</H2>
+				&emsp;&emsp;&emsp;
+				<form id="add" action="addvoucher.controller" enctype="multipart/form-data" method="post" class="btn btn-info btn-icon-split">
+					<span class="icon text-white-50"> <i class="fas fa-flag"></i></span>
+					<input type="submit" name="add" value="新增" class="text" style="border: none; background-color: #36b9cc; color: white"/>
+				</form>
+				<table id="table_id">
+					<thead>
+						<tr>
+							<th>優惠券號</th>
+							<th>優惠券名</th>
+							<th>到期日</th>
+							<th>負責管理員</th>
+							<th>最後修改時間</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<c:forEach var="vqa" items="${voucher_queryAll}">
+						<tr>
+							<td>${vqa.voucherNo}</td>
+							<td>${vqa.voucherTitle}</td>
+							<td>${vqa.expiryTime}</td>
+							<td>${vqa.a_account}</td>
+							<td>${vqa.reviseTime}</td>
+							<td>
+								<form ACTION="queryvoucher.controller" method="post" style="float: left; " >
+									<input type="hidden" name="dataId" value="${vqa.voucherId}" />
+									<input type="submit" name="query" value="查看內文" />
+								</form> 
+								<form ACTION="updatevoucher.controller" method="post" enctype="multipart/form-data" style="float: left;">
+									<input type="hidden" name="dataId" value="${vqa.voucherId}" />
+									<input type="submit" name="update" value="修改" />
+								</form> 
+								<form ACTION="deletevoucher.controller" method="post" >
+									<input type="hidden" name="dataId" value="${vqa.voucherId}" id="dd" />
+									<input type="submit" id="delete" name="delete" class="del" value="刪除" />
+								</form>
+							</td>
+						</tr>
+					</c:forEach>
+				</table>
+	
 	<script>$('#table_id').dataTable({});</script>
 	<script>
 	

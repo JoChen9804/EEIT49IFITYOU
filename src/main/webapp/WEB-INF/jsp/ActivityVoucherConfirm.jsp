@@ -49,7 +49,7 @@ fieldset {
 </head>
 <body>
 	<h2>資料如下請確認</h2>
-	<form action="activitymain.controller" method="get">
+	<form action="vouchermain.controller" method="get">
 		<input type="hidden" name="selec_page" value="voucher">
 
 		<fieldset>
