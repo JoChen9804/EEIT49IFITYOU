@@ -79,7 +79,7 @@ function chkinput(form)
 			
 			<div class="st1">
 				<label for="memo" style="float: left; margin: 3px;">圖片:</label> 
-				<input type="file" name="photo"/>
+				<input type="file" id="ff" name="photo"/>
 			</div>
 			<img width="400" />
 		</fieldset>
@@ -88,7 +88,7 @@ function chkinput(form)
 		<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
 		
 		<script>
-    		$('input').on('change', function(e){      
+    		$('#ff').on('change', function(e){      
       		const file = this.files[0];
       		const objectURL = URL.createObjectURL(file);
       

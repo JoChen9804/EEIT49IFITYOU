@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -61,6 +62,9 @@ public class ActivityFunctionController extends HttpServlet {
 	@PostMapping("/updatevoucher.controller")
 	public String voucherUpdate(@ModelAttribute(name = "voucher") ActivityVoucher voucher, String update, int dataId, String oldimg, MultipartFile photo, Model m )
 			throws IllegalStateException, IOException {
+		
+		System.out.println(update+"測試");
+		
 		if (update.equals("修改")) {
 			ActivityVoucher vUpdate = vService.selectById(dataId);
 			m.addAttribute("update_voucher", vUpdate);

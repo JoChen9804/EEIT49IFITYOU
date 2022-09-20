@@ -37,7 +37,7 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 
 			<div class="st1">
 				<label for="date1" class="t1">到期日:</label> 
-				<form:input type="date" path="expiryTime" value="${update_voucher.expiryTime}"/>
+				<form:input type="date" id="time" path="expiryTime" value="${update_voucher.expiryTime}"/>
 			</div>
 		</fieldset>
 
@@ -61,20 +61,21 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 			
 			<div class="st1">
 			<label for="memo" style="float: left; margin: 3px;">修改圖片:</label>
-				<input type="file" name="photo"/>
+				<input type="file" id="ff" name="photo"/>
 				<img id="img1" width="230" />
 			</div>
 		</fieldset>
 
 		<div class="sub">
 			<input type="submit" class="upd"  name="update" value="送出">
+			<input type="hidden" name="update" value="送出">
 			<a href="vouchermain.controller"><input type="button" value="返回"></a>
 		</div>
 	</form:form>
 	</div>
 	<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
 		<script>
-    		$('input').on('change', function(e){      
+    		$('#ff').on('change', function(e){      
       		const file = this.files[0];
       		const objectURL = URL.createObjectURL(file);
       
@@ -83,6 +84,16 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
     		
     		$(".upd").on('click', function(event){
 				event.preventDefault();
+				let date = new Date();
+				if(date.toISOString().split('T')[0] >= $('#time').val()){
+					Swal.fire(
+						'日期錯誤',
+						'選擇日期已過請重新選擇',
+						'warning'
+					)
+			   		return;
+			    }
+				
 				Swal.fire({
 					  title:'確定要修改此筆資料?',
 					  text:'優惠券:'+$('#voucherTitle').val(),
@@ -95,13 +106,15 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 					}).then((result) => {
 					  if (result.isConfirmed) {
 						  Swal.fire(
-							      '修改成功!'
+							      '修改成功!',
+							      'success'
 							    ).then((result) => {
 					   				 $(this).parent().parent().submit();
 							    });
 					  }
 					});
 			});
+    		
   		</script>
 </body>
 </html>

@@ -88,7 +88,7 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 			
 			<div class="st1">
 			<label style="float: left; margin: 3px;">修改圖片:</label>
-				<input type="file" name="photo"/>
+				<input type="file" id="ff" name="photo"/>
 				<img id="img1" width="230" />
 			</div>
 		</fieldset>
@@ -101,15 +101,15 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 	</div>
 	<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
 		<script>
-    		$('input').on('change', function(e){      
+    		$('#ff').on('change', function(e){      
       		const file = this.files[0];
       		const objectURL = URL.createObjectURL(file);
       
       		$('#img1').attr('src', objectURL);
     		});
     		
-    		$(".upd").on('click', function(event){
-				event.preventDefault();
+    		
+				
 				Swal.fire({
 					  title:'確定要修改此筆資料?',
 					  text:'活動:'+$('#activityTitle').val(),
@@ -122,7 +122,8 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 					}).then((result) => {
 					  if (result.isConfirmed) {
 						  Swal.fire(
-							      '修改成功!'
+							      '修改成功!',
+							      'success'
 							    ).then((result) => {
 					   				 $(this).parent().parent().submit();
 							    });
