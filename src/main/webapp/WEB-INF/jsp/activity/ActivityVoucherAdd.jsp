@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="java.util.*,tw.group5.model.*"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="java.util.*,tw.group5.model.*"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 	
 <!DOCTYPE html>
@@ -15,42 +14,7 @@ response.setCharacterEncoding("UTF-8");
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" >
 <title>新增優惠券</title>
-<style>
-h2 {
-	text-align: center;
-}
-
-fieldset {
-	width: 950px;
-	border: 1px solid #D1BBFF;
-	border-radius: 15px;
-	margin: auto;
-}
-
-.happy {
-	width: 800px;
-	margin: 30px auto;
-}
-
-.sub {
-	width: 500px;
-	margin: 15px auto 15px auto;
-	text-align: center;
-}
-
-.t1 {
-	width: 100px;
-	float: left;
-	text-align: right;
-	margin-right: 3px;
-}
-
-.st1 {
-	margin-bottom: 5px;
-}
-
-</style>
-
+<link rel="stylesheet" href="/css/voucherStyle.css">
 <script>
  function chkinput(form)
  {
@@ -80,7 +44,6 @@ fieldset {
 
 <body>
 	<form:form action="addvoucher.controller" method="post" modelAttribute="voucher" enctype="multipart/form-data" onsubmit=" return chkinput(this)">
-		<input type="hidden" name="page" value="voucher">
 
 		<form:input type="hidden" path="a_account" value="暫空"/>
 
@@ -95,9 +58,7 @@ fieldset {
 
 			<div class="st1">
 				<label for="voucherTitle" class="t1">優惠券標題:</label>
-				<label>
-					<form:input type="text" path="voucherTitle" id="voucherTitle" placeholder="voucherTitle" required="required"/>＊請勿超過15個字
-				</label>
+				<form:input type="text" path="voucherTitle" id="voucherTitle" placeholder="voucherTitle" required="required"/>＊請勿超過15個字
 			</div>
 
 			<div class="st1">

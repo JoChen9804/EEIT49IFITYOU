@@ -52,78 +52,10 @@ input {
 	
 	<script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
 
-	<!-- <div id="show"></div> -->
-	
-	<H2 style="display: inline">優惠券總覽</H2>
-				&emsp;&emsp;&emsp;
-				<form id="add" action="addvoucher.controller" enctype="multipart/form-data" method="post" class="btn btn-info btn-icon-split">
-					<span class="icon text-white-50"> <i class="fas fa-flag"></i></span>
-					<input type="submit" name="add" value="新增" class="text" style="border: none; background-color: #36b9cc; color: white"/>
-				</form>
-				<table id="table_id">
-					<thead>
-						<tr>
-							<th>優惠券號</th>
-							<th>優惠券名</th>
-							<th>到期日</th>
-							<th>負責管理員</th>
-							<th>最後修改時間</th>
-							<th>操作</th>
-						</tr>
-					</thead>
-					<c:forEach var="vqa" items="${voucher_queryAll}">
-						<tr>
-							<td>${vqa.voucherNo}</td>
-							<td>${vqa.voucherTitle}</td>
-							<td>${vqa.expiryTime}</td>
-							<td>${vqa.a_account}</td>
-							<td>${vqa.reviseTime}</td>
-							<td>
-								<form ACTION="queryvoucher.controller" method="post" style="float: left; " >
-									<input type="hidden" name="dataId" value="${vqa.voucherId}" />
-									<input type="submit" name="query" value="查看內文" />
-								</form> 
-								<form ACTION="updatevoucher.controller" method="post" enctype="multipart/form-data" style="float: left;">
-									<input type="hidden" name="dataId" value="${vqa.voucherId}" />
-									<input type="submit" name="update" value="修改" />
-								</form> 
-								<form ACTION="deletevoucher.controller" method="post" >
-									<input type="hidden" name="dataId" value="${vqa.voucherId}" id="dd" />
-									<input type="submit" id="delete" name="delete" class="del" value="刪除" />
-								</form>
-							</td>
-						</tr>
-					</c:forEach>
-				</table>
+	<div id="show"></div>
 	
 	<script>$('#table_id').dataTable({});</script>
-	<script>
 	
-	$(".del").on('click', function(event){
-		event.preventDefault();
-		var id = $(this).prev().val(); 
-		console.log("抓取刪除ID:" + id);
-		Swal.fire({
-			  title: 'Are you sure?',
-			  text: " delete ID : "+id,
-			  icon: 'warning',
-			  showCancelButton: true,
-			  confirmButtonColor: '#3085d6',
-			  cancelButtonColor: '#d33',
-			  confirmButtonText: 'Yes, delete it!'
-			}).then((result) => {
-			  if (result.isConfirmed) {
-				  Swal.fire(
-					      'Deleted!',
-					      'Your file has been deleted.',
-					      'success'
-					    ).then((result) => {
-			   				 $(this).parent().submit();
-					    });
-			  }
-			});
-	});
-	</script>
 	<script>
 	$(function() {
 		var page = `${page}`;
@@ -166,7 +98,8 @@ input {
 									<input type="submit" name="update" value="修改" />
 								</form> 
 								<form ACTION="deletevoucher.controller" method="post" >
-									<input type="hidden" name="dataId" value="${vqa.voucherId}" id="dd" />
+									<input type="hidden" name="dataId" value="${vqa.voucherId}" />
+									<input type="hidden" name="voucherTitle" value="${vqa.voucherTitle}" />
 									<input type="submit" id="delete" name="delete" class="del" value="刪除" />
 								</form>
 							</td>
@@ -177,7 +110,7 @@ input {
 			
 		}else if(page=="activity"){
 			
-			$('#show').html(`
+			$('#show').append(`
 				<H2 style="display: inline">活動總覽</H2>
 				&emsp;&emsp;&emsp;
 				<form id="add" action="addactivity.controller" enctype="multipart/form-data" method="post" class="btn btn-info btn-icon-split">
@@ -215,10 +148,12 @@ input {
 									<input type="hidden" name="dataId" value="${aqa.activityId}" />
 									<input type="submit" name="update" value="修改" />
 								</form> 
-								<form ACTION="deleteactivity.controller" method="post" >
+								<form ACTION="deleteactivity.controller" name="ddeell" method="post" >
 									<input type="hidden" name="dataId" value="${aqa.activityId}" id="dd" />
+									<input type="hidden" name="voucherTitle" value="${aqa.activityTitle}" />
 									<input type="submit" id="delete" name="delete" class="del" value="刪除" />
 								</form>
+								
 							</td>
 						</tr>
 					</c:forEach>
@@ -228,7 +163,34 @@ input {
 		
 	});
 	</script>
-			
-	
+	<script>
+	$(function() {
+		$(".del").on('click', function(event){
+			event.preventDefault();
+			var id = $(this).prev().val();
+			console.log("抓取刪除:" + id);
+			Swal.fire({
+				  title:'確定要刪除'+id+'?',
+				  text: '如刪除後不可復原...',
+				  icon: 'warning',
+				  showCancelButton: true,
+				  confirmButtonColor: '#3085d6',
+				  cancelButtonColor: '#d33',
+				  confirmButtonText: '確認',
+				  cancelButtonText: '取消'
+				}).then((result) => {
+				  if (result.isConfirmed) {
+					  Swal.fire(
+						      '刪除成功!',
+						      id+'已刪除',
+						      'success'
+						    ).then((result) => {
+				   				 $(this).parent().submit();
+						    });
+				  }
+				});
+		});
+	})
+	</script>
 </body>
 </html>

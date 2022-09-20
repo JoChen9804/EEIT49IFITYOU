@@ -11,38 +11,8 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>優惠券修改</title>
-<style>
-h2 {
-	text-align: center;
-}
-
-fieldset {
-	width: 500px;
-	margin: 15px auto 15px auto;
-}
-
-.happy {
-	width: 800px;
-	margin: 30px auto;
-}
-
-.sub {
-	width: 500px;
-	margin: 15px auto 15px auto;
-	text-align: center;
-}
-
-.t1 {
-	width: 100px;
-	float: left;
-	text-align: right;
-	margin-right: 3px;
-}
-
-.st1 {
-	margin-bottom: 5px;
-}
-</style>
+<link rel="stylesheet" href="/css/voucherStyle.css">
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -61,7 +31,7 @@ fieldset {
 			
 			<div class="st1">
 				<label for="voucherTitle" class="t1">優惠券標題:</label> <label>
-					<form:input type="text" path="voucherTitle" placeholder="voucherTitle" value="${update_voucher.voucherTitle}"/>＊請勿超過15個字
+					<form:input type="text" id="voucherTitle" path="voucherTitle" placeholder="voucherTitle" value="${update_voucher.voucherTitle}"/>＊請勿超過15個字
 				</label>
 			</div>
 
@@ -97,7 +67,7 @@ fieldset {
 		</fieldset>
 
 		<div class="sub">
-			<input type="submit"  name="update" value="送出">
+			<input type="submit" class="upd"  name="update" value="送出">
 			<a href="vouchermain.controller"><input type="button" value="返回"></a>
 		</div>
 	</form:form>
@@ -110,6 +80,28 @@ fieldset {
       
       		$('#img1').attr('src', objectURL);
     		});
+    		
+    		$(".upd").on('click', function(event){
+				event.preventDefault();
+				Swal.fire({
+					  title:'確定要修改此筆資料?',
+					  text:'優惠券:'+$('#voucherTitle').val(),
+					  icon: 'question',
+					  showCancelButton: true,
+					  confirmButtonColor: '#3085d6',
+					  cancelButtonColor: '#d33',
+					  confirmButtonText:'確定',
+					  cancelButtonText: '取消'
+					}).then((result) => {
+					  if (result.isConfirmed) {
+						  Swal.fire(
+							      '修改成功!'
+							    ).then((result) => {
+					   				 $(this).parent().parent().submit();
+							    });
+					  }
+					});
+			});
   		</script>
 </body>
 </html>
