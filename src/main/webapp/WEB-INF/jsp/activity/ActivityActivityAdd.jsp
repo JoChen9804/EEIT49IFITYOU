@@ -58,7 +58,7 @@ response.setCharacterEncoding("UTF-8");
 			<br>
 
 			<div class="st1">
-				<label style="float: left; margin: 3px;">活動內容:</label>
+				<label style="float: left; margin: 3px;">活動內容:</label>＊
 				<form:textarea path="activityContent" id="activityContent" cols="70" rows="15" class="need"></form:textarea>
 			</div>
 			
@@ -70,14 +70,6 @@ response.setCharacterEncoding("UTF-8");
 		</fieldset>
 		</div>
 		
-		<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
-		
-		<script>
-    		$('#ff').on('change', function(e){      
-      		const file = this.files[0];
-      		const objectURL = URL.createObjectURL(file);
-  		</script>
-
 		<div class="sub">
 			<input type="button" id="add" value="送出">
 			<input type="hidden" name="add" value="送出">
@@ -85,18 +77,27 @@ response.setCharacterEncoding("UTF-8");
 		</div>
 	</form:form>
 	
-	<script type="text/javascript">    		
+	<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+	<script type="text/javascript">    
+	$('#ff').on('change', function(e){      
+  		const file = this.files[0];
+  		const objectURL = URL.createObjectURL(file);
+		});
+	
     	$("#add").on('click', function(event){
-			
-    		if($(".need").val()==""){
-	    		console.log('檢查到欄位有空值!');
-    			Swal.fire({
-					title:'資料不完整',
-					text:'請檢查＊號欄位是否都有填入',
-					icon:'warning'
-				});
-		   		return;
-    		}
+			var rs = false;
+    		$(".need").each(function(){
+    			if($(this).val()==""){
+    	    		console.log('檢查到欄位有空值!');
+        			Swal.fire({
+    					title:'資料不完整',
+    					text:'請檢查＊號欄位是否都有填入',
+    					icon:'warning'
+    				});
+    		   		rs = true;
+        		}
+    		});
+    		if(rs)return;
     		
     		let date = new Date();
 			if(date.toISOString().split('T')[0] >= $('#endTime').val()){

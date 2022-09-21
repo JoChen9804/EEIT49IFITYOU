@@ -35,44 +35,44 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 			
 			<div class="st1">
 				<label class="t1">活動名稱:</label> <label>
-					<form:input type="text" id="activityTitle" path="activityTitle" value="${update_activity.activityTitle}" required="required"/>
+					<form:input type="text" id="activityTitle" path="activityTitle" value="${update_activity.activityTitle}" class="need"/>＊
 				</label>
 			</div>
 			
 			<div class="st1">
 				<label class="t1">活動類型:</label> <label>
-					<form:input type="text" id="typeContent" path="typeContent" value="${update_activity.typeContent}" required="required"/>
+					<form:input type="text" id="typeContent" path="typeContent" value="${update_activity.typeContent}" class="need"/>＊
 				</label>
 			</div>
 			
 			<div class="st1">
 				<label class="t1">主辦方:</label> <label>
-					<form:input type="text" id="holder" path="holder" value="${update_activity.holder}" required="required"/>
+					<form:input type="text" id="holder" path="holder" value="${update_activity.holder}" class="need"/>＊
 				</label>
 			</div>
 			
 			<div class="st1">
 				<label class="t1">活動地點:</label> <label>
-					<form:input type="text" id="location" path="location" value="${update_activity.location}" required="required"/>
+					<form:input type="text" id="location" path="location" value="${update_activity.location}" class="need"/>＊
 				</label>
 			</div>
 
 			<div class="st1">
 				<label class="t1">活動開始日:</label> 
-				<form:input type="date" id="startTime" path="startTime" value="${update_activity.startTime}" required="required"/>
+				<form:input type="date" id="startTime" path="startTime" value="${update_activity.startTime}" class="need"/>＊
 			</div>
 			
 			<div class="st1">
 				<label class="t1">活動結束日:</label> 
-				<form:input type="date" id="endTime" path="endTime" value="${update_activity.endTime}" required="required"/>
+				<form:input type="date" id="endTime" path="endTime" value="${update_activity.endTime}" class="need"/>＊
 			</div>
 		</fieldset>
 
 		<fieldset>
 			<legend>說明內容</legend>
 			<div class="st1">
-				<label style="float: left; margin: 3px;">活動內容:</label>
-				<form:textarea path="activityContent" id="t1" cols="70" rows="15"/>
+				<label style="float: left; margin: 3px;">活動內容:</label>＊
+				<form:textarea path="activityContent" id="t1" class="need" cols="70" rows="15"/>
 			</div>
 			
 			<script>
@@ -95,7 +95,7 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 		</fieldset>
 
 		<div class="sub">
-			<input type="submit" class="upd" value="送出">
+			<input type="button" class="upd" value="送出">
 			<input type="hidden" name="update" value="送出">
 			<a href="activitymain.controller"><input type="button" value="返回"></a>
 		</div>
@@ -107,12 +107,24 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
     		$('#ff').on('change', function(e){      
       		const file = this.files[0];
       		const objectURL = URL.createObjectURL(file);
-      
       		$('#img1').attr('src', objectURL);
     		});
     		
     		$(".upd").on('click', function(event){
-    			event.preventDefault();
+    			var rs = false;
+        		$(".need").each(function(){
+        			if($(this).val()==""){
+        	    		console.log('檢查到欄位有空值!');
+            			Swal.fire({
+        					title:'資料不完整',
+        					text:'請檢查＊號欄位是否都有填入',
+        					icon:'warning'
+        				});
+        		   		rs = true;
+            		}
+        		});
+        		if(rs)return;
+        		
     			let date = new Date();
     			if(date.toISOString().split('T')[0] >= $('#endTime').val()){
     				Swal.fire({
