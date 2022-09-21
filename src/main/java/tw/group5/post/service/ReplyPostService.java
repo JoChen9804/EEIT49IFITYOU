@@ -26,4 +26,7 @@ public class ReplyPostService {
     public void deleteById(Integer id) {
         rpResp.deleteById(id);
     }
+    
+    
+    
 }

@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isErrorPage="true"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <html>
@@ -16,16 +17,13 @@ fieldset {
     background:rgb(231, 240, 184);
     } 
     
-
-
-    
     </style>
     </head>
     <body>
 
     <fieldset>
     <H1 ALIGN=CENTER>修改貼文</H1>
-      <form ACTION="MainPostServlet" method="post">
+      <form ACTION="MainPostServlet" method="post" enctype='multipart/form-data'>
         <input type="hidden" name="_method" value="PUT">
     
             <div class="st1">
@@ -54,23 +52,33 @@ fieldset {
             <textarea name="content" id="content1" cols="40" rows="10" 
             required oninvalid="setCustomValidity('請輸入內容')" oninput="setCustomValidity('')">${queryContent.content}</textarea>
             
-        </div> 
+        </div>
+        <input type="hidden" id="p_image" name="p_image" value="${queryContent.p_image}">
+           <c:forEach var="image" items="${updatImages}">
+           
+                            <img width='300' height='200' src="${image}">
+                        </c:forEach>
+                        
+        <P>重新選擇圖片(最多五張，每張2MB以下):<input id="file1" type="file" class="upl" name="chamgeimages" multiple="multiple" 
+                            accept="image/*" onchange="checkip()"></P>        
+         <div id="imgs"></div>  
+        <script src="js/jquery-3.6.0.js"></script>
+        <script src="js/images.js"></script>   
+        
   
         <div class="sub">
         <input type="submit" name="modifyContent" value="修改內容">
         </div>
    </form>
    
-           <form name="updateForm" action="MainPost.return" method="GET">
-       <!--   <input type="hidden" name="todo" value="return"> -->
-       <input
-            type="submit" name="returns" value="返回首頁">
+   
+   
+    <form name="updateForm" action="MainPost.return" method="GET">
+       <input type="submit" name="returns" value="返回首頁">
     </form>
    
     
     </fieldset>
-    
-    
     
     
     </body>

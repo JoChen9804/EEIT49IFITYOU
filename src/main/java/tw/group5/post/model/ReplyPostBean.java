@@ -35,15 +35,18 @@ public class ReplyPostBean {
     @Column(name = "replylikenumber")
     private String replyLikeNumber;        // 按鑽數量
     
+    @Column(name = "r_image")
+    private String r_image;              //照片路徑
+    
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "mainpostno")
     private MainPostBean mainPostBean;  
     
     public ReplyPostBean() {
     }
-    
+
     public ReplyPostBean(int replyNo, String replyPhoto, String replyAccount, String replyContent, String replyTime,
-            String replyLikeNumber) {
+            String replyLikeNumber, String r_image, MainPostBean mainPostBean) {
         super();
         this.replyNo = replyNo;
         this.replyPhoto = replyPhoto;
@@ -51,6 +54,8 @@ public class ReplyPostBean {
         this.replyContent = replyContent;
         this.replyTime = replyTime;
         this.replyLikeNumber = replyLikeNumber;
+        this.r_image = r_image;
+        this.mainPostBean = mainPostBean;
     }
 
     public int getReplyNo() {
@@ -89,4 +94,21 @@ public class ReplyPostBean {
     public void setReplyLikeNumber(String replyLikeNumber) {
         this.replyLikeNumber = replyLikeNumber;
     }
+
+    public MainPostBean getMainPostBean() {
+        return mainPostBean;
+    }
+
+    public void setMainPostBean(MainPostBean mainPostBean) {
+        this.mainPostBean = mainPostBean;
+    }
+
+    public String getR_image() {
+        return r_image;
+    }
+
+    public void setR_image(String r_image) {
+        this.r_image = r_image;
+    }
+    
 }

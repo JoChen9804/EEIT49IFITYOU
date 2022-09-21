@@ -71,12 +71,12 @@
             required oninvalid="setCustomValidity('請輸入內容')" oninput="setCustomValidity('')"></textarea>
         </div>
                   
-       請選擇圖片(最多五張):<input id="file1" type="file" class="upl" name="Filename2" multiple="multiple" 
+       請選擇圖片(最多五張，每張2MB以下):<input id="file1" type="file" class="upl" name="Filename2" multiple="multiple" 
                             accept="image/*" onchange="checkip()">           
             <div id="imgs"></div>  
     
-        <script src="postfolder/js/jquery-3.6.0.js"></script>
-        <script src="postfolder/js/images.js"></script>
+        <script src="js/jquery-3.6.0.js"></script>
+        <script src="js/images.js"></script>
 
     
         <div class="sub">       

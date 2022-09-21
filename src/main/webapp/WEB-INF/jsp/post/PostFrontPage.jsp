@@ -76,8 +76,8 @@ th {
             <td><img src="${allmpbs.p_image}"></td>
             <td>${allmpbs.mainPostNo}</td>
             <td>${allmpbs.postTypeName}</td>
-            <td><a href="/MainPost.watch2/${allmpbs.mainPostNo}">${allmpbs.title}</a></td>
-                        
+            <td>${allmpbs.title}</td>
+            <!-- <td><a href="/MainPost.watch2/${allmpbs.mainPostNo}">${allmpbs.title}</a></td>  -->           
             <td>${allmpbs.account}</td>
             <td>${allmpbs.addtime}</td>
             <td>

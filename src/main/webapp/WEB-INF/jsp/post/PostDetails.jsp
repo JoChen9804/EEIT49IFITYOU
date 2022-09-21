@@ -79,8 +79,8 @@
 						</c:forEach>
 						</form>
 						<form action=Likes method="post">
-							<input type="hidden" name="_method" value="PUT"> <input
-								type="hidden" id="mainPostNo" name="mainPostNo"
+							<input type="hidden" name="_method" value="PUT"> 
+							<input type="hidden" id="mainPostNo" name="mainPostNo"
 								value="${queryOne.mainPostNo}">
 							<p><button type="submit" name="likenumber" value="${likes}">讚${likes}</button>
 							</p>
@@ -89,6 +89,8 @@
 					</div>
 				</td>
 			</tr>
+
+
 
 
         <c:forEach var="測試回復" items="">
@@ -117,29 +119,36 @@
 			
 			
 			
-			<form action=replypost method="post" onsubmit="return checkip()">
+			<form action=ReplyPost method="post" onsubmit="return checkip()" enctype='multipart/form-data'>
+			<input type="hidden" name="mainPostNo" value="${queryOne.mainPostNo}">
 			    <tr>
                   <td class="column3">
                 <img width='150' height='150' src="postfolder/images/test.gif"></td>
                 <td><div class="content">
                 
-               <P>發布時間:${queryOne.addtime}</P>
+               
                                                 
-            <textarea name="content" id="content1" cols="105" rows="10" 
+            <textarea name="replyContent" id="content1" cols="105" rows="10" 
             required oninvalid="setCustomValidity('請輸入內容')" oninput="setCustomValidity('')"></textarea>
+            
+  
+            
+            
+            
+            
            
             </div>
        請選擇圖片(最多五張):<input id="file1" type="file" class="upl" name="replyfile" multiple="multiple" 
                             accept="image/*" onchange="checkip()">           
             <div id="imgs"></div>
-            <script src="postfolder/js/jquery-3.6.0.js"></script>
-            <script src="postfolder/js/images.js"></script>
+             <script src="js/jquery-3.6.0.js"></script>
+             <script src="js/images.js"></script>  
             
             
             
             <!--    之後改成抓取會帳號     -->
-            <input type="hidden" id="mainPostNo" name="mainPostNo" value="replyAccount">
-            <input type="submit" name="replysubmit"  value="送出">
+            <input type="hidden" id="會員帳號" name="會員帳號" value="replyAccount">
+            <input type="submit" name="replysubmit"  value="發表回復">
   
                 </td>
             </tr>

@@ -28,12 +28,23 @@ public class MainPostServlet {
     @Autowired
     private MainPostService mainPostService;
     
+    public final String postFrontPage ="post/PostFrontPage";
+    public final String postMainPosting ="post/PostMainPosting";
+    public final String postDetails ="post/PostDetails";
+    public final String postChangePost = "post/PostChangePost";
+    
+    
+    //改成會員帳號 與會員權限
+    public String memberAccount ="test123";
+    public String postPermission = "一般會員";
+    
+    
     //首頁進入
     //推薦使用四種方式最終都是封裝成ModelAndView
     @GetMapping("/MainPost.all")
     public ModelAndView postHomepage2(MainPostBean mpBean) {
         
-        ModelAndView mav = new ModelAndView("post/PostFrontPage");
+        ModelAndView mav = new ModelAndView(postFrontPage);
         
         if(mpBean.getMainPostNo() != 0 ) {
             List<MainPostBean> query = firstImagePath(mainPostService.query(mpBean.getMainPostNo()));
@@ -65,21 +76,19 @@ public class MainPostServlet {
     //跳轉到新增畫面
     @PostMapping("MainPosting.add")
     public ModelAndView postPage(String addpost) {
-        return new ModelAndView("post/PostMainPosting");
+        return new ModelAndView(postMainPosting);
     }
     
-    //發布貼文 圖片待處理
+    //發布貼文 
     @PostMapping("/MainPosting.controller")
     public String addingPostConfirming(MainPostBean addPost,
                                        @RequestParam("Filename2") List<MultipartFile> mfs) throws FileNotFoundException {
         
-        addPost.setPostPermission("一般會員");
+        addPost.setPostPermission(postPermission);
         addPost.setAddtime(mainPostService.currentDateFormat("date"));
         addPost.setLikeNumber("");
+        addPost.setP_image("");
         
-        //讀取照片ok
-//        Set<PostImageBean> addPostImages = mainPostService.addPostImages(mfs, addPost);
-//        addPost.setMainPostImages(addPostImages); 
         
         //測試用路徑串接
         if(!mfs.get(0).isEmpty()) {
@@ -94,10 +103,13 @@ public class MainPostServlet {
     @GetMapping("/MainPost.watch")
     public ModelAndView watchPost(Integer watch) {
         MainPostBean queryOne = mainPostService.selectById(watch);
-        ModelAndView mav = new ModelAndView("post/PostDetails");
-        mav.addObject("queryOne",queryOne);
+        ModelAndView mav = new ModelAndView(postDetails);
         
-        System.out.println("31321" +queryOne.getLikeNumber().equals("") +"!!!");
+        if(queryOne.getP_image().equals("")) {
+            queryOne.setP_image(null);
+        }
+        
+        mav.addObject("queryOne",queryOne);
         
         if(!queryOne.getLikeNumber().equals("")) {
             String[] oldlikes =queryOne.getLikeNumber().split(",");
@@ -107,10 +119,6 @@ public class MainPostServlet {
         }
         
         
-        
-        //照片讀取ok
-//        List<PostImageBean> allImages = mainPostService.allImages(watch);
-//        mav.addObject("allImages",allImages);
         //使用串接存進去
       if(  queryOne.getP_image() !=null) {
           String[] allImages =queryOne.getP_image().split(",");
@@ -128,15 +136,44 @@ public class MainPostServlet {
     //跳到修改頁面ok
     @PostMapping("/MainPostingServlet")
     public ModelAndView modifyPage(Integer updatepost) {
-        ModelAndView mav = new ModelAndView("post/PostChangePost");
+        ModelAndView mav = new ModelAndView(postChangePost);
         MainPostBean queryContent = mainPostService.selectById(updatepost);
+        
+        if(!queryContent.getP_image().equals("")) {
+            String[] allImages =queryContent.getP_image().split(",");
+            mav.addObject("updatImages",allImages);
+        }else {
+            queryContent.setP_image("");
+        }
+        
+        
         mav.addObject("queryContent",queryContent);
         return mav;
     }
+    
     //修改後送出ok
     @PutMapping("/MainPostServlet")
-    public ModelAndView updateMainPost(MainPostBean mpBean) {
+    public ModelAndView updateMainPost(MainPostBean mpBean,@RequestParam("chamgeimages") List<MultipartFile> mfs) {
+        
+        System.out.println("32132131"+mpBean.getP_image());
+        
         mpBean.setAddtime(mainPostService.currentDateFormat("date"));
+        
+        mpBean.setLikeNumber("");
+        
+        if(mpBean.getP_image().equals("")) {
+            mpBean.setP_image("");
+        }
+        
+        if(!mfs.get(0).isEmpty()) {
+        String addPostImages = mainPostService.addPostImages(mfs);
+        
+        System.out.println(addPostImages);
+        mpBean.setP_image(addPostImages);
+        }
+        
+        
+        
         MainPostBean queryContent = mainPostService.update(mpBean);
         if(queryContent !=null) {
             return new ModelAndView("redirect:/MainPost.all");
@@ -144,13 +181,15 @@ public class MainPostServlet {
         return null;
     }
     
-    //抓取第一張圖片並重新寫入Bean
+    //抓取第一張圖片並重新寫入Bean，找不到給預設圖片
     public List<MainPostBean> firstImagePath(List<MainPostBean> mpBean) {
         if(mpBean != null) {
             for(MainPostBean oneBean : mpBean) {
-                if(oneBean.getP_image() != null && oneBean.getP_image().indexOf(",") !=-1) {
+                if(!oneBean.getP_image().equals("") && oneBean.getP_image().indexOf(",") !=-1) {
                     System.out.println("==="+oneBean.getP_image().substring(0,oneBean.getP_image().indexOf(",")));
                     oneBean.setP_image(oneBean.getP_image().substring(0,(oneBean.getP_image().indexOf(",")))); 
+                }else if(oneBean.getP_image().equals("")){
+                    oneBean.setP_image("imagestest/defaultScreen.jpg");
                 }
             }
             return mpBean;
@@ -164,12 +203,12 @@ public class MainPostServlet {
     //測試按讚紀錄 之後改成帳號串起來算陣列數量
     @PutMapping("/Likes")
     public ModelAndView Likes(MainPostBean mpBean) {
-        ModelAndView mav = new ModelAndView("post/PostDetails");
+        ModelAndView mav = new ModelAndView(postDetails);
         MainPostBean queryOne = mainPostService.selectById(mpBean.getMainPostNo());
+        if(queryOne.getP_image().equals("")) {
+            queryOne.setP_image(null);
+        }
         
-        
-        //會員帳號
-        String test = "6666";
         
         //改成會員帳號抓取
         String[] oldlikes =queryOne.getLikeNumber().split(",");
@@ -177,14 +216,14 @@ public class MainPostServlet {
         int i = 0; //找到一樣的就+1
         for(String like : oldlikes) {
             System.out.println(like);
-            if(like.equals(test)) {          //test要改成會員的帳號
+            if(like.equals(memberAccount)) {  
                 i++;
                 break;
             }
         }
         
         if(i == 0) {
-          String newLike = queryOne.getLikeNumber() + test +",";    //test要改成會員的帳號
+          String newLike = queryOne.getLikeNumber() + memberAccount +",";    //test要改成會員的帳號
           queryOne.setLikeNumber(newLike);
           mainPostService.update(queryOne);
         }
