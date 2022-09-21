@@ -10,7 +10,7 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>優惠券修改</title>
+<title>活動修改</title>
 <link rel="stylesheet" href="/css/voucherStyle.css">
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
@@ -25,46 +25,46 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 
 <div class="happy">
 	<form:form action="updateactivity.controller" method="post" enctype="multipart/form-data" modelAttribute="activity">
-		<form:input type="hidden" path="activityId" value="${update_activty.activityId}"/>
+		<form:input type="hidden" path="activityId" id="testgetID" value="${update_activity.activityId}"/>
 		<form:input type="hidden" path="a_account" value="暫空,修改"/>
 		<input type="hidden" name="dataId" value="123"/>
-		<h2>修改優惠券</h2>
+		<h2>修改活動</h2>
 
 		<fieldset>
 			<legend>活動資料</legend>
 			
 			<div class="st1">
 				<label class="t1">活動名稱:</label> <label>
-					<form:input type="text" id="activityTitle" path="activityTitle" value="${update_activity.activityTitle}"/>
+					<form:input type="text" id="activityTitle" path="activityTitle" value="${update_activity.activityTitle}" required="required"/>
 				</label>
 			</div>
 			
 			<div class="st1">
 				<label class="t1">活動類型:</label> <label>
-					<form:input type="text" id="typeContent" path="typeContent" value="${update_activity.typeContent}"/>
+					<form:input type="text" id="typeContent" path="typeContent" value="${update_activity.typeContent}" required="required"/>
 				</label>
 			</div>
 			
 			<div class="st1">
 				<label class="t1">主辦方:</label> <label>
-					<form:input type="text" id="holder" path="holder" value="${update_activity.holder}"/>
+					<form:input type="text" id="holder" path="holder" value="${update_activity.holder}" required="required"/>
 				</label>
 			</div>
 			
 			<div class="st1">
 				<label class="t1">活動地點:</label> <label>
-					<form:input type="text" id="location" path="location" value="${update_activity.location}"/>
+					<form:input type="text" id="location" path="location" value="${update_activity.location}" required="required"/>
 				</label>
 			</div>
 
 			<div class="st1">
 				<label class="t1">活動開始日:</label> 
-				<form:input type="date" id="startTime" path="startTime" value="${update_activity.startTime}"/>
+				<form:input type="date" id="startTime" path="startTime" value="${update_activity.startTime}" required="required"/>
 			</div>
 			
 			<div class="st1">
 				<label class="t1">活動結束日:</label> 
-				<form:input type="date" id="endTime" path="endTime" value="${update_activity.endTime}"/>
+				<form:input type="date" id="endTime" path="endTime" value="${update_activity.endTime}" required="required"/>
 			</div>
 		</fieldset>
 
@@ -77,6 +77,7 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 			
 			<script>
 				document.getElementById("t1").value = '${update_activity.activityContent}';
+				console.log('${update_activity.activityContent}');
 			</script>
 			
 			<div class="st1">
@@ -94,13 +95,15 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 		</fieldset>
 
 		<div class="sub">
-			<input type="submit" class="upd" name="update" value="送出">
+			<input type="submit" class="upd" value="送出">
+			<input type="hidden" name="update" value="送出">
 			<a href="activitymain.controller"><input type="button" value="返回"></a>
 		</div>
 	</form:form>
 	</div>
 	<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
 		<script>
+		
     		$('#ff').on('change', function(e){      
       		const file = this.files[0];
       		const objectURL = URL.createObjectURL(file);
@@ -108,8 +111,25 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
       		$('#img1').attr('src', objectURL);
     		});
     		
-    		
-				
+    		$(".upd").on('click', function(event){
+    			event.preventDefault();
+    			let date = new Date();
+    			if(date.toISOString().split('T')[0] >= $('#endTime').val()){
+    				Swal.fire({
+    					title:'日期錯誤',
+    					text:'結束日期已過請重新選擇',
+    					icon:'warning'
+    				})
+    		   		return;
+    		    }
+    			if($('#startTime').val() >= $('#endTime').val()){
+    				Swal.fire({
+    					title:'日期錯誤',
+    					text:'開始日期大於結束日期',
+    					icon:'warning'
+    				})
+    		   		return;
+    		    }
 				Swal.fire({
 					  title:'確定要修改此筆資料?',
 					  text:'活動:'+$('#activityTitle').val(),
@@ -121,12 +141,12 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 					  confirmButtonText:'確定'
 					}).then((result) => {
 					  if (result.isConfirmed) {
-						  Swal.fire(
-							      '修改成功!',
-							      'success'
-							    ).then((result) => {
+						  Swal.fire({
+							  title:'修改成功!',
+							  icon:'success'
+						  }).then((result) => {
 					   				 $(this).parent().parent().submit();
-							    });
+							});
 					  }
 					});
 			});

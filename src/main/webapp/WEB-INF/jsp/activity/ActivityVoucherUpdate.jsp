@@ -30,14 +30,15 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 			<legend>優惠券資料</legend>
 			
 			<div class="st1">
-				<label for="voucherTitle" class="t1">優惠券標題:</label> <label>
-					<form:input type="text" id="voucherTitle" path="voucherTitle" placeholder="voucherTitle" value="${update_voucher.voucherTitle}"/>＊請勿超過15個字
+				<label for="voucherTitle" class="t1">優惠券標題:</label>
+				<label>
+					<form:input type="text" id="voucherTitle" path="voucherTitle" placeholder="voucherTitle" value="${update_voucher.voucherTitle}" required="required"/>＊請勿超過15個字
 				</label>
 			</div>
 
 			<div class="st1">
 				<label for="date1" class="t1">到期日:</label> 
-				<form:input type="date" id="time" path="expiryTime" value="${update_voucher.expiryTime}"/>
+				<form:input type="date" id="time" path="expiryTime" value="${update_voucher.expiryTime}" required="required"/>
 			</div>
 		</fieldset>
 
@@ -50,6 +51,7 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 			
 			<script>
 				document.getElementById("t1").value = '${update_voucher.voucherContent}';
+				console.log('${update_voucher.voucherContent}');
 			</script>
 			
 			<div class="st1">
@@ -67,7 +69,7 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 		</fieldset>
 
 		<div class="sub">
-			<input type="submit" class="upd"  name="update" value="送出">
+			<input type="submit" class="upd" value="送出">
 			<input type="hidden" name="update" value="送出">
 			<a href="vouchermain.controller"><input type="button" value="返回"></a>
 		</div>
@@ -86,14 +88,13 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 				event.preventDefault();
 				let date = new Date();
 				if(date.toISOString().split('T')[0] >= $('#time').val()){
-					Swal.fire(
-						'日期錯誤',
-						'選擇日期已過請重新選擇',
-						'warning'
-					)
+					Swal.fire({
+						title:'日期錯誤',
+						text:'選擇日期已過請重新選擇',
+						icon:'warning'
+					})
 			   		return;
 			    }
-				
 				Swal.fire({
 					  title:'確定要修改此筆資料?',
 					  text:'優惠券:'+$('#voucherTitle').val(),
@@ -105,12 +106,12 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 					  cancelButtonText: '取消'
 					}).then((result) => {
 					  if (result.isConfirmed) {
-						  Swal.fire(
-							      '修改成功!',
-							      'success'
-							    ).then((result) => {
-					   				 $(this).parent().parent().submit();
-							    });
+						  Swal.fire({
+							  title:'修改成功!',
+							  icon:'success'
+						  }).then((result) => {
+					   			$(this).parent().parent().submit();
+							});
 					  }
 					});
 			});

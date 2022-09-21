@@ -142,16 +142,16 @@ public class ActivityFunctionController extends HttpServlet {
 	public String activityUpdate(@ModelAttribute(name = "activity") ActivityActivity activity, String update, int dataId, String oldimg, MultipartFile photo, Model m )
 			throws IllegalStateException, IOException {
 		if (update.equals("修改")) {
-			
-			System.out.println("舊資料ID:"+dataId);
-			
 			ActivityActivity aaUpdate = aService.selectById(dataId);
 			
-			System.out.println("舊資料內容:"+aaUpdate.getActivityTitle());
+			System.out.println("舊物件活動內容:"+aaUpdate.getActivityContent());
 			
 			m.addAttribute("update_activity", aaUpdate);
 			return "activity/ActivityActivityUpdate";
 		} else {
+			
+			System.out.println("更新資料ID : " + activity.getActivityId());
+			
 			activity.setReviseTime(aService.getTime());
 			if (photo.isEmpty()) {
 				activity.setPhotoData(oldimg);
