@@ -19,6 +19,7 @@ public class ActivityActivity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int activityId;
 	
+	@Column(name = "a_account")
 	private String a_account;
 	
 	@Column(name = "typecontent")
@@ -44,73 +45,96 @@ public class ActivityActivity {
 	
 	@Column(name = "photodata")
 	private String photoData;
-	
+
 	public int getActivityId() {
 		return activityId;
 	}
+
 	public void setActivityId(int activityId) {
 		this.activityId = activityId;
 	}
-	public String getA_acount() {
+
+	public String getA_account() {
 		return a_account;
 	}
-	public void setA_acount(String a_acount) {
-		this.a_account = a_acount;
+
+	public void setA_account(String a_account) {
+		this.a_account = a_account;
 	}
+
 	public String getTypeContent() {
 		return typeContent;
 	}
+
 	public void setTypeContent(String typeContent) {
 		this.typeContent = typeContent;
 	}
-	public String getActivityTtile() {
+
+	public String getActivityTitle() {
 		return activityTitle;
 	}
-	public void setActivityTtile(String activityTitle) {
+
+	public void setActivityTitle(String activityTitle) {
 		this.activityTitle = activityTitle;
 	}
+
 	public String getActivityContent() {
 		return activityContent;
 	}
+
 	public void setActivityContent(String activityContent) {
 		this.activityContent = activityContent;
 	}
+
 	public String getStartTime() {
 		return startTime;
 	}
+
 	public void setStartTime(String startTime) {
 		this.startTime = startTime;
 	}
+
 	public String getEndTime() {
 		return endTime;
 	}
+
 	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
+
 	public String getHolder() {
 		return holder;
 	}
+
 	public void setHolder(String holder) {
 		this.holder = holder;
 	}
+
 	public String getLocation() {
 		return location;
 	}
+
 	public void setLocation(String location) {
 		this.location = location;
 	}
+
 	public String getReviseTime() {
 		return reviseTime;
 	}
+
 	public void setReviseTime(String reviseTime) {
 		this.reviseTime = reviseTime;
 	}
+
 	public String getPhotoData() {
 		return photoData;
 	}
+
 	public void setPhotoData(String photoData) {
 		this.photoData = photoData;
 	}
+	
+	
 	
 	
 }
