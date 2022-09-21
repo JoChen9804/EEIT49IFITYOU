@@ -1,4 +1,4 @@
-package tw.group5.model;
+package tw.group5.activity.model;
 
 import java.io.Serializable;
 

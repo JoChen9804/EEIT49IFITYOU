@@ -1,4 +1,4 @@
-package tw.group5.service;
+package tw.group5.activity.service;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,8 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import tw.group5.model.ActivityActivity;
-import tw.group5.model.ActivityActivityRepository;
+import tw.group5.activity.model.ActivityActivity;
+import tw.group5.activity.model.ActivityActivityRepository;
 
 @Service
 @Transactional
