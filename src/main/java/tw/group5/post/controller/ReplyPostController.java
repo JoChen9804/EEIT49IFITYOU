@@ -60,6 +60,17 @@ public class ReplyPostController {
                 System.out.println(replyImages);
                 rpBean.setR_image(replyImages);
             }
+            
+            if(queryOne.getP_image().equals("")) {
+                queryOne.setP_image(null);
+            }
+            
+            if(  queryOne.getP_image() !=null) {
+                String[] allImages =queryOne.getP_image().split(",");
+                mav.addObject("allImages",allImages);
+            }
+            
+            
             rpService.insert(rpBean);
         return mav;
     }

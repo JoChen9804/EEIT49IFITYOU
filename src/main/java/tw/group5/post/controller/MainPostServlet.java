@@ -20,13 +20,19 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import tw.group5.post.model.MainPostBean;
+import tw.group5.post.model.ReplyPostBean;
 import tw.group5.post.service.MainPostService;
+import tw.group5.post.service.ReplyPostService;
 
 @Controller
 public class MainPostServlet {
     
     @Autowired
     private MainPostService mainPostService;
+    
+    @Autowired
+    private ReplyPostService rpService;
+    
     
     public final String postFrontPage ="post/PostFrontPage";
     public final String postMainPosting ="post/PostMainPosting";
@@ -93,6 +99,7 @@ public class MainPostServlet {
         //測試用路徑串接
         if(!mfs.get(0).isEmpty()) {
         String addPostImages = mainPostService.addPostImages(mfs);
+        System.out.println("有檔案~~~");
         addPost.setP_image(addPostImages);
         }
         
@@ -124,6 +131,20 @@ public class MainPostServlet {
           String[] allImages =queryOne.getP_image().split(",");
           mav.addObject("allImages",allImages);
       }
+      
+      
+      //-----------上面是主貼文------------
+      
+      List<ReplyPostBean> allReply = rpService.allReply(watch);
+      
+      for(ReplyPostBean oneReply : allReply ) {
+          System.out.println(oneReply.getR_image());
+      }
+      
+      
+      
+      
+      
         return mav;
     }
     //刪除 ok
@@ -205,9 +226,9 @@ public class MainPostServlet {
     public ModelAndView Likes(MainPostBean mpBean) {
         ModelAndView mav = new ModelAndView(postDetails);
         MainPostBean queryOne = mainPostService.selectById(mpBean.getMainPostNo());
-        if(queryOne.getP_image().equals("")) {
-            queryOne.setP_image(null);
-        }
+        
+        
+
         
         
         //改成會員帳號抓取
@@ -227,6 +248,11 @@ public class MainPostServlet {
           queryOne.setLikeNumber(newLike);
           mainPostService.update(queryOne);
         }
+        
+        if(queryOne.getP_image().equals("")) {
+            queryOne.setP_image(null);
+        }
+        
         
                 
         mav.addObject("likes",queryOne.getLikeNumber().split(",").length);
