@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="java.util.*,tw.group5.model.*"%>
+	pageEncoding="UTF-8" import="java.util.*,tw.group5.activity.model.*"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 	
 <!DOCTYPE html>

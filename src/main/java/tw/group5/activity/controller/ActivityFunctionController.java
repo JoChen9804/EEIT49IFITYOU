@@ -1,4 +1,4 @@
-package tw.group5.controller;
+package tw.group5.activity.controller;
 
 import java.io.IOException;
 import java.util.List;
@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import tw.group5.model.ActivityActivity;
-import tw.group5.model.ActivityVoucher;
-import tw.group5.service.ActivityActivityService;
-import tw.group5.service.ActivityVoucherService;
+import tw.group5.activity.model.ActivityActivity;
+import tw.group5.activity.model.ActivityVoucher;
+import tw.group5.activity.service.ActivityActivityService;
+import tw.group5.activity.service.ActivityVoucherService;
 
 @Controller
 public class ActivityFunctionController extends HttpServlet {
