@@ -43,13 +43,12 @@ input {
 </head>
 <body>
 	<!-- JQuery  連結-->
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	
 	<!-- DataTable 連結 -->
 	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.2/js/jquery.dataTables.js"></script>
 
 	<!-- sweetalert2   連結-->
-	
 	<script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
 
 	<div id="show"></div>
