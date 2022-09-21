@@ -1,4 +1,9 @@
+<<<<<<< HEAD:src/main/webapp/WEB-INF/jsp/activity/ActivityVoucherAdd.jsp
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="java.util.*,tw.group5.model.*"%>
+=======
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8" import="java.util.*,tw.group5.activity.model.*"%>
+>>>>>>> 50f43d4ea7261ff2cc243f7b8d9e416fd7e25586:src/main/webapp/WEB-INF/jsp/ActivityVoucherAdd.jsp
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 	
 <!DOCTYPE html>
