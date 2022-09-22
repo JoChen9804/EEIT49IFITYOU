@@ -40,6 +40,10 @@ public class ActivityPromotionsService {
 		return pRepository.findByMember(member);
 	}
 	
+	public ActivityPromotions findOnePromotions(AdminMember member, ActivityVoucher voucher) {
+		return pRepository.findByMemberAndVoucher(member, voucher);
+	}
+	
 	public List<ActivityPromotions> finAll() {
 		return pRepository.findAll();
 	}
