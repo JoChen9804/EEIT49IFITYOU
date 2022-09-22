@@ -42,6 +42,9 @@ input {
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
+
+	<%@ include file="../admin/AdminstyleHead.jsp" %>
+
 	<!-- JQuery  連結-->
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -192,5 +195,8 @@ input {
 		});
 	})
 	</script>
+	
+	<%@ include file="../admin/AdminstyleFoot.jsp"%>
+	
 </body>
 </html>
