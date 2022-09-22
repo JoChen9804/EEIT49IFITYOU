@@ -74,11 +74,17 @@ public class ReplyPostController {
 //                mav.addObject("allImages",allImages);
 //            }
             
-            if("".equals(queryOne.getP_image())) {
+            if(!"".equals(queryOne.getP_image()) && queryOne.getP_image() != null) {
                 String[] allImages =queryOne.getP_image().split(",");
                 mav.addObject("allImages",allImages);
             }
             
+            if(!"".equals(queryOne.getLikeNumber()) &&queryOne.getLikeNumber() !=null) {
+                String[] oldlikes =queryOne.getLikeNumber().split(",");
+                mav.addObject("likes",oldlikes.length);
+            }else {
+                mav.addObject("likes",0);
+            }
             
             
             

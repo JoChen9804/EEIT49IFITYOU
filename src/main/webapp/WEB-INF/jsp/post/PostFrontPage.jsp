@@ -5,7 +5,7 @@
 <html>
    <HEAD>
       <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8"/>
-      <link rel="stylesheet" href="WEB-INF/postfolder/styles/Topic.css">
+      
       <link rel="stylesheet" href="styles/Topic.css">
       <script type="text/javascript" src="postfolder/js/jquery-3.6.0.js"></script>
       <TITLE>貼文首頁</TITLE>
@@ -21,6 +21,15 @@ td,
 th {
     border: 1px solid gray;
    }
+   fieldset {
+    width: 700px;
+    border: 1px solid #acd6ff;
+    border-radius: 15px;
+    opacity: 0.85;
+    margin: auto;
+    background: #f7f4dd;
+}   
+   
     </style>
       
    </HEAD>

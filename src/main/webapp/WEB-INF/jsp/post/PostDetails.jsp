@@ -5,6 +5,7 @@
 
 <head>
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8" />
+<link rel="stylesheet" href="styles/Topic.css">
 <TITLE>${queryOne.title}</TITLE>
 <link rel="stylesheet" href="">
 
@@ -14,6 +15,7 @@
 	table-layout: fixed;
 	margin-left:auto; 
     margin-right:auto;
+    background-color: #f7f4dd;
 }
 
 .column1 {
@@ -44,12 +46,16 @@
 }
 
 .content {
-	border: 1px solid;
-	width: 800px;
+	/* border: 1px solid;*/
+	/* width: 800px;*/
 	/* height: 400px; */
 	background-color: #f7f4dd;
 	/* margin: auto; */
 	word-wrap: break-word;
+}
+.img {
+width:150px ;
+height:150px;
 }
 </style>
 </head>
@@ -67,11 +73,13 @@
 			</tr>
 			<tr>
 				<td class="column3">
-				<img width='150' height='150' src="imagestest/test.gif"></td>
+				<img class="img" src="imagestest/test.gif"></td>
 				<td>
 					<div class="content">
+						
 						<P>發布時間:${queryOne.addtime}</P>
-						<p>${queryOne.content}</p>
+						<p class="content">${queryOne.content}</p>
+
 
 						<c:forEach var="image" items="${allImages}">
 							<img width='300' height='200' src="${image}">
@@ -122,7 +130,7 @@
 			<input type="hidden" name="mainPostNo" value="${queryOne.mainPostNo}">
 			    <tr>
                   <td class="column3">
-                <img width='150' height='150' src="imagestest/test.gif"></td>
+                <img class="img" src="imagestest/test.gif"></td>
                 <td><div class="content">
                 
                
@@ -156,7 +164,7 @@
 
 		</table>
 		<form name="updateForm" action="MainPost.return" method="GET">
-			<input type="submit" name="returns" value="返回首頁">
+			<div class="sub"><input type="submit" name="returns" value="返回首頁" margin="auto"></div>
 		</form>
 </body>
 

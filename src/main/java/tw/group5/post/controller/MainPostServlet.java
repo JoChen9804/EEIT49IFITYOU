@@ -62,7 +62,7 @@ public class MainPostServlet {
         }else if(mpBean.getTitle() !=null){
             System.out.println("所有貼文");
             List<MainPostBean> query = firstImagePath(mainPostService.allPosts(mpBean.getTitle()));
-            if(query == null) {
+            if(query.isEmpty()) {
                 mav.addObject("error","查無資料");
             }
             mav.addObject("query",query);
@@ -81,7 +81,7 @@ public class MainPostServlet {
     }
 
     //跳轉到新增畫面
-    @PostMapping("MainPosting.add")
+    @PostMapping("/MainPosting.add")
     public ModelAndView postPage(String addpost) {
         return new ModelAndView(postMainPosting);
     }
@@ -120,7 +120,7 @@ public class MainPostServlet {
         
         mav.addObject("queryOne",queryOne);
         
-        if(!queryOne.getLikeNumber().equals("")) {
+        if(!"".equals(queryOne.getLikeNumber()) &&queryOne.getLikeNumber() !=null) {
             String[] oldlikes =queryOne.getLikeNumber().split(",");
             mav.addObject("likes",oldlikes.length);
         }else {
@@ -157,7 +157,7 @@ public class MainPostServlet {
     @DeleteMapping("/MainPostingServlet")
     public String deleteDainPost(Integer deletepost) {
         mainPostService.deleteById(deletepost);
-        return "redirect:/MainPost.all";
+        return "redirect:/group5/MainPost.all";
     }
     
     //跳到修改頁面ok
@@ -166,7 +166,7 @@ public class MainPostServlet {
         ModelAndView mav = new ModelAndView(postChangePost);
         MainPostBean queryContent = mainPostService.selectById(updatepost);
         
-        if(!queryContent.getP_image().equals("")) {
+        if(!"".equals(queryContent.getP_image()) && queryContent.getP_image() !=null) {
             String[] allImages =queryContent.getP_image().split(",");
             mav.addObject("updatImages",allImages);
         }else {
@@ -268,7 +268,7 @@ public class MainPostServlet {
         mav.addObject("likes",queryOne.getLikeNumber().split(",").length);
         
         mav.addObject("queryOne",queryOne);
-        if(  queryOne.getP_image() !=null) {
+        if(! "".equals(queryOne.getP_image()) && queryOne.getP_image() !=null) {
             String[] allImages =queryOne.getP_image().split(",");
             mav.addObject("allImages",allImages);
         }

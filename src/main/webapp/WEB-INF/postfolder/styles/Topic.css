@@ -29,7 +29,7 @@ fieldset {
 	border-radius: 15px;
 	opacity: 0.85;
 	margin: auto;
-	background: rgb(231, 240, 184);
+	background: #f7f4dd;
 }
 
 H1 {
@@ -47,20 +47,6 @@ ul {
 	margin: auto;
 }
 
-video {
-	position: fixed;
-	right: 0px;
-	bottom: 0px;
-	min-width: 100%;
-	min-height: 100%;
-	height: auto;
-	width: auto;
-	/*加濾鏡*/
-	/*filter: blur(15px); //背景模糊設定 */
-	/*-webkit-filter: grayscale(100%);*/
-	/*filter:grayscale(100%); //背景灰度設定*/
-	z-index: -11
-}
 
 source {
 	min-width: 100%;

@@ -14,7 +14,7 @@ fieldset {
     border-radius: 15px;
     opacity:0.85;
     margin: auto;
-    background:rgb(231, 240, 184);
+    background: #f7f4dd;
     } 
     
     </style>
@@ -74,7 +74,8 @@ fieldset {
    
    
     <form name="updateForm" action="MainPost.return" method="GET">
-       <input type="submit" name="returns" value="返回首頁">
+       <div class="sub"> 
+       <input type="submit" name="returns" value="返回首頁"></div>
     </form>
    
     

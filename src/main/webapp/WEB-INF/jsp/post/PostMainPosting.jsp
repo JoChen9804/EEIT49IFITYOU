@@ -17,15 +17,15 @@
             margin: 10px;
         } 
         
-    fieldset {
 
+       fieldset {
     width: 700px;
     border: 1px solid #acd6ff;
     border-radius: 15px;
-    opacity:0.85;
+    opacity: 0.85;
     margin: auto;
-    background:rgb(231, 240, 184);
-    }
+    background: #f7f4dd;
+} 
       </style>
    
    </HEAD>
@@ -33,7 +33,7 @@
   <BODY>
    
         <fieldset>
-    <FORM ACTION="${pageContext.request.contextPath}/MainPosting.controller" 
+    <FORM ACTION="${pageContext.request.contextPath}/group5/MainPosting.controller" 
             enctype='multipart/form-data' method="POST"onsubmit="return checkip()">
             
             
@@ -84,9 +84,11 @@
         </div>
      </FORM>
      
-        <form name="updateForm" action="/MainPost.return" method="GET">
-       <!--   <input type="hidden" name="todo" value="return"> --><input
-            type="submit" name="returns" value="返回首頁">
+        <form name="updateForm" action="/group5/MainPost.return" method="GET">
+       <!--   <input type="hidden" name="todo" value="return"> -->
+       <div class="sub"> 
+       <input type="submit" name="returns" value="返回首頁">
+             </div>
     </form>
     </fieldset>
 
