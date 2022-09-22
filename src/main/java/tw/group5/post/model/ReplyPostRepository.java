@@ -19,8 +19,8 @@ public interface ReplyPostRepository extends JpaRepository<ReplyPostBean, Intege
 //    public List<MainPostBean> allPostss(Object titles);
 
     //原生Sql 語法
-  @Query(value = "select * from replyPost where mainPostNo = ?;",nativeQuery = true)
-  public List<ReplyPostBean> allReplys(@Param("mainPostNo") int mainPostNo);
+    @Query(value = "select * from replyPost where mainPostNo = ?;",nativeQuery = true)
+    public List<ReplyPostBean> allReplys(@Param("mainPostNo") int mainPostNo);
     
     
 }

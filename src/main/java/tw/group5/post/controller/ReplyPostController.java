@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -16,6 +17,7 @@ import tw.group5.post.service.MainPostService;
 import tw.group5.post.service.ReplyPostService;
 
 @Controller
+@RequestMapping("/group5")
 public class ReplyPostController {
     
     @Autowired
@@ -53,6 +55,10 @@ public class ReplyPostController {
             
             
             MainPostBean queryOne = mpService.selectById(mpBean.getMainPostNo());
+            if("".equals(queryOne.getP_image())) {
+                queryOne.setP_image(null);
+            }
+            
             mav.addObject("queryOne",queryOne);
         //測試用路徑串接
             if(!mfs.get(0).isEmpty()) {
@@ -61,15 +67,22 @@ public class ReplyPostController {
                 rpBean.setR_image(replyImages);
             }
             
-            if(queryOne.getP_image().equals("")) {
-                queryOne.setP_image(null);
-            }
+   
             
-            if(  queryOne.getP_image() !=null) {
+//            if(  queryOne.getP_image() !=null && !queryOne.getP_image().equals("")) {
+//                String[] allImages =queryOne.getP_image().split(",");
+//                mav.addObject("allImages",allImages);
+//            }
+            
+            if("".equals(queryOne.getP_image())) {
                 String[] allImages =queryOne.getP_image().split(",");
                 mav.addObject("allImages",allImages);
             }
             
+            
+            
+            
+            System.out.println("測試-----"+ "".equals(queryOne.getLikeNumber()));
             
             rpService.insert(rpBean);
         return mav;

@@ -1,6 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" isErrorPage="true"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isErrorPage="true"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
@@ -123,7 +122,7 @@
 			<input type="hidden" name="mainPostNo" value="${queryOne.mainPostNo}">
 			    <tr>
                   <td class="column3">
-                <img width='150' height='150' src="postfolder/images/test.gif"></td>
+                <img width='150' height='150' src="imagestest/test.gif"></td>
                 <td><div class="content">
                 
                

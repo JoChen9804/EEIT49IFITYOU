@@ -81,8 +81,9 @@ th {
             <td>${allmpbs.account}</td>
             <td>${allmpbs.addtime}</td>
             <td>
-                <form name="sendForm" action="MainPost.watch" method="GET">
+                <form name="sendForm" action="MainPost.watch" method="POST">
                     <input type="hidden" name="watch" value="${allmpbs.mainPostNo}">
+                   <!--   <button type="submit" name="watch1" value="${allmpbs.mainPostNo}">1111觀看</button>-->
                     <input type="submit" value="觀看"> 
                 </form>
                 </td>

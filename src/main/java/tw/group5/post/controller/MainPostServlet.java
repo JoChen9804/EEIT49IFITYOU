@@ -25,6 +25,7 @@ import tw.group5.post.service.MainPostService;
 import tw.group5.post.service.ReplyPostService;
 
 @Controller
+@RequestMapping("/group5")
 public class MainPostServlet {
     
     @Autowired
@@ -76,7 +77,7 @@ public class MainPostServlet {
     //返回頁面
     @GetMapping("/MainPost.return")
     public ModelAndView backToThePage(String returns) {
-        return new ModelAndView("redirect:/MainPost.all");
+        return new ModelAndView("redirect:/group5/MainPost.all");
     }
 
     //跳轉到新增畫面
@@ -104,15 +105,16 @@ public class MainPostServlet {
         }
         
         mainPostService.insert(addPost);
-        return "redirect:/MainPost.all";
+        return "redirect:/group5/MainPost.all";
     }
     //觀看ok
-    @GetMapping("/MainPost.watch")
+    @PostMapping("/MainPost.watch")
     public ModelAndView watchPost(Integer watch) {
+        
         MainPostBean queryOne = mainPostService.selectById(watch);
         ModelAndView mav = new ModelAndView(postDetails);
         
-        if(queryOne.getP_image().equals("")) {
+        if("".equals(queryOne.getP_image())) {
             queryOne.setP_image(null);
         }
         
@@ -133,13 +135,17 @@ public class MainPostServlet {
       }
       
       
+      
+      
+      
+      
       //-----------上面是主貼文------------
       
-      List<ReplyPostBean> allReply = rpService.allReply(watch);
-      
-      for(ReplyPostBean oneReply : allReply ) {
-          System.out.println(oneReply.getR_image());
-      }
+//      List<ReplyPostBean> allReply = rpService.allReply(watch);
+//      
+//      for(ReplyPostBean oneReply : allReply ) {
+//          System.out.println(oneReply.getR_image());
+//      }
       
       
       
@@ -197,7 +203,7 @@ public class MainPostServlet {
         
         MainPostBean queryContent = mainPostService.update(mpBean);
         if(queryContent !=null) {
-            return new ModelAndView("redirect:/MainPost.all");
+            return new ModelAndView("redirect:/group5/MainPost.all");
         }
         return null;
     }
@@ -206,10 +212,10 @@ public class MainPostServlet {
     public List<MainPostBean> firstImagePath(List<MainPostBean> mpBean) {
         if(mpBean != null) {
             for(MainPostBean oneBean : mpBean) {
-                if(!oneBean.getP_image().equals("") && oneBean.getP_image().indexOf(",") !=-1) {
+                if(!"".equals(oneBean.getP_image()) &&oneBean.getP_image()!=null && oneBean.getP_image().indexOf(",") !=-1) {
                     System.out.println("==="+oneBean.getP_image().substring(0,oneBean.getP_image().indexOf(",")));
                     oneBean.setP_image(oneBean.getP_image().substring(0,(oneBean.getP_image().indexOf(",")))); 
-                }else if(oneBean.getP_image().equals("")){
+                }else {
                     oneBean.setP_image("imagestest/defaultScreen.jpg");
                 }
             }
@@ -225,6 +231,10 @@ public class MainPostServlet {
     @PutMapping("/Likes")
     public ModelAndView Likes(MainPostBean mpBean) {
         ModelAndView mav = new ModelAndView(postDetails);
+       
+        //ModelAndView mav = watchPost(mpBean.getMainPostNo());
+        
+        
         MainPostBean queryOne = mainPostService.selectById(mpBean.getMainPostNo());
         
         
@@ -249,7 +259,7 @@ public class MainPostServlet {
           mainPostService.update(queryOne);
         }
         
-        if(queryOne.getP_image().equals("")) {
+        if("".equals(queryOne.getP_image())) {
             queryOne.setP_image(null);
         }
         

@@ -14,11 +14,29 @@ public class WebAppConfig implements WebMvcConfigurer{
 		registry.addResourceHandler("/css/**").addResourceLocations("/WEB-INF/resources/css/");
 		
 		
-		//明企的~~~~
-        registry.addResourceHandler("/styles/**").addResourceLocations("/WEB-INF/postfolder/styles/");
-        registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/postfolder/js/");
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		//貼文的~~~~
+        registry.addResourceHandler("/group5/styles/**").addResourceLocations("/WEB-INF/postfolder/styles/");
+        registry.addResourceHandler("/group5/js/**").addResourceLocations("/WEB-INF/postfolder/js/");
+        registry.addResourceHandler("/group5/imagestest/**").addResourceLocations("/WEB-INF/postfolder/images/");
         registry.addResourceHandler("/images/**").addResourceLocations("file:/D:/posts/");
-        registry.addResourceHandler("/imagestest/**").addResourceLocations("/WEB-INF/postfolder/images/");
+        
+
 	}
 
 }
