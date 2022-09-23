@@ -17,7 +17,7 @@ import tw.group5.post.service.MainPostService;
 import tw.group5.post.service.ReplyPostService;
 
 @Controller
-@RequestMapping("/group5")
+@RequestMapping("/group5/admin")
 public class ReplyPostController {
     
     @Autowired
