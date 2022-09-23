@@ -22,6 +22,7 @@ public class MemberBean {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
+	@Column(name="account")
 	private String account;
 	
 	private String password;
