@@ -51,7 +51,7 @@ public class MainPostServlet {
 
         ModelAndView mav = new ModelAndView(postFrontPage);
 
-        if (mpBean.getMainPostNo() != 0) {
+        if (mpBean.getMainPostNo() != null) {
             List<MainPostBean> query = firstImagePath(mainPostService.query(mpBean.getMainPostNo()));
             if (query == null) {
                 mav.addObject("error", "查無資料");
@@ -64,10 +64,13 @@ public class MainPostServlet {
                 mav.addObject("error", "查無資料");
             }
             mav.addObject("query", query);
-        } else if (mpBean != null) {
+      
+        } else if (mpBean != null ) {
             System.out.println("所有貼文");
+         
             List<MainPostBean> query = firstImagePath(mainPostService.allPosts());
             mav.addObject("query", query);
+
         }
         return mav;
     }

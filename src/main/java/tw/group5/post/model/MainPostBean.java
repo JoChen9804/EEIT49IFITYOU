@@ -22,7 +22,7 @@ public class MainPostBean {
     
     @Id @Column(name = "mainpostno")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int mainPostNo;           // 主貼文編號
+    private Integer mainPostNo;           // 主貼文編號
     
     @Column(name = "posttypename")
     private String postTypeName;        //貼文種類名稱
@@ -80,10 +80,10 @@ public class MainPostBean {
         this.content = content;                 //內容
         this.likeNumber = likeNumber;           //按鑽
     }
-    public int getMainPostNo() {
+    public Integer getMainPostNo() {
         return mainPostNo;
     }
-    public void setMainPostNo(int mainPostNo) {
+    public void setMainPostNo(Integer mainPostNo) {
         this.mainPostNo = mainPostNo;
     }
     public String getPostTypeName() {
