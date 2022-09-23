@@ -43,7 +43,7 @@ public class AuthUserDetailService implements UserDetailsService {
 					authority = "normal,ROLE_ADMIN";
 				}
 				System.out.println("username: " + username + "password" + aBean.getAdminPwd());
-				return new User(aBean.getAdminName(),aBean.getAdminPwd(),  AuthorityUtils.commaSeparatedStringToAuthorityList(authority));
+				return new User(aBean.getAdminName(), aBean.getAdminPwd(),  AuthorityUtils.commaSeparatedStringToAuthorityList(authority));
 			}	
 		}catch(Exception e){
 			e.printStackTrace();

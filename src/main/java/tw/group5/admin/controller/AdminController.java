@@ -38,13 +38,12 @@ public class AdminController {
 //		return "AdminLogin";
 //	}
 	
-	@RequestMapping(path = "/fail", method = RequestMethod.POST)
-	public String adminLoginAction(@RequestParam("uname") String username, @RequestParam("psw") String psw, Model m) {
-		
+	@RequestMapping(path = "/admin/fail", method = RequestMethod.POST)
+	public String adminLoginAction(Model m) {
 		Map<String, String> errorMsgMap = new HashMap<String, String>();
 		m.addAttribute("errorMsgMap", errorMsgMap);
 		errorMsgMap.put("LoginError", "帳號或密碼錯誤，請重新輸入");
-		return "/group5/login";
+		return "admin/AdminLogin";
 	}
 	
 	@RequestMapping("/admin/AdminNew")
@@ -226,8 +225,9 @@ public class AdminController {
 		return "admin/AdminMemberNew";
 		}
 	
-	@PostMapping(path = "/deleteMemberNameAction.controller") //刪除會員(字串Ids)
+	@PostMapping(path = "/admin/deleteMemberNameAction.controller") //刪除會員(字串Ids)
 	private String deleteMemberNameAction(String deleteNames, Model m) {
+		System.out.println("進入刪除");
 		String[] memberList = deleteNames.split(" ");
 		List<Integer> memberListInteger = new ArrayList<Integer>();
 		for(int i=0; i<memberList.length; i++) {
