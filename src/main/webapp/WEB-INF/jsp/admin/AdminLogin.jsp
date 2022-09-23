@@ -167,11 +167,9 @@
                                                 <label class="custom-control-label" for="customCheck">Remember
                                                     Me</label>
                                             </div>
-                                            </div>
-                                            <!--  
+                                            </div>  
 										<br>
-										<p>${errorMsgMap.LoginError}</p>
-										-->
+										<p id="errorMsg">${errorMsgMap.LoginError}</p>
 										<br> <INPUT type="submit" value="login"
 											class="btn btn-primary btn-user btn-block" id="loginbutton"> <br>
 										<br>
@@ -190,6 +188,9 @@
 	</div>
 	<script>
 	var unameValue = $('#uname').val();
+	$('#uname').on('focus', function() {
+		$('#errorMsg').html("");
+	});
 	$('#username').val(unameValue +",on");
 	console.log($('#username').val());
 		$('#cktoggle_id2').on('change', function() {
