@@ -1,0 +1,33 @@
+@charset "UTF-8";
+h2 {
+	text-align: center;
+}
+
+fieldset {
+	width: 550px;
+	border: 1px solid #D1BBFF;
+	border-radius: 15px;
+	margin: auto;
+}
+
+.happy {
+	width: 800px;
+	margin: 30px auto;
+}
+
+.sub {
+	width: 500px;
+	margin: 15px auto 15px auto;
+	text-align: center;
+}
+
+.t1 {
+	width: 100px;
+	float: left;
+	text-align: right;
+	margin-right: 3px;
+}
+
+.st1 {
+	margin-bottom: 5px;
+}
