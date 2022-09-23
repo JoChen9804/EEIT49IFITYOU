@@ -26,6 +26,7 @@ public class WebAppConfig implements WebMvcConfigurer{
 		//貼文的~~~~
         registry.addResourceHandler("/images/**").addResourceLocations("file:/C:/images/posts/");
         registry.addResourceHandler("/group5/admin/imagestest/**").addResourceLocations("/WEB-INF/resources/postfolder/images/");
+        registry.addResourceHandler("/group5/admin/styles/**").addResourceLocations("/WEB-INF/resources/postfolder/styles/");
         
 		registry.addResourceHandler("/upload/**").addResourceLocations("file:C:/images/admin/");
 		registry.addResourceHandler("/group5/**").addResourceLocations("/WEB-INF/resources/");
