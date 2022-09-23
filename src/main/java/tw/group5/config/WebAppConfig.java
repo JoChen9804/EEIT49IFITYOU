@@ -15,6 +15,8 @@ public class WebAppConfig implements WebMvcConfigurer{
 		registry.addViewController("/group5/frontpage").setViewName("admin/FrontStageMain");
 		registry.addViewController("/group5/admin/logout").setViewName("admin/FrontStageMAIN");
 //		registry.addViewController("/admin/page").setViewName("logout");
+		
+		registry.addViewController("/group5/admin/ActivityQueryAll").setViewName("activity/ActivityQueryAll");
 	}
 
 	@Override

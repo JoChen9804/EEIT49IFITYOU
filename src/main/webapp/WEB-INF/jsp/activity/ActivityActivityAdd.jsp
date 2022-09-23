@@ -17,6 +17,9 @@ response.setCharacterEncoding("UTF-8");
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
+
+	<%@ include file="../admin/AdminstyleHead.jsp" %>
+
 	<form:form action="addactivity.controller" method="post" modelAttribute="activity" enctype="multipart/form-data">
 
 		<form:input type="hidden" path="a_account" value="暫空"/>
@@ -119,5 +122,8 @@ response.setCharacterEncoding("UTF-8");
 			$(this).parent().parent().submit();
     	});
 	</script>
+	
+	<%@ include file="../admin/AdminstyleFoot.jsp"%>
+	
 </body>
 </html>

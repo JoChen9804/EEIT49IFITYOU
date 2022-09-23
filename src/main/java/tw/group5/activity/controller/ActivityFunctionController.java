@@ -35,7 +35,8 @@ public class ActivityFunctionController extends HttpServlet {
 		List<ActivityVoucher> voucher = vService.findAll();
 		m.addAttribute("voucher_queryAll", voucher);
 		m.addAttribute("page", "voucher");
-		return "activity/ActivityQueryAll";
+//		return "activity/ActivityQueryAll";
+		return "/group5/admin/ActivityQueryAll";
 	}
 
 	@PostMapping("/addvoucher.controller")
