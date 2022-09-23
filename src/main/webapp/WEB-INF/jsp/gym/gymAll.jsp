@@ -13,17 +13,14 @@
 		crossorigin="anonymous"></script>
 		
     <!-- Custom fonts for this template -->
-    <link href="/css/fontawsome-free-all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
-
+    <link rel="stylesheet" type="text/css" href="/group5/css/fontawsome-free-all.min.css">
+    
     <!-- Custom styles for this template -->
-    <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="/group5/css/sb-admin-2.min.css" rel="stylesheet">
 
     <!-- Custom styles for this page -->
-    <link href="/css/dataTables.bootstrap4.min.css" rel="stylesheet">
-	<script src="/js/jquery.min.js"></script>
+    <link href="/group5/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+	<script src="/group5/js/jquery.min.js"></script>
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script>
 		$(function(){
@@ -40,7 +37,7 @@
 				let gymBean={"gymId": gymid, "gymName":gName, "gymAddress": gAddress, "gymOpenHours": gTime}
 				$.ajax({
 					type: "post",
-					url: "/gym/allUpdateAction",
+					url: "/group5/admin/gym/allUpdateAction",
 					dataType: "json",
 					data: JSON.stringify(gymBean),
 					contentType: "application/json",
@@ -86,7 +83,7 @@
 		function editGym(name){
 			$.ajax({
 				type: "post",
-				url: "/gym/allUpdate/"+name,
+				url: "/group5/admin/gym/allUpdate/"+name,
 				dataType: "json",
 				success: function(data){
 					console.log(data);
@@ -106,7 +103,7 @@
 		function deleteGym(deleteName){
 			$.ajax({
 				type: "post",
-				url: "/gym/allDelete/" + deleteName,
+				url: "/group5/admin/gym/allDelete/" + deleteName,
 				success: function(){
 					console.log("deleted!!")
 				}
@@ -116,20 +113,11 @@
 
 </head>
 <body>
-
-	<%@ include file="../admin/AdminstyleHead.jsp" %>
-
+<%@ include file="../admin/AdminstyleHead.jsp" %>
 	<div class="container-fluid">
 
 		<!-- Page Heading -->
-		<h1 class="h3 mb-2 text-gray-800">Gym Tables</h1>
-		<p class="mb-4">
-			DataTables is a third party plugin that is used to generate the demo
-			table below. For more information about DataTables, please visit the
-			<a target="_blank" href="https://datatables.net">official
-				DataTables documentation</a>.
-		</p>
-		
+		<h1 class="h3 mb-2 text-gray-800">Gym Tables</h1>		
 		<!-- DataTales Example -->
 		<div class="card shadow mb-4">
 			<div class="card-header py-3">
@@ -169,8 +157,8 @@
 								<td>${gymlist.gymAddress}</td>
 								<td>${gymlist.gymOpenHours}</td>
 								<td>${gymlist.rating}</td>
-								<td><form action="/gym/gymDetail/${gymlist.gymName}" method="post">
-									<input type="hidden" value="10000" name="memberIdNow">
+								<td><form action="/group5/admin/gym/gymDetail/${gymlist.gymName}" method="post">
+									<input type="hidden" value="${userAdmin.id }" name="memberIdNow">
 									<input type="submit" class="btn btn-outline-success gymDetail" value="詳細資訊">
 								</form></td>
 								<td><button type="button" class="btn btn-outline-secondary edit" 
@@ -266,27 +254,27 @@
 	</div>
 	
 	
-	<%@ include file="../admin/AdminstyleFoot.jsp"%>
 	
 	
 
 	<!-- Bootstrap core JavaScript-->
     
-    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/group5/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="/js/jquery.easing.min.js"></script>
+    <script src="/group5/js/jquery.easing.min.js"></script>
 	
     <!-- Custom scripts for all pages-->
-    <script src="/js/sb-admin-2.min.js"></script>
+    <script src="/group5/js/sb-admin-2.min.js"></script>
 	
     <!-- Page level plugins -->
-    <script src="/js/jquery.dataTables.min.js"></script>
-    <script src="/js/dataTables.bootstrap4.min.js"></script>
-	<script src="/js/chooseAddress.js"></script>
-	<script src="/js/confirmData.js"></script>
+    <script src="/group5/js/jquery.dataTables.min.js"></script>
+    <script src="/group5/js/dataTables.bootstrap4.min.js"></script>
+	<script src="/group5/js/chooseAddress.js"></script>
+	<script src="/group5/js/confirmData.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="/js/datatables-demo.js"></script>
+    <script src="/group5/js/datatables-demo.js"></script>
+<%@ include file="../admin/AdminstyleFoot.jsp" %>	
 </body>
 </html>

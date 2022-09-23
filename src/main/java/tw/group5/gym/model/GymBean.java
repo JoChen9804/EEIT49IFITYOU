@@ -1,6 +1,7 @@
 package tw.group5.gym.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -16,6 +17,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
@@ -48,9 +51,10 @@ public class GymBean implements Serializable{
 	@Column(name = "A_ACCOUNT")
 	private String admin;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "gymInFavorite", cascade = CascadeType.ALL)
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "gym", cascade = CascadeType.ALL)
 	@Transient
-	private Set<GymLog> favoriteGyms = new LinkedHashSet<GymLog>();
+	private Set<GymLog> gymLogs = new HashSet<GymLog>();
 	
 	
 	public GymBean() {
@@ -120,13 +124,13 @@ public class GymBean implements Serializable{
 	}
 
 
-	public Set<GymLog> getFavoriteGyms() {
-		return favoriteGyms;
+	public Set<GymLog> getGymLogs() {
+		return gymLogs;
 	}
 
 
-	public void setFavoriteGyms(Set<GymLog> favoriteGyms) {
-		this.favoriteGyms = favoriteGyms;
+	public void setGymLogs(Set<GymLog> favoriteGyms) {
+		this.gymLogs = favoriteGyms;
 	}
 
 

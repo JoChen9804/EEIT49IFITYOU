@@ -15,14 +15,14 @@
 <title>I FIT YOU 後臺管理系統</title>
 
 <!-- Custom fonts for this template-->
-<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
+<link href="/group5/vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
 	type="text/css">
 <link
 	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
 	rel="stylesheet">
 
 <!-- Custom styles for this template-->
-<link href="css/sb-admin-2.min.css" rel="stylesheet">
+<link href="/group5/css/sb-admin-2.min.css" rel="stylesheet">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 
@@ -108,10 +108,8 @@
 				<div id="collapseArea" class="collapse" aria-labelledby="headingTwo"
 					data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
-						<a class="collapse-item" href="/Subject2_Hibernate/gym.queryMain">查詢地點</a>
-						<a class="collapse-item" href="/Subject2_Hibernate/gym.addMain">新增地點</a>
-						<a class="collapse-item" href="/Subject2_Hibernate/gym.updateMain">修改地點</a>
-						<a class="collapse-item" href="/Subject2_Hibernate/gym.deleteMain">刪除地點</a>
+						<a class="collapse-item" href="/group5/admin/gym/allMain">查詢地點</a>
+						<a class="collapse-item" href="/group5/admin/gym/addMain">新增地點</a>
 					</div>
 				</div>
 			</li>
