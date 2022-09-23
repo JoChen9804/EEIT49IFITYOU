@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServlet;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,11 +21,18 @@ import tw.group5.activity.model.ActivityVoucher;
 import tw.group5.activity.service.ActivityActivityService;
 import tw.group5.activity.service.ActivityPromotionsService;
 import tw.group5.activity.service.ActivityVoucherService;
+import tw.group5.admin.model.MemberBean;
 
 @Controller
 @RequestMapping("/group5")
 public class ActivityFunctionController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	 public String getUsername() {
+	        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+	        System.out.println(username); // user
+	        return username;
+	 }
 	
 	/*
 	 * voucher
@@ -53,6 +61,7 @@ public class ActivityFunctionController extends HttpServlet {
 				voucher.setPhotoData(imgName);
 			}
 			voucher.setReviseTime(vService.getTime());
+			voucher.setA_account(getUsername());
 			if (vService.insert(voucher)!=null) {
 				m.addAttribute("add_voucher", vService.selectById(voucher.getVoucherId()));
 				m.addAttribute("page", "voucher");
@@ -74,6 +83,7 @@ public class ActivityFunctionController extends HttpServlet {
 			return "activity/ActivityVoucherUpdate";
 		} else {
 			voucher.setReviseTime(vService.getTime());
+			voucher.setA_account(getUsername());
 			if (photo.isEmpty()) {
 				voucher.setPhotoData(oldimg);
 			} else {
@@ -132,6 +142,7 @@ public class ActivityFunctionController extends HttpServlet {
 				activity.setPhotoData(imgName);
 			}
 			activity.setReviseTime(aService.getTime());
+			activity.setA_account(getUsername());
 			if (aService.insert(activity)!=null) {
 				m.addAttribute("add_activity", aService.selectById(activity.getActivityId()));
 				m.addAttribute("page", "activity");
@@ -156,6 +167,7 @@ public class ActivityFunctionController extends HttpServlet {
 			System.out.println("更新資料ID : " + activity.getActivityId());
 			
 			activity.setReviseTime(aService.getTime());
+			activity.setA_account(getUsername());
 			if (photo.isEmpty()) {
 				activity.setPhotoData(oldimg);
 			} else {
