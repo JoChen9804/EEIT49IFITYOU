@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.springframework.stereotype.Component;
 
@@ -42,6 +43,13 @@ public class ReplyPostBean {
     @JoinColumn(name = "mainpostno")
     private MainPostBean mainPostBean;  
     
+    @Transient
+    private String [] r_imagess;
+    
+    @Transient
+    private int replyLikeNumbers;
+    
+    
     public ReplyPostBean() {
     }
 
@@ -56,6 +64,14 @@ public class ReplyPostBean {
         this.replyLikeNumber = replyLikeNumber;
         this.r_image = r_image;
         this.mainPostBean = mainPostBean;
+    }
+
+    public int getReplyLikeNumbers() {
+        return replyLikeNumbers;
+    }
+
+    public void setReplyLikeNumbers(int replyLikeNumbers) {
+        this.replyLikeNumbers = replyLikeNumbers;
     }
 
     public int getReplyNo() {
@@ -109,6 +125,14 @@ public class ReplyPostBean {
 
     public void setR_image(String r_image) {
         this.r_image = r_image;
+    }
+
+    public String[] getR_imagess() {
+        return r_imagess;
+    }
+
+    public void setR_imagess(String[] r_imagess) {
+        this.r_imagess = r_imagess;
     }
     
 }

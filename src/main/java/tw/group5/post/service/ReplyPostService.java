@@ -1,6 +1,7 @@
 package tw.group5.post.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,9 +30,21 @@ public class ReplyPostService {
         rpResp.deleteById(id);
     }
     
+    public ReplyPostBean selectById(Integer id) {
+        Optional<ReplyPostBean> optional = rpResp.findById(id);
+        if (optional.isPresent()) {
+            return optional.get();
+        }
+        return null;
+    }
+    
+    
+    
+    
     public List<ReplyPostBean> allReply(int mainPostNo) {
         return rpResp.allReplys(mainPostNo);
     }
+    
     
     
     

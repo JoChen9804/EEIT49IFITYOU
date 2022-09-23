@@ -100,25 +100,30 @@ height:150px;
 
 
 
-        <c:forEach var="測試回復" items="">
+        <c:forEach var="onereply" items="${allReply}">
 			<tr>
-				<td class="column1">帳號:34654654</td>
-				<td class="column2">發布時間:2020/1010</td>
+				<td class="column1">帳號:${onereply.replyAccount}</td>
+				<td class="column2">回復時間:${onereply.replyTime}</td>
 			</tr>
 			<tr>
-				<td class="column3"><img width='150' height='150'
-					src=""></td>
+				<td class="column3"><img class="img" src="imagestest/test.gif"></td>
 				<td>
 					<div class="content">
-
-						<p>內容</p>
-
-						<c:forEach var="image" items="回復待修改">
-							<img width='300' height='200' src="回復待修改">
-						</c:forEach>
-
-						<p><button type="submit" name="回復待修改" value="${queryOne.likeNumber}">讚</button>
-						</p>
+					<p>${onereply.replyContent}</p>
+					<c:forEach var="onewReplyImage" items="${onereply.r_imagess}">
+					   <img width='300' height='200' src="${onewReplyImage}">
+                       </c:forEach>
+						
+						  <form action=ReplyLikes method="post">
+						   <input type="hidden" name="_method" value="PUT"> 
+						   <input type="hidden" id="mainPostNo" name="mainPostNo" value="${queryOne.mainPostNo}">
+                            <input type="hidden"  name="replyNo" value="${onereply.replyNo}">
+                            <p><button type="submit" name="replylikenumber" value="${onereply.replyLikeNumber}">讚${onereply.replyLikeNumber}</button>
+                            </p>
+                        </form>
+						
+						
+						
 					</div>
 				</td>
 			</tr>

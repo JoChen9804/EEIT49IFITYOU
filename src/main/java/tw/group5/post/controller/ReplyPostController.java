@@ -50,7 +50,6 @@ public class ReplyPostController {
             rpBean.setReplyAccount(memberAccount);
             rpBean.setR_image("");
             
-            
             rpBean.setMainPostBean(mpBean);
             
             
@@ -67,13 +66,6 @@ public class ReplyPostController {
                 rpBean.setR_image(replyImages);
             }
             
-   
-            
-//            if(  queryOne.getP_image() !=null && !queryOne.getP_image().equals("")) {
-//                String[] allImages =queryOne.getP_image().split(",");
-//                mav.addObject("allImages",allImages);
-//            }
-            
             if(!"".equals(queryOne.getP_image()) && queryOne.getP_image() != null) {
                 String[] allImages =queryOne.getP_image().split(",");
                 mav.addObject("allImages",allImages);
@@ -86,11 +78,44 @@ public class ReplyPostController {
                 mav.addObject("likes",0);
             }
             
-            
-            
-            System.out.println("測試-----"+ "".equals(queryOne.getLikeNumber()));
-            
+
             rpService.insert(rpBean);
+            
+            List<ReplyPostBean> allReply = rpService.allReply(mpBean.getMainPostNo());
+            
+            if(!allReply.isEmpty() && allReply !=null) {
+                        
+                for(ReplyPostBean oneReply :allReply ) {
+
+                    if(!"".equals(oneReply.getR_image()) &&  oneReply.getR_image() !=null) {
+                        String[] allReplyImages =oneReply.getR_image().split(",");
+                       
+                        oneReply.setR_imagess(allReplyImages);
+                    } 
+                        
+
+                    
+                    
+                    if(!"".equals(oneReply.getReplyLikeNumber()) &&queryOne.getLikeNumber() !=null) {
+                        String[] oldlikesReply =oneReply.getReplyLikeNumber().split(",");
+                        oneReply.setReplyLikeNumber(String.valueOf(oldlikesReply.length));
+                    
+                    }else {
+                        oneReply.setReplyLikeNumber("0");
+                    }
+                
+                   
+                } 
+                mav.addObject("allReply",allReply);
+            }
+            
+            
+            
+            
+            
+            
+            
+            
         return mav;
     }
     

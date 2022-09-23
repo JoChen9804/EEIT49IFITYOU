@@ -54,9 +54,9 @@
         </div> 
        
         <div class="st1">
-            <label for="data1" class="t1">帳號:</label>
-            <input type="TEXT" id=data1 name="account" 
-            required oninvalid="setCustomValidity('請輸入帳號')" oninput="setCustomValidity('')"><BR>
+            <label for="data1" class="t1">帳號:</label>${memberAccount}
+          
+       
         </div>
         
         <div class="st1">
