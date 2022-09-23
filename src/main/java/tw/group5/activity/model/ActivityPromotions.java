@@ -36,5 +36,51 @@ public class ActivityPromotions implements Serializable {
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "voucherid")
 	private ActivityVoucher voucher; 
+	
+	@Column(name = "a_account")
+	private String a_account;
+	
+	@Column(name = "revisetime")
+	private String reviseTime;
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public MemberBean getMember() {
+		return member;
+	}
+
+	public void setMember(MemberBean member) {
+		this.member = member;
+	}
+
+	public ActivityVoucher getVoucher() {
+		return voucher;
+	}
+
+	public void setVoucher(ActivityVoucher voucher) {
+		this.voucher = voucher;
+	}
+
+	public String getA_account() {
+		return a_account;
+	}
+
+	public void setA_account(String a_account) {
+		this.a_account = a_account;
+	}
+
+	public String getReviseTime() {
+		return reviseTime;
+	}
+
+	public void setReviseTime(String reviseTime) {
+		this.reviseTime = reviseTime;
+	}
+	
 }

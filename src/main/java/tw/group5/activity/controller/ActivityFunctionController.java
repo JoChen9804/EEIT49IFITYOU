@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import tw.group5.activity.model.ActivityActivity;
+import tw.group5.activity.model.ActivityPromotions;
 import tw.group5.activity.model.ActivityVoucher;
 import tw.group5.activity.service.ActivityActivityService;
+import tw.group5.activity.service.ActivityPromotionsService;
 import tw.group5.activity.service.ActivityVoucherService;
 
 @Controller
@@ -35,7 +37,6 @@ public class ActivityFunctionController extends HttpServlet {
 		List<ActivityVoucher> voucher = vService.findAll();
 		m.addAttribute("voucher_queryAll", voucher);
 		m.addAttribute("page", "voucher");
-//		return "activity/ActivityQueryAll";
 		return "activity/ActivityQueryAll";
 	}
 
@@ -186,5 +187,20 @@ public class ActivityFunctionController extends HttpServlet {
 		return "activity/ActivityConfirm";
 	}
 	
-
+	/*
+	 * Promotions
+	 */
+	@Autowired
+	private ActivityPromotionsService promotionsService;
+	
+	@GetMapping("/admin/promotionsmain.controller")
+	public String processPromotionsMainAction(Model m) {
+		System.out.println("進入promotions總攬");
+		List<ActivityPromotions> promotions = promotionsService.findAll();
+		m.addAttribute("promotions_queryAll", promotions);
+		m.addAttribute("page", "promotions");
+		return "activity/ActivityQueryAll";
+	}
+	
+	
 }

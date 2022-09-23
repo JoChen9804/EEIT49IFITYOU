@@ -1,5 +1,8 @@
 package tw.group5.activity.service;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -19,6 +22,16 @@ public class ActivityPromotionsService {
 
 	@Autowired
 	private ActivityPromotionsRepository pRepository;
+	
+	/*
+	 * 時間處理
+	 * 回傳sql date格式字串
+	 */
+	public String getTime() {
+		Date date = new Date(System.currentTimeMillis());
+		Format format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		return format.format(date);
+	}
 	
 	public ActivityPromotions insert(ActivityPromotions promotions) {
 		return pRepository.save(promotions);
@@ -44,7 +57,11 @@ public class ActivityPromotionsService {
 		return pRepository.findByMemberAndVoucher(member, voucher);
 	}
 	
-	public List<ActivityPromotions> finAll() {
+	public ActivityPromotions findByMemberAndVoucher(MemberBean member, ActivityVoucher voucher) {
+		return pRepository.findByMemberAndVoucher(member, voucher);
+	}
+	
+	public List<ActivityPromotions> findAll() {
 		return pRepository.findAll();
 	}
 	
