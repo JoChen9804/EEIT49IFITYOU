@@ -21,7 +21,7 @@ import tw.group5.gym.service.GymLogService;
 import tw.group5.gym.service.GymService;
 
 @Controller
-@RequestMapping("/gym")
+@RequestMapping("/group5/gym")
 public class GymController {
 	
 	@Autowired
