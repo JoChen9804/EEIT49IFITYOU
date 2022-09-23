@@ -37,6 +37,9 @@
 
 
 <body>
+
+    <%@ include file="../admin/AdminstyleHead.jsp" %>
+    
     <div class="limiter">
         <div class="container-table100">
             <div class="wrap-table100">
@@ -281,6 +284,7 @@
     $(function(){
 		$('.delete').click(function(){
 			
+			
 			var deleteCommodityNo = $(this).val();
 			
 			$.ajax({
@@ -288,13 +292,16 @@
 				url:"commodity_administration.delete",
 				data:"deleteCommodityNo=" + deleteCommodityNo,
 				dataType:"text",
+				context: this,
 				success:function(data){
 					$(this).parent().parent().remove();
-					setTimeout(alert(data),3000);
+					alert(data);
 				}		
 			});	
 		});
 	});
+    
+    
          
      </script>
     
@@ -404,7 +411,7 @@
     
      </script>
          
-
+     <%@ include file="../admin/AdminstyleFoot.jsp"%>
 
 </body>
 </html>

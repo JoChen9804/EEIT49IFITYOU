@@ -21,7 +21,7 @@ import tw.group5.commodity.service.CommodityService;
 
 @Controller
 @SessionAttributes(names = {"commodityAdministrationDemonstration"})
-@RequestMapping(path = "/group5")
+@RequestMapping(path = "/group5/admin")
 public class CommodityAdministrationController {
 	
 	@Autowired

@@ -24,7 +24,7 @@ import tw.group5.commodity.service.CommodityService;
 //商品新增
 @Controller
 @SessionAttributes(names = {"commodityAdministrationDemonstration"})
-@RequestMapping(path = "/group5")
+@RequestMapping(path = "/group5/admin")
 public class CommodityOnShelfController {
 
 	private static final String SAVE_DIR = "commodityImages"; //儲存路徑
@@ -65,7 +65,7 @@ public class CommodityOnShelfController {
 			     
 	    MultipartFile[] parts = {image1, image2, image3, image4, image5};
 	    for (int i=0 ; i < parts.length ; i++) {
-			if (parts[i] != null) {
+			if (!parts[i].isEmpty()) {
 				int iName = i+1;
 				String fileName = commodityNo+"_"+"image"+iName+".jpg";
 				File file = new File(savePath + File.separator +fileName);
@@ -81,11 +81,11 @@ public class CommodityOnShelfController {
 		String image5Path = savePath + File.separator + commodityNo+"_"+"image5"+".jpg";
 		
 		Commodity newCommodity = new Commodity(commodityNo, commodityType, commodityName, commodityStyle, commodityPrice, commodityInventory, 
-				                               image1 != null ? image1Path : null, 
-				                               image2 != null ? image2Path : null, 
-				                               image3 != null ? image3Path : null, 
-				                               image4 != null ? image4Path : null, 
-				                               image5 != null ? image5Path : null, 
+				                               image1.isEmpty() ? "null" : image1Path , 
+				                               image2.isEmpty() ? "null" : image2Path , 
+				                               image3.isEmpty() ? "null" : image3Path , 
+				                               image4.isEmpty() ? "null" : image4Path , 
+				                               image5.isEmpty() ? "null" : image5Path , 
 				                               commodityDescription, onShelf);
 		
 		//裝結果訊息的Map
@@ -107,7 +107,6 @@ public class CommodityOnShelfController {
 		m.addAttribute("commodityAdministrationDemonstration", commodityAdministrationDemonstration);
 		
 		return "redirect:commodity_administration";
-		//commodity/commodity_administration
 	}
 	
 }
