@@ -86,13 +86,13 @@
 				<div id="collapseActivities" class="collapse"
 					aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
-						<form class="collapse-item" ACTION="./group5/admin/activitymain.controller"
+						<form class="collapse-item" ACTION="/group5/admin/activitymain.controller"
 							method="get">
 							<input type="hidden" name="selec_page" value="activity">
 							<INPUT type="submit" name="/group5/admin/activitymain.controller" value="活動資訊"
 								style="border: none; background-color:transparent">
 						</form>
-						<form class="collapse-item" ACTION="./group5/admin/vouchermain.controller"
+						<form class="collapse-item" ACTION="/group5/admin/vouchermain.controller"
 							method="get">
 							<INPUT type="submit" name="/group5/admin/vouchermain.controller" value="優惠券管"
 								style="border: none; background-color:transparent">

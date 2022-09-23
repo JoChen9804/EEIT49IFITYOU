@@ -30,16 +30,16 @@ public class ActivityFunctionController extends HttpServlet {
 	@Autowired
 	public ActivityVoucherService vService;
 
-	@GetMapping("/vouchermain.controller")
+	@GetMapping("/admin/vouchermain.controller")
 	public String processvoucherMainAction(Model m) {
 		List<ActivityVoucher> voucher = vService.findAll();
 		m.addAttribute("voucher_queryAll", voucher);
 		m.addAttribute("page", "voucher");
 //		return "activity/ActivityQueryAll";
-		return "/group5/admin/ActivityQueryAll";
+		return "activity/ActivityQueryAll";
 	}
 
-	@PostMapping("/addvoucher.controller")
+	@PostMapping("/admin/addvoucher.controller")
 	public String voucherAdd(@ModelAttribute(name = "voucher") ActivityVoucher voucher, String add, MultipartFile photo, Model m)
 			throws IllegalStateException, IOException {
 		if (add.equals("新增")) {
@@ -61,7 +61,7 @@ public class ActivityFunctionController extends HttpServlet {
 		}
 	}
 
-	@PostMapping("/updatevoucher.controller")
+	@PostMapping("/admin/updatevoucher.controller")
 	public String voucherUpdate(@ModelAttribute(name = "voucher") ActivityVoucher voucher, String update, int dataId, String oldimg, MultipartFile photo, Model m )
 			throws IllegalStateException, IOException {
 		
@@ -89,13 +89,13 @@ public class ActivityFunctionController extends HttpServlet {
 		}
 	}
 
-	@PostMapping("/deletevoucher.controller")
+	@PostMapping("/admin/deletevoucher.controller")
 	public String voucherDelete(Model m, int dataId) {
 		vService.delete(dataId);
 		return "redirect:vouchermain.controller";
 	}
 
-	@PostMapping("/queryvoucher.controller")
+	@PostMapping("/admin/queryvoucher.controller")
 	public String voucherQuery(@RequestParam("dataId") int id, Model m) {
 		ActivityVoucher v = vService.selectById(id);
 		m.addAttribute("query_voucher", v);
@@ -110,7 +110,7 @@ public class ActivityFunctionController extends HttpServlet {
 	@Autowired
 	private ActivityActivityService aService;
 	
-	@GetMapping("/activitymain.controller")
+	@GetMapping("/admin/activitymain.controller")
 	public String processMainActivityAction(Model m) {
 		List<ActivityActivity> activity = aService.findAll();
 		m.addAttribute("activity_queryAll", activity);
@@ -118,7 +118,7 @@ public class ActivityFunctionController extends HttpServlet {
 		return "activity/ActivityQueryAll";
 	}
 	
-	@PostMapping("/addactivity.controller")
+	@PostMapping("/admin/addactivity.controller")
 	public String voucherAdd(@ModelAttribute(name = "activity") ActivityActivity activity, String add, MultipartFile photo, Model m)
 			throws IllegalStateException, IOException {
 		if (add.equals("新增")) {
@@ -140,7 +140,7 @@ public class ActivityFunctionController extends HttpServlet {
 		}
 	}
 	
-	@PostMapping("/updateactivity.controller")
+	@PostMapping("/admin/updateactivity.controller")
 	public String activityUpdate(@ModelAttribute(name = "activity") ActivityActivity activity, String update, int dataId, String oldimg, MultipartFile photo, Model m )
 			throws IllegalStateException, IOException {
 		if (update.equals("修改")) {
@@ -171,13 +171,13 @@ public class ActivityFunctionController extends HttpServlet {
 		}
 	}
 	
-	@PostMapping("/deleteactivity.controller")
+	@PostMapping("/admin/deleteactivity.controller")
 	public String activityDelete(Model m, int dataId) {
 		aService.delete(dataId);
 		return "redirect:activitymain.controller";
 	}
 
-	@PostMapping("/queryactivity.controller")
+	@PostMapping("/admin/queryactivity.controller")
 	public String activityQuery(@RequestParam("dataId") int id, Model m) {
 		ActivityActivity aa = aService.selectById(id);
 		m.addAttribute("query_activity", aa);

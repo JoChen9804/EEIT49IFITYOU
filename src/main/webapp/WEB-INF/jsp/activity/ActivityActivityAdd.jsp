@@ -20,7 +20,7 @@ response.setCharacterEncoding("UTF-8");
 
 	<%@ include file="../admin/AdminstyleHead.jsp" %>
 
-	<form:form action="addactivity.controller" method="post" modelAttribute="activity" enctype="multipart/form-data">
+	<form:form action="/group5/admin/addactivity.controller" method="post" modelAttribute="activity" enctype="multipart/form-data">
 
 		<form:input type="hidden" path="a_account" value="暫空"/>
 

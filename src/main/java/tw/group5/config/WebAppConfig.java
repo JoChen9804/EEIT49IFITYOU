@@ -15,15 +15,11 @@ public class WebAppConfig implements WebMvcConfigurer{
 		registry.addViewController("/group5/frontpage").setViewName("admin/FrontStageMain");
 		registry.addViewController("/group5/admin/logout").setViewName("admin/FrontStageMAIN");
 //		registry.addViewController("/admin/page").setViewName("logout");
-		
-		registry.addViewController("/group5/admin/ActivityQueryAll").setViewName("activity/ActivityQueryAll");
 	}
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/Path/**").addResourceLocations("file:/C:/images/admin/");
-		registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/resources/js/");
-		registry.addResourceHandler("/css/**").addResourceLocations("/WEB-INF/resources/css/");
 		
 		registry.addResourceHandler("/upload/**").addResourceLocations("file:C:/images/admin/");
 		registry.addResourceHandler("/group5/**").addResourceLocations("/WEB-INF/resources/");
