@@ -20,8 +20,6 @@ public class WebAppConfig implements WebMvcConfigurer{
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/Path/**").addResourceLocations("file:/C:/images/admin/");
-		registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/resources/js/");
-		registry.addResourceHandler("/css/**").addResourceLocations("/WEB-INF/resources/css/");
 		
 		registry.addResourceHandler("/upload/**").addResourceLocations("file:C:/images/admin/");
 		registry.addResourceHandler("/group5/**").addResourceLocations("/WEB-INF/resources/");

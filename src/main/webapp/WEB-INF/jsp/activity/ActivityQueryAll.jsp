@@ -46,13 +46,12 @@ input {
 	<%@ include file="../admin/AdminstyleHead.jsp" %>
 
 	<!-- JQuery  連結-->
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	
 	<!-- DataTable 連結 -->
 	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.2/js/jquery.dataTables.js"></script>
 
 	<!-- sweetalert2   連結-->
-	
 	<script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
 
 	<div id="show"></div>
@@ -69,7 +68,7 @@ input {
 			$('#show').html(`
 				<H2 style="display: inline">優惠券總覽</H2>
 				&emsp;&emsp;&emsp;
-				<form id="add" action="addvoucher.controller" enctype="multipart/form-data" method="post" class="btn btn-info btn-icon-split">
+				<form id="add" action="/group5/admin/addvoucher.controller" enctype="multipart/form-data" method="post" class="btn btn-info btn-icon-split">
 					<span class="icon text-white-50"> <i class="fas fa-flag"></i></span>
 					<input type="submit" name="add" value="新增" class="text" style="border: none; background-color: #36b9cc; color: white"/>
 				</form>
@@ -92,15 +91,15 @@ input {
 							<td>${vqa.a_account}</td>
 							<td>${vqa.reviseTime}</td>
 							<td>
-								<form ACTION="queryvoucher.controller" method="post" style="float: left; " >
+								<form ACTION="/group5/admin/queryvoucher.controller" method="post" style="float: left; " >
 									<input type="hidden" name="dataId" value="${vqa.voucherId}" />
 									<input type="submit" name="query" value="查看內文" />
 								</form> 
-								<form ACTION="updatevoucher.controller" method="post" enctype="multipart/form-data" style="float: left;">
+								<form ACTION="/group5/admin/updatevoucher.controller" method="post" enctype="multipart/form-data" style="float: left;">
 									<input type="hidden" name="dataId" value="${vqa.voucherId}" />
 									<input type="submit" name="update" value="修改" />
 								</form> 
-								<form ACTION="deletevoucher.controller" method="post" >
+								<form ACTION="/group5/admin/deletevoucher.controller" method="post" >
 									<input type="hidden" name="dataId" value="${vqa.voucherId}" />
 									<input type="hidden" name="voucherTitle" value="${vqa.voucherTitle}" />
 									<input type="submit" id="delete" name="delete" class="del" value="刪除" />
@@ -116,7 +115,7 @@ input {
 			$('#show').append(`
 				<H2 style="display: inline">活動總覽</H2>
 				&emsp;&emsp;&emsp;
-				<form id="add" action="addactivity.controller" enctype="multipart/form-data" method="post" class="btn btn-info btn-icon-split">
+				<form id="add" action="/group5/admin/addactivity.controller" enctype="multipart/form-data" method="post" class="btn btn-info btn-icon-split">
 					<span class="icon text-white-50"> <i class="fas fa-flag"></i></span>
 					<input type="submit" name="add" value="新增" class="text" style="border: none; background-color: #36b9cc; color: white"/>
 				</form>
@@ -143,15 +142,15 @@ input {
 							<td>${aqa.a_account}</td>
 							<td>${aqa.reviseTime}</td>
 							<td>
-								<form ACTION="queryactivity.controller" method="post" style="float: left; " >
+								<form ACTION="/group5/admin/queryactivity.controller" method="post" style="float: left; " >
 									<input type="hidden" name="dataId" value="${aqa.activityId}" />
 									<input type="submit" name="query" value="查看內文" />
 								</form> 
-								<form ACTION="updateactivity.controller" method="post" enctype="multipart/form-data" style="float: left;">
+								<form ACTION="/group5/admin/updateactivity.controller" method="post" enctype="multipart/form-data" style="float: left;">
 									<input type="hidden" name="dataId" value="${aqa.activityId}" />
 									<input type="submit" name="update" value="修改" />
 								</form> 
-								<form ACTION="deleteactivity.controller" name="ddeell" method="post" >
+								<form ACTION="/group5/admin/deleteactivity.controller" name="ddeell" method="post" >
 									<input type="hidden" name="dataId" value="${aqa.activityId}" id="dd" />
 									<input type="hidden" name="voucherTitle" value="${aqa.activityTitle}" />
 									<input type="submit" id="delete" name="delete" class="del" value="刪除" />
