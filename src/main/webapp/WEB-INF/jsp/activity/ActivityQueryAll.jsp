@@ -184,11 +184,10 @@ input {
 				        </thead>
 				        <c:forEach var="pqa" items="${promotions_queryAll}">
 				            <tr>
-				                <td>${vqa.voucher.voucherNo}</td>
-				                <td>${vqa.member.id}</td>
-				                <td>${vqa.a_account}</td>
-				                <td>${vqa.expiryTime}</td>
-				                <td>${vqa.reviseTime}</td>
+				                <td>${pqa.voucher.getVoucherNo()}</td>
+				                <td>${pqa.member.id}</td>
+				                <td>${pqa.a_account}</td>
+				                <td>${pqa.reviseTime}</td>
 				                <td>
 				                    <form ACTION="updatepromotions.controller" method="post" enctype="multipart/form-data"
 				                        style="float: left;">
@@ -197,7 +196,7 @@ input {
 				                    </form>
 				                    <form ACTION="deletepromotions.controller" method="post">
 				                        <input type="hidden" name="dataId" value="${pqa.id}" />
-				                        <input type="hidden" name="voucherTitle" value="${pqa.member.account}" />
+				                        <input type="hidden" name="voucherTitle" value="${pqa.member.getMemberAccount()}" />
 				                        <input type="submit" id="delete" name="delete" class="del" value="刪除" />
 				                    </form>
 				                </td>
@@ -205,6 +204,7 @@ input {
 				        </c:forEach>
 				    </table>
 			`);
+		}
 		
 	});
 	</script>

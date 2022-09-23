@@ -97,6 +97,11 @@
 							<INPUT type="submit" name="/group5/admin/vouchermain.controller" value="優惠券管"
 								style="border: none; background-color:transparent">
 						</form>
+						<form class="collapse-item" ACTION="/group5/admin/promotionsmain.controller"
+							method="get">
+							<INPUT type="submit" name="/group5/admin/vouchermain.controller" value="優惠券分發"
+								style="border: none; background-color:transparent">
+						</form>
 					</div>
 				</div></li>
 			<!-- Nav Item - Pages Collapse Menu æå¡ç®¡ç-->
@@ -108,10 +113,10 @@
 				<div id="collapseArea" class="collapse" aria-labelledby="headingTwo"
 					data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
-						<a class="collapse-item" href="/Subject2_Hibernate/gym.queryMain">查詢地點</a>
-						<a class="collapse-item" href="/Subject2_Hibernate/gym.addMain">新增地點</a>
-						<a class="collapse-item" href="/Subject2_Hibernate/gym.updateMain">修改地點</a>
-						<a class="collapse-item" href="/Subject2_Hibernate/gym.deleteMain">刪除地點</a>
+						<a class="collapse-item" href="gym.queryMain">查詢地點</a>
+						<a class="collapse-item" href="gym.addMain">新增地點</a>
+						<a class="collapse-item" href="gym.updateMain">修改地點</a>
+						<a class="collapse-item" href="gym/gym.deleteMain">刪除地點</a>
 					</div>
 				</div>
 			</li>
