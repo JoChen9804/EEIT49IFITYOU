@@ -61,10 +61,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		  // 登出
 		   
 		   http.logout()
-		  //刪除cookies
-		  .deleteCookies("JSESSIONID")
 		  // 設定觸發登出功能的 URL，預設為 /logout
 		  .logoutUrl("/group5/logout")                   
+		  //刪除cookies JSESSIONID
+		  .deleteCookies("JSESSIONID")
 		  //登出後會重新導向的 URL，預設是 /login?logout
           .logoutSuccessUrl("/group5/login");
 			

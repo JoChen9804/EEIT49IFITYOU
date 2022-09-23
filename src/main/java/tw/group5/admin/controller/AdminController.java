@@ -32,11 +32,11 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService;
 	
-//	@RequestMapping(path = "/adminMain.controller", method = RequestMethod.GET)
-//	public String processMainAction(SessionStatus status) {
-//		status.setComplete();
-//		return "AdminLogin";
-//	}
+	@RequestMapping(path = "/logout", method = RequestMethod.POST)
+	public String processMainAction(SessionStatus status) {
+		status.setComplete();
+		return "AdminLogin";
+	}
 	
 	@RequestMapping(path = "/admin/fail", method = RequestMethod.POST)
 	public String adminLoginAction(Model m) {
