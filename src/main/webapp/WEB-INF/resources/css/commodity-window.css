@@ -1,0 +1,19 @@
+.modal-header {
+    height: 65px;
+}
+
+.modal-header h4 {
+    font-size: 25px;
+    color: black;
+    /* 文字置中*/
+    position: absolute;
+    top: 7%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.img1, .img2, .img3, .img4, .img5{
+    width:25px;
+    height:25px;
+}
+
