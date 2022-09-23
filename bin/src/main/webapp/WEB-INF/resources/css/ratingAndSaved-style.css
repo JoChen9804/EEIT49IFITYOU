@@ -1,0 +1,62 @@
+@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css);
+
+.rating{
+    border:none;
+    float:left;
+}
+
+.rating>input{
+    display: none;
+}
+
+.rating>label:before{
+    content:'\f005';
+    font-family: FontAwesome;
+    margin:5px;
+    font-size: 1.5em;
+    cursor:pointer;
+
+}
+
+.rating >label{
+    color:#ddd;
+    float:right;
+    cursor:pointer;
+}
+
+.rating >input:checked~label,
+.rating:not(:checked) >label:hover,
+.rating:not(:checked) >label:hover ~ label{
+    color: #2ce679;
+}
+
+.rating > input:checked + label:hover,
+.rating > input:checked ~ label:hover,
+.rating>input:hover ~ input:checked ~ label,
+.rating>input:checked ~ label:hover ~ label{
+    color: #2ddc76;
+}
+
+
+.saved>input{
+    display: none;
+}
+
+
+.saved>label:before{
+    content:'\f004';
+    font-family: FontAwesome;
+    margin:5px;
+    font-size: 1.5em;
+    cursor:pointer;
+}
+
+.saved >label{
+    color:#ddd;
+    cursor:pointer;
+}
+
+.saved >label:hover,
+.saved >input:checked +label{
+    color:pink;
+}
