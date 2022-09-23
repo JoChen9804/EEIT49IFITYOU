@@ -67,7 +67,7 @@ response.setCharacterEncoding("UTF-8");
 			<td>${mql.breakTime}</td>
 			<td>
 			<form action="updateMenuForm.controller" method="post">
-				<input type="hidden" name="id" value="${mql.id}">
+				<input type="hidden" name="dataId" value="${mql.id}">
 				<input type="submit" name="update" value="修改">
 			</form>
 			

@@ -1,6 +1,7 @@
 package tw.group5.menu.controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
 import tw.group5.menu.model.Menubean;
+import tw.group5.menu.model.WriteIntoSQL;
 import tw.group5.menu.service.MenuService;
 
 @Controller
-@RequestMapping("/group5/menu")
+@RequestMapping("/group5")
 public class menuController {
 
 	private static final long serialVersionUID = 1L;
@@ -69,33 +70,43 @@ public class menuController {
 	}
 	
 	/*
-	 * AJAX ver
+	 * spmvc ver
 	 */
 	@GetMapping("/mainmenu.controller")
 	public String QueryAllPage(Model m) {
 		List<Menubean> menuall = menuService.findall();
 		m.addAttribute("menu_queryAll", menuall);
 		m.addAttribute("page","menuall");
-		return "group5/menu/MenuAll";
+		return "menu/MenuAll";
+	
+	}
+	
+	@PostMapping("/mainmenu2.controller")
+	public String QueryAllPage2(Model m) {
+		List<Menubean> menuall = menuService.findall();
+		m.addAttribute("menu_queryAll", menuall);
+		m.addAttribute("page","menuall");
+		return "menu/MenuAll";
 	
 	}
 	
 	@PostMapping("/updateMenuForm.controller")
-	public String menuUpdate(@ModelAttribute(name = "menuall") Menubean menu, String update, int id, Model m )
+	public String menuUpdate(@ModelAttribute(name = "menu") Menubean menu, String update, int dataId, Model m )
 			throws IllegalStateException, IOException {
 		if (update.equals("修改")) {
-			Menubean mUpdate = menuService.selectById(id);
+			Menubean mUpdate = menuService.selectById(dataId);
+			
 			m.addAttribute("update_menu", mUpdate);
-			return "group5/menu/MenuUpdatepage";
-		}    
-		      if(menuService.update(menu) != null) {
+			
+			return "menu/MenuUpdate";
+		}
+		if(menuService.update(menu) != null) {
 				m.addAttribute("update_menu", menu);
 				m.addAttribute("page", "menu");
 				m.addAttribute("update1", true);
-				return "group5/menu/menuConfirm";
-			}
-			return "redirect:mainmenu.controller";
-		
+				return "redirect:mainmenu.controller";
+			}	
+		      return "redirect:mainmenu.controller";
 	}
 	
 	@GetMapping("/menuDelete.controller")
@@ -104,6 +115,38 @@ public class menuController {
 	return "redirect:mainmenu.controller";
 	}
 	
+	@GetMapping("/menuAdd.controller")
+	public String menuAdd() {
+		return "menu/MenuAdd";
+	}
+	
+	@PostMapping("/menuAddAction.controller")
+	@ResponseBody
+	public Menubean menuAddAction(@RequestBody Menubean mbean) {
+		return menuService.add(mbean);
+	}
+	
+	@PostMapping("/menuAddAction2.controller")
+	public String  menuAddAction2(@RequestParam("complete") String complete) {
+
+		WriteIntoSQL intoSQL = new WriteIntoSQL();
+		try {
+			intoSQL.createConnection();
+			boolean part2 = intoSQL.intodatabase(complete);
+			if (part2 == true) {
+				System.out.println("成功寫入sql!");
+				return "redirect:mainmenu.controller";
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("寫入失敗sql!");
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:mainmenu.controller";
+    }
+
 
 	
 	
