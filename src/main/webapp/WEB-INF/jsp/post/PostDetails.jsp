@@ -62,6 +62,7 @@ height:150px;
 
 <body>
 	
+	<%@ include file="../admin/AdminstyleHead.jsp" %>
 
 		<table class="table1" border="1">
 		<form ACTION="MainPostServlet" method="post">
@@ -171,6 +172,9 @@ height:150px;
 		<form name="updateForm" action="MainPost.return" method="GET">
 			<div class="sub"><input type="submit" name="returns" value="返回首頁" margin="auto"></div>
 		</form>
+		
+		<%@ include file="../admin/AdminstyleFoot.jsp"%>
+		
 </body>
 
 </html>

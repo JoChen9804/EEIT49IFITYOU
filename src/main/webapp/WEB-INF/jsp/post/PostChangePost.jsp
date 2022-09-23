@@ -20,6 +20,8 @@ fieldset {
     </style>
     </head>
     <body>
+    
+    <%@ include file="../admin/AdminstyleHead.jsp" %>
 
     <fieldset>
     <H1 ALIGN=CENTER>修改貼文</H1>
@@ -81,6 +83,7 @@ fieldset {
     
     </fieldset>
     
+    <%@ include file="../admin/AdminstyleFoot.jsp"%>
     
     </body>
 </html>

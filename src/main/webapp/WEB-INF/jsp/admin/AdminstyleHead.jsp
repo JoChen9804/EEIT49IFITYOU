@@ -137,7 +137,7 @@
 				<div id="collapseText" class="collapse" aria-labelledby="headingTwo"
 					data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
-						<form class="collapse-item" ACTION="MainPost.all" method="get">
+						<form class="collapse-item" ACTION="/group5/admin/MainPost.all" method="get">
 							<input type="hidden" name="todo" value="allposts"> 
 							<INPUT type="submit" name="goToFrontPage" value="貼文管理" style="border: none; background-color:transparent">
 						</form>

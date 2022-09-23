@@ -78,7 +78,7 @@ public class MainPostServlet {
     // 返回頁面
     @GetMapping("/MainPost.return")
     public ModelAndView backToThePage(String returns) {
-        return new ModelAndView("redirect:/group5/MainPost.all");
+        return new ModelAndView("redirect:MainPost.all");
     }
 
     // 跳轉到新增畫面
@@ -108,7 +108,7 @@ public class MainPostServlet {
         }
 
         mainPostService.insert(addPost);
-        return "redirect:/group5/MainPost.all";
+        return "redirect:MainPost.all";
     }
 
     // 觀看ok
@@ -171,7 +171,7 @@ public class MainPostServlet {
     @DeleteMapping("/MainPostingServlet")
     public String deleteDainPost(Integer deletepost) {
         mainPostService.deleteById(deletepost);
-        return "redirect:/group5/MainPost.all";
+        return "redirect:MainPost.all";
     }
 
     // 跳到修改頁面ok
@@ -214,7 +214,7 @@ public class MainPostServlet {
 
         MainPostBean queryContent = mainPostService.update(mpBean);
         if (queryContent != null) {
-            return new ModelAndView("redirect:/group5/MainPost.all");
+            return new ModelAndView("redirect:MainPost.all");
         }
         return null;
     }

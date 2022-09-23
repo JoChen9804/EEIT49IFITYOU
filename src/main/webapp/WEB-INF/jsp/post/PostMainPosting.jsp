@@ -31,9 +31,11 @@
    </HEAD>
 
   <BODY>
+  
+  <%@ include file="../admin/AdminstyleHead.jsp" %>
    
         <fieldset>
-    <FORM ACTION="${pageContext.request.contextPath}/group5/MainPosting.controller" 
+    <FORM ACTION="${pageContext.request.contextPath}/group5/admin/MainPosting.controller" 
             enctype='multipart/form-data' method="POST"onsubmit="return checkip()">
             
             
@@ -84,12 +86,15 @@
         </div>
      </FORM>
      
-        <form name="updateForm" action="/group5/MainPost.return" method="GET">
+     <form name="updateForm" action="MainPost.return" method="GET">
        <!--   <input type="hidden" name="todo" value="return"> -->
        <div class="sub"> 
        <input type="submit" name="returns" value="返回首頁">
              </div>
     </form>
     </fieldset>
-
+    
+    <%@ include file="../admin/AdminstyleFoot.jsp"%>
+    
+    </BODY>
 </HTML>

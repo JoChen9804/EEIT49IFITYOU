@@ -35,6 +35,8 @@ th {
       
    </HEAD>
     <body>
+    
+    <%@ include file="../admin/AdminstyleHead.jsp" %>
        
    <fieldset>
     <h1 ALIGN=CENTER>貼文首頁</h1>
@@ -143,5 +145,8 @@ th {
                 </form>
                </div>
         </fieldset>
+        
+        <%@ include file="../admin/AdminstyleFoot.jsp"%>
+        
     </body>
 </html>
