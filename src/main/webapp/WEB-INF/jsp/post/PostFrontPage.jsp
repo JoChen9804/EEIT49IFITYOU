@@ -101,22 +101,25 @@ th {
                     <form name="AddForm" action="MainPostingServlet" method="POST"> 
                     <input type="hidden" name="_method" value="DELETE">
                     <input type="hidden" name="deletepost" value="${allmpbs.mainPostNo}">
-                    <input type="submit" id="submit" value="刪除" > 
+                    <input type="submit" id="${allmpbs.mainPostNo}" class="deletes" value="刪除" > 
                    <script src="js/jquery-3.6.0.js"></script>
-
-
 			<script>
-			var submitBtn = document.getElementById("submit");
+			
+			
+			var submitBtn = document.getElementById("${allmpbs.mainPostNo}");
 			
 			submitBtn.onclick = function (event) {
 				var r=confirm("確認是否刪除");
 				if (r==true){
+					$(this).parent().submit();
 					return true;
 			    }
 			    else{
 			          return false;//此處return false;即不會提交表單，一般驗證表單資料不符合要求使用
 			         };
 			};
+			
+			
 			</script>
                     
                     

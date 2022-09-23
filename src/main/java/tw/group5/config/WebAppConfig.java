@@ -34,7 +34,7 @@ public class WebAppConfig implements WebMvcConfigurer{
         registry.addResourceHandler("/group5/styles/**").addResourceLocations("/WEB-INF/postfolder/styles/");
         registry.addResourceHandler("/group5/js/**").addResourceLocations("/WEB-INF/postfolder/js/");
         registry.addResourceHandler("/group5/imagestest/**").addResourceLocations("/WEB-INF/postfolder/images/");
-        registry.addResourceHandler("/images/**").addResourceLocations("file:/D:/posts/");
+        registry.addResourceHandler("/images/**").addResourceLocations("file:/C:/images/posts/");
         
 
 	}

@@ -76,7 +76,7 @@ public class MainPostService {
                 String imageName = currentDateFormat("millisecond") + "_" + submittedFileName;
 
                 String sqlImage = "";
-                String imgsrc = "D:/posts";
+                String imgsrc = "C:/images/posts/";
 
                 try {
 
@@ -101,7 +101,7 @@ public class MainPostService {
     public String addPostImages(List<MultipartFile> mfs) {
 
         String sqlImage = "";
-        String imgsrc = "D:/posts";
+        String imgsrc = "C:/images/posts/";
         for (MultipartFile ms : mfs) {
             String imageName = ms.getOriginalFilename();
             if (imageName != null && imageName != "") {
