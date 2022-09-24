@@ -14,7 +14,7 @@ response.setCharacterEncoding("UTF-8");
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" >
 <title>新增優惠券</title>
-<link rel="stylesheet" href="/css/voucherStyle.css">
+<link rel="stylesheet" href="/group5/css/voucherStyle.css">
 <script>
  function chkinput(form)
  {
