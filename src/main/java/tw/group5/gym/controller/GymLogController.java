@@ -8,23 +8,30 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
+import tw.group5.gym.model.GymBean;
 import tw.group5.gym.model.GymLog;
 import tw.group5.gym.service.GymLogService;
+import tw.group5.gym.service.GymService;
 
 @Controller
-@RequestMapping("/gym")
+@RequestMapping("/group5/admin/gym")
 public class GymLogController {
 	
 	@Autowired
 	private GymLogService gLogService;
+	
+	@Autowired
+	private GymService gymService;
 	
 	//更新收藏狀態為true(1)
 	@PostMapping("/gymFavorite/{logId}")
 	@ResponseBody
 	public GymLog processUpdateFavoriteAction(@PathVariable("logId") int logId) {
 		GymLog gymLog = gLogService.findById(logId);
-		if(gymLog.getFavorite()==null || gymLog.getFavorite()==1) {
+		gymLog.setGymId(gymLog.getGym().getGymId());
+		if(gymLog.getFavorite()==null || gymLog.getFavorite()==0) {
 			System.out.println("set true");
 			gymLog.setFavorite(1);
 			return gLogService.updateGymLog(gymLog);
@@ -39,6 +46,7 @@ public class GymLogController {
 	@PostMapping("/gymFavorite")
 	@ResponseBody
 	public GymLog processAddFavoriteAction(@RequestBody GymLog gLog) {
+		gLog.setGym(gymService.findById(gLog.getGymId()));
 		return gLogService.addGymLog(gLog);
 	}
 	
@@ -49,13 +57,20 @@ public class GymLogController {
 	public GymLog processUpdateRatingAction(@PathVariable("logId") int logId,@PathVariable("rating") int rating) {
 		GymLog gymLog = gLogService.findById(logId);
 		gymLog.setRating(rating);
-		return gLogService.updateGymLog(gymLog);
+		gymLog.setGymId(gymLog.getGym().getGymId());
+		System.out.println("update"+gymLog.getGym().getGymId());
+		GymLog gymLogResult = gLogService.updateGymLog(gymLog);
+		gymService.updateGymRating(gymLog.getGymId());
+		return gymLogResult;
 	}
 	
 	//新增評分
 	@PostMapping("/gymRating")
 	@ResponseBody
 	public GymLog processAddRatingAction(@RequestBody GymLog gLog) {
-		return gLogService.addGymLog(gLog);
+		gLog.setGym(gymService.findById(gLog.getGymId()));
+		GymLog gymLogResult = gLogService.addGymLog(gLog);
+		gymService.updateGymRating(gLog.getGymId());
+		return gymLogResult;
 	}
 }

@@ -26,16 +26,18 @@ for(let i=0; i<star.length;i++){
     star[i].addEventListener('click',function(){
         i= this.value;
         ratingValue.value=i;
+        console.log(logId+typeof(logId));
         if(logId!=""){
 			$.ajax({
 				type: "post",
-				url: "/gym/gymRating/"+logId+"/"+ratingValue.value
+				url: "/group5/admin/gym/gymRating/"+logId+"/"+ratingValue.value
 			});
 		}else{
 			let logBean={"memberId":mId, "gymId":gId, "rating": ratingValue.value};
+			console.log(logBean);
 			$.ajax({
 				type: "post",
-				url: "/gym/gymRating",
+				url: "/group5/admin/gym/gymRating",
 				contentType: "application/json",
 				data:JSON.stringify(logBean),
 				success: function(data){
@@ -53,13 +55,13 @@ saved.addEventListener('click',function(){
 	if(logId!=""){
 		$.ajax({
 			type: "post",
-			url: "/gym/gymFavorite/"+logId
+			url: "/group5/admin/gym/gymFavorite/"+logId
 		});
 	}else{
 		let logBean={"memberId":mId, "gymId":gId, "favorite": 1};
 		$.ajax({
 			type: "post",
-			url: "/gym/gymFavorite",
+			url: "/group5/admin/gym/gymFavorite",
 			contentType: "application/json",
 			data:JSON.stringify(logBean),
 			success: function(data){

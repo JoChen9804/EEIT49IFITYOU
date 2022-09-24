@@ -1,13 +1,16 @@
 package tw.group5.gym.service;
 
 import java.util.List;
-
+import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import tw.group5.gym.model.GymBean;
+import tw.group5.gym.model.GymLog;
+import tw.group5.gym.model.GymLogRespository;
 import tw.group5.gym.model.GymRespository;
 
 
@@ -18,29 +21,30 @@ public class GymService{
 	@Autowired
 	private GymRespository gymRespository;
 
-	//屬性id須為空
+	//新增，屬性id須為空
 	public GymBean add(GymBean gymBean) {
 		gymBean.setAdmin("group5");
 		return gymRespository.save(gymBean);
 	}
 
-	//屬性id需不可為空
+	//更新，屬性id需不可為空
 	public GymBean update(GymBean gymBean) {
 		gymBean.setAdmin("group5");
 		return gymRespository.save(gymBean);
 	}
 	
-	//若id為null會拋出exception，id不存在會拋出org.springframework.dao.EmptyResultDataAccessException
-	public String delete(Integer id) {
+	//deleteById若id為null會拋出exception，id不存在會拋出org.springframework.dao.EmptyResultDataAccessException
+	//delete
+	public String delete(GymBean gym) {
 		try {
-			gymRespository.deleteById(id);
+			gymRespository.delete(gym);
 			return "刪除成功";
 		} catch (Exception e) {
 			return "刪除失敗";
 		}
 	}
 
-	
+	//find
 	public List<GymBean> findGyms(GymBean gymBean) {
 		if(gymBean.getGymName()==null) {
 			gymBean.setGymName("");
@@ -50,7 +54,7 @@ public class GymService{
 		}
 		return gymRespository.findByGymNameLikeAndGymAddressLike("%"+gymBean.getGymName()+"%","%"+gymBean.getGymAddress()+"%");
 	}
-
+	
 	public GymBean queryName(String name) {
 		if(name==null) {
 			return null;
@@ -61,5 +65,18 @@ public class GymService{
 		}
 		return single.get(0);
 	}
-
+	
+	//update average rating
+	public GymBean updateGymRating(int gymId) {
+		return gymRespository.updateGymRating(gymId);
+	}
+	
+	public GymBean findById(Integer gymId) {
+		 Optional<GymBean> result = gymRespository.findById(gymId);
+		 if (result.isPresent()) {
+			return result.get();
+		}
+		return null;
+	}
+	
 }

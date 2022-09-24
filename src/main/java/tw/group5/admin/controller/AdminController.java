@@ -51,7 +51,7 @@ public class AdminController {
 		return "admin/AdminNew"; // 導向AdminNew.jsp頁面
 	}
 	@RequestMapping("/admin/AdminBackstage")
-	public String adminBackstage() {
+	public String adminBackstage(Model m) {
 		return "admin/AdminBackstage"; // 導向AdminBackstage.jsp頁面
 	}
 	@RequestMapping("/admin/AdminMemberNew")

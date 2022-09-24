@@ -8,8 +8,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>新增地點</title>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-<script src="/js/chooseAddress.js"></script>
-<script src="/js/confirmData.js"></script>
+<script src="/group5/js/chooseAddress.js"></script>
+<script src="/group5/js/confirmData.js"></script>
+<script src="/group5/js/confirmData.js"></script>
+
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -39,7 +41,7 @@
                     		if(result2.isConfirmed){
                     			$.ajax({
                     				type: "post",
-                    				url: "/gym/addGymAction",
+                    				url: "/group5/admin/gym/addGymAction",
                     				data: JSON.stringify(gymBean),
                     				dataType: "json",
                     				contentType: "application/json",
@@ -68,6 +70,7 @@
 </script>
 </head>
 <body onload="city()">
+<%@ include file="../admin/AdminstyleHead.jsp" %>
 	<div class="container">
         <div class="row  justify-content-md-center">
             <div class="col-md-auto"><h3>新增健身房地點</h3></div>
@@ -136,5 +139,9 @@
 		</div>	
 	<div id="addResult" style="padding-top: 12px;"></div>
 	</div>
+	
+<%@ include file="../admin/AdminstyleFoot.jsp" %>
+<script src="/group5/js/sb-admin-2.min.js"></script>
+<script src="/group5/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -1,3 +1,4 @@
+
 package tw.group5.gym.model;
 
 
@@ -5,10 +6,15 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.springframework.stereotype.Component;
 
@@ -27,17 +33,22 @@ public class GymLog implements Serializable{
 	@Column(name = "LOGID")
 	private int logId;
 	
-	@Column(name = "MEMBERID")
-	private int memberId;
+	@Column(name = "ADMINID")
+	private Integer memberId;
 	
 	@Column(name = "GYMNO")
-	private int gymId;
+	@Transient
+	private Integer gymId;
 	
 	@Column(name = "RATING")
 	private Integer rating;
 	
 	@Column(name = "FAVORITE")
 	private Integer favorite;
+	
+	@JoinColumn(name = "GYMNO")
+	@ManyToOne
+	private GymBean gym;
 	
 	public int getLogId() {
 		return logId;
@@ -47,19 +58,21 @@ public class GymLog implements Serializable{
 		this.logId = logId;
 	}
 
-	public int getMemberId() {
+	
+
+	public Integer getMemberId() {
 		return memberId;
 	}
 
-	public void setMemberId(int memberId) {
+	public void setMemberId(Integer memberId) {
 		this.memberId = memberId;
 	}
 
-	public int getGymId() {
+	public Integer getGymId() {
 		return gymId;
 	}
 
-	public void setGymId(int gymId) {
+	public void setGymId(Integer gymId) {
 		this.gymId = gymId;
 	}
 
@@ -78,6 +91,17 @@ public class GymLog implements Serializable{
 	public void setFavorite(Integer favorite) {
 		this.favorite = favorite;
 	}
+
+	public GymBean getGym() {
+		return gym;
+	}
+
+	public void setGym(GymBean gym) {
+		this.gym = gym;
+	}
+	
+	
+	
 	
 	
 }
