@@ -2,12 +2,14 @@ package tw.group5.gym.service;
 
 
 import java.util.Optional;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import tw.group5.gym.model.GymBean;
 import tw.group5.gym.model.GymLog;
 import tw.group5.gym.model.GymLogRespository;
 
@@ -20,9 +22,6 @@ public class GymLogService {
 	
 	//新增收藏或評分
 	public GymLog addGymLog(GymLog gLog) {
-//		if(gLog.getFavorite()==null) {
-//			
-//		}
 		return gymLogRespository.save(gLog);
 	}
 	
@@ -32,8 +31,8 @@ public class GymLogService {
 	}
 	
 	//where gymId=? and memberId=?
-	public GymLog findByMemberIdAndGymId(int memberId, int gymId){
-		return gymLogRespository.findByMemberIdAndGymId(memberId, gymId);
+	public GymLog findByMemberIdAndGym(Integer memberId, GymBean gym){
+		return gymLogRespository.findByMemberIdAndGym(memberId, gym);
 	}
 	
 	public GymLog findById(int logId) {
@@ -43,6 +42,17 @@ public class GymLogService {
 		 }
 		 return null;
 	}
+	
+	//where gymName=? 
+	public Set<GymLog> findByGym(GymBean gym){
+		return gymLogRespository.findByGym(gym);
+	}
+	
+	//刪除log
+	public void deletelog(GymLog gLog) {
+		gymLogRespository.delete(gLog);
+	}
+	
 	
 	
 }
