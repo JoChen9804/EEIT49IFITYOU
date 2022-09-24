@@ -29,6 +29,8 @@
 <link href="css/swiper.css" rel="stylesheet">
 <link href="css/magnific-popup.css" rel="stylesheet">
 <link href="css/styles.css" rel="stylesheet">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 
 <!-- Favicon  -->
 <link rel="icon" href="images/favicon.png">
@@ -106,33 +108,25 @@
 						</div></li>
 					<!-- end of dropdown menu -->
 
-					<li class="nav-item"><a class="nav-link page-scroll"
+					<li class="nav-item dropdown"><a class="nav-link page-scroll"
 						href="#pricing">PRICING</a></li>
 
-					<li class="nav-item dropdown"><a
-						class="btn-outline-sm dropdown-toggle page-scroll" href="#"
+					<li class="nav-item dropdown" ><a
+						class="btn-outline-sm dropdown-toggle page-scroll"
 						id="navbarDropdown" role="button" aria-haspopup="true"
-						aria-expanded="false">會員</a> <span
-						class="mr-3 d-none d-lg-inline text-gray-600 big"><span>${loginMember.name}</span>
-					</span> <img class="img-profile rounded-circle"
-						src="${loginMember.photo}" height=20px width=20px></a> <!-- Dropdown - User Information -->
+						aria-expanded="false"> <img class="img-profile rounded-circle"
+							src="${loginMember.memberPhoto}" height=45px width=45px></a> 
+							<!-- Dropdown - User Information -->
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<a class="dropdown-item" href="/group5/logout"
-								data-toggle="modal" data-target="#logoutModal"> <i
-								class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-								Logout</a> 
-								<a class="dropdown-item" href="article-details.html"><span
+							 <a class="dropdown-item" href="article-details.html"><span
 								class="item-text">會員資訊</span></a>
 							<div class="dropdown-items-divide-hr"></div>
 							<a class="dropdown-item" href="terms-conditions.html"><span
 								class="item-text">交友管理</span></a>
 							<div class="dropdown-items-divide-hr"></div>
-							<form class="dropdown-item" action="">
-								<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-								<input class="item-text" type="button" id="logoutCheck"
-									value="登出"
-									style="color: white; background-color: transparent; border: none;" />
-							</form>
+							<a class="dropdown-item" href="/logout" data-toggle="modal"
+								data-target="#logoutModal"><span class="item-text"><i
+								class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>登出</span></a>
 						</div></li>
 				</ul>
 			</div>

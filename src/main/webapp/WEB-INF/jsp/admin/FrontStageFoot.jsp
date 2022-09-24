@@ -104,7 +104,7 @@
 				<div class="modal-footer">
 					<button class="btn btn-secondary" type="button"
 						data-dismiss="modal">取消</button>
-					<a class="btn btn-primary" href="/group5/login">登出</a>
+					<a class="btn btn-primary" href="logout" style="text-decoration: none;">登出</a>
 				</div>
 			</div>
 		</div>

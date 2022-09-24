@@ -229,7 +229,7 @@ h5 {
 							<label for="pwd2" class="t1">再次輸入密碼：</label><input id="pwd2"
 								type="password" name="pwd2" maxlength="15" required
 								onblur="validate()"> <span id="tishi"></span>
-								<input type="hidden" name="originalRealPassword" value="" id="">
+								<input type="hidden" name="originalRealPassword" value="${pwd}" id="">
 						</div>
 						<div class="st1">
 							<label for="name1" class="t1">姓名：</label> <input id="name1"
@@ -310,7 +310,6 @@ h5 {
 				var img=document.getElementById("img");
                 img.setAttribute("src", "${OneMember.memberPhoto}");                
                 $('#account1').val("${OneMember.memberAccount}")
-                $('#originalRealPassword').val("${OneMember.memberPassword}")
 				$('#pwd1').val("******")
 				$('#pwd2').val("******")
                 $('#name1').val("${OneMember.memberName}")

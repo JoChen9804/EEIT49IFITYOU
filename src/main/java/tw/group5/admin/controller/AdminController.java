@@ -32,11 +32,12 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService;
 	
-	@RequestMapping(path = "/logout", method = RequestMethod.POST)
-	public String processMainAction(SessionStatus status) {
-		status.setComplete();
-		return "AdminLogin";
-	}
+//	@RequestMapping(path = "/logout", method = RequestMethod.POST)
+//	public String processMainAction(SessionStatus status) {
+//		status.setComplete();
+//		session.
+//		return "AdminLogin";
+//	}
 	
 	@RequestMapping(path = "/admin/fail", method = RequestMethod.POST)
 	public String adminLoginAction(Model m) {
@@ -62,10 +63,10 @@ public class AdminController {
 	public String FrontStageMain() {
 		return "admin/FrontStageMain"; // 導向前台頁面
 	}
-	@RequestMapping("/group5/login")
-	public String GoLogin() {
-		return "admin/FrontStageMain"; // 導向前台頁面
-	}
+//	@RequestMapping("/group5/login")
+//	public String GoLogin() {
+//		return "admin/FrontStageMain"; // 導向前台頁面
+//	}
 	
 	
 	//常常使用到的查找管理員
@@ -101,6 +102,7 @@ public class AdminController {
 			AdminBean adminBean;
 			String modifyPassword;
 			if (pwd.equals("******")){
+				System.out.println("123456" + originalRealPassword);
 				modifyPassword = originalRealPassword;
 			}else {
 				modifyPassword = new BCryptPasswordEncoder().encode(pwd);
@@ -113,7 +115,13 @@ public class AdminController {
 			}
 			Integer idNum = Integer.parseInt(idNumString);
 			adminBean.setId(idNum);
-			adminService.updateOne(adminBean);
+			AdminBean aBean= adminService.updateOne(adminBean);
+			System.out.println((m.getAttribute("loginMember")));
+			//圖片更動 修改頭像
+			AdminBean nowBean = (AdminBean) m.getAttribute("loginMember");
+			if (aBean.getId().equals(nowBean.getId())){
+			m.addAttribute("loginMember", aBean);				
+			}
 			System.out.println("管理員修改成功");
 		}
 		return SearchAdmin(m);
@@ -167,7 +175,7 @@ public class AdminController {
 			@RequestParam("recentLoginDate") String recentLoginDateModify, 
 			@RequestParam("filepath") MultipartFile mf,Model m) {
 		
-		String memberPhoto = null;
+		String memberPhoto;
 		Integer authority = 0;
 		Integer pairWilling = Integer.parseInt(match);
 		//新增
@@ -179,7 +187,7 @@ public class AdminController {
 			Integer mute = 0;
 			Integer postPermission = 0;
 			String recentLoginDate = adminService.getDate();
-			memberPhoto = adminService.imageProcess(account, bcEncode, mf, true);
+			memberPhoto = adminService.imageProcess(account, modifyimage, mf, true);
 
 			MemberDetail mDetail = new MemberDetail(gender, nickname, birthday, cellphone, zipcode, address,
 					referralCode, registerReferralCode, mute, postPermission, pairWilling, pairContactInfo, pairRequest,
@@ -192,7 +200,8 @@ public class AdminController {
 			memberDetail.setReferralCode(referralCode);
 			adminService.updateCodeById(memberDetail);
 			System.out.println("會員新增成功");
-		
+			
+			//修改
 		}else {
 			String modifyPassword;
 			if (pwd.equals("******")){
