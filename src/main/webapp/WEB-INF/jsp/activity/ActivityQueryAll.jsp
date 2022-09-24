@@ -42,14 +42,16 @@ input {
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
+
+	<%@ include file="../admin/AdminstyleHead.jsp" %>
+
 	<!-- JQuery  連結-->
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	
 	<!-- DataTable 連結 -->
 	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.2/js/jquery.dataTables.js"></script>
 
 	<!-- sweetalert2   連結-->
-	
 	<script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
 
 	<div id="show"></div>
@@ -159,6 +161,49 @@ input {
 					</c:forEach>
 				</table>
 			`);
+		}else if(page=="promotions"){
+			
+			$('#show').append(`
+					<H2 style="display: inline">優惠券分發操作</H2>
+				    &emsp;&emsp;&emsp;
+				    <form id="add" action="addpromotions.controller" enctype="multipart/form-data" method="post"
+				        class="btn btn-info btn-icon-split">
+				        <span class="icon text-white-50"> <i class="fas fa-flag"></i></span>
+				        <input type="submit" name="add" value="新增" class="text"
+				            style="border: none; background-color: #36b9cc; color: white" />
+				    </form>
+				    <table id="table_id">
+				        <thead>
+				            <tr>
+				                <th>優惠券號</th>
+				                <th>持有會員</th>
+				                <th>負責管理員</th>
+				                <th>最後修改時間</th>
+				                <th>操作</th>
+				            </tr>
+				        </thead>
+				        <c:forEach var="pqa" items="${promotions_queryAll}">
+				            <tr>
+				                <td>${pqa.voucher.getVoucherNo()}</td>
+				                <td>${pqa.member.id}</td>
+				                <td>${pqa.a_account}</td>
+				                <td>${pqa.reviseTime}</td>
+				                <td>
+				                    <form ACTION="updatepromotions.controller" method="post" enctype="multipart/form-data"
+				                        style="float: left;">
+				                        <input type="hidden" name="dataId" value="${pqa.id}" />
+				                        <input type="submit" name="update" value="修改" />
+				                    </form>
+				                    <form ACTION="deletepromotions.controller" method="post">
+				                        <input type="hidden" name="dataId" value="${pqa.id}" />
+				                        <input type="hidden" name="voucherTitle" value="${pqa.member.getMemberAccount()}" />
+				                        <input type="submit" id="delete" name="delete" class="del" value="刪除" />
+				                    </form>
+				                </td>
+				            </tr>
+				        </c:forEach>
+				    </table>
+			`);
 		}
 		
 	});
@@ -192,5 +237,8 @@ input {
 		});
 	})
 	</script>
+	
+	<%@ include file="../admin/AdminstyleFoot.jsp"%>
+	
 </body>
 </html>

@@ -116,6 +116,9 @@
 
 </head>
 <body>
+
+	<%@ include file="../admin/AdminstyleHead.jsp" %>
+
 	<div class="container-fluid">
 
 		<!-- Page Heading -->
@@ -263,7 +266,7 @@
 	</div>
 	
 	
-	
+	<%@ include file="../admin/AdminstyleFoot.jsp"%>
 	
 	
 

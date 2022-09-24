@@ -1,0 +1,68 @@
+@charset "UTF-8";
+
+body {
+	background-image: url(images/1234.jpg);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	background-attachment: fixed;
+	/* fixed 只適合body,textarea元素 */
+	/* overflow:hidden;*/
+}
+
+.st1 {
+	width: 450px;
+	border-bottom: 3px dashed #adadad;
+	margin: 20px;
+	padding-bottom: 20px;
+}
+
+.t1 {
+	width: 100px;
+	float: left;
+	/* border: 1px solid red; */
+	text-align: right;
+}
+
+fieldset {
+	width: 700px;
+	border: 1px solid #acd6ff;
+	border-radius: 15px;
+	opacity: 0.85;
+	margin: auto;
+	background: #f7f4dd;
+}
+
+H1 {
+	color: blue;
+}
+
+ul {
+	list-style-type: none;
+}
+
+.sub {
+	width: 450px;
+	margin: 20px;
+	text-align: center;
+	margin: auto;
+}
+
+
+source {
+	min-width: 100%;
+	min-height: 100%;
+	height: auto;
+	width: auto;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+img {
+	width: 300px;
+	/*border: 3px solid red;*/
+	padding: 5px 5px 5px 5px;
+	margin: 10px;
+}
