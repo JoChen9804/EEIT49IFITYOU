@@ -156,7 +156,8 @@
 				<div id="collapseFitness" class="collapse"
 					aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
-						<a class="collapse-item" href="menuBuildup.controller">新增菜單</a>
+						<a class="collapse-item" href="mainmenu.controller">查看菜單</a>
+						<a class="collapse-item" href="menuAdd.controller">新增菜單</a>
 					</div>
 				</div></li>
 		</ul>

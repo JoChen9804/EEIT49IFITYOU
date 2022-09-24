@@ -13,7 +13,7 @@ response.setCharacterEncoding("UTF-8");
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" >
 <title>新增活動</title>
-<link rel="stylesheet" href="/css/voucherStyle.css">
+<link rel="stylesheet" href="/group5/css/voucherStyle.css">
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
