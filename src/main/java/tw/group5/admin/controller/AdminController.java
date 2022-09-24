@@ -58,10 +58,16 @@ public class AdminController {
 	public String adminMemberNew() {
 		return "admin/AdminMemberNew"; // 導向AdminMemberNew.jsp頁面
 	}
-	@RequestMapping("/admin/FrontStageMain")
+	@RequestMapping("/FrontStageMain")
 	public String FrontStageMain() {
-		return "admin/FrontStageMain"; // 導向AdminNew.jsp頁面
+		return "admin/FrontStageMain"; // 導向前台頁面
 	}
+	@RequestMapping("/group5/login")
+	public String GoLogin() {
+		return "admin/FrontStageMain"; // 導向前台頁面
+	}
+	
+	
 	//常常使用到的查找管理員
 	private String SearchAdmin(Model m) {
 		List<String> adminTitleList = adminService.adminTitleList();

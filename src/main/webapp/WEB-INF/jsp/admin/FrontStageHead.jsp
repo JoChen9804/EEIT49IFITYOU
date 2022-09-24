@@ -65,8 +65,8 @@
 						height=50 width=50 />
 				</div>
 				<div class="nav-item">
-					<a class="nav-link page-scroll" href="FrontStageMain" style="font-size:20px">I FIT YOU
-					</a>
+					<a class="nav-link page-scroll" href="FrontStageMain"
+						style="font-size: 20px">I FIT YOU </a>
 				</div>
 			</a>
 
@@ -112,9 +112,16 @@
 					<li class="nav-item dropdown"><a
 						class="btn-outline-sm dropdown-toggle page-scroll" href="#"
 						id="navbarDropdown" role="button" aria-haspopup="true"
-						aria-expanded="false">會員</a>
+						aria-expanded="false">會員</a> <span
+						class="mr-3 d-none d-lg-inline text-gray-600 big"><span>${loginMember.name}</span>
+					</span> <img class="img-profile rounded-circle"
+						src="${loginMember.photo}" height=20px width=20px></a> <!-- Dropdown - User Information -->
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<a class="dropdown-item" href="article-details.html"><span
+							<a class="dropdown-item" href="/group5/logout"
+								data-toggle="modal" data-target="#logoutModal"> <i
+								class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+								Logout</a> 
+								<a class="dropdown-item" href="article-details.html"><span
 								class="item-text">會員資訊</span></a>
 							<div class="dropdown-items-divide-hr"></div>
 							<a class="dropdown-item" href="terms-conditions.html"><span

@@ -20,7 +20,7 @@ import tw.group5.admin.service.AdminService;
 
 //@SessionAttributes(names = {"loginMember"})
 @Component
-public class LoginSuccessHandle implements AuthenticationSuccessHandler{
+public class LoginSuccessHandler implements AuthenticationSuccessHandler{
 	
 	@Autowired //攔截器會在service前載入，故注入無效
 	private AdminService adminService;
@@ -42,7 +42,7 @@ public class LoginSuccessHandle implements AuthenticationSuccessHandler{
         System.out.println("抓到了"+name);
         MemberBean mBean = adminService.findByAccountMember(name);
         session.setAttribute("loginMember", mBean);
-        response.sendRedirect("frontpage");
+        response.sendRedirect("FrontStageMain");
 		
 	}
 
