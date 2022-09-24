@@ -36,6 +36,9 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 </head>
 
 <body>
+
+	<%@ include file="../admin/AdminstyleHead.jsp"%>
+
 	<section> <header>
 	<h2>Personal Menu build up</h2>
 	</header>
@@ -193,6 +196,9 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
                 })
             })
         </script> </section>
+        
+        <%@ include file="../admin/AdminstyleFoot.jsp"%>
+        
 </body>
 
 </html>

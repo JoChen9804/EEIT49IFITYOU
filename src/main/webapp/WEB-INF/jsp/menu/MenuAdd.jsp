@@ -24,6 +24,9 @@ response.setCharacterEncoding("UTF-8");
 </head>
 
 <body>
+
+	<%@ include file="../admin/AdminstyleHead.jsp"%>
+
 	<section>
 		<header>
 			<h2>Build Up Your Menu</h2>
@@ -260,5 +263,8 @@ response.setCharacterEncoding("UTF-8");
 
 
 	</section>
+	
+	<%@ include file="../admin/AdminstyleFoot.jsp"%>
+	
 </body>
 </html>

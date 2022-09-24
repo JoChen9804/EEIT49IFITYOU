@@ -23,6 +23,9 @@ response.setCharacterEncoding("UTF-8");
 
 </head>
 <body>
+
+	<%@ include file="../admin/AdminstyleHead.jsp"%>
+
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<script type="text/javascript" charset="utf8"
@@ -112,5 +115,8 @@ response.setCharacterEncoding("UTF-8");
 		});
 	})
 	</script>
+	
+	<%@ include file="../admin/AdminstyleFoot.jsp"%>
+	
 </body>
 </html>

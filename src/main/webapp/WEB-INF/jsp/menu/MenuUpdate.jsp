@@ -14,6 +14,9 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
+
+	<%@ include file="../admin/AdminstyleHead.jsp"%>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
 
@@ -107,6 +110,8 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 			});
   		</script>
 </form:form>
+
+	<%@ include file="../admin/AdminstyleFoot.jsp"%>
 
 </body>
 </html>

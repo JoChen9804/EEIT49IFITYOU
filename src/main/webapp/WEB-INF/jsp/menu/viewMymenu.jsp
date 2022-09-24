@@ -35,6 +35,9 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 
 <body>
 
+	<%@ include file="../admin/AdminstyleHead.jsp"%>
+
+
 	<h1>MY CURRENT MENU</h1>
 
 	<table border="1" width="90%" class="table table-dark table-hover">
@@ -84,7 +87,7 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 	
 	
 	
-	
+	<%@ include file="../admin/AdminstyleFoot.jsp"%>
 
 </body>
 

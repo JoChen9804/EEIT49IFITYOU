@@ -29,6 +29,9 @@
 </head>
 
 <body>
+
+	<%@ include file="../admin/AdminstyleHead.jsp"%>
+
 	<header>
 	<h1>Edit Form</h1>
 	</header>
@@ -76,6 +79,8 @@
 		</table>
 			
 	</form>
+
+	<%@ include file="../admin/AdminstyleFoot.jsp"%>
 
 </body>
 
