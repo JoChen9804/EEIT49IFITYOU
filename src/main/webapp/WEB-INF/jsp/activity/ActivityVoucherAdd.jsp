@@ -14,7 +14,7 @@ response.setCharacterEncoding("UTF-8");
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" >
 <title>新增優惠券</title>
-<link rel="stylesheet" href="/css/voucherStyle.css">
+<link rel="stylesheet" href="/group5/css/voucherStyle.css">
 <script>
  function chkinput(form)
  {
@@ -43,6 +43,9 @@ response.setCharacterEncoding("UTF-8");
 </head>
 
 <body>
+
+	<%@ include file="../admin/AdminstyleHead.jsp" %>
+
 	<form:form action="addvoucher.controller" method="post" modelAttribute="voucher" enctype="multipart/form-data" onsubmit=" return chkinput(this)">
 
 		<form:input type="hidden" path="a_account" value="暫空"/>
@@ -97,5 +100,8 @@ response.setCharacterEncoding("UTF-8");
 			<a href="vouchermain.controller"><input type="button" value="返回"></a>
 		</div>
 	</form:form>	
+	
+	<%@ include file="../admin/AdminstyleFoot.jsp"%>
+	
 </body>
 </html>

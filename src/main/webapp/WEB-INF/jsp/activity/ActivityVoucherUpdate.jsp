@@ -11,11 +11,14 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>優惠券修改</title>
-<link rel="stylesheet" href="/css/voucherStyle.css">
+<link rel="stylesheet" href="/group5/css/voucherStyle.css">
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
+
+<%@ include file="../admin/AdminstyleHead.jsp" %>
+
 <div class="happy">
 	<form:form action="updatevoucher.controller" method="post" enctype="multipart/form-data" modelAttribute="voucher">
 		<input type="hidden" name="page" value="voucher">
@@ -117,5 +120,8 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 			});
     		
   		</script>
+  		
+  		<%@ include file="../admin/AdminstyleFoot.jsp"%>
+  		
 </body>
 </html>

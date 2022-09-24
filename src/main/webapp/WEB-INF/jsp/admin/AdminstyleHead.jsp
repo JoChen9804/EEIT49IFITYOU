@@ -86,15 +86,20 @@
 				<div id="collapseActivities" class="collapse"
 					aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
-						<form class="collapse-item" ACTION="ActivityFunctionController"
-							method="post">
+						<form class="collapse-item" ACTION="/group5/admin/activitymain.controller"
+							method="get">
 							<input type="hidden" name="selec_page" value="activity">
-							<INPUT type="submit" name="submitFromAdmin" value="活動資訊"
+							<INPUT type="submit" name="/group5/admin/activitymain.controller" value="活動資訊"
 								style="border: none; background-color:transparent">
 						</form>
-						<form class="collapse-item" ACTION="activitymain.controller"
+						<form class="collapse-item" ACTION="/group5/admin/vouchermain.controller"
 							method="get">
-							<INPUT type="submit" name="submitFromAdmin" value="優惠券管"
+							<INPUT type="submit" name="/group5/admin/vouchermain.controller" value="優惠券管"
+								style="border: none; background-color:transparent">
+						</form>
+						<form class="collapse-item" ACTION="/group5/admin/promotionsmain.controller"
+							method="get">
+							<INPUT type="submit" name="/group5/admin/vouchermain.controller" value="優惠券分發"
 								style="border: none; background-color:transparent">
 						</form>
 					</div>
@@ -108,10 +113,10 @@
 				<div id="collapseArea" class="collapse" aria-labelledby="headingTwo"
 					data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
-						<a class="collapse-item" href="/Subject2_Hibernate/gym.queryMain">查詢地點</a>
-						<a class="collapse-item" href="/Subject2_Hibernate/gym.addMain">新增地點</a>
-						<a class="collapse-item" href="/Subject2_Hibernate/gym.updateMain">修改地點</a>
-						<a class="collapse-item" href="/Subject2_Hibernate/gym.deleteMain">刪除地點</a>
+						<a class="collapse-item" href="gym.queryMain">查詢地點</a>
+						<a class="collapse-item" href="gym.addMain">新增地點</a>
+						<a class="collapse-item" href="gym.updateMain">修改地點</a>
+						<a class="collapse-item" href="gym/gym.deleteMain">刪除地點</a>
 					</div>
 				</div>
 			</li>
@@ -137,7 +142,7 @@
 				<div id="collapseText" class="collapse" aria-labelledby="headingTwo"
 					data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
-						<form class="collapse-item" ACTION="MainPost.all" method="get">
+						<form class="collapse-item" ACTION="/group5/admin/MainPost.all" method="get">
 							<input type="hidden" name="todo" value="allposts"> 
 							<INPUT type="submit" name="goToFrontPage" value="貼文管理" style="border: none; background-color:transparent">
 						</form>
@@ -151,7 +156,8 @@
 				<div id="collapseFitness" class="collapse"
 					aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
-						<a class="collapse-item" href="menuBuildup.controller">新增菜單</a>
+						<a class="collapse-item" href="mainmenu.controller">查看菜單</a>
+						<a class="collapse-item" href="menuAdd.controller">新增菜單</a>
 					</div>
 				</div></li>
 		</ul>

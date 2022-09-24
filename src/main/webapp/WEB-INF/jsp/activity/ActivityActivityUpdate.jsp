@@ -11,11 +11,13 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>活動修改</title>
-<link rel="stylesheet" href="/css/voucherStyle.css">
+<link rel="stylesheet" href="/group5/css/voucherStyle.css">
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
+
+	<%@ include file="../admin/AdminstyleHead.jsp" %>
 
 	<!-- JQuery  連結-->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -163,5 +165,8 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 					});
 			});
   		</script>
+  		
+  		<%@ include file="../admin/AdminstyleFoot.jsp"%>
+  		
 </body>
 </html>

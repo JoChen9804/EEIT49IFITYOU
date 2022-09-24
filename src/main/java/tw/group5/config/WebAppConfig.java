@@ -20,9 +20,14 @@ public class WebAppConfig implements WebMvcConfigurer{
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/Path/**").addResourceLocations("file:/C:/images/admin/");
-		registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/resources/js/");
-		registry.addResourceHandler("/css/**").addResourceLocations("/WEB-INF/resources/css/");
+//		registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/resources/js/");
+//		registry.addResourceHandler("/css/**").addResourceLocations("/WEB-INF/resources/css/");
 		
+		//貼文的~~~~
+        registry.addResourceHandler("/images/**").addResourceLocations("file:/C:/images/posts/");
+        registry.addResourceHandler("/group5/admin/imagestest/**").addResourceLocations("/WEB-INF/resources/postfolder/images/");
+        registry.addResourceHandler("/group5/admin/styles/**").addResourceLocations("/WEB-INF/resources/postfolder/styles/");
+        
 		registry.addResourceHandler("/upload/**").addResourceLocations("file:C:/images/admin/");
 		registry.addResourceHandler("/group5/**").addResourceLocations("/WEB-INF/resources/");
 		registry.addResourceHandler("/group5/admin/**").addResourceLocations("/WEB-INF/resources/");
