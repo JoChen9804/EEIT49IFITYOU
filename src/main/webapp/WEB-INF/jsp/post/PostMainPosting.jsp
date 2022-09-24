@@ -73,7 +73,7 @@
             required oninvalid="setCustomValidity('請輸入內容')" oninput="setCustomValidity('')"></textarea>
         </div>
                   
-       請選擇圖片(最多五張，每張2MB以下):<input id="file1" type="file" class="upl" name="Filename2" multiple="multiple" 
+       請選擇圖片(最多五張，每張2MB以下):<input id="file1" type="file" class="btn btn-outline-primary" name="Filename2" multiple="multiple" 
                             accept="image/*" onchange="checkip()">           
             <div id="imgs"></div>  
     
@@ -82,14 +82,14 @@
 
     
         <div class="sub">       
-            <input type="submit" name="submit"  value="送出">
+            <input type="submit" name="submit" class="btn btn-outline-success"  value="送出">
         </div>
      </FORM>
      
      <form name="updateForm" action="MainPost.return" method="GET">
        <!--   <input type="hidden" name="todo" value="return"> -->
        <div class="sub"> 
-       <input type="submit" name="returns" value="返回首頁">
+       <input type="submit" name="returns" class="btn btn-outline-primary" value="返回首頁">
              </div>
     </form>
     </fieldset>

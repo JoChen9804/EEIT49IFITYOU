@@ -61,7 +61,7 @@ fieldset {
                             <img width='300' height='200' src="${image}">
                         </c:forEach>
                         
-        <P>重新選擇圖片(最多五張，每張2MB以下):<input id="file1" type="file" class="upl" name="chamgeimages" multiple="multiple" 
+        <P>重新選擇圖片(最多五張，每張2MB以下):<input id="file1" type="file" class="btn btn-outline-primary" name="chamgeimages" multiple="multiple" 
                             accept="image/*" onchange="checkip()"></P>        
          <div id="imgs"></div>  
         <script src="js/jquery-3.6.0.js"></script>
@@ -69,7 +69,7 @@ fieldset {
         
   
         <div class="sub">
-        <input type="submit" name="modifyContent" value="修改內容">
+        <input type="submit" name="modifyContent" class="btn btn-outline-success" value="修改內容">
         </div>
    </form>
    
@@ -77,7 +77,7 @@ fieldset {
    
     <form name="updateForm" action="MainPost.return" method="GET">
        <div class="sub"> 
-       <input type="submit" name="returns" value="返回首頁"></div>
+       <input type="submit" name="returns" class="btn btn-outline-primary" value="返回首頁"></div>
     </form>
    
     

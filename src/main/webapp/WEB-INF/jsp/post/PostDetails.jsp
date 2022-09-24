@@ -90,7 +90,7 @@ height:150px;
 							<input type="hidden" name="_method" value="PUT"> 
 							<input type="hidden" id="mainPostNo" name="mainPostNo"
 								value="${queryOne.mainPostNo}">
-							<p><button type="submit" name="likenumber" value="${likes}">讚${likes}</button>
+							<p><button type="submit" name="likenumber" class="btn btn-outline-danger" value="${likes}">讚${likes}</button>
 							</p>
 						</form>
 
@@ -119,7 +119,7 @@ height:150px;
 						   <input type="hidden" name="_method" value="PUT"> 
 						   <input type="hidden" id="mainPostNo" name="mainPostNo" value="${queryOne.mainPostNo}">
                             <input type="hidden"  name="replyNo" value="${onereply.replyNo}">
-                            <p><button type="submit" name="replylikenumber" value="${onereply.replyLikeNumber}">讚${onereply.replyLikeNumber}</button>
+                            <p><button type="submit" name="replylikenumber" class="btn btn-outline-danger" value="${onereply.replyLikeNumber}"> 讚${onereply.replyLikeNumber}</button>
                             </p>
                         </form>
 						
@@ -141,7 +141,7 @@ height:150px;
                 
                
                                                 
-            <textarea name="replyContent" id="content1" cols="105" rows="10" 
+            <textarea name="replyContent" id="content1" cols="90" rows="10" 
             required oninvalid="setCustomValidity('請輸入內容')" oninput="setCustomValidity('')"></textarea>
             
   
@@ -151,7 +151,7 @@ height:150px;
             
            
             </div>
-       請選擇圖片(最多五張):<input id="file1" type="file" class="upl" name="replyfile" multiple="multiple" 
+       請選擇圖片(最多五張):<input id="file1" type="file" class="btn btn-outline-primary" name="replyfile" multiple="multiple" 
                             accept="image/*" onchange="checkip()">           
             <div id="imgs"></div>
              <script src="js/jquery-3.6.0.js"></script>
@@ -161,7 +161,7 @@ height:150px;
             
             <!--    之後改成抓取會帳號     -->
             <input type="hidden" id="會員帳號" name="會員帳號" value="replyAccount">
-            <input type="submit" name="replysubmit"  value="發表回復">
+            <input type="submit" name="replysubmit" class="btn btn-outline-success"  value="發表回復">
   
                 </td>
             </tr>
@@ -170,7 +170,7 @@ height:150px;
 
 		</table>
 		<form name="updateForm" action="MainPost.return" method="GET">
-			<div class="sub"><input type="submit" name="returns" value="返回首頁" margin="auto"></div>
+			<div class="sub"><input type="submit" name="returns" class="btn btn-outline-primary" value="返回首頁" margin="auto"></div>
 		</form>
 		
 		<%@ include file="../admin/AdminstyleFoot.jsp"%>
