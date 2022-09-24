@@ -13,21 +13,6 @@
 	content="I FIT YOU is a HTML landing page template built with Bootstrap to help you crate engaging presentations for SaaS apps and convert visitors into users.">
 <meta name="author" content="Inovatik">
 
-<!-- OG Meta Tags to improve the way the post looks when you share the page on LinkedIn, Facebook, Google+
-<meta property="og:site_name" content="" />
-<!-- website name 
-<meta property="og:site" content="" />
-<!-- website link 
-<meta property="og:title" content="" />
-<!-- title shown in the actual shared post 
-<meta property="og:description" content="" />
-<!-- description shown in the actual shared post 
-<meta property="og:image" content="" />
-<!-- image link, make sure it's jpg 
-<meta property="og:url" content="" />
-<!-- where do you want your post to link to
-<meta property="og:type" content="article" />
--->
 <!-- Website Title -->
 <title>I FIT YOU</title>
 
@@ -71,8 +56,19 @@
 			<!-- <a class="navbar-brand logo-text page-scroll" href="index.html">I FIT YOU</a> -->
 
 			<!-- Image Logo -->
-			<a class="navbar-brand logo-image" href="FrontStageMain"><img
-				src="images/logo.svg" alt="alternative"></a>
+			<!-- Sidebar - Brand -->
+			<a
+				class="sidebar-brand d-flex align-items-center justify-content-center"
+				href="FrontStageMain" aria-haspopup="true" aria-expanded="false">
+				<div class="sidebar-brand-icon rotate-n-15">
+					<img src="img/i_ift_you.jpg" class="img-profile rounded-circle"
+						height=50 width=50 />
+				</div>
+				<div class="nav-item">
+					<a class="nav-link page-scroll" href="FrontStageMain" style="font-size:20px">I FIT YOU
+					</a>
+				</div>
+			</a>
 
 			<!-- Mobile Menu Toggle Button -->
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -127,7 +123,8 @@
 							<form class="dropdown-item" action="">
 								<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
 								<input class="item-text" type="button" id="logoutCheck"
-									value="登出" style="color: white; background-color: transparent; border: none;" />
+									value="登出"
+									style="color: white; background-color: transparent; border: none;" />
 							</form>
 						</div></li>
 				</ul>
@@ -137,14 +134,7 @@
 	<!-- end of navbar -->
 	<!-- end of navigation -->
 	<script type="text/javascript">
-    $("#logoutCheck").on("click", function() {
-        swal({
-        title: 'Logga ut?',
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'OK'
-   })  
-    })  
+		
 	</script>
 </body>
 </html>

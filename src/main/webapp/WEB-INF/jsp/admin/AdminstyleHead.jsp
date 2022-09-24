@@ -43,9 +43,9 @@
 				class="sidebar-brand d-flex align-items-center justify-content-center"
 				href="AdminBackstage">
 				<div class="sidebar-brand-icon rotate-n-15">
-					<i class="fas fa-laugh-wink"></i>
+					<img src="img/i_ift_you.jpg" class="img-profile rounded-circle" height=50 width=50/>
 				</div>
-				<div class="sidebar-brand-text mx-3">
+				<div class="sidebar-brand-text mx-4">
 					I FIT YOU<br>管理系統 <sup></sup>
 				</div>
 			</a>
@@ -214,7 +214,7 @@
 							class="nav-link dropdown-toggle" href="#" id="userDropdown"
 							role="button" data-toggle="dropdown" aria-haspopup="true"
 							aria-expanded="false"> <span
-								class="mr-2 d-none d-lg-inline text-gray-600 small"><span>${loginMember.adminName}</span>
+								class="mr-3 d-none d-lg-inline text-gray-600 big"><span>${loginMember.adminName}</span>
 							</span> <img class="img-profile rounded-circle"
 								src="${loginMember.adminPhoto}">
 						</a> <!-- Dropdown - User Information -->

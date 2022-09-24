@@ -196,6 +196,12 @@
 	</header>
 	<!-- end of header -->
 	<script>
+	$( document ).ready(function(){
+		$('#loginbutton').attr("style", "background-color:#4e73df")
+		$('#cktoggle_id2').val("on")
+		$('#group5control').attr('style', 'background-color: #53618b')	
+	});
+	
 		var unameValue = $('#uname').val();
 		$('#uname').on('focus', function() {
 			$('#errorMsg').html("");
@@ -204,15 +210,15 @@
 		console.log($('#username').val());
 		$('#cktoggle_id2').on('change', function() {
 			if ($('#cktoggle_id2').val() == "on") {
+				$('#loginbutton').attr("style", "background-color:#53618b");
 				$('#cktoggle_id2').val("off");
 				var unameValue = $('#uname').val();
 				$('#username').val(unameValue + ",off");
-				$('#loginbutton').attr("style", "background-color:#53618b");
 			} else {
+				$('#loginbutton').attr("style", "background-color:#4e73df");
 				$('#cktoggle_id2').val("on");
 				var unameValue = $('#uname').val();
 				$('#username').val(unameValue + ",on");
-				$('#loginbutton').attr("style", "background-color:#4e73df");
 
 			}
 			console.log($('#username').val());
