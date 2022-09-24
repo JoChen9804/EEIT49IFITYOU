@@ -21,7 +21,6 @@ import tw.group5.activity.model.ActivityVoucher;
 import tw.group5.activity.service.ActivityActivityService;
 import tw.group5.activity.service.ActivityPromotionsService;
 import tw.group5.activity.service.ActivityVoucherService;
-import tw.group5.admin.model.MemberBean;
 
 @Controller
 @RequestMapping("/group5")
