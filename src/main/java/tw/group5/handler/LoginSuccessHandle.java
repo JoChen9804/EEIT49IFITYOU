@@ -8,20 +8,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.stereotype.Component;
 
 import tw.group5.admin.model.AdminBean;
 import tw.group5.admin.model.MemberBean;
 import tw.group5.admin.service.AdminService;
 
 //@SessionAttributes(names = {"loginMember"})
+@Component
 public class LoginSuccessHandle implements AuthenticationSuccessHandler{
 	
-//	@Autowired //攔截器會在service前載入，故注入無效
-//	private AdminService adminService;
-	AdminService adminService = SpringContextHolder.getBean(AdminService.class);
+	@Autowired //攔截器會在service前載入，故注入無效
+	private AdminService adminService;
+//	AdminService adminService = SpringContextHolder.getBean(AdminService.class);
 
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
@@ -29,7 +32,7 @@ public class LoginSuccessHandle implements AuthenticationSuccessHandler{
 		HttpSession session = request.getSession();
         String name = authentication.getName();
 		if (roles.contains("ROLE_ADMIN")){
-//        	System.out.println("抓到了"+name);
+        	System.out.println("抓到了"+name);
 			
         	AdminBean aBean = adminService.findByAccount(name);
         	session.setAttribute("loginMember", aBean);

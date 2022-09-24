@@ -22,6 +22,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private AuthUserDetailService auDetailService;
 	
+	@Autowired 
+	LoginSuccessHandle loginSuccessHandle;
+	
+	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth
@@ -55,7 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		  // loginpage.html 表單 action 內容
 		  .loginPage("/group5/login")
 		  //登入成功要造訪的頁面，使用Handle實現跳轉前後台
-		  .defaultSuccessUrl("/group5").successHandler(new LoginSuccessHandle())
+		  .defaultSuccessUrl("/group5").successHandler(loginSuccessHandle)
 		  // 登入失敗後要造訪的頁面
 		  .failureForwardUrl("/group5/admin/fail");
 		  // 登出
