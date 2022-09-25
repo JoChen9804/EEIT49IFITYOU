@@ -49,7 +49,7 @@
                     <input type="hidden" value="${logStatus.logId }" id="gymLogIdNow">
                     <input type="hidden" value="${logStatus.favorite }" id="logFavorite">
                     <input type="hidden" value="${logStatus.rating }" id="logRating">
-                    <input type="hidden" value="${userAdmin.id }" id="memberIdNow">
+                    <input type="hidden" value="${loginMember.id }" id="memberIdNow">
                 </div>
                 <div class="card-body">
                     <div class="saved">收藏：
