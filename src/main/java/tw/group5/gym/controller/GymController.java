@@ -30,7 +30,7 @@ import tw.group5.gym.service.GymService;
 
 @Controller
 @RequestMapping("/group5/admin/gym")
-@SessionAttributes(names= {"userAdmin"})
+//@SessionAttributes(names= {"userAdmin"})
 public class GymController {
 	
 	@Autowired
@@ -45,9 +45,9 @@ public class GymController {
 	//總表
 	@GetMapping("/allMain")
 	public String processAllMainAction(Model m) {
-		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		AdminBean admin = adminService.findByAccount(username);
-		m.addAttribute("userAdmin", admin);
+//		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+//		AdminBean admin = adminService.findByAccount(username);
+//		m.addAttribute("userAdmin", admin);
 		List<GymBean> list =gymService.findGyms(new GymBean());
 		m.addAttribute("queryAll",list);
 		return "gym/gymAll";
