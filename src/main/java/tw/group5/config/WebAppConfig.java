@@ -29,7 +29,7 @@ public class WebAppConfig implements WebMvcConfigurer{
 		registry.addResourceHandler("/upload/**").addResourceLocations("file:C:/images/admin/");
 		registry.addResourceHandler("/group5/**").addResourceLocations("/WEB-INF/resources/");
 		registry.addResourceHandler("/group5/admin/**").addResourceLocations("/WEB-INF/resources/");
-		registry.addResourceHandler("/group5/member/**").addResourceLocations("/WEB-INF/resources/");
+		registry.addResourceHandler("/group5/user/**").addResourceLocations("/WEB-INF/resources/");
 	}
 
 }

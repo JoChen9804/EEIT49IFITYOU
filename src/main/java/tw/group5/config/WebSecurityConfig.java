@@ -51,8 +51,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		  .authorizeRequests()
 		  .antMatchers(staticResources).permitAll()
 		  .antMatchers(HttpMethod.GET, "/group5/admin/**").hasRole("ADMIN")
+		  .antMatchers(HttpMethod.GET, "/group5/user/**").hasRole("USER")
 		  .antMatchers(HttpMethod.GET).permitAll() //get網址
 		  .antMatchers(HttpMethod.POST,"/group5/admin/**").hasRole("ADMIN")
+		  .antMatchers(HttpMethod.GET, "/group5/user/**").hasRole("USER")
 		  .antMatchers(HttpMethod.POST).permitAll() //post表單
 		  .anyRequest().authenticated()
 		  .and()                            //有效時間40分鐘

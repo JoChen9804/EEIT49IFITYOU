@@ -63,6 +63,10 @@ public class AdminController {
 	public String FrontStageMain() {
 		return "admin/FrontStageMain"; // 導向前台頁面
 	}
+	@RequestMapping("/user/UserCenter")
+	public String UserCenter() {
+		return "admin/UserCenter"; // 導向前台頁面
+	}
 //	@RequestMapping("/group5/login")
 //	public String GoLogin() {
 //		return "admin/FrontStageMain"; // 導向前台頁面
