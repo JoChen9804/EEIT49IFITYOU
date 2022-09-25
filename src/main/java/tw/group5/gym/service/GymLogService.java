@@ -43,7 +43,7 @@ public class GymLogService {
 		 return null;
 	}
 	
-	//where gymName=? 
+	//where gymNo=? 
 	public Set<GymLog> findByGym(GymBean gym){
 		return gymLogRespository.findByGym(gym);
 	}

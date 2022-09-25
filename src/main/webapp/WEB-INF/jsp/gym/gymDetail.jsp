@@ -76,11 +76,48 @@
                     </div>
                 </div>
             </div>
+                        <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">曾對${selectedGym.gymName }評分／收藏會員名單</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered display" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>會員編號</th>
+                                    <th>會員名稱</th>
+                                    <th>會員性別</th>
+                                    <th>收藏狀態</th>
+                                    <th>對健身房評分</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>會員編號</th>
+                                    <th>會員名稱</th>
+                                    <th>會員性別</th>
+                                    <th>收藏狀態</th>
+                                    <th>對健身房評分</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                <tr>
+                                    <td>Tiger Nixon</td>
+                                    <td>System Architect</td>
+                                    <td>Edinburgh</td>
+                                    <td>61</td>
+                                    <td>2011/04/25</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
             <div>
                 <a href="/group5/admin/gym/allMain" class="btn btn-secondary">回上一頁</a>
             </div>
         </div>
-    </div>
     </div>
 
     <script>
