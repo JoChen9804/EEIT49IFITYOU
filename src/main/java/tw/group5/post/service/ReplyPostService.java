@@ -38,14 +38,9 @@ public class ReplyPostService {
         return null;
     }
     
-    
-    
-    
     public List<ReplyPostBean> allReply(int mainPostNo) {
         return rpResp.allReplys(mainPostNo);
     }
-    
-    
     
     
 }

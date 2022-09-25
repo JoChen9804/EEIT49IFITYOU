@@ -64,7 +64,7 @@ fieldset {
         <P>重新選擇圖片(最多五張，每張2MB以下):<input id="file1" type="file" class="btn btn-outline-primary" name="chamgeimages" multiple="multiple" 
                             accept="image/*" onchange="checkip()"></P>        
          <div id="imgs"></div>  
-        <script src="js/jquery-3.6.0.js"></script>
+        <script src="/group5/js/jquery.min.js"></script>
         <script src="js/images.js"></script>   
         
   

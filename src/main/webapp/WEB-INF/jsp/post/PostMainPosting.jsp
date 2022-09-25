@@ -77,7 +77,7 @@
                             accept="image/*" onchange="checkip()">           
             <div id="imgs"></div>  
     
-        <script src="js/jquery-3.6.0.js"></script>
+        <script src="/group5/js/jquery.min.js"></script>
         <script src="js/images.js"></script>
 
     

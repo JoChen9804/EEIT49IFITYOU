@@ -1,7 +1,6 @@
 package tw.group5.post.controller;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -30,7 +28,7 @@ import tw.group5.post.service.ReplyPostService;
 public class MainPostServlet {
 
     @Autowired
-    private MainPostService mainPostService;
+    private MainPostService mpService;
 
     @Autowired
     private ReplyPostService rpService;
@@ -52,14 +50,14 @@ public class MainPostServlet {
         ModelAndView mav = new ModelAndView(postFrontPage);
 
         if (mpBean.getMainPostNo() != null) {
-            List<MainPostBean> query = firstImagePath(mainPostService.query(mpBean.getMainPostNo()));
+            List<MainPostBean> query = firstImagePath(mpService.query(mpBean.getMainPostNo()));
             if (query == null) {
                 mav.addObject("error", "查無資料");
             }
             mav.addObject("query", query);
         } else if (mpBean.getTitle() != null) {
             System.out.println("所有貼文");
-            List<MainPostBean> query = firstImagePath(mainPostService.allPosts(mpBean.getTitle()));
+            List<MainPostBean> query = firstImagePath(mpService.allPosts(mpBean.getTitle()));
             if (query.isEmpty()) {
                 mav.addObject("error", "查無資料");
             }
@@ -68,7 +66,7 @@ public class MainPostServlet {
         } else if (mpBean != null ) {
             System.out.println("所有貼文");
          
-            List<MainPostBean> query = firstImagePath(mainPostService.allPosts());
+            List<MainPostBean> query = firstImagePath(mpService.allPosts());
             mav.addObject("query", query);
 
         }
@@ -96,18 +94,18 @@ public class MainPostServlet {
             throws FileNotFoundException {
 
         addPost.setPostPermission(postPermission);
-        addPost.setAddtime(mainPostService.currentDateFormat("date"));
+        addPost.setAddtime(mpService.currentDateFormat("date"));
         addPost.setLikeNumber("");
         addPost.setP_image("");
 
         // 測試用路徑串接
         if (!mfs.get(0).isEmpty()) {
-            String addPostImages = mainPostService.addPostImages(mfs);
+            String addPostImages = mpService.addPostImages(mfs);
             System.out.println("有檔案~~~");
             addPost.setP_image(addPostImages);
         }
 
-        mainPostService.insert(addPost);
+        mpService.insert(addPost);
         return "redirect:MainPost.all";
     }
 
@@ -115,7 +113,7 @@ public class MainPostServlet {
     @PostMapping("/MainPost.watch")
     public ModelAndView watchPost(Integer watch) {
 
-        MainPostBean queryOne = mainPostService.selectById(watch);
+        MainPostBean queryOne = mpService.selectById(watch);
         ModelAndView mav = new ModelAndView(postDetails);
 
         if ("".equals(queryOne.getP_image())) {
@@ -170,7 +168,7 @@ public class MainPostServlet {
     // 刪除 ok
     @DeleteMapping("/MainPostingServlet")
     public String deleteDainPost(Integer deletepost) {
-        mainPostService.deleteById(deletepost);
+        mpService.deleteById(deletepost);
         return "redirect:MainPost.all";
     }
 
@@ -178,7 +176,7 @@ public class MainPostServlet {
     @PostMapping("/MainPostingServlet")
     public ModelAndView modifyPage(Integer updatepost) {
         ModelAndView mav = new ModelAndView(postChangePost);
-        MainPostBean queryContent = mainPostService.selectById(updatepost);
+        MainPostBean queryContent = mpService.selectById(updatepost);
 
         if (!"".equals(queryContent.getP_image()) && queryContent.getP_image() != null) {
             String[] allImages = queryContent.getP_image().split(",");
@@ -197,7 +195,7 @@ public class MainPostServlet {
 
         System.out.println("32132131" + mpBean.getP_image());
 
-        mpBean.setAddtime(mainPostService.currentDateFormat("date"));
+        mpBean.setAddtime(mpService.currentDateFormat("date"));
 
         mpBean.setLikeNumber("");
 
@@ -206,13 +204,13 @@ public class MainPostServlet {
         }
 
         if (!mfs.get(0).isEmpty()) {
-            String addPostImages = mainPostService.addPostImages(mfs);
+            String addPostImages = mpService.addPostImages(mfs);
 
             System.out.println(addPostImages);
             mpBean.setP_image(addPostImages);
         }
 
-        MainPostBean queryContent = mainPostService.update(mpBean);
+        MainPostBean queryContent = mpService.update(mpBean);
         if (queryContent != null) {
             return new ModelAndView("redirect:MainPost.all");
         }
@@ -241,7 +239,7 @@ public class MainPostServlet {
     public ModelAndView Likes(MainPostBean mpBean, ReplyPostBean rpBean) {
         ModelAndView mav = new ModelAndView(postDetails);
 
-        MainPostBean queryOne = mainPostService.selectById(mpBean.getMainPostNo());
+        MainPostBean queryOne = mpService.selectById(mpBean.getMainPostNo());
 
         // 改成會員帳號抓取
         String[] oldlikes = queryOne.getLikeNumber().split(",");
@@ -258,7 +256,7 @@ public class MainPostServlet {
         if (i == 0) {
             String newLike = queryOne.getLikeNumber() + memberAccount + ",";
             queryOne.setLikeNumber(newLike);
-            mainPostService.update(queryOne);
+            mpService.update(queryOne);
         }
 
         if ("".equals(queryOne.getP_image())) {
@@ -310,7 +308,7 @@ public class MainPostServlet {
     @PutMapping("/ReplyLikes")
     public ModelAndView ReplyLikes(MainPostBean mpBean, ReplyPostBean rpBean) {
         ModelAndView mav = new ModelAndView(postDetails);
-        MainPostBean queryOne = mainPostService.selectById(mpBean.getMainPostNo());
+        MainPostBean queryOne = mpService.selectById(mpBean.getMainPostNo());
 
         if ("".equals(queryOne.getP_image())) {
             queryOne.setP_image(null);
@@ -384,6 +382,82 @@ public class MainPostServlet {
         return mav;
     }
 
+    
+    
+    @PostMapping("/ReplyPost")
+    public ModelAndView addingPostConfirming(ReplyPostBean rpBean,MainPostBean mpBean,
+                                       @RequestParam("replyfile") List<MultipartFile> mfs) throws FileNotFoundException {
+            ModelAndView mav = new ModelAndView(postDetails);
+        
+//          rpBean.setPostPermission(postPermission);
+            rpBean.setReplyTime(mpService.currentDateFormat("date"));
+            rpBean.setReplyLikeNumber("");
+            rpBean.setReplyAccount(memberAccount);
+            rpBean.setR_image("");
+            
+            rpBean.setMainPostBean(mpBean);
+            
+            
+            MainPostBean queryOne = mpService.selectById(mpBean.getMainPostNo());
+            if("".equals(queryOne.getP_image())) {
+                queryOne.setP_image(null);
+            }
+            
+            mav.addObject("queryOne",queryOne);
+        //測試用路徑串接
+            if(!mfs.get(0).isEmpty()) {
+                String replyImages = mpService.addPostImages(mfs);
+                System.out.println(replyImages);
+                rpBean.setR_image(replyImages);
+            }
+            
+            if(!"".equals(queryOne.getP_image()) && queryOne.getP_image() != null) {
+                String[] allImages =queryOne.getP_image().split(",");
+                mav.addObject("allImages",allImages);
+            }
+            
+            if(!"".equals(queryOne.getLikeNumber()) &&queryOne.getLikeNumber() !=null) {
+                String[] oldlikes =queryOne.getLikeNumber().split(",");
+                mav.addObject("likes",oldlikes.length);
+            }else {
+                mav.addObject("likes",0);
+            }
+            
+
+            rpService.insert(rpBean);
+            
+            List<ReplyPostBean> allReply = rpService.allReply(mpBean.getMainPostNo());
+            
+            if(!allReply.isEmpty() && allReply !=null) {
+                        
+                for(ReplyPostBean oneReply :allReply ) {
+
+                    if(!"".equals(oneReply.getR_image()) &&  oneReply.getR_image() !=null) {
+                        String[] allReplyImages =oneReply.getR_image().split(",");
+                       
+                        oneReply.setR_imagess(allReplyImages);
+                    } 
+                    
+                    if(!"".equals(oneReply.getReplyLikeNumber()) &&queryOne.getLikeNumber() !=null) {
+                        String[] oldlikesReply =oneReply.getReplyLikeNumber().split(",");
+                        oneReply.setReplyLikeNumber(String.valueOf(oldlikesReply.length));
+                    
+                    }else {
+                        oneReply.setReplyLikeNumber("0");
+                    }
+                   
+                } 
+                mav.addObject("allReply",allReply);
+            }
+            
+        return mav;
+    }
+    
+    
+    
+ 
+    
+    
     // 測試
     public List<MainPostBean> firstImagePath1(List<MainPostBean> mpBean) {
         for (int i = 0; i < mpBean.size(); i++) {
@@ -396,9 +470,9 @@ public class MainPostServlet {
     }
 
     // 觀看 測試
-    @GetMapping("/MainPost.watch2/{id}")
+    //@GetMapping("/MainPost.watch2/{id}")
     public ModelAndView watchPost2(@PathVariable("id") Integer watch) {
-        MainPostBean queryOne = mainPostService.selectById(watch);
+        MainPostBean queryOne = mpService.selectById(watch);
         ModelAndView mav = new ModelAndView("redirect:/MainPost.watch456");
         mav.addObject("queryOne", queryOne);
 
@@ -408,8 +482,7 @@ public class MainPostServlet {
         }
         return mav;
     }
-
-    @PostMapping("/MainPost.watch456")
+    //@PostMapping("/MainPost.watch456")
     public ModelAndView watchPost() {
 
         ModelAndView mav = new ModelAndView("PostDetails");
@@ -418,39 +491,35 @@ public class MainPostServlet {
     }
 
     // 先給空的Bean給form:form使用 新增ok
-    @RequestMapping(path = "/addMembers.get", method = RequestMethod.GET)
+    //@RequestMapping(path = "/addMembers.get", method = RequestMethod.GET)
     public String addingPostConfirmings(Model m) {
         MainPostBean queryOne = new MainPostBean();
         m.addAttribute("addpost", queryOne);
         return "MainPosting2";
     }
-
-    @RequestMapping(path = "/addMembers", method = RequestMethod.POST)
+    //@RequestMapping(path = "/addMembers", method = RequestMethod.POST)
     public String addingPostConfirmingss(@ModelAttribute("addpost") MainPostBean addPost) {
         addPost.setPostPermission("一般會員");
         addPost.setPostPhoto(null);
-        addPost.setAddtime(mainPostService.currentDateFormat("date"));
+        addPost.setAddtime(mpService.currentDateFormat("date"));
         addPost.setLastReplyTime(null);
-
         // mainPostService.add(addPost);
         return "redirect:/MainPostingServlet.all";
     }
-
     // 首頁進入
-    @GetMapping("/MainPostingServlet3.all")
+    //@GetMapping("/MainPostingServlet3.all")
     public String postHomepage3(Map<String, Object> map) {
         System.out.println("所有貼文");
-        List<MainPostBean> query = mainPostService.allPosts();
+        List<MainPostBean> query = mpService.allPosts();
         map.put("query", query);
         return "PostFrontPage";
     }
-
     // 首頁進入
-    @GetMapping("/MainPostingServlet.all")
+    //@GetMapping("/MainPostingServlet.all")
     // @RequestMapping(path = "/MainPostingServlet.all",method = RequestMethod.GET)
     public String postHomepage(Model m) {
         System.out.println("所有貼文");
-        List<MainPostBean> query = mainPostService.allPosts();
+        List<MainPostBean> query = mpService.allPosts();
         m.addAttribute("query", query);
         return "PostFrontPage";
     }

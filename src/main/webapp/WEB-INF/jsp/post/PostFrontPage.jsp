@@ -107,7 +107,7 @@ th {
                     <input type="hidden" name="_method" value="DELETE">
                     <input type="hidden" name="deletepost" value="${allmpbs.mainPostNo}">
                     <input type="submit" id="${allmpbs.mainPostNo}" class="btn btn-outline-danger" value="刪除" > 
-                   <script src="js/jquery-3.6.0.js"></script>
+                   <script src="/group5/js/jquery.min.js"></script>
 			<script>
 			
 			

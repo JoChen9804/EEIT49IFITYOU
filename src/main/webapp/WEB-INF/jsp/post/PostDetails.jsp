@@ -154,7 +154,7 @@ height:150px;
        請選擇圖片(最多五張):<input id="file1" type="file" class="btn btn-outline-primary" name="replyfile" multiple="multiple" 
                             accept="image/*" onchange="checkip()">           
             <div id="imgs"></div>
-             <script src="js/jquery-3.6.0.js"></script>
+             <script src="/group5/js/jquery.min.js"></script>
              <script src="js/images.js"></script>  
             
             
