@@ -9,9 +9,10 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import tw.group5.admin.service.AuthUserDetailService;
-import tw.group5.handler.LoginSuccessHandle;
+import tw.group5.handler.LoginSuccessHandler;
 
 
 @SuppressWarnings("deprecation") //讓黃線不要顯示
@@ -21,6 +22,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	private AuthUserDetailService auDetailService;
+	
+	@Autowired 
+	LoginSuccessHandler loginSuccessHandle;
+	
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -55,18 +60,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		  // loginpage.html 表單 action 內容
 		  .loginPage("/group5/login")
 		  //登入成功要造訪的頁面，使用Handle實現跳轉前後台
-		  .defaultSuccessUrl("/group5").successHandler(new LoginSuccessHandle())
+		  .defaultSuccessUrl("/group5").successHandler(loginSuccessHandle)
 		  // 登入失敗後要造訪的頁面
 		  .failureForwardUrl("/group5/admin/fail");
-		  // 登出
-		   
+		  
+		  // 登出  
 		   http.logout()
-		  //刪除cookies
+		  // 設定觸發登出功能的 URL，預設為 /logout               
+		  //刪除cookies JSESSIONID
 		  .deleteCookies("JSESSIONID")
-		  // 設定觸發登出功能的 URL，預設為 /logout
-		  .logoutUrl("/group5/logout")                   
-		  //登出後會重新導向的 URL，預設是 /login?logout
-          .logoutSuccessUrl("/group5/login");
+		  //刪除Session
+		  .invalidateHttpSession(true)
+          .logoutRequestMatcher(new AntPathRequestMatcher("/group5/logout")) // 可以使用任何的 HTTP 方法登出
+          //登出後會重新導向的 URL，預設是 /login?logout
+		  .logoutSuccessUrl("/group5/FrontStageMain");
+      	;
 			
 	}
 

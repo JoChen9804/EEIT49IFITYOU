@@ -19,7 +19,6 @@ import tw.group5.admin.model.MemberBean;
 import tw.group5.admin.model.MemberDetail;
 import tw.group5.admin.model.MemberDetailRepository;
 import tw.group5.admin.model.MemberRepository;
-import tw.group5.exception.UserNotFoundExcption;
 
 @Service(value = "adminService")
 public class AdminService {

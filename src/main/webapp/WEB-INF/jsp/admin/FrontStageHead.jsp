@@ -13,25 +13,14 @@
 	content="I FIT YOU is a HTML landing page template built with Bootstrap to help you crate engaging presentations for SaaS apps and convert visitors into users.">
 <meta name="author" content="Inovatik">
 
-<!-- OG Meta Tags to improve the way the post looks when you share the page on LinkedIn, Facebook, Google+ -->
-<meta property="og:site_name" content="" />
-<!-- website name -->
-<meta property="og:site" content="" />
-<!-- website link -->
-<meta property="og:title" content="" />
-<!-- title shown in the actual shared post -->
-<meta property="og:description" content="" />
-<!-- description shown in the actual shared post -->
-<meta property="og:image" content="" />
-<!-- image link, make sure it's jpg -->
-<meta property="og:url" content="" />
-<!-- where do you want your post to link to -->
-<meta property="og:type" content="article" />
-
 <!-- Website Title -->
 <title>I FIT YOU</title>
 
 <!-- Styles -->
+<!--引用SweetAlert2.js-->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js"
+	type="text/javascript"></script>
 <link
 	href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700&display=swap&subset=latin-ext"
 	rel="stylesheet">
@@ -46,74 +35,113 @@
 </head>
 <body data-spy="scroll" data-target=".fixed-top">
 
-    <!-- Preloader -->
-    <div class="spinner-wrapper">
-        <div class="spinner">
-            <div class="bounce1"></div>
-            <div class="bounce2"></div>
-            <div class="bounce3"></div>
-        </div>
-    </div>
-    <!-- end of preloader -->
+	<!-- Preloader -->
+	<div class="spinner-wrapper">
+		<div class="spinner">
+			<div class="bounce1"></div>
+			<div class="bounce2"></div>
+			<div class="bounce3"></div>
+		</div>
+	</div>
+	<!-- end of preloader -->
 
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top" style="background-color: #4e73df">
-        <div class="container">
+	<!-- Navigation -->
+	<nav
+		class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top"
+		style="background-color: #4e73df">
+		<div class="container">
 
-            <!-- Text Logo - Use this if you don't have a graphic logo -->
-            <!-- <a class="navbar-brand logo-text page-scroll" href="index.html">I FIT YOU</a> -->
+			<!-- Text Logo - Use this if you don't have a graphic logo -->
+			<!-- <a class="navbar-brand logo-text page-scroll" href="index.html">I FIT YOU</a> -->
 
-            <!-- Image Logo -->
-            <a class="navbar-brand logo-image" href="FrontStageMain"><img src="images/logo.svg" alt="alternative"></a>
+			<!-- Image Logo -->
+			<!-- Sidebar - Brand -->
+			<a
+				class="sidebar-brand d-flex align-items-center justify-content-center"
+				href="FrontStageMain" aria-haspopup="true" aria-expanded="false">
+				<div class="sidebar-brand-icon rotate-n-15">
+					<img src="img/i_ift_you.jpg" class="img-profile rounded-circle"
+						height=50 width=50 />
+				</div>
+				<div class="nav-item">
+					<a class="nav-link page-scroll" href="FrontStageMain"
+						style="font-size: 20px">I FIT YOU </a>
+				</div>
+			</a>
 
-            <!-- Mobile Menu Toggle Button -->
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
-                aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-awesome fas fa-bars"></span>
-                <span class="navbar-toggler-awesome fas fa-times"></span>
-            </button>
-            <!-- end of mobile menu toggle button -->
+			<!-- Mobile Menu Toggle Button -->
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarsExampleDefault"
+				aria-controls="navbarsExampleDefault" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-awesome fas fa-bars"></span> <span
+					class="navbar-toggler-awesome fas fa-times"></span>
+			</button>
+			<!-- end of mobile menu toggle button -->
 
-            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link page-scroll" href="#header">HOME <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link page-scroll" href="#features">FEATURES</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link page-scroll" href="#details">DETAILS</a>
-                    </li>
+			<div class="collapse navbar-collapse" id="navbarsExampleDefault">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item"><a class="nav-link page-scroll"
+						href="#header">HOME <span class="sr-only">(current)</span></a></li>
+					<li class="nav-item"><a class="nav-link page-scroll"
+						href="#features">FEATURES</a></li>
+					<li class="nav-item"><a class="nav-link page-scroll"
+						href="#details">DETAILS</a></li>
 
-                    <!-- Dropdown Menu -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle page-scroll" href="#video" id="navbarDropdown" role="button"
-                            aria-haspopup="true" aria-expanded="false">VIDEO</a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="article-details.html"><span class="item-text">ARTICLE
-                                    DETAILS</span></a>
-                            <div class="dropdown-items-divide-hr"></div>
-                            <a class="dropdown-item" href="terms-conditions.html"><span class="item-text">TERMS
-                                    CONDITIONS</span></a>
-                            <div class="dropdown-items-divide-hr"></div>
-                            <a class="dropdown-item" href="privacy-policy.html"><span class="item-text">PRIVACY
-                                    POLICY</span></a>
-                        </div>
-                    </li>
-                    <!-- end of dropdown menu -->
+					<!-- Dropdown Menu -->
+					<li class="nav-item dropdown"><a
+						class="nav-link dropdown-toggle page-scroll" href="#video"
+						id="navbarDropdown" role="button" aria-haspopup="true"
+						aria-expanded="false">VIDEO</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href="article-details.html"><span
+								class="item-text">ARTICLE DETAILS</span></a>
+							<div class="dropdown-items-divide-hr"></div>
+							<a class="dropdown-item" href="terms-conditions.html"><span
+								class="item-text">TERMS CONDITIONS</span></a>
+							<div class="dropdown-items-divide-hr"></div>
+							<a class="dropdown-item" href="privacy-policy.html"><span
+								class="item-text">PRIVACY POLICY</span></a>
+						</div></li>
+					<!-- end of dropdown menu -->
 
-                    <li class="nav-item">
-                        <a class="nav-link page-scroll" href="#pricing">PRICING</a>
-                    </li>
-                </ul>
-                <span class="nav-item">
-                    <a class="btn-outline-sm" href="/group5/login">LOGIN</a>
-                </span>
-            </div>
-        </div> <!-- end of container -->
-    </nav> <!-- end of navbar -->
-    <!-- end of navigation -->
+					<li class="nav-item"><a class="nav-link page-scroll"
+						href="#pricing">PRICING</a></li>
+
+					<li class="nav-item dropdown"><a
+						class="btn-outline-sm dropdown-toggle page-scroll" href="#"
+						id="navbarDropdown" role="button" aria-haspopup="true"
+						aria-expanded="false">會員</a> <span
+						class="mr-3 d-none d-lg-inline text-gray-600 big"><span>${loginMember.name}</span>
+					</span> <img class="img-profile rounded-circle"
+						src="${loginMember.photo}" height=20px width=20px></a> <!-- Dropdown - User Information -->
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href="/group5/logout"
+								data-toggle="modal" data-target="#logoutModal"> <i
+								class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+								Logout</a> 
+								<a class="dropdown-item" href="article-details.html"><span
+								class="item-text">會員資訊</span></a>
+							<div class="dropdown-items-divide-hr"></div>
+							<a class="dropdown-item" href="terms-conditions.html"><span
+								class="item-text">交友管理</span></a>
+							<div class="dropdown-items-divide-hr"></div>
+							<form class="dropdown-item" action="">
+								<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+								<input class="item-text" type="button" id="logoutCheck"
+									value="登出"
+									style="color: white; background-color: transparent; border: none;" />
+							</form>
+						</div></li>
+				</ul>
+			</div>
+			<!-- end of container -->
+	</nav>
+	<!-- end of navbar -->
+	<!-- end of navigation -->
+	<script type="text/javascript">
+		
+	</script>
 </body>
 </html>
