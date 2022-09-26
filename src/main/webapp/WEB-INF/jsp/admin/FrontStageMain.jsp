@@ -4,7 +4,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
 </head>
 <body>
 <%@ include file="FrontStageHead.jsp"%>
@@ -15,16 +14,17 @@
                 <div class="row">
                     <div class="col-lg-6 col-xl-5">
                         <div class="text-container">
-                            <h1>SaaS App HTML Landing Page</h1>
-                            <p class="p-large">Use Tivo to automate your marketing actions in order to reach a much
-                                larger audience</p>
-                            <a class="btn-solid-lg page-scroll" href="sign-up.html">SIGN UP</a>
+                            <h1>I FIT YOU 源起</h1>
+                            <p class="p-large">數位科技生活化的時代，現代人大多獨立，一個人在異地，也能享受生活、休憩、運動，卻也漸漸走向社交孤立。
+我們的網站希望能為用戶們建立一個全方位的平台，使用戶們能記錄運動以及自己常去的據點、分享心得、尋找朋友；也能夠過平台取得運動所需品，並將定期進行優惠促銷回饋用戶們。
+</p>
+                            <a class="btn-solid-lg page-scroll" href="sign-up.html">看更多</a>
                         </div> <!-- end of text-container -->
                     </div> <!-- end of col -->
                     <div class="col-lg-6 col-xl-7">
                         <div class="image-container">
                             <div class="img-wrapper">
-                                <img class="img-fluid" src="images/header-software-app.png" alt="alternative">
+                                <img class="img-fluid" src="images/i_fit_you_cover.png" alt="alternative">
                             </div> <!-- end of img-wrapper -->
                         </div> <!-- end of image-container -->
                     </div> <!-- end of col -->

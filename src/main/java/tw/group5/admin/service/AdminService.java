@@ -19,7 +19,6 @@ import tw.group5.admin.model.MemberBean;
 import tw.group5.admin.model.MemberDetail;
 import tw.group5.admin.model.MemberDetailRepository;
 import tw.group5.admin.model.MemberRepository;
-import tw.group5.exception.UserNotFoundExcption;
 
 @Service(value = "adminService")
 public class AdminService {
@@ -142,6 +141,7 @@ public class AdminService {
 		String adminPhoto;
 		if (modifyimage.equals("false")) {
 			adminPhoto = "/upload" + "/" + "DefaultImage.png";
+			return adminPhoto;
 		} else {
 			// 根據時間戳建立頭像檔案
 			String fileName;

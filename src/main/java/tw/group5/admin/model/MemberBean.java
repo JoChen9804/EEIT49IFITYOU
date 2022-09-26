@@ -29,6 +29,7 @@ public class MemberBean {
 	
 	private Integer authority;
 	
+	@Column(name="name")
 	private String name;
 	
 	private String photo;
