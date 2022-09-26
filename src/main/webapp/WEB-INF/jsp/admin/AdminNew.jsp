@@ -101,7 +101,7 @@ legend {
 						<label for="pwd2" class="t1">再次輸入密碼：</label><input id="pwd2"
 							type="password" name="pwd2" maxlength="15" required
 							onblur="validate()"> <span id="tishi"></span>
-							<input type="hidden" name="originalRealPassword" value="" id="">
+							<input type="hidden" name="originalRealPassword" value="${pwd}" id="">
 					</div>
 					<div class="st1">
 						<label for="" class="t1">權限：</label> <label> <input
@@ -137,10 +137,8 @@ legend {
 									$('#account1').val("${name}")
 									var img = document.getElementById("img");
 									img.setAttribute("src", "${modifyAdminPhoto}");
-									$('#originalRealPassword').val("${pwd}")
 									$('#pwd1').val("******")
 									$('#pwd2').val("******")
-
 									if ("${auth}" == 2) {
 										document.getElementById("authority1").checked = false;
 										document.getElementById("authority2").checked = true;
