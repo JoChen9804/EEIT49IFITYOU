@@ -31,7 +31,7 @@ public class AuthUserDetailService implements UserDetailsService {
 				MemberBean mBean = adminService.findByAccountMember(userName);
 //			System.out.println("username: " + username + "password" + mBean.getMemberPassword());
 				if (mBean.getAuthority() == 0) {
-					authority = "user,normal,ROLE_user";
+					authority = "user,normal,ROLE_USER";
 				}
 				return new User(mBean.getMemberAccount(),mBean.getMemberPassword(), AuthorityUtils.commaSeparatedStringToAuthorityList(authority));
 				//"off" 管理員登入，權限設定

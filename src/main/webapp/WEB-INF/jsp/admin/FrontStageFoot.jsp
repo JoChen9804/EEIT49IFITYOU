@@ -4,11 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
 </head>
 <body>
     <!-- Footer -->
-    <svg class="footer-frame" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
+    <svg id="group5control" class="footer-frame" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
         viewBox="0 0 1920 79">
         <defs>
             <style>
@@ -79,7 +78,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <p class="p-small">Copyright © 2020 <a href="https://inovatik.com">Template by Inovatik</a><br>
+                    <p class="p-small">Copyright © 2022 <a href="https://inovatik.com">Template by Inovatik</a><br>
                         Distributed By <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
                     </p>
                 </div> <!-- end of col -->
@@ -87,6 +86,28 @@
         </div> <!-- end of container -->
     </div> <!-- end of copyright -->
     <!-- end of copyright -->
+    
+    <!-- Logout Modal-->
+	<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">確認是否登出？</h5>
+					<button class="close" type="button" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true"></span>
+					</button>
+				</div>
+				<div class="modal-body">登出後將跳轉登入頁面。</div>
+				<div class="modal-footer">
+					<button class="btn btn-secondary" type="button"
+						data-dismiss="modal">取消</button>
+					<a class="btn btn-primary" href="/group5/logout" style="text-decoration: none;">登出</a>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
     <!-- Scripts -->
