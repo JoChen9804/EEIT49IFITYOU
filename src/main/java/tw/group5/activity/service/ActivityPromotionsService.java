@@ -41,20 +41,16 @@ public class ActivityPromotionsService {
 		
 	}
 	
-	public void delete(ActivityPromotions promotions) {
-		pRepository.delete(promotions);
+	public void delete(int id) {
+		pRepository.deleteById(id);
 	}
 	
-	public Set<MemberBean> findByVoucher(ActivityVoucher voucher){
+	public Set<ActivityPromotions> findByVoucher(ActivityVoucher voucher){
 		return pRepository.findByVoucher(voucher);
 	}
 	
-	public Set<ActivityVoucher> findByMember(MemberBean member){
+	public Set<ActivityPromotions> findByMember(MemberBean member){
 		return pRepository.findByMember(member);
-	}
-	
-	public ActivityPromotions findOnePromotions(MemberBean member, ActivityVoucher voucher) {
-		return pRepository.findByMemberAndVoucher(member, voucher);
 	}
 	
 	public ActivityPromotions findByMemberAndVoucher(MemberBean member, ActivityVoucher voucher) {

@@ -17,10 +17,6 @@ response.setCharacterEncoding("UTF-8");
 <title>優惠券總覽</title>
 <style>
 
-td, th {
-	width: 175px;
-}
-
 input {
 	margin: 3px;
 }
@@ -31,8 +27,7 @@ input {
 	overflow: auto;
 }
 </style>
-<link rel="stylesheet" type="text/css"
-	href="https://cdn.datatables.net/1.11.2/css/jquery.dataTables.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.2/css/jquery.dataTables.css">
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
@@ -47,6 +42,9 @@ input {
 
 	<!-- sweetalert2   連結-->
 	<script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
+	
+	<!-- fontawesome 連結 -->
+	<script src="https://kit.fontawesome.com/5b36a12f3a.js" crossorigin="anonymous"></script>
 
 	<div id="show"></div>
 	
@@ -67,34 +65,43 @@ input {
 				<table class="table table-bordered" id="table_id" class="compact hover stripe" style="border:none">
 					<thead>
 						<tr>
+							<th style="width: 65px">持有會員</th>
 							<th>優惠券號</th>
 							<th>優惠券名</th>
 							<th>到期日</th>
 							<th>負責管理員</th>
 							<th>最後修改時間</th>
-							<th>操作</th>
+							<th style="width: 170px">操作</th>
 						</tr>
 					</thead>
 					<c:forEach var="vqa" items="${voucher_queryAll}">
 						<tr>
+							<td>
+								<center>
+								<form ACTION="promotionsmain.controller" method="post" >
+									<input type="hidden" name="dataId" value="${vqa.voucherId}" />
+									<input type="submit" name="query" value="編輯" class="btn btn-outline-primary " />
+								</form>
+								</center>
+							</td>
 							<td>${vqa.voucherNo}</td>
 							<td>${vqa.voucherTitle}</td>
 							<td>${vqa.expiryTime}</td>
 							<td>${vqa.a_account}</td>
 							<td>${vqa.reviseTime}</td>
 							<td>
-								<form ACTION="queryvoucher.controller" method="post" style="float: left; " >
+								<form ACTION="queryvoucher.controller" method="post" style="float: left; margin-left: 3px" >
 									<input type="hidden" name="dataId" value="${vqa.voucherId}" />
-									<input type="submit" name="query" value="查看內文" />
+									<input type="submit" name="query" value="查看" class="btn btn-outline-info " />
 								</form> 
-								<form ACTION="updatevoucher.controller" method="post" enctype="multipart/form-data" style="float: left;">
+								<form ACTION="updatevoucher.controller" method="post" enctype="multipart/form-data" style="float: left; margin-left: 3px">
 									<input type="hidden" name="dataId" value="${vqa.voucherId}" />
-									<input type="submit" name="update" value="修改" />
+									<input type="submit" name="update" value="修改" class="btn btn-outline-secondary " />
 								</form> 
-								<form ACTION="deletevoucher.controller" method="post" >
+								<form ACTION="deletevoucher.controller" method="post" style="float: left; margin-left: 3px">
 									<input type="hidden" name="dataId" value="${vqa.voucherId}" />
 									<input type="hidden" name="voucherTitle" value="${vqa.voucherTitle}" />
-									<input type="submit" id="delete" name="delete" class="del" value="刪除" />
+									<input type="submit" id="delete" name="delete" value="刪除" class="del btn btn-outline-danger " />
 								</form>
 							</td>
 						</tr>
@@ -115,37 +122,35 @@ input {
 					<thead>
 						<tr>
 							<th>活動名稱</th>
-							<th>活動類型</th>
-							<th>活動開始日</th>
-							<th>活動結束日</th>
+							<th style="width:80px">活動類型</th>
+							<th>活動時間</th>
 							<th>主辦方</th>
 							<th>負責管理員</th>
 							<th>最後修改時間</th>
-							<th>操作</th>
+							<th style="width: 170px">操作</th>
 						</tr>
 					</thead>
 					<c:forEach var="aqa" items="${activity_queryAll}">
 						<tr>
 							<td>${aqa.activityTitle}</td>
 							<td>${aqa.typeContent}</td>
-							<td>${aqa.startTime}</td>
-							<td>${aqa.endTime}</td>
+							<td>${aqa.startTime}<br>~${aqa.endTime}</td>
 							<td>${aqa.holder}</td>
 							<td>${aqa.a_account}</td>
 							<td>${aqa.reviseTime}</td>
 							<td>
-								<form ACTION="queryactivity.controller" method="post" style="float: left; " >
+								<form ACTION="queryactivity.controller" method="post" style="float: left; margin-left: 3px" >
 									<input type="hidden" name="dataId" value="${aqa.activityId}" />
-									<input type="submit" name="query" value="查看內文" />
+									<input type="submit" name="query" value="查看" class="btn btn-outline-info " />
 								</form> 
-								<form ACTION="updateactivity.controller" method="post" enctype="multipart/form-data" style="float: left;">
+								<form ACTION="updateactivity.controller" method="post" enctype="multipart/form-data" style="float: left; margin-left: 3px">
 									<input type="hidden" name="dataId" value="${aqa.activityId}" />
-									<input type="submit" name="update" value="修改" />
+									<input type="submit" name="update" value="修改" class="btn btn-outline-secondary " />
 								</form> 
-								<form ACTION="deleteactivity.controller" name="ddeell" method="post" >
+								<form ACTION="deleteactivity.controller" name="ddeell" method="post" style="float: left; margin-left: 3px">
 									<input type="hidden" name="dataId" value="${aqa.activityId}" id="dd" />
 									<input type="hidden" name="voucherTitle" value="${aqa.activityTitle}" />
-									<input type="submit" id="delete" name="delete" class="del" value="刪除" />
+									<input type="submit" id="delete" name="delete" value="刪除" class="del btn btn-outline-danger "/>
 								</form>
 								
 							</td>
@@ -153,52 +158,9 @@ input {
 					</c:forEach>
 				</table>
 			`);
-		}else if(page=="promotions"){
-			
-			$('#show').append(`
-					<H2 style="display: inline">優惠券分發操作</H2>
-				    &emsp;&emsp;&emsp;
-				    <form id="add" action="addpromotions.controller" enctype="multipart/form-data" method="post"
-				        class="btn btn-info btn-icon-split">
-				        <span class="icon text-white-50"> <i class="fas fa-flag"></i></span>
-				        <input type="submit" name="add" value="新增" class="text"
-				            style="border: none; background-color: #36b9cc; color: white" />
-				    </form>
-				    <table class="table table-bordered" id="table_id" class="compact hover stripe">
-				        <thead>
-				            <tr>
-				                <th>優惠券號</th>
-				                <th>持有會員</th>
-				                <th>負責管理員</th>
-				                <th>最後修改時間</th>
-				                <th>操作</th>
-				            </tr>
-				        </thead>
-				        <c:forEach var="pqa" items="${promotions_queryAll}">
-				            <tr>
-				                <td>${pqa.voucher.getVoucherNo()}</td>
-				                <td>${pqa.member.id}</td>
-				                <td>${pqa.a_account}</td>
-				                <td>${pqa.reviseTime}</td>
-				                <td>
-				                    <form ACTION="updatepromotions.controller" method="post" enctype="multipart/form-data"
-				                        style="float: left;">
-				                        <input type="hidden" name="dataId" value="${pqa.id}" />
-				                        <input type="submit" name="update" value="修改" />
-				                    </form>
-				                    <form ACTION="deletepromotions.controller" method="post">
-				                        <input type="hidden" name="dataId" value="${pqa.id}" />
-				                        <input type="hidden" name="voucherTitle" value="${pqa.member.getMemberAccount()}" />
-				                        <input type="submit" id="delete" name="delete" class="del" value="刪除" />
-				                    </form>
-				                </td>
-				            </tr>
-				        </c:forEach>
-				    </table>
-			`);
 		}
 		
-		$('#table_id').dataTable({});
+		$('#table_id').dataTable({'bAutoWidth': false});
 		
 	});
 	</script>
@@ -230,8 +192,6 @@ input {
 				});
 		});
 	})
-	
-	
 	
 	</script>
 	

@@ -48,7 +48,8 @@ response.setCharacterEncoding("UTF-8");
 
 	<form:form action="addvoucher.controller" method="post" modelAttribute="voucher" enctype="multipart/form-data" onsubmit=" return chkinput(this)">
 
-		<form:input type="hidden" path="a_account" value="暫空"/>
+		<!-- <form:input type="hidden" path="a_account" value=""/> -->
+		<form:input type="hidden" path="a_account" value="${loginMember.adminName }"/>
 
 		<div class="happy">
 		<fieldset>

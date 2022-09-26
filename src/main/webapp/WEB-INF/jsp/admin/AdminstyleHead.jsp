@@ -87,8 +87,7 @@
 					aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<a class="collapse-item" href="/group5/admin/activitymain.controller">活動管理</a>
-						<a class="collapse-item" href="/group5/admin/vouchermain.controller">優惠券管</a>
-						<a class="collapse-item" href="/group5/admin/promotionsmain.controller">優惠券分發</a>
+						<a class="collapse-item" href="/group5/admin/vouchermain.controller">優惠券管理</a>
 					</div>
 				</div></li>
 			<!-- Nav Item - Pages Collapse Menu æå¡ç®¡ç-->

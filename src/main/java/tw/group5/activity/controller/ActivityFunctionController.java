@@ -2,6 +2,8 @@ package tw.group5.activity.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
+
 import javax.servlet.http.HttpServlet;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,17 +23,13 @@ import tw.group5.activity.model.ActivityVoucher;
 import tw.group5.activity.service.ActivityActivityService;
 import tw.group5.activity.service.ActivityPromotionsService;
 import tw.group5.activity.service.ActivityVoucherService;
+import tw.group5.admin.model.AdminBean;
+import tw.group5.admin.model.MemberBean;
 
 @Controller
 @RequestMapping("/group5")
 public class ActivityFunctionController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-	 public String getUsername() {
-	        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-	        System.out.println(username); // user
-	        return username;
-	 }
 	
 	/*
 	 * voucher
@@ -60,7 +58,6 @@ public class ActivityFunctionController extends HttpServlet {
 				voucher.setPhotoData(imgName);
 			}
 			voucher.setReviseTime(vService.getTime());
-			voucher.setA_account(getUsername());
 			if (vService.insert(voucher)!=null) {
 				m.addAttribute("add_voucher", vService.selectById(voucher.getVoucherId()));
 				m.addAttribute("page", "voucher");
@@ -82,7 +79,6 @@ public class ActivityFunctionController extends HttpServlet {
 			return "activity/ActivityVoucherUpdate";
 		} else {
 			voucher.setReviseTime(vService.getTime());
-			voucher.setA_account(getUsername());
 			if (photo.isEmpty()) {
 				voucher.setPhotoData(oldimg);
 			} else {
@@ -141,7 +137,6 @@ public class ActivityFunctionController extends HttpServlet {
 				activity.setPhotoData(imgName);
 			}
 			activity.setReviseTime(aService.getTime());
-			activity.setA_account(getUsername());
 			if (aService.insert(activity)!=null) {
 				m.addAttribute("add_activity", aService.selectById(activity.getActivityId()));
 				m.addAttribute("page", "activity");
@@ -166,7 +161,6 @@ public class ActivityFunctionController extends HttpServlet {
 			System.out.println("更新資料ID : " + activity.getActivityId());
 			
 			activity.setReviseTime(aService.getTime());
-			activity.setA_account(getUsername());
 			if (photo.isEmpty()) {
 				activity.setPhotoData(oldimg);
 			} else {
@@ -204,14 +198,20 @@ public class ActivityFunctionController extends HttpServlet {
 	@Autowired
 	private ActivityPromotionsService promotionsService;
 	
-	@GetMapping("/admin/promotionsmain.controller")
-	public String processPromotionsMainAction(Model m) {
+	@PostMapping("/admin/promotionsmain.controller")
+	public String processPromotionsMainAction(Model m, int dataId) {
 		System.out.println("進入promotions總攬");
-		List<ActivityPromotions> promotions = promotionsService.findAll();
+		ActivityVoucher voucher = vService.selectById(dataId);
+		Set<ActivityPromotions> promotions = promotionsService.findByVoucher(voucher);
 		m.addAttribute("promotions_queryAll", promotions);
-		m.addAttribute("page", "promotions");
-		return "activity/ActivityQueryAll";
+		m.addAttribute("voucher_name", voucher.getVoucherTitle());
+		return "activity/ActivityPromotionsEdit";
 	}
 	
+	@PostMapping("/admin/deletepromotions.controller")
+	public String promotionsDelete(Model m, int dataId) {
+		promotionsService.delete(dataId);
+		return "redirect:promotionsmain.controller";
+	}
 	
 }
