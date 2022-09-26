@@ -7,7 +7,32 @@
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8" />
 <link rel="stylesheet" href="styles/Topic.css">
 <TITLE>${queryOne.title}</TITLE>
-<link rel="stylesheet" href="">
+<script src="/group5/js/jquery.min.js"></script>
+
+<script type="text/javascript">
+$(function(){
+    $("#likemainpost").on("click",function(){
+        var mainPostNo = $(this).prev().val();
+        let mainPostBean={"mainPostNo":mainPostNo};
+        $.ajax({
+            type: "put",
+            url:'/group5/admin/LikesAJAX',
+            data: mainPostBean,
+            dataType:'json',
+           
+            success: function(data){
+                  console.log(data);
+                  $("#likemainpost").text("讚"+data.likeNumber);
+                 //location.reload();
+            }
+        });
+    });
+});
+</script>
+
+
+
+
 
 <style>
 .table1 {
@@ -86,13 +111,12 @@ height:150px;
 							<img width='300' height='200' src="${image}">
 						</c:forEach>
 						</form>
-						<form action=Likes method="post">
-							<input type="hidden" name="_method" value="PUT"> 
+						
+					
+						 <br>
 							<input type="hidden" id="mainPostNo" name="mainPostNo"
 								value="${queryOne.mainPostNo}">
-							<p><button type="submit" name="likenumber" class="btn btn-outline-danger" value="${likes}">讚${likes}</button>
-							</p>
-						</form>
+							<button type="submit" name="likenumber" id="likemainpost" class="btn btn-outline-danger" value="${likes}">讚${likes}</button>
 
 					</div>
 				</td>
@@ -115,20 +139,39 @@ height:150px;
 					   <img width='300' height='200' src="${onewReplyImage}">
                        </c:forEach>
 						
-						  <form action=ReplyLikes method="post">
-						   <input type="hidden" name="_method" value="PUT"> 
+			                 <br>
 						   <input type="hidden" id="mainPostNo" name="mainPostNo" value="${queryOne.mainPostNo}">
                             <input type="hidden"  name="replyNo" value="${onereply.replyNo}">
-                            <p><button type="submit" name="replylikenumber" class="btn btn-outline-danger" value="${onereply.replyLikeNumber}"> 讚${onereply.replyLikeNumber}</button>
-                            </p>
-                        </form>
-						
-						
-						
+                            <button type="submit" name="replylikenumber" id="${onereply.replyNo}" class="btn btn-outline-danger" value="${onereply.replyLikeNumber}"> 讚${onereply.replyLikeNumber}</button>
+
+						<script type="text/javascript">
+                        $(function(){
+                            var onereply = document.getElementById("${onereply.replyNo}");
+                            
+                            onereply.onclick = function (event) {
+                                var replyNo = $(this).prev().val();
+                                console.log(replyNo);
+                                let ReplyPostBean = {"replyNo":replyNo};
+                                $.ajax({
+                                    type: "put",
+                                    url:'/group5/admin/ReplyLikesAJAX',
+                                    data: ReplyPostBean,
+                                    dataType:'json',
+                                    success: function(data){
+                                        console.log(data);
+                                        document.getElementById("${onereply.replyNo}").innerText ="讚"+data.replyLikeNumber
+                                    }
+                                });
+                            }
+                            
+                          });
+                        </script>
 					</div>
 				</td>
 			</tr>
 			</c:forEach>
+
+			
 			
 			
 			

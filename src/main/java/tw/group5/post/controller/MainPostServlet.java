@@ -1,6 +1,8 @@
 package tw.group5.post.controller;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -15,9 +17,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import tw.group5.admin.model.MemberBean;
 import tw.group5.post.model.MainPostBean;
 import tw.group5.post.model.ReplyPostBean;
 import tw.group5.post.service.MainPostService;
@@ -39,14 +43,17 @@ public class MainPostServlet {
     public final String postChangePost = "post/PostChangePost";
 
     // 改成會員帳號 與會員權限
-    public String memberAccount = "test123";
+    public String memberAccount = "test777";
     public String postPermission = "一般會員";
 
     // 首頁進入
     // 推薦使用四種方式最終都是封裝成ModelAndView
     @GetMapping("/MainPost.all")
-    public ModelAndView postHomepage2(MainPostBean mpBean) {
+    public ModelAndView postHomepage2(MainPostBean mpBean,@ModelAttribute("loginMember") MemberBean mBean) {
 
+        //System.out.println(mBean.getMemberName());
+        
+        
         ModelAndView mav = new ModelAndView(postFrontPage);
 
         if (mpBean.getMainPostNo() != null) {
@@ -190,7 +197,7 @@ public class MainPostServlet {
     }
 
     // 測試按讚紀錄 之後改成帳號串起來算陣列數量
-    @PutMapping("/Likes")
+   // @PutMapping("/Likes")
     public ModelAndView Likes(MainPostBean mpBean, ReplyPostBean rpBean) {
         MainPostBean queryOne = mpService.selectById(mpBean.getMainPostNo());
         // 改成會員帳號抓取
@@ -220,7 +227,7 @@ public class MainPostServlet {
         return mavMpost;
     }
 
-    @PutMapping("/ReplyLikes")
+   // @PutMapping("/ReplyLikes")
     public ModelAndView ReplyLikes(MainPostBean mpBean, ReplyPostBean rpBean) {
        
         MainPostBean queryOne = mpService.selectById(mpBean.getMainPostNo());
@@ -313,6 +320,83 @@ public class MainPostServlet {
         }
         return null;
     }
+    
+    
+    @PutMapping("/LikesAJAX") @ResponseBody
+    public MainPostBean LikesAJAX(MainPostBean mpBean) {
+        
+       // ModelAndView mav = watchPost(mpBean.getMainPostNo());
+        ModelAndView mav = new ModelAndView("/MainPost.watch");
+        System.out.println("有找到嗎?");
+        MainPostBean queryOne = mpService.selectById(mpBean.getMainPostNo());
+        System.out.println("有找到嗎?");
+        String[] oldlikes = queryOne.getLikeNumber().split(",");
+        
+        
+        int i = 0; // 找到一樣的就+1
+        for (String like : oldlikes) {
+            System.out.println(like);
+            if (like.equals(memberAccount)) {
+                i++;
+                List<String> list = new ArrayList<String>(Arrays.asList(oldlikes));
+                list.remove(memberAccount);
+                String [] newStr = new String [list.size()];
+                list.toArray(newStr);
+                String newlinkes = "";
+                for(String oneStr : newStr) {
+                    newlinkes += oneStr+','; 
+                }
+                queryOne.setLikeNumber(newlinkes);
+                mpService.update(queryOne);
+                break;
+            }
+        }
+        if (i == 0) {
+            String newLike = queryOne.getLikeNumber() + memberAccount + ",";
+            queryOne.setLikeNumber(newLike);
+            mpService.update(queryOne);
+        }
+        
+        if (!"".equals(queryOne.getLikeNumber())) {
+            queryOne.setLikeNumber(String.valueOf(oldlikes.length));
+            mav.addObject("likes", queryOne.getLikeNumber().split(",").length);
+        }
+        else {
+            mav.addObject("likes", 0);
+        }
+        return queryOne;
+    }
+    
+
+    @PutMapping("/ReplyLikesAJAX") @ResponseBody
+    public ReplyPostBean ReplyLikesAJAX(ReplyPostBean rpBean) {
+        ReplyPostBean replyPostBean = rpService.selectById(rpBean.getReplyNo());
+        String[] oldReplylikes = replyPostBean.getReplyLikeNumber().split(",");
+        int j = 0; // 找到一樣的就+1
+        for (String likeReply : oldReplylikes) {
+            if (likeReply.equals(memberAccount)) {
+                j++;
+                break;
+            }
+        }
+        if (j == 0) {
+            String newLikeReply = replyPostBean.getReplyLikeNumber() + memberAccount + ",";
+            replyPostBean.setReplyLikeNumber(newLikeReply);
+            rpService.update(replyPostBean);
+        }
+        if (!"".equals(replyPostBean.getReplyLikeNumber())) {
+            
+            replyPostBean.setReplyLikeNumber(String.valueOf(oldReplylikes.length));
+        }
+        else {
+            replyPostBean.setReplyLikeNumber("0");
+        }
+        return replyPostBean;
+    }
+    
+    
+    
+    
     
     // 測試
     public List<MainPostBean> firstImagePath1(List<MainPostBean> mpBean) {
