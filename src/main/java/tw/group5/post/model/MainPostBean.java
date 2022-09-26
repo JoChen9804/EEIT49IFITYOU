@@ -140,14 +140,11 @@ public class MainPostBean {
     public void setLikeNumber(String likeNumber) {
         this.likeNumber = likeNumber;
     }
-
     public String getP_image() {
         return p_image;
     }
-
     public void setP_image(String p_image) {
         this.p_image = p_image;
     }
-    
     
 }

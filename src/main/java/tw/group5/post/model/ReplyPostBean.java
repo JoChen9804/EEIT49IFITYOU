@@ -39,6 +39,10 @@ public class ReplyPostBean {
     @Column(name = "r_image")
     private String r_image;              //照片路徑
     
+    @Column(name = "replypermission")
+    private String replyPermission;              //照片路徑
+    
+    
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "mainpostno")
     private MainPostBean mainPostBean;  
@@ -69,11 +73,9 @@ public class ReplyPostBean {
     public int getReplyLikeNumbers() {
         return replyLikeNumbers;
     }
-
     public void setReplyLikeNumbers(int replyLikeNumbers) {
         this.replyLikeNumbers = replyLikeNumbers;
     }
-
     public int getReplyNo() {
         return replyNo;
     }
@@ -110,29 +112,32 @@ public class ReplyPostBean {
     public void setReplyLikeNumber(String replyLikeNumber) {
         this.replyLikeNumber = replyLikeNumber;
     }
-
     public MainPostBean getMainPostBean() {
         return mainPostBean;
     }
-
     public void setMainPostBean(MainPostBean mainPostBean) {
         this.mainPostBean = mainPostBean;
     }
-
     public String getR_image() {
         return r_image;
     }
-
     public void setR_image(String r_image) {
         this.r_image = r_image;
     }
-
     public String[] getR_imagess() {
         return r_imagess;
     }
-
     public void setR_imagess(String[] r_imagess) {
         this.r_imagess = r_imagess;
     }
+
+    public String getReplyPermission() {
+        return replyPermission;
+    }
+
+    public void setReplyPermission(String replyPermission) {
+        this.replyPermission = replyPermission;
+    }
+    
     
 }
