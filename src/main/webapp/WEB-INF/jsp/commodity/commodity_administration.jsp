@@ -192,7 +192,7 @@
     		
     	    				for (Commodity commodity : commodityAdministrationDemonstration) {
     	    					
-    	    				String commodityImage = "../../../commodityImages/"+commodity.getCommodityNo()+"_image1.jpg";
+    	    				String commodityImage = "/group5/commodityImages/"+commodity.getCommodityNo()+"_image1.jpg";
     	    				
     	    				%>
     	    				
