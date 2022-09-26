@@ -5,25 +5,23 @@
 <html>
    <HEAD>
       <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8"/>
-  
-      
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+
+        
       <link rel="stylesheet" href="styles/Topic.css">
       
       
       <TITLE>貼文首頁</TITLE>
     <style>
-  img {
-         width: 150px;
+img {
+        width: 150px;
+        height: 120px;
          /*border: 3px solid red;*/
-        padding: 5px 5px 5px 5px;
-        margin: 5px;
-     }
+        padding: 2px 2px 2px 2px;
+        margin: 2px;
+}
      
-td,
-th {
-    border: 1px solid gray;
-   }
-   fieldset {
+fieldset {
     width: 1000px;
     border: 1px solid #acd6ff;
     border-radius: 15px;
@@ -39,24 +37,30 @@ th {
     
     <%@ include file="../admin/AdminstyleHead.jsp" %>
        
+         <script src="/group5/js/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.11.2/js/jquery.dataTables.js"></script> 
+       
+       
    <fieldset>
     <h1 ALIGN=CENTER>貼文首頁</h1>
-    <form name="querypostbut" action="MainPost.all" method="GET">
-     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+    
+     <table class="table table-bordered" id="table_id"
+            class="compact hover stripe">
            <tr>
+          <form name="querypostbut" action="MainPost.all" method="GET">
             <th>  
             <label for="dataa" class="t1">主貼文編號:</label>
             <input type="TEXT"  id=dataa name="mainPostNo" 
             required oninvalid="setCustomValidity('請輸入貼文編號id')" oninput="setCustomValidity('')"><BR></th>
             <th>
-            <input type="submit" class="btn btn-outline-primary"" name="inquireId" value="查詢">
+            <input type="submit" class="btn btn-outline-primary" name="inquireId" value="查詢">
            </th>
+             </form> 
         </tr>
-    </table>
-   </form>
-       <form name="likequerypostbut" action="MainPost.all" method="GET">
-         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+         
            <tr>
+               <form name="likequerypostbut" action="MainPost.all" method="GET">
              <th>  
             <label for="dataa1" class="t1">搜尋:</label>
             <input type="TEXT" id=dataa1 name="title" 
@@ -64,16 +68,19 @@ th {
             <th>
             <input type="submit" class="btn btn-outline-primary"  name="likequire" value="查詢標題" >
            </th>
-        </tr>
+            </tr>
+            </form>
     </table>
   
-   </form>
+  
+   
    <form action="MainPost.return" method="GET">
         <input type="submit" class="btn btn-outline-primary""  name="returns" value="所有貼文" >
    </form>
    <div class="card-body">
    <div class="table-responsive">
-    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+    <table class="table table-bordered" id="table_id"
+            class="compact hover stripe">
     <thead>
         <tr>
         <th>圖片</th>
@@ -139,11 +146,10 @@ th {
           </tr>
         </tbody>
      </c:forEach>
-     <tbody>
-    <tr><td colspan="7">${error}</td></tr></tbody>
+            <tbody>
+            <tr><td colspan="9">${error}</td></tr></tbody>
             </table> 
              </div> 
-
                 <div class="sub">
                 <form name="addForm" action="MainPosting.add" method="POST"> 
                 <input type="submit" class="btn btn-outline-warning" name="addpost" value="發布貼文">
@@ -151,7 +157,7 @@ th {
                </div>
                 </div>
         </fieldset>
-        
+
         <%@ include file="../admin/AdminstyleFoot.jsp"%>
         
     </body>

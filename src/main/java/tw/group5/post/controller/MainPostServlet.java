@@ -92,8 +92,8 @@ public class MainPostServlet {
     @PostMapping("/MainPosting.controller")
     public String addingPostConfirming(MainPostBean addPost, @RequestParam("Filename2") List<MultipartFile> mfs)
             throws FileNotFoundException {
-
         addPost.setPostPermission(postPermission);
+        addPost.setAccount(memberAccount);
         addPost.setAddtime(mpService.currentDateFormat("date"));
         addPost.setLikeNumber("");
         addPost.setP_image("");
@@ -104,7 +104,6 @@ public class MainPostServlet {
             System.out.println("有檔案~~~");
             addPost.setP_image(addPostImages);
         }
-
         mpService.insert(addPost);
         return "redirect:MainPost.all";
     }
@@ -112,57 +111,17 @@ public class MainPostServlet {
     // 觀看ok
     @PostMapping("/MainPost.watch")
     public ModelAndView watchPost(Integer watch) {
-
         MainPostBean queryOne = mpService.selectById(watch);
-        ModelAndView mav = new ModelAndView(postDetails);
-
-        if ("".equals(queryOne.getP_image())) {
-            queryOne.setP_image(null);
-        }
-
-        mav.addObject("queryOne", queryOne);
-
-        if (!"".equals(queryOne.getLikeNumber()) && queryOne.getLikeNumber() != null) {
-            String[] oldlikes = queryOne.getLikeNumber().split(",");
-            mav.addObject("likes", oldlikes.length);
-        } else {
-            mav.addObject("likes", 0);
-        }
-
-        // 使用串接存進去
-        if (queryOne.getP_image() != null) {
-            String[] allImages = queryOne.getP_image().split(",");
-            mav.addObject("allImages", allImages);
-        }
-
+        ModelAndView mavMpost = takeOutmpBean(queryOne,postDetails);
+        
         // -----------上面是主貼文------------
 
         List<ReplyPostBean> allReply = rpService.allReply(watch);
-
-        if (!allReply.isEmpty() && allReply != null) {
-
-            for (ReplyPostBean oneReply : allReply) {
-
-                if (!"".equals(oneReply.getR_image()) && oneReply.getR_image() != null) {
-                    String[] allReplyImages = oneReply.getR_image().split(",");
-
-                    oneReply.setR_imagess(allReplyImages);
-                }
-                    if (!"".equals(oneReply.getReplyLikeNumber()) && queryOne.getLikeNumber() != null) {
-                        String[] oldlikesReply = oneReply.getReplyLikeNumber().split(",");
-
-                        oneReply.setReplyLikeNumber(String.valueOf(oldlikesReply.length));
-                    } else {
-
-                        oneReply.setReplyLikeNumber("0");
-                    }
-
-                
-            }
-            mav.addObject("allReply", allReply);
+        if(!allReply.isEmpty()) {
+            ModelAndView mav = takeOutrpBean(allReply,mavMpost);
+            return mav;
         }
-
-        return mav;
+        return mavMpost;
     }
 
     // 刪除 ok
@@ -184,7 +143,6 @@ public class MainPostServlet {
         } else {
             queryContent.setP_image("");
         }
-
         mav.addObject("queryContent", queryContent);
         return mav;
     }
@@ -192,21 +150,18 @@ public class MainPostServlet {
     // 修改後送出ok
     @PutMapping("/MainPostServlet")
     public ModelAndView updateMainPost(MainPostBean mpBean, @RequestParam("chamgeimages") List<MultipartFile> mfs) {
-
-        System.out.println("32132131" + mpBean.getP_image());
-
         mpBean.setAddtime(mpService.currentDateFormat("date"));
+        
+        if("".equals(mpBean.getLikeNumber()) || mpBean.getLikeNumber() == null) {
+            mpBean.setLikeNumber("");
+        }
 
-        mpBean.setLikeNumber("");
-
-        if (mpBean.getP_image().equals("")) {
+        if ("".equals(mpBean.getP_image())) {
             mpBean.setP_image("");
         }
 
         if (!mfs.get(0).isEmpty()) {
             String addPostImages = mpService.addPostImages(mfs);
-
-            System.out.println(addPostImages);
             mpBean.setP_image(addPostImages);
         }
 
@@ -237,10 +192,7 @@ public class MainPostServlet {
     // 測試按讚紀錄 之後改成帳號串起來算陣列數量
     @PutMapping("/Likes")
     public ModelAndView Likes(MainPostBean mpBean, ReplyPostBean rpBean) {
-        ModelAndView mav = new ModelAndView(postDetails);
-
         MainPostBean queryOne = mpService.selectById(mpBean.getMainPostNo());
-
         // 改成會員帳號抓取
         String[] oldlikes = queryOne.getLikeNumber().split(",");
 
@@ -252,88 +204,27 @@ public class MainPostServlet {
                 break;
             }
         }
-
         if (i == 0) {
             String newLike = queryOne.getLikeNumber() + memberAccount + ",";
             queryOne.setLikeNumber(newLike);
             mpService.update(queryOne);
         }
 
-        if ("".equals(queryOne.getP_image())) {
-            queryOne.setP_image(null);
-        }
-
-        if (!"".equals(queryOne.getLikeNumber()))
-            mav.addObject("likes", queryOne.getLikeNumber().split(",").length);
-        else {
-            mav.addObject("likes", 0);
-        }
-
-        mav.addObject("queryOne", queryOne);
-        if (!"".equals(queryOne.getP_image()) && queryOne.getP_image() != null) {
-            String[] allImages = queryOne.getP_image().split(",");
-            mav.addObject("allImages", allImages);
-        }
-
-        // ---------------上面是主貼文---------
+        ModelAndView mavMpost = takeOutmpBean(queryOne,postDetails);
         
         List<ReplyPostBean> allReply = rpService.allReply(mpBean.getMainPostNo());
-        if (!allReply.isEmpty() && allReply != null) {
-            for (ReplyPostBean oneReply : allReply) {
-                if (!"".equals(oneReply.getR_image()) && oneReply.getR_image() != null) {
-                    String[] allReplyImages = oneReply.getR_image().split(",");
-                    oneReply.setR_imagess(allReplyImages);
-                }
-                    
-                    if (!"".equals(oneReply.getReplyLikeNumber()) &&oneReply.getReplyLikeNumber()!=null) {
-                        String[] oldlikesReply = oneReply.getReplyLikeNumber().split(",");
-                        System.out.println("999999");
-                        oneReply.setReplyLikeNumber(String.valueOf(oldlikesReply.length));
-                    } else {
-                        oneReply.setReplyLikeNumber("0");
-                    }
-               
-            }
-            mav.addObject("allReply", allReply);
+        if(!allReply.isEmpty()) {
+            ModelAndView mav = takeOutrpBean(allReply,mavMpost);
+            return mav;
         }
-        
-        
-        
-        
-        
-
-        return mav;
+        return mavMpost;
     }
 
     @PutMapping("/ReplyLikes")
     public ModelAndView ReplyLikes(MainPostBean mpBean, ReplyPostBean rpBean) {
-        ModelAndView mav = new ModelAndView(postDetails);
+       
         MainPostBean queryOne = mpService.selectById(mpBean.getMainPostNo());
-
-        if ("".equals(queryOne.getP_image())) {
-            queryOne.setP_image(null);
-        }
-
-        if (!"".equals(queryOne.getP_image()) && queryOne.getP_image() != null) {
-            String[] allImages = queryOne.getP_image().split(",");
-            mav.addObject("allImages", allImages);
-        }
-
-        mav.addObject("queryOne", queryOne);
-        if (!"".equals(queryOne.getP_image()) && queryOne.getP_image() != null) {
-            String[] allImages = queryOne.getP_image().split(",");
-            mav.addObject("allImages", allImages);
-        }
-
-        if (!"".equals(queryOne.getLikeNumber()))
-            mav.addObject("likes", queryOne.getLikeNumber().split(",").length);
-        else {
-            mav.addObject("likes", 0);
-        }
-
-        mav.addObject("queryOne", queryOne);
-
-
+        ModelAndView mavmPost = takeOutmpBean(queryOne,postDetails);
 
         ReplyPostBean replyPostBean = rpService.selectById(rpBean.getReplyNo());
         String[] oldReplylikes = replyPostBean.getReplyLikeNumber().split(",");
@@ -345,118 +236,83 @@ public class MainPostServlet {
                 break;
             }
         }
-
         if (j == 0) {
             String newLikeReply = replyPostBean.getReplyLikeNumber() + memberAccount + ",";
             replyPostBean.setReplyLikeNumber(newLikeReply);
             rpService.update(replyPostBean);
         }
 
-//        if (!"".equals(replyPostBean.getReplyLikeNumber())) {
-//            String[] oldlikesReply = replyPostBean.getReplyLikeNumber().split(",");
-//            replyPostBean.setReplyLikeNumber(String.valueOf(oldlikesReply.length));
-//        } else {
-//            replyPostBean.setReplyLikeNumber("0");
-//        }
-
         List<ReplyPostBean> allReply = rpService.allReply(mpBean.getMainPostNo());
-        if (!allReply.isEmpty() && allReply != null) {
-            for (ReplyPostBean oneReply : allReply) {
-                if (!"".equals(oneReply.getR_image()) && oneReply.getR_image() != null) {
-                    String[] allReplyImages = oneReply.getR_image().split(",");
-                    oneReply.setR_imagess(allReplyImages);
-                }
-                    
-                    if (!"".equals(oneReply.getReplyLikeNumber()) &&oneReply.getReplyLikeNumber()!=null) {
-                        String[] oldlikesReply = oneReply.getReplyLikeNumber().split(",");
-                        System.out.println("999999");
-                        oneReply.setReplyLikeNumber(String.valueOf(oldlikesReply.length));
-                    } else {
-                        oneReply.setReplyLikeNumber("0");
-                    }
-               
-            }
-            mav.addObject("allReply", allReply);
-        }
+        ModelAndView mav = takeOutrpBean(allReply,mavmPost);
 
         return mav;
     }
-
-    
     
     @PostMapping("/ReplyPost")
     public ModelAndView addingPostConfirming(ReplyPostBean rpBean,MainPostBean mpBean,
                                        @RequestParam("replyfile") List<MultipartFile> mfs) throws FileNotFoundException {
-            ModelAndView mav = new ModelAndView(postDetails);
-        
-//          rpBean.setPostPermission(postPermission);
             rpBean.setReplyTime(mpService.currentDateFormat("date"));
             rpBean.setReplyLikeNumber("");
             rpBean.setReplyAccount(memberAccount);
             rpBean.setR_image("");
-            
             rpBean.setMainPostBean(mpBean);
             
-            
             MainPostBean queryOne = mpService.selectById(mpBean.getMainPostNo());
+            ModelAndView mavmPost = takeOutmpBean(queryOne,postDetails);
+            
             if("".equals(queryOne.getP_image())) {
                 queryOne.setP_image(null);
             }
             
-            mav.addObject("queryOne",queryOne);
-        //測試用路徑串接
             if(!mfs.get(0).isEmpty()) {
                 String replyImages = mpService.addPostImages(mfs);
-                System.out.println(replyImages);
                 rpBean.setR_image(replyImages);
             }
-            
-            if(!"".equals(queryOne.getP_image()) && queryOne.getP_image() != null) {
-                String[] allImages =queryOne.getP_image().split(",");
-                mav.addObject("allImages",allImages);
-            }
-            
-            if(!"".equals(queryOne.getLikeNumber()) &&queryOne.getLikeNumber() !=null) {
-                String[] oldlikes =queryOne.getLikeNumber().split(",");
-                mav.addObject("likes",oldlikes.length);
-            }else {
-                mav.addObject("likes",0);
-            }
-            
-
             rpService.insert(rpBean);
             
             List<ReplyPostBean> allReply = rpService.allReply(mpBean.getMainPostNo());
+            ModelAndView mav = takeOutrpBean(allReply,mavmPost);
             
-            if(!allReply.isEmpty() && allReply !=null) {
-                        
-                for(ReplyPostBean oneReply :allReply ) {
-
-                    if(!"".equals(oneReply.getR_image()) &&  oneReply.getR_image() !=null) {
-                        String[] allReplyImages =oneReply.getR_image().split(",");
-                       
-                        oneReply.setR_imagess(allReplyImages);
-                    } 
-                    
-                    if(!"".equals(oneReply.getReplyLikeNumber()) &&queryOne.getLikeNumber() !=null) {
-                        String[] oldlikesReply =oneReply.getReplyLikeNumber().split(",");
-                        oneReply.setReplyLikeNumber(String.valueOf(oldlikesReply.length));
-                    
-                    }else {
-                        oneReply.setReplyLikeNumber("0");
-                    }
-                   
-                } 
-                mav.addObject("allReply",allReply);
-            }
-            
+            return mav;
+    }
+    
+    public ModelAndView takeOutmpBean(MainPostBean mpBean ,String view) {
+        ModelAndView mav = new ModelAndView(view);
+        if ("".equals(mpBean.getP_image()) || mpBean.getP_image()==null) {
+            mpBean.setP_image(null);
+        }else {
+            String[] allImages = mpBean.getP_image().split(",");
+            mav.addObject("allImages", allImages);
+        }
+        if(mpBean.getLikeNumber().indexOf(",") !=-1) {
+            String[] oldlikes = mpBean.getLikeNumber().split(",");
+            mav.addObject("likes", oldlikes.length);
+        }else {
+            mav.addObject("likes", 0);
+        }
+        mav.addObject("queryOne", mpBean);
         return mav;
     }
     
-    
-    
- 
-    
+    public ModelAndView takeOutrpBean(List<ReplyPostBean> rpBeans,ModelAndView mav) {
+        if (!rpBeans.isEmpty() && rpBeans != null) {
+            for (ReplyPostBean oneReply : rpBeans) {
+                if (!"".equals(oneReply.getR_image()) && oneReply.getR_image() != null) {
+                    String[] allReplyImages = oneReply.getR_image().split(",");
+                    oneReply.setR_imagess(allReplyImages);
+                }
+                if (!"".equals(oneReply.getReplyLikeNumber()) && oneReply.getReplyLikeNumber() != null) {
+                    String[] oldlikesReply = oneReply.getReplyLikeNumber().split(",");
+                    oneReply.setReplyLikeNumber(String.valueOf(oldlikesReply.length));
+                } else {
+                    oneReply.setReplyLikeNumber("0");
+                }
+            }
+            mav.addObject("allReply", rpBeans);
+            return mav;
+        }
+        return null;
+    }
     
     // 測試
     public List<MainPostBean> firstImagePath1(List<MainPostBean> mpBean) {

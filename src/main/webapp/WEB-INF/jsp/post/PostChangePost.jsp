@@ -32,8 +32,8 @@ fieldset {
             <label for="mainPostNo" class="t1">主貼文編號:</label>${queryContent.mainPostNo}
              <input type="hidden" id="mainPostNo" name="mainPostNo" value="${queryContent.mainPostNo}">
              <input type="hidden" name="account" value="${queryContent.account}">
+             <input type="hidden" name="likeNumber" value="${queryContent.likeNumber}">
              </div>
-             
              
              
             <div class="st1">
