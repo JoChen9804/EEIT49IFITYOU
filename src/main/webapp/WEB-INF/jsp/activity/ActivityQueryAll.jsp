@@ -56,13 +56,8 @@ input {
 
 	<div id="show"></div>
 	
-	<!-- <script>$('#table_id').dataTable({});</script> -->
-	
 	<script>
 	$(function() {
-		
-		$('#table_id').dataTable({});
-		
 		var page = `${page}`;
 		console.log(page);
 		
@@ -75,8 +70,7 @@ input {
 					<span class="icon text-white-50"> <i class="fas fa-flag"></i></span>
 					<input type="submit" name="add" value="新增" class="text" style="border: none; background-color: #36b9cc; color: white"/>
 				</form>
-				<table class="table table-bordered" id="table_id"
-					class="compact hover stripe">
+				<table class="table table-bordered" id="table_id" class="compact hover stripe">
 					<thead>
 						<tr>
 							<th>優惠券號</th>
@@ -210,6 +204,8 @@ input {
 			`);
 		}
 		
+		$('#table_id').dataTable({});
+		
 	});
 	</script>
 	<script>
@@ -240,6 +236,9 @@ input {
 				});
 		});
 	})
+	
+	
+	
 	</script>
 	
 	<%@ include file="../admin/AdminstyleFoot.jsp"%>
