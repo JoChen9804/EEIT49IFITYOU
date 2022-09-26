@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="zh-hang-TW">
 
@@ -13,11 +14,13 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <!-- Custom styles for this template -->
-    <link href="/group5/css/sb-admin-2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/group5/css/ratingAndSaved-style.css">
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-</head>
+    <link href="/group5/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <script src="/group5/js/jquery.dataTables.min.js"></script>
+    <script src="/group5/js/dataTables.bootstrap4.min.js"></script>
 
+</head>
 <body>
 <%@ include file="../admin/AdminstyleHead.jsp" %>
     <!-- Page Heading -->
@@ -49,7 +52,7 @@
                     <input type="hidden" value="${logStatus.logId }" id="gymLogIdNow">
                     <input type="hidden" value="${logStatus.favorite }" id="logFavorite">
                     <input type="hidden" value="${logStatus.rating }" id="logRating">
-                    <input type="hidden" value="${userAdmin.id }" id="memberIdNow">
+                    <input type="hidden" value="10003" id="memberIdNow">
                 </div>
                 <div class="card-body">
                     <div class="saved">收藏：
@@ -76,11 +79,50 @@
                     </div>
                 </div>
             </div>
+                        <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">曾對${selectedGym.gymName }評分／收藏會員名單</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered display" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>會員編號</th>
+                                    <th>會員名稱</th>
+                                    <th>會員性別</th>
+                                    <th>收藏狀態(1表示收藏，0表示未收藏)</th>
+                                    <th>對健身房評分</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>會員編號</th>
+                                    <th>會員帳號</th>
+                                    <th>會員性別</th>
+                                    <th>收藏狀態</th>
+                                    <th>對健身房評分</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                            <c:forEach var="gymlog" items="${memberlist}">
+                                <tr>
+                                    <td>${gymlog.member.id }</td>
+                                    <td>${gymlog.member.memberAccount }</td>
+                                    <td>${gymlog.member.memberDetail.gender }</td>
+                                    <td>${gymlog.favorite }</td>
+                                    <td>${gymlog.rating }</td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
             <div>
                 <a href="/group5/admin/gym/allMain" class="btn btn-secondary">回上一頁</a>
             </div>
         </div>
-    </div>
     </div>
 
     <script>
@@ -124,17 +166,11 @@
     </script>
     <script async
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQvR9v8XyZl476ki2PsDcJZtLwpo023gs&libraries=places&callback=initMap&region=TW&language=zh-TW"></script>
-    <script src="/group5/js/ratingAndSaved.js"></script>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="/group5/js/bootstrap.bundle.min.js"></script>
-	
     <!-- Core plugin JavaScript-->
-    <script src="/group5/js/jquery.min.js"></script>
     <script src="/group5/js/jquery.easing.min.js"></script>
-
+	<script src="/group5/js/ratingAndSaved.js"></script>
     <!-- Custom scripts for all pages-->
-    <script src="/group5/js/sb-admin-2.min.js"></script>
 <%@ include file="../admin/AdminstyleFoot.jsp" %>
 </body>
 

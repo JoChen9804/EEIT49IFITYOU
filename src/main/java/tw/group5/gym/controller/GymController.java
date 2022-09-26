@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import tw.group5.admin.model.AdminBean;
+import tw.group5.admin.model.MemberBean;
+import tw.group5.admin.model.MemberRepository;
 import tw.group5.admin.service.AdminService;
 import tw.group5.gym.model.GymBean;
 import tw.group5.gym.model.GymLog;
@@ -30,7 +32,6 @@ import tw.group5.gym.service.GymService;
 
 @Controller
 @RequestMapping("/group5/admin/gym")
-@SessionAttributes(names= {"userAdmin"})
 public class GymController {
 	
 	@Autowired
@@ -45,9 +46,6 @@ public class GymController {
 	//總表
 	@GetMapping("/allMain")
 	public String processAllMainAction(Model m) {
-		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		AdminBean admin = adminService.findByAccount(username);
-		m.addAttribute("userAdmin", admin);
 		List<GymBean> list =gymService.findGyms(new GymBean());
 		m.addAttribute("queryAll",list);
 		return "gym/gymAll";
@@ -72,7 +70,6 @@ public class GymController {
 	@PostMapping("/allDelete/{gname}")
 	public String processAllDeleteAction(@PathVariable("gname") String gymName) {
 		GymBean deletegym = gymService.queryName(gymName);
-		
 		Set<GymLog> gymLogs = gymLogService.findByGym(deletegym);
 		for(GymLog log: gymLogs) {
 			gymLogService.deletelog(log);
@@ -85,11 +82,14 @@ public class GymController {
 	//傳到detail頁面
 	@PostMapping("/gymDetail/{gName}")
 	public String processDetailPageAction(@PathVariable("gName") String gName, int memberIdNow, Model m) {
-		GymBean result = gymService.queryName(gName);
-		m.addAttribute("selectedGym", result);
-		GymLog logStatus = gymLogService.findByMemberIdAndGym(memberIdNow, result);
+		GymBean gym = gymService.queryName(gName);
+		m.addAttribute("selectedGym", gym);		
+		MemberBean member = adminService.selectOneMember(memberIdNow);		
+		GymLog logStatus = gymLogService.findByMemberAndGym(member, gym);
 		System.out.println(logStatus);
 		if(logStatus!=null) {
+			Set<GymLog> memberlist = gymLogService.findByGym(gym);
+			m.addAttribute("memberlist", memberlist);
 			m.addAttribute("logStatus", logStatus);			
 		}
 		return "/gym/gymDetail";

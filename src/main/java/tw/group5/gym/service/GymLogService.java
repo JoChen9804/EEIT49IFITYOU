@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import tw.group5.admin.model.MemberBean;
 import tw.group5.gym.model.GymBean;
 import tw.group5.gym.model.GymLog;
 import tw.group5.gym.model.GymLogRespository;
@@ -31,8 +32,8 @@ public class GymLogService {
 	}
 	
 	//where gymId=? and memberId=?
-	public GymLog findByMemberIdAndGym(Integer memberId, GymBean gym){
-		return gymLogRespository.findByMemberIdAndGym(memberId, gym);
+	public GymLog findByMemberAndGym(MemberBean member, GymBean gym){
+		return gymLogRespository.findByMemberAndGym(member, gym);
 	}
 	
 	public GymLog findById(int logId) {
@@ -43,7 +44,7 @@ public class GymLogService {
 		 return null;
 	}
 	
-	//where gymName=? 
+	//where gymNo=? 
 	public Set<GymLog> findByGym(GymBean gym){
 		return gymLogRespository.findByGym(gym);
 	}
