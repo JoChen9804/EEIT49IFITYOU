@@ -78,10 +78,19 @@ $(function(){
 	/* margin: auto; */
 	word-wrap: break-word;
 }
+
 .img {
 width:150px ;
 height:150px;
 }
+
+.imgs {
+    width: 300px;
+    padding: 5px 5px 5px 5px;
+    margin: 10px;
+}
+
+
 </style>
 </head>
 
@@ -99,7 +108,7 @@ height:150px;
 			</tr>
 			<tr>
 				<td class="column3">
-				<img class="img" src="imagestest/test.gif"></td>
+				<img class="img" src="${queryOne.postPhoto}"></td>
 				<td>
 					<div class="content">
 						
@@ -108,7 +117,7 @@ height:150px;
 
 
 						<c:forEach var="image" items="${allImages}">
-							<img width='300' height='200' src="${image}">
+							<img src="${image}">
 						</c:forEach>
 						</form>
 						
@@ -131,7 +140,7 @@ height:150px;
 				<td class="column2">回復時間:${onereply.replyTime}</td>
 			</tr>
 			<tr>
-				<td class="column3"><img class="img" src="imagestest/test.gif"></td>
+				<td class="column3"><img class="img" src="${onereply.replyPhoto}"></td>
 				<td>
 					<div class="content">
 					<p>${onereply.replyContent}</p>
@@ -179,7 +188,7 @@ height:150px;
 			<input type="hidden" name="mainPostNo" value="${queryOne.mainPostNo}">
 			    <tr>
                   <td class="column3">
-                <img class="img" src="imagestest/test.gif"></td>
+                <img class="img" src="${queryOne.postPhoto}"></td>
                 <td><div class="content">
                 
                

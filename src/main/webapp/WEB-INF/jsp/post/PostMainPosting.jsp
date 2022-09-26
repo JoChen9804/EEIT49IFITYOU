@@ -11,7 +11,7 @@
       <TITLE>發布貼文</TITLE>
       <style>
         img {
-            width: 300px;
+           /* width: 300px;*/
             /*border: 3px solid red;*/
             padding: 5px 5px 5px 5px;
             margin: 10px;

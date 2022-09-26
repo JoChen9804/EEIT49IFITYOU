@@ -13,7 +13,7 @@
       
       <TITLE>貼文首頁</TITLE>
     <style>
-img {
+.img {
         width: 150px;
         height: 120px;
          /*border: 3px solid red;*/
@@ -37,9 +37,7 @@ fieldset {
     
     <%@ include file="../admin/AdminstyleHead.jsp" %>
        
-         <script src="/group5/js/jquery.min.js"></script>
-    <script type="text/javascript" charset="utf8"
-        src="https://cdn.datatables.net/1.11.2/js/jquery.dataTables.js"></script> 
+     
        
        
    <fieldset>
@@ -95,7 +93,7 @@ fieldset {
     <c:forEach var="allmpbs" items="${query}">
         <tbody>
          <tr>
-            <td><img src="${allmpbs.p_image}"></td>
+            <td><img class="img" src="${allmpbs.p_image}"></td>
             <td>${allmpbs.mainPostNo}</td>
             <td>${allmpbs.postTypeName}</td>
             <td>${allmpbs.title}</td>

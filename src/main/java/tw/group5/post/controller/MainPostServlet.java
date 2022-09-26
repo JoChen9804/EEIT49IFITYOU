@@ -6,7 +6,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,10 +21,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import tw.group5.admin.model.MemberBean;
+import tw.group5.admin.model.AdminBean;
+import tw.group5.admin.service.AdminService;
 import tw.group5.post.model.MainPostBean;
 import tw.group5.post.model.ReplyPostBean;
 import tw.group5.post.service.MainPostService;
@@ -29,6 +34,7 @@ import tw.group5.post.service.ReplyPostService;
 
 @Controller
 @RequestMapping("/group5/admin")
+@SessionAttributes(names= {"useradmin"})
 public class MainPostServlet {
 
     @Autowired
@@ -36,6 +42,10 @@ public class MainPostServlet {
 
     @Autowired
     private ReplyPostService rpService;
+    
+    @Autowired
+    private AdminService amService;
+    
 
     public final String postFrontPage = "post/PostFrontPage";
     public final String postMainPosting = "post/PostMainPosting";
@@ -43,19 +53,32 @@ public class MainPostServlet {
     public final String postChangePost = "post/PostChangePost";
 
     // 改成會員帳號 與會員權限
-    public String memberAccount = "test777";
+    public String memberAccount = "";
     public String postPermission = "一般會員";
-
+    public String postPhoto ="";
+    public String replyPhoto ="";
+    
+    
+    public AdminBean adminBean() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        AdminBean admin = amService.findByAccount(username);
+        return admin;
+    }
+    
+    
+    
     // 首頁進入
     // 推薦使用四種方式最終都是封裝成ModelAndView
     @GetMapping("/MainPost.all")
-    public ModelAndView postHomepage2(MainPostBean mpBean,@ModelAttribute("loginMember") MemberBean mBean) {
-
-        //System.out.println(mBean.getMemberName());
-        
-        
+    public ModelAndView postHomepage2(MainPostBean mpBean,HttpServletRequest request) {
         ModelAndView mav = new ModelAndView(postFrontPage);
-
+        AdminBean adminBean = adminBean();
+        memberAccount = adminBean.getAdminName();
+        postPhoto = adminBean.getAdminPhoto();
+        replyPhoto = adminBean.getAdminPhoto();
+        
+ 
+        
         if (mpBean.getMainPostNo() != null) {
             List<MainPostBean> query = firstImagePath(mpService.query(mpBean.getMainPostNo()));
             if (query == null) {
@@ -99,6 +122,12 @@ public class MainPostServlet {
     @PostMapping("/MainPosting.controller")
     public String addingPostConfirming(MainPostBean addPost, @RequestParam("Filename2") List<MultipartFile> mfs)
             throws FileNotFoundException {
+        
+        
+//        AdminBean adminBean = adminBean();
+//        memberAccount = adminBean.getAdminName();
+//        postPhoto = adminBean.getAdminPhoto();
+        addPost.setPostPhoto(postPhoto);
         addPost.setPostPermission(postPermission);
         addPost.setAccount(memberAccount);
         addPost.setAddtime(mpService.currentDateFormat("date"));
@@ -118,8 +147,10 @@ public class MainPostServlet {
     // 觀看ok
     @PostMapping("/MainPost.watch")
     public ModelAndView watchPost(Integer watch) {
+        
         MainPostBean queryOne = mpService.selectById(watch);
         ModelAndView mavMpost = takeOutmpBean(queryOne,postDetails);
+        
         
         // -----------上面是主貼文------------
 
@@ -262,6 +293,7 @@ public class MainPostServlet {
             rpBean.setReplyLikeNumber("");
             rpBean.setReplyAccount(memberAccount);
             rpBean.setR_image("");
+            rpBean.setReplyPhoto(replyPhoto);
             rpBean.setMainPostBean(mpBean);
             
             MainPostBean queryOne = mpService.selectById(mpBean.getMainPostNo());
@@ -279,6 +311,7 @@ public class MainPostServlet {
             
             List<ReplyPostBean> allReply = rpService.allReply(mpBean.getMainPostNo());
             ModelAndView mav = takeOutrpBean(allReply,mavmPost);
+            
             
             return mav;
     }
@@ -326,7 +359,7 @@ public class MainPostServlet {
     public MainPostBean LikesAJAX(MainPostBean mpBean) {
         
        // ModelAndView mav = watchPost(mpBean.getMainPostNo());
-        ModelAndView mav = new ModelAndView("/MainPost.watch");
+        ModelAndView mav = new ModelAndView();
         System.out.println("有找到嗎?");
         MainPostBean queryOne = mpService.selectById(mpBean.getMainPostNo());
         System.out.println("有找到嗎?");
@@ -357,11 +390,17 @@ public class MainPostServlet {
             mpService.update(queryOne);
         }
         
+        //ModelAndView mav = takeOutmpBean(queryOne,null);
+        
+        
         if (!"".equals(queryOne.getLikeNumber())) {
             queryOne.setLikeNumber(String.valueOf(oldlikes.length));
             mav.addObject("likes", queryOne.getLikeNumber().split(",").length);
         }
         else {
+            System.out.println("11111111");
+            queryOne.setLikeNumber("0");
+            
             mav.addObject("likes", 0);
         }
         return queryOne;
@@ -376,9 +415,24 @@ public class MainPostServlet {
         for (String likeReply : oldReplylikes) {
             if (likeReply.equals(memberAccount)) {
                 j++;
+                List<String> list = new ArrayList<String>(Arrays.asList(oldReplylikes));
+                list.remove(memberAccount);
+                String [] newStr = new String [list.size()];
+                list.toArray(newStr);
+                list.toArray(newStr);
+                String newlinkes = "";
+                for(String oneStr : newStr) {
+                    newlinkes += oneStr+','; 
+                }
+                replyPostBean.setReplyLikeNumber(newlinkes);
+                rpService.update(replyPostBean);
                 break;
             }
         }
+        
+        
+        
+        
         if (j == 0) {
             String newLikeReply = replyPostBean.getReplyLikeNumber() + memberAccount + ",";
             replyPostBean.setReplyLikeNumber(newLikeReply);

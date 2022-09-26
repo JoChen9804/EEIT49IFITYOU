@@ -39,6 +39,10 @@ public class ReplyPostBean {
     @Column(name = "r_image")
     private String r_image;              //照片路徑
     
+    @Column(name = "replypermission")
+    private String replyPermission;              //照片路徑
+    
+    
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "mainpostno")
     private MainPostBean mainPostBean;  
@@ -126,5 +130,14 @@ public class ReplyPostBean {
     public void setR_imagess(String[] r_imagess) {
         this.r_imagess = r_imagess;
     }
+
+    public String getReplyPermission() {
+        return replyPermission;
+    }
+
+    public void setReplyPermission(String replyPermission) {
+        this.replyPermission = replyPermission;
+    }
+    
     
 }
