@@ -22,8 +22,7 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js"
 	type="text/javascript"></script>
 <link
-	href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700&display=swap&subset=latin-ext"
-	rel="stylesheet">
+	href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700&display=swap&subset=latin-ext" rel="stylesheet">
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/fontawesome-all.css" rel="stylesheet">
 <link href="css/swiper.css" rel="stylesheet">
