@@ -16,8 +16,12 @@
     <link href="/group5/css/sb-admin-2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/group5/css/ratingAndSaved-style.css">
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script>
+    	$(function(){
+    		
+    	})
+    </script>
 </head>
-
 <body>
 <%@ include file="../admin/AdminstyleHead.jsp" %>
     <!-- Page Heading -->
@@ -49,7 +53,7 @@
                     <input type="hidden" value="${logStatus.logId }" id="gymLogIdNow">
                     <input type="hidden" value="${logStatus.favorite }" id="logFavorite">
                     <input type="hidden" value="${logStatus.rating }" id="logRating">
-                    <input type="hidden" value="${loginMember.id }" id="memberIdNow">
+                    <input type="hidden" value="10003" id="memberIdNow">
                 </div>
                 <div class="card-body">
                     <div class="saved">收藏：
@@ -103,7 +107,7 @@
                             </tfoot>
                             <tbody>
                                 <tr>
-                                    <td>Tiger Nixon</td>
+                                    <td></td>
                                     <td>System Architect</td>
                                     <td>Edinburgh</td>
                                     <td>61</td>

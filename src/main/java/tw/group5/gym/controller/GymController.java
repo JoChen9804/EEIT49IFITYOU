@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import tw.group5.admin.model.AdminBean;
+import tw.group5.admin.model.MemberBean;
+import tw.group5.admin.model.MemberRepository;
 import tw.group5.admin.service.AdminService;
 import tw.group5.gym.model.GymBean;
 import tw.group5.gym.model.GymLog;
@@ -39,7 +41,7 @@ public class GymController {
 	private GymLogService gymLogService;
 	
 	@Autowired
-	private AdminService adminService;
+	private MemberRepository memberRepository;
 	
 	//總表
 	@GetMapping("/allMain")
@@ -83,7 +85,10 @@ public class GymController {
 	public String processDetailPageAction(@PathVariable("gName") String gName, int memberIdNow, Model m) {
 		GymBean result = gymService.queryName(gName);
 		m.addAttribute("selectedGym", result);
-		GymLog logStatus = gymLogService.findByMemberIdAndGym(memberIdNow, result);
+		
+		Optional<MemberBean> memberOpt = memberRepository.findById(memberIdNow);
+		
+		GymLog logStatus = gymLogService.findByMemberAndGym(memberOpt.get(), result);
 		System.out.println(logStatus);
 		if(logStatus!=null) {
 			m.addAttribute("logStatus", logStatus);			

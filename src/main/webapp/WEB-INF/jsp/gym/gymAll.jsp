@@ -158,7 +158,7 @@
 								<td>${gymlist.gymOpenHours}</td>
 								<td>${gymlist.rating}</td>
 								<td><form action="/group5/admin/gym/gymDetail/${gymlist.gymName}" method="post">
-									<input type="hidden" value="${loginMember.id }" name="memberIdNow">
+									<input type="hidden" value="10003" name="memberIdNow">
 									<input type="submit" class="btn btn-outline-success gymDetail" value="詳細資訊">
 								</form></td>
 								<td><button type="button" class="btn btn-outline-secondary edit" 

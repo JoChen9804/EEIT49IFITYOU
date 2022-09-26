@@ -18,6 +18,8 @@ import javax.persistence.Transient;
 
 import org.springframework.stereotype.Component;
 
+import tw.group5.admin.model.MemberBean;
+
 @Entity
 @Table(name = "gymlog")
 @Component
@@ -33,7 +35,8 @@ public class GymLog implements Serializable{
 	@Column(name = "LOGID")
 	private int logId;
 	
-	@Column(name = "ADMINID")
+	@Column(name = "MEMBERID")
+	@Transient
 	private Integer memberId;
 	
 	@Column(name = "GYMNO")
@@ -49,6 +52,11 @@ public class GymLog implements Serializable{
 	@JoinColumn(name = "GYMNO")
 	@ManyToOne
 	private GymBean gym;
+	
+	@JoinColumn(name = "MEMBERID")
+	@ManyToOne
+	private MemberBean member;
+	
 	
 	public int getLogId() {
 		return logId;
@@ -98,6 +106,14 @@ public class GymLog implements Serializable{
 
 	public void setGym(GymBean gym) {
 		this.gym = gym;
+	}
+
+	public MemberBean getMember() {
+		return member;
+	}
+
+	public void setMember(MemberBean member) {
+		this.member = member;
 	}
 	
 	
