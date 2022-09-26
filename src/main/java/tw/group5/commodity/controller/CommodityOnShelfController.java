@@ -54,8 +54,9 @@ public class CommodityOnShelfController {
 		//照片存取及其路徑
 		String severPath = request.getServletContext().getRealPath("");
 				
-		String savePath = severPath + SAVE_DIR;
+		String savePath = severPath + "WEB-INF" + File.separator + "resources" + File.separator + SAVE_DIR;
 				 
+		
 		File fileSaveDir = new File(savePath);
 		if (!fileSaveDir.exists()) {
 		   fileSaveDir.mkdir();   //不存在就建資料夾
