@@ -86,22 +86,9 @@
 				<div id="collapseActivities" class="collapse"
 					aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
-						<form class="collapse-item" ACTION="/group5/admin/activitymain.controller"
-							method="get">
-							<input type="hidden" name="selec_page" value="activity">
-							<INPUT type="submit" name="/group5/admin/activitymain.controller" value="活動資訊"
-								style="border: none; background-color:transparent">
-						</form>
-						<form class="collapse-item" ACTION="/group5/admin/vouchermain.controller"
-							method="get">
-							<INPUT type="submit" name="/group5/admin/vouchermain.controller" value="優惠券管"
-								style="border: none; background-color:transparent">
-						</form>
-						<form class="collapse-item" ACTION="/group5/admin/promotionsmain.controller"
-							method="get">
-							<INPUT type="submit" name="/group5/admin/vouchermain.controller" value="優惠券分發"
-								style="border: none; background-color:transparent">
-						</form>
+						<a class="collapse-item" href="/group5/admin/activitymain.controller">活動管理</a>
+						<a class="collapse-item" href="/group5/admin/vouchermain.controller">優惠券管</a>
+						<a class="collapse-item" href="/group5/admin/promotionsmain.controller">優惠券分發</a>
 					</div>
 				</div></li>
 			<!-- Nav Item - Pages Collapse Menu æå¡ç®¡ç-->

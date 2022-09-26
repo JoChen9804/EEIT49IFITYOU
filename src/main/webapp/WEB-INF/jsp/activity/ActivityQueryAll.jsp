@@ -16,15 +16,9 @@ response.setCharacterEncoding("UTF-8");
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>優惠券總覽</title>
 <style>
-table {
-	border: 1px solid gray;
-	border-collapse: collapse
-}
 
 td, th {
 	width: 175px;
-	border: 1px solid gray;
-	border-collapse: collapse
 }
 
 input {
@@ -70,7 +64,7 @@ input {
 					<span class="icon text-white-50"> <i class="fas fa-flag"></i></span>
 					<input type="submit" name="add" value="新增" class="text" style="border: none; background-color: #36b9cc; color: white"/>
 				</form>
-				<table class="table table-bordered" id="table_id" class="compact hover stripe">
+				<table class="table table-bordered" id="table_id" class="compact hover stripe" style="border:none">
 					<thead>
 						<tr>
 							<th>優惠券號</th>
@@ -117,7 +111,7 @@ input {
 					<span class="icon text-white-50"> <i class="fas fa-flag"></i></span>
 					<input type="submit" name="add" value="新增" class="text" style="border: none; background-color: #36b9cc; color: white"/>
 				</form>
-				<table id="table_id">
+				<table class="table table-bordered" id="table_id" class="compact hover stripe">
 					<thead>
 						<tr>
 							<th>活動名稱</th>
@@ -170,7 +164,7 @@ input {
 				        <input type="submit" name="add" value="新增" class="text"
 				            style="border: none; background-color: #36b9cc; color: white" />
 				    </form>
-				    <table id="table_id">
+				    <table class="table table-bordered" id="table_id" class="compact hover stripe">
 				        <thead>
 				            <tr>
 				                <th>優惠券號</th>
