@@ -20,6 +20,9 @@
 
 
 <body>
+
+    <!-- <%@ include file="../admin/FrontStageHead.jsp" %>  -->	
+
     <div id="wrap" class="container_48">
 
         <div id="content" class="container_48">
@@ -122,6 +125,7 @@
 
         </div>
     </div>
+      <!-- <%@ include file="../admin/FrontStageFoot.jsp" %>  -->	
 </body>
 
 

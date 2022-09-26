@@ -20,7 +20,10 @@
     <link rel="stylesheet" type="text/css" href="css/commodity-main.css">
 
     <link rel="stylesheet" type="text/css" href="css/commodity-window.css">
+    
+    <link rel="stylesheet" type="text/css" href="css/commodity/commodity-button.css">
 
+    <script src="https://kit.fontawesome.com/0d0c16b1bb.js" crossorigin="anonymous"></script>
     
     <style type="text/css">
     
@@ -28,6 +31,8 @@
     	width:100px;
         height:120px;
     }
+    
+    
     
     </style>
 
@@ -38,25 +43,31 @@
 
 <body>
 
-    <%@ include file="../admin/AdminstyleHead.jsp" %>
+        <%@ include file="../admin/AdminstyleHead.jsp" %>
     
-    <div class="limiter">
+    
         <div class="container-table100">
             <div class="wrap-table100">
 
-                <h3 style="padding-bottom:15px">商品管理:
-                    <!--點按鈕做商品添加-->
-                    <button style="margin-left:1100px" data-bs-toggle="modal"
-                        data-bs-target="#commodity_add">新增商品</button>
-                </h3>
+                <h4>商品管理</h4>
+                
                 
                 <div style="padding-bottom:10px">
         		<%request.setCharacterEncoding("UTF-8");%>
-        		<form action="commodity_administration" method="get">
+        		<form  style="display: inline" action="commodity_administration" method="get">
             		<input type="text" class="searchCommodity" name="searchCommodity" placeholder="請輸入要尋找的商品" value=<%=request.getParameter("searchCommodity")==null?"":request.getParameter("searchCommodity").toString()%>>
-            		<input type="submit" value="搜尋" >
+            		<button type="submit" class="searchCommodityButton"><i class="fa-solid fa-magnifying-glass"></i></button>
         		</form>
-        		</div>
+
+				<!--點按鈕做商品添加-->
+                <button class="add_button" data-bs-toggle="modal"
+                        data-bs-target="#commodity_add"><i class="fa-solid fa-circle-plus"></i>&nbsp新增商品</button>
+                
+
+        		</div>	
+        		
+        		
+        		
 
                 <!-- 彈出視窗 -->
                 <div class="modal fade" id="commodity_add">
@@ -200,13 +211,13 @@
                                 
                                     <td class="cell100 column01">
                                     
-                                    <button class="delete" value=<%=commodity.getCommodityNo()%>>刪除</button>
+                                    <button class="delete" value=<%=commodity.getCommodityNo()%>><i class="fa-solid fa-trash-can"></i></button>
                                     
                                     </td>
                                     
                                     <td class="cell100 column02">
                                     
-                                    <input type="submit" name="update" class="update" value="修改" class="update">
+                                    <button type="submit" name="update" class="update" value="修改" class="update"><i class="fa-solid fa-pencil"></i></button>
                                     
                                     </td>
                                     
@@ -243,7 +254,7 @@
                 </div>
             </div>
         </div>
-    </div>
+   
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
         integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
@@ -320,10 +331,10 @@
         		let originalCommodityNo = $(this).parent('td').nextAll('.commodityNo').text();
         		
         		let originalCommodityNameWord = $(this).parent('td').nextAll('.commodityName').text().replaceAll(" ",",").replaceAll(","," ");
-        	    let originalCommodityName = '<input type="text" value="'+originalCommodityNameWord+'">';
+        	    let originalCommodityName = '<input type="text" class="commodityNameUpdate" value="'+originalCommodityNameWord+'">';
         	    
-	    	    let originalCommodityPrice = '<input type="text" value="'+$(this).parent('td').nextAll('.commodityPrice').text()+'">';
-	    	    let originalCommodityInventory = '<input type="text" value="'+$(this).parent('td').nextAll('.commodityInventory').text()+'">';
+	    	    let originalCommodityPrice = '<input type="text" class="commodityPriceUpdate" value="'+$(this).parent('td').nextAll('.commodityPrice').text()+'">';
+	    	    let originalCommodityInventory = '<input type="text" class="commodityInventoryUpdate" value="'+$(this).parent('td').nextAll('.commodityInventory').text()+'">';
 	    	    
 	    	    let originalOnShelf = $(this).parent('td').nextAll('.commodityOnShelf').text();
 	    	    if(originalOnShelf == '否'){
@@ -338,28 +349,28 @@
 	    	    let originalCommodityType = null
 	    	    let originalType = $(this).parent('td').nextAll('.commodityType').text()
 	    	        if(originalType=="乳清蛋白"){
-	        		   originalCommodityType = '<select name="commodityType" size="1">' +
+	        		   originalCommodityType = '<select name="commodityType" size="1" class="commodityTypeUpdate">' +
 	                                                '<option value="乳清蛋白" selected>乳清蛋白</option>'+
 	                                                '<option value="服飾">服飾</option>'+
 	                                                '<option value="配件">配件</option>'+
 	                                                '<option value="器材">器材</option>'+
 	                                            '</select>'
 	                }else if(originalType=="服飾"){
-	            	    originalCommodityType = '<select name="commodityType" size="1">' +
+	            	    originalCommodityType = '<select name="commodityType" size="1" class="commodityTypeUpdate">' +
 	                                                    '<option value="乳清蛋白">乳清蛋白</option>'+
 	                                                    '<option value="服飾" selected>服飾</option>'+
 	                                                    '<option value="配件">配件</option>'+
 	                                                    '<option value="器材">器材</option>'+
 	                                                '</select>'
 	                }else if(originalType=="配件"){
-	            		originalCommodityType = '<select name="commodityType" size="1">' +
+	            		originalCommodityType = '<select name="commodityType" size="1" class="commodityTypeUpdate">' +
 	                                                    '<option value="乳清蛋白">乳清蛋白</option>'+
 	                                                    '<option value="服飾">服飾</option>'+
 	                                                    '<option value="配件" selected>配件</option>'+
 	                                                    '<option value="器材">器材</option>'+
 	                                                '</select>'
 	               }else if(originalType=="配件"){
-	           		    originalCommodityType = '<select name="commodityType" size="1">' +
+	           		    originalCommodityType = '<select name="commodityType" size="1" class="commodityTypeUpdate">' +
 	                                                    '<option value="乳清蛋白">乳清蛋白</option>'+
 	                                                    '<option value="服飾">服飾</option>'+
 	                                                    '<option value="配件">配件</option>'+
@@ -367,8 +378,7 @@
 	                                                '</select>'
 	               }
 	    	    
-        		$(this).attr('value','確認修改')
-   	    	    $(this).attr('style','width:100px')
+        		$(this).html('<i class="fa-solid fa-check"></i>')
    	    	    $(this).parent('td').parent('tr').css('background','lightblue')
    	    	    $(this).parent('td').nextAll('.commodityNo').html(originalCommodityNo)
    	    	    $(this).parent('td').nextAll('.commodityType').html(originalCommodityType)
