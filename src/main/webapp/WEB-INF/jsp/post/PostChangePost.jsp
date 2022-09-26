@@ -16,6 +16,15 @@ fieldset {
     margin: auto;
     background: #f7f4dd;
     } 
+    .imgss {
+    width: 300px;
+    height: 200px;
+    padding: 5px 5px 5px 5px;
+    margin: 10px;
+}
+    
+    
+    
     
     </style>
     </head>
@@ -58,7 +67,7 @@ fieldset {
         <input type="hidden" id="p_image" name="p_image" value="${queryContent.p_image}">
            <c:forEach var="image" items="${updatImages}">
            
-                            <img width='300' height='200' src="${image}">
+                            <img class="imgss" src="${image}">
                         </c:forEach>
                         
         <P>重新選擇圖片(最多五張，每張2MB以下):<input id="file1" type="file" class="btn btn-outline-primary" name="chamgeimages" multiple="multiple" 

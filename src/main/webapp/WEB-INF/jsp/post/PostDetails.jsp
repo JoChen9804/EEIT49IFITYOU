@@ -79,16 +79,14 @@ $(function(){
 	word-wrap: break-word;
 }
 
-.img {
-width:150px ;
-height:150px;
-}
 
-.imgs {
+.imgss {
     width: 300px;
+    height: 200px;
     padding: 5px 5px 5px 5px;
     margin: 10px;
 }
+
 
 
 </style>
@@ -117,7 +115,7 @@ height:150px;
 
 
 						<c:forEach var="image" items="${allImages}">
-							<img src="${image}">
+							<img class="imgss" src="${image}">
 						</c:forEach>
 						</form>
 						
@@ -125,7 +123,7 @@ height:150px;
 						 <br>
 							<input type="hidden" id="mainPostNo" name="mainPostNo"
 								value="${queryOne.mainPostNo}">
-							<button type="submit" name="likenumber" id="likemainpost" class="btn btn-outline-danger" value="${likes}">讚${likes}</button>
+							<button type="submit" name="likenumber" id="likemainpost" class="btn btn-outline-danger">讚${queryOne.likeNumber}</button>
 
 					</div>
 				</td>
@@ -145,7 +143,7 @@ height:150px;
 					<div class="content">
 					<p>${onereply.replyContent}</p>
 					<c:forEach var="onewReplyImage" items="${onereply.r_imagess}">
-					   <img width='300' height='200' src="${onewReplyImage}">
+					   <img class="imgss" src="${onewReplyImage}">
                        </c:forEach>
 						
 			                 <br>
@@ -188,10 +186,9 @@ height:150px;
 			<input type="hidden" name="mainPostNo" value="${queryOne.mainPostNo}">
 			    <tr>
                   <td class="column3">
-                <img class="img" src="${queryOne.postPhoto}"></td>
+                <img class="img" src="${postPhoto}"></td>
                 <td><div class="content">
                 
-               
                                                 
             <textarea name="replyContent" id="content1" cols="90" rows="10" 
             required oninvalid="setCustomValidity('請輸入內容')" oninput="setCustomValidity('')"></textarea>

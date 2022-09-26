@@ -10,13 +10,13 @@
         <link rel="stylesheet" href="styles/Topic.css">
       <TITLE>發布貼文</TITLE>
       <style>
-        img {
-           /* width: 300px;*/
-            /*border: 3px solid red;*/
-            padding: 5px 5px 5px 5px;
-            margin: 10px;
-        } 
-        
+.imgss {
+    width: 300px;
+    height: 200px;
+    padding: 5px 5px 5px 5px;
+    margin: 10px;
+}
+
 
        fieldset {
     width: 700px;

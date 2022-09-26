@@ -59,8 +59,15 @@ source {
 	padding: 0;
 }
 
-img {
+..img {
 	width: 300px;
 	padding: 5px 5px 5px 5px;
 	margin: 10px;
+}
+
+.img {
+        width: 150px;
+        height: 120px;
+        padding: 2px 2px 2px 2px;
+        margin: 2px;
 }

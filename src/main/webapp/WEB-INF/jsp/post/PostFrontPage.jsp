@@ -5,21 +5,16 @@
 <html>
    <HEAD>
       <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8"/>
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
-
         
       <link rel="stylesheet" href="styles/Topic.css">
+      
+      <script src="/group5/js/jquery.min.js"></script>
+      <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.2/js/jquery.dataTables.js"></script>
+      <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
       
       
       <TITLE>貼文首頁</TITLE>
     <style>
-.img {
-        width: 150px;
-        height: 120px;
-         /*border: 3px solid red;*/
-        padding: 2px 2px 2px 2px;
-        margin: 2px;
-}
      
 fieldset {
     width: 1000px;
@@ -43,10 +38,9 @@ fieldset {
    <fieldset>
     <h1 ALIGN=CENTER>貼文首頁</h1>
     
-     <table class="table table-bordered" id="table_id"
-            class="compact hover stripe">
-           <tr>
+     <table class="table table-bordered" class="compact hover stripe">
           <form name="querypostbut" action="MainPost.all" method="GET">
+           <tr>
             <th>  
             <label for="dataa" class="t1">主貼文編號:</label>
             <input type="TEXT"  id=dataa name="mainPostNo" 
@@ -54,11 +48,11 @@ fieldset {
             <th>
             <input type="submit" class="btn btn-outline-primary" name="inquireId" value="查詢">
            </th>
-             </form> 
         </tr>
+             </form> 
          
-           <tr>
                <form name="likequerypostbut" action="MainPost.all" method="GET">
+           <tr>
              <th>  
             <label for="dataa1" class="t1">搜尋:</label>
             <input type="TEXT" id=dataa1 name="title" 
@@ -70,15 +64,12 @@ fieldset {
             </form>
     </table>
   
-  
-   
    <form action="MainPost.return" method="GET">
-        <input type="submit" class="btn btn-outline-primary""  name="returns" value="所有貼文" >
+        <input type="submit" class="btn btn-outline-primary"  name="returns" value="所有貼文" >
    </form>
    <div class="card-body">
    <div class="table-responsive">
-    <table class="table table-bordered" id="table_id"
-            class="compact hover stripe">
+    <table class="table table-bordered" id="table_id" class="compact hover stripe">
     <thead>
         <tr>
         <th>圖片</th>
@@ -108,45 +99,46 @@ fieldset {
                 </form>
                 </td>
                 <td>
-                    <form name="AddForm" action="MainPostingServlet" method="POST"> 
-                    <input type="hidden" name="_method" value="DELETE">
-                    <input type="hidden" name="deletepost" value="${allmpbs.mainPostNo}">
-                    <input type="submit" id="${allmpbs.mainPostNo}" class="btn btn-outline-danger" value="刪除" > 
-                   <script src="/group5/js/jquery.min.js"></script>
-			<script>
-			
-			
-			var submitBtn = document.getElementById("${allmpbs.mainPostNo}");
-			
-			submitBtn.onclick = function (event) {
-				var r=confirm("確認是否刪除");
-				if (r==true){
-					$(this).parent().submit();
-					return true;
-			    }
-			    else{
-			          return false;//此處return false;即不會提交表單，一般驗證表單資料不符合要求使用
-			         };
-			};
-			
-			
-			</script>
+                <form name="AddForm" action="MainPostingServlet" method="POST"> 
+                <input type="hidden" name="_method" value="DELETE">
+                <input type="hidden" name="deletepost" value="${allmpbs.mainPostNo}">
+                <input type="submit" id="${allmpbs.mainPostNo}" class="btn btn-outline-danger" value="刪除" > 
+                <script src="/group5/js/jquery.min.js"></script>
+				<script>
+				var submitBtn = document.getElementById("${allmpbs.mainPostNo}");
+				submitBtn.onclick = function (event) {
+					var r=confirm("確認是否刪除");
+					if (r==true){
+						$(this).parent().submit();
+						return true;
+				    }
+				    else{
+				          return false;
+				         };
+				};
+				</script>
                     
-                    
-                    </form>
-               </td>
-               <td>
+                </form>
+                   </td>
+                   
+                    <td>
                     <form name="updateForm" action="MainPostingServlet" method="POST"> 
                     <input type="hidden" name="updatepost" value="${allmpbs.mainPostNo}">
                     <input type="submit" class="btn btn-outline-info" value="修改">
                     </form>
-                </td>
-          </tr>
+                    </td>
+            </tr>
         </tbody>
      </c:forEach>
             <tbody>
             <tr><td colspan="9">${error}</td></tr></tbody>
             </table> 
+           
+            <script src="/group5/js/jquery.min.js"></script>
+          <script>
+          $('#table_id').dataTable({});
+            </script>
+            
              </div> 
                 <div class="sub">
                 <form name="addForm" action="MainPosting.add" method="POST"> 
