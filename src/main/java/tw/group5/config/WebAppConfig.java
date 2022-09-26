@@ -10,11 +10,10 @@ public class WebAppConfig implements WebMvcConfigurer{
 	
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
+		registry.addViewController("/group5/").setViewName("admin/FrontStageMain");
 		registry.addViewController("/group5/login").setViewName("admin/AdminLogin");
 		registry.addViewController("/group5/admin/backstage").setViewName("admin/AdminBackstage");
-		registry.addViewController("/group5/FrontStageMain").setViewName("admin/FrontStageMain");
-		registry.addViewController("/group5/admin/logout").setViewName("admin/FrontStageMAIN");
-//		registry.addViewController("/admin/page").setViewName("logout");
+		registry.addViewController("/group5/FrontStageMain").setViewName("admin/FrontStageMAIN");
 	}
 
 	@Override
@@ -29,7 +28,7 @@ public class WebAppConfig implements WebMvcConfigurer{
 		registry.addResourceHandler("/upload/**").addResourceLocations("file:C:/images/admin/");
 		registry.addResourceHandler("/group5/**").addResourceLocations("/WEB-INF/resources/");
 		registry.addResourceHandler("/group5/admin/**").addResourceLocations("/WEB-INF/resources/");
-		registry.addResourceHandler("/group5/member/**").addResourceLocations("/WEB-INF/resources/");
+		registry.addResourceHandler("/group5/user/**").addResourceLocations("/WEB-INF/resources/");
 	}
 
 }

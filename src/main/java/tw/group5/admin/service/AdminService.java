@@ -141,6 +141,7 @@ public class AdminService {
 		String adminPhoto;
 		if (modifyimage.equals("false")) {
 			adminPhoto = "/upload" + "/" + "DefaultImage.png";
+			return adminPhoto;
 		} else {
 			// 根據時間戳建立頭像檔案
 			String fileName;

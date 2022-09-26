@@ -29,6 +29,8 @@
 <link href="css/swiper.css" rel="stylesheet">
 <link href="css/magnific-popup.css" rel="stylesheet">
 <link href="css/styles.css" rel="stylesheet">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 
 <!-- Favicon  -->
 <link rel="icon" href="images/favicon.png">
@@ -59,15 +61,14 @@
 			<!-- Sidebar - Brand -->
 			<a
 				class="sidebar-brand d-flex align-items-center justify-content-center"
-				href="FrontStageMain" aria-haspopup="true" aria-expanded="false">
+				href="/group5/FrontStageMain" aria-haspopup="true"
+				aria-expanded="false">
 				<div class="sidebar-brand-icon rotate-n-15">
 					<img src="img/i_ift_you.jpg" class="img-profile rounded-circle"
 						height=50 width=50 />
-				</div>
-				<div class="nav-item">
-					<a class="nav-link page-scroll" href="FrontStageMain"
-						style="font-size: 20px">I FIT YOU </a>
-				</div>
+				</div> <a class="nav-link page-scroll" href="FrontStageMain"
+				style="font-size: 20px; color: white; text-decoration: none;">I
+					FIT YOU </a>
 			</a>
 
 			<!-- Mobile Menu Toggle Button -->
@@ -81,20 +82,21 @@
 			<!-- end of mobile menu toggle button -->
 
 			<div class="collapse navbar-collapse" id="navbarsExampleDefault">
-				<ul class="navbar-nav ml-auto">
-					<li class="nav-item"><a class="nav-link page-scroll"
-						href="#header">HOME <span class="sr-only">(current)</span></a></li>
-					<li class="nav-item"><a class="nav-link page-scroll"
-						href="#features">FEATURES</a></li>
-					<li class="nav-item"><a class="nav-link page-scroll"
-						href="#details">DETAILS</a></li>
+				<ul class="navbar-nav ml-auto align-items-center">
+					<li class="nav-item dropdown"><a class="nav-link page-scroll"
+						href="#header" style="font-size: 17px;">首頁<span
+							class="sr-only">(current)</span></a></li>
+					<li class="nav-item dropdown"><a class="nav-link page-scroll"
+						href="#features" style="font-size: 17px;">活動</a></li>
+					<li class="nav-item dropdown"><a class="nav-link page-scroll"
+						href="#details" style="font-size: 17px;">據點</a></li>
 
-					<!-- Dropdown Menu -->
+					<!-- Dropdown Menu dropdown-toggle下拉紐-->
 					<li class="nav-item dropdown"><a
-						class="nav-link dropdown-toggle page-scroll" href="#video"
+						class="nav-link page-scroll" href="#video"
 						id="navbarDropdown" role="button" aria-haspopup="true"
-						aria-expanded="false">VIDEO</a>
-						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						aria-expanded="false" style="font-size: 17px;">商品</a>
+						<!-- <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 							<a class="dropdown-item" href="article-details.html"><span
 								class="item-text">ARTICLE DETAILS</span></a>
 							<div class="dropdown-items-divide-hr"></div>
@@ -103,37 +105,38 @@
 							<div class="dropdown-items-divide-hr"></div>
 							<a class="dropdown-item" href="privacy-policy.html"><span
 								class="item-text">PRIVACY POLICY</span></a>
-						</div></li>
+						</div>--></li>
 					<!-- end of dropdown menu -->
 
-					<li class="nav-item"><a class="nav-link page-scroll"
-						href="#pricing">PRICING</a></li>
+					<li class="nav-item dropdown"><a class="nav-link page-scroll"
+						href="#pricing" style="font-size: 17px;">貼文</a></li>
+					<li class="nav-item dropdown"><a class="nav-link page-scroll"
+						href="#pricing" style="font-size: 17px;">菜單</a></li>
 
-					<li class="nav-item dropdown"><a
-						class="btn-outline-sm dropdown-toggle page-scroll" href="#"
+					<li class="nav-item dropdown" style="display: none;"
+						id="memberShow"><a
+						class="btn-outline-sm dropdown-toggle page-scroll"
 						id="navbarDropdown" role="button" aria-haspopup="true"
-						aria-expanded="false">會員</a> <span
-						class="mr-3 d-none d-lg-inline text-gray-600 big"><span>${loginMember.name}</span>
-					</span> <img class="img-profile rounded-circle"
-						src="${loginMember.photo}" height=20px width=20px></a> <!-- Dropdown - User Information -->
+						aria-expanded="false"> <img class="img-profile rounded-circle"
+							src="${loginMember.memberPhoto}" height=45px width=45px></a> <!-- Dropdown - User Information -->
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<a class="dropdown-item" href="/group5/logout"
-								data-toggle="modal" data-target="#logoutModal"> <i
-								class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-								Logout</a> 
-								<a class="dropdown-item" href="article-details.html"><span
-								class="item-text">會員資訊</span></a>
+							<a class="dropdown-item" href="/group5/user/UserCenter"><span
+								class="item-text">會員中心</span></a>
 							<div class="dropdown-items-divide-hr"></div>
 							<a class="dropdown-item" href="terms-conditions.html"><span
-								class="item-text">交友管理</span></a>
+								class="item-text">健友配對</span></a>
 							<div class="dropdown-items-divide-hr"></div>
-							<form class="dropdown-item" action="">
-								<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-								<input class="item-text" type="button" id="logoutCheck"
-									value="登出"
-									style="color: white; background-color: transparent; border: none;" />
-							</form>
+							<a class="dropdown-item" href="/logout" data-toggle="modal"
+								data-target="#logoutModal"><span class="item-text"><i
+									class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>登出</span></a>
 						</div></li>
+					<li class="nav-item dropdown" id="loginShow"><span
+						class="nav-item dropdown"> <a class="btn-outline-sm"
+							href="/group5/login"
+							style="border: 0.125rem solid #fff; padding: 0.875rem 1.5rem 0.875rem 1.5rem; font-size: 17px; border-radius: 2rem;">登入</a>
+					</span></li>
+
+
 				</ul>
 			</div>
 			<!-- end of container -->
@@ -141,7 +144,14 @@
 	<!-- end of navbar -->
 	<!-- end of navigation -->
 	<script type="text/javascript">
-		
+		$().ready(function() {
+			console.log("${loginMember.id}");
+			var OneMember = "${loginMember.id}";
+			if (OneMember) {
+				$('#memberShow').attr('style', '');
+				$('#loginShow').attr('style', 'display:none;');
+			}
+		})
 	</script>
 </body>
 </html>

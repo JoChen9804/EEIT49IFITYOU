@@ -13,6 +13,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import tw.group5.admin.service.AuthUserDetailService;
 import tw.group5.handler.LoginSuccessHandler;
+import tw.group5.handler.MyAccessDeniedHandler;
 
 
 @SuppressWarnings("deprecation") //讓黃線不要顯示
@@ -26,6 +27,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired 
 	LoginSuccessHandler loginSuccessHandle;
 	
+	@Autowired
+	MyAccessDeniedHandler myAccessDeniedHandler;
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -47,9 +50,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 		  .authorizeRequests()
 		  .antMatchers(staticResources).permitAll()
-		  .antMatchers(HttpMethod.GET, "/group5/admin/**").authenticated()
+		  .antMatchers(HttpMethod.GET, "/group5/admin/**").hasRole("ADMIN")
+		  .antMatchers(HttpMethod.GET, "/group5/user/**").hasRole("USER")
 		  .antMatchers(HttpMethod.GET).permitAll() //get網址
-		  .antMatchers(HttpMethod.POST,"/group5/admin/**").authenticated()
+		  .antMatchers(HttpMethod.POST,"/group5/admin/**").hasRole("ADMIN")
+		  .antMatchers(HttpMethod.GET, "/group5/user/**").hasRole("USER")
 		  .antMatchers(HttpMethod.POST).permitAll() //post表單
 		  .anyRequest().authenticated()
 		  .and()                            //有效時間40分鐘
@@ -74,7 +79,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
           .logoutRequestMatcher(new AntPathRequestMatcher("/group5/logout")) // 可以使用任何的 HTTP 方法登出
           //登出後會重新導向的 URL，預設是 /login?logout
 		  .logoutSuccessUrl("/group5/FrontStageMain");
-      	;
+		  // 異常處理
+			http.exceptionHandling()
+				//.accessDeniedPage("/異常處理頁面");  // 請自行撰寫
+				.accessDeniedHandler(myAccessDeniedHandler);
 			
 	}
 

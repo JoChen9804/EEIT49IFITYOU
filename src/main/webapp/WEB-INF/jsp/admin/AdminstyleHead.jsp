@@ -221,6 +221,11 @@
 								class="mr-3 d-none d-lg-inline text-gray-600 big"><span>${loginMember.adminName}</span>
 							</span> <img class="img-profile rounded-circle"
 								src="${loginMember.adminPhoto}">
+								<script>
+								$(document).ready(function(){
+									console.log("${loginMember.authority}")
+									});
+								</script>
 						</a> <!-- Dropdown - User Information -->
 							<div
 								class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
