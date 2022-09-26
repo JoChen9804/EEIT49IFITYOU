@@ -41,7 +41,7 @@ public class GymController {
 	private GymLogService gymLogService;
 	
 	@Autowired
-	private MemberRepository memberRepository;
+	private AdminService adminService;
 	
 	//總表
 	@GetMapping("/allMain")
@@ -70,7 +70,6 @@ public class GymController {
 	@PostMapping("/allDelete/{gname}")
 	public String processAllDeleteAction(@PathVariable("gname") String gymName) {
 		GymBean deletegym = gymService.queryName(gymName);
-		
 		Set<GymLog> gymLogs = gymLogService.findByGym(deletegym);
 		for(GymLog log: gymLogs) {
 			gymLogService.deletelog(log);
@@ -83,14 +82,14 @@ public class GymController {
 	//傳到detail頁面
 	@PostMapping("/gymDetail/{gName}")
 	public String processDetailPageAction(@PathVariable("gName") String gName, int memberIdNow, Model m) {
-		GymBean result = gymService.queryName(gName);
-		m.addAttribute("selectedGym", result);
-		
-		Optional<MemberBean> memberOpt = memberRepository.findById(memberIdNow);
-		
-		GymLog logStatus = gymLogService.findByMemberAndGym(memberOpt.get(), result);
+		GymBean gym = gymService.queryName(gName);
+		m.addAttribute("selectedGym", gym);		
+		MemberBean member = adminService.selectOneMember(memberIdNow);		
+		GymLog logStatus = gymLogService.findByMemberAndGym(member, gym);
 		System.out.println(logStatus);
 		if(logStatus!=null) {
+			Set<GymLog> memberlist = gymLogService.findByGym(gym);
+			m.addAttribute("memberlist", memberlist);
 			m.addAttribute("logStatus", logStatus);			
 		}
 		return "/gym/gymDetail";

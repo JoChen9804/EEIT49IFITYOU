@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import tw.group5.admin.service.AdminService;
 import tw.group5.gym.model.GymBean;
 import tw.group5.gym.model.GymLog;
 import tw.group5.gym.service.GymLogService;
@@ -24,6 +25,9 @@ public class GymLogController {
 	
 	@Autowired
 	private GymService gymService;
+	
+	@Autowired
+	private AdminService adminService;
 	
 	//更新收藏狀態為true(1)
 	@PostMapping("/gymFavorite/{logId}")
@@ -57,10 +61,8 @@ public class GymLogController {
 	public GymLog processUpdateRatingAction(@PathVariable("logId") int logId,@PathVariable("rating") int rating) {
 		GymLog gymLog = gLogService.findById(logId);
 		gymLog.setRating(rating);
-		gymLog.setGymId(gymLog.getGym().getGymId());
-		System.out.println("update"+gymLog.getGym().getGymId());
 		GymLog gymLogResult = gLogService.updateGymLog(gymLog);
-		gymService.updateGymRating(gymLog.getGymId());
+		gymService.updateGymRating(gymLog.getGym().getGymId());
 		return gymLogResult;
 	}
 	
@@ -69,6 +71,7 @@ public class GymLogController {
 	@ResponseBody
 	public GymLog processAddRatingAction(@RequestBody GymLog gLog) {
 		gLog.setGym(gymService.findById(gLog.getGymId()));
+		gLog.setMember(adminService.selectOneMember(gLog.getMemberId()));
 		GymLog gymLogResult = gLogService.addGymLog(gLog);
 		gymService.updateGymRating(gLog.getGymId());
 		return gymLogResult;

@@ -18,6 +18,9 @@ import javax.persistence.Transient;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import tw.group5.admin.model.MemberBean;
 
 @Entity
@@ -53,8 +56,10 @@ public class GymLog implements Serializable{
 	@ManyToOne
 	private GymBean gym;
 	
+	
 	@JoinColumn(name = "MEMBERID")
 	@ManyToOne
+	@JsonBackReference
 	private MemberBean member;
 	
 	
