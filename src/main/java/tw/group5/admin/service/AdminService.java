@@ -174,5 +174,9 @@ public class AdminService {
 
 		return s;
 	}
-
+	
+	//where pairwilling =1; 1是要0是不要
+	public List<MemberDetail> findByPairWilling(int pairWilling){
+		return memberDetailRepo.findByPairWilling(pairWilling);
+	}
 }

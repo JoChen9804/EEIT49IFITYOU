@@ -1,6 +1,7 @@
 package tw.group5.gym.service;
 
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -45,7 +46,7 @@ public class GymLogService {
 	}
 	
 	//where gymNo=? 
-	public Set<GymLog> findByGym(GymBean gym){
+	public List<GymLog> findByGym(GymBean gym){
 		return gymLogRespository.findByGym(gym);
 	}
 	
@@ -54,6 +55,9 @@ public class GymLogService {
 		gymLogRespository.delete(gLog);
 	}
 	
-	
+	//where memberId=? 
+	public List<GymLog> findByMember(MemberBean member){
+		return gymLogRespository.findByMember(member);
+	}
 	
 }
