@@ -16,11 +16,13 @@ response.setCharacterEncoding("UTF-8");
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <head>
 <title>Menu Build</title>
-<link rel="stylesheet" type="text/css"
-	href="https://cdn.datatables.net/1.11.2/css/jquery.dataTables.css">
+
+<!-- JQuery  連結-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.2/css/jquery.dataTables.css">
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
  <%@ include file="../admin/AdminstyleHead.jsp" %>
- <script>$('#table_id').dataTable({});</script>
 </head>
 
 <body>
@@ -146,7 +148,7 @@ response.setCharacterEncoding("UTF-8");
 		</div>
 
 		<div class="container">
-			<table  class="h3 mb-2 text-gray-800">
+			<table id="table_id" class="h3 mb-2 text-gray-800">
 				<thead>
 					<th>動作種類</th>
 					<th>動作</th>
@@ -262,6 +264,9 @@ response.setCharacterEncoding("UTF-8");
                          
             })
             })
+            
+            $('#table_id').dataTable({});
+            
             })
            
 					
@@ -309,6 +314,7 @@ response.setCharacterEncoding("UTF-8");
       		
       //	});
      
+            
             </script>
 
 	</section>

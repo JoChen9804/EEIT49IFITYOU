@@ -23,7 +23,7 @@ import tw.group5.menu.model.WriteIntoSQL;
 import tw.group5.menu.service.MenuService;
 
 @Controller
-@RequestMapping("/group5")
+@RequestMapping("/group5/admin")
 public class menuController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;

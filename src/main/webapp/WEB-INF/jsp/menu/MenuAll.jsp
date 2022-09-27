@@ -20,7 +20,6 @@ response.setCharacterEncoding("UTF-8");
 	href="https://cdn.datatables.net/1.11.2/css/jquery.dataTables.css">
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
  
- <script>$('#table_id').dataTable({});</script>
 </head>
 <body>
    <%@ include file="../admin/AdminstyleHead.jsp" %>
@@ -91,6 +90,9 @@ response.setCharacterEncoding("UTF-8");
 	     </form>
 	`);
 	}
+	
+	$('#table_id').dataTable({});
+	
     });
     </script>
 	<script>
