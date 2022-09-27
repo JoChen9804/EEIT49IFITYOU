@@ -114,7 +114,6 @@
 					aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<a class="collapse-item" href="/group5/admin/commodity_administration">商品管理</a>
-						<a class="collapse-item" href="/group5/admin/shopping">購物車</a>
 					</div>
 				</div></li>
 			<!-- Nav Item - Pages Collapse Menu æå¡ç®¡ç-->
