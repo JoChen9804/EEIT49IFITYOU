@@ -15,13 +15,13 @@ response.setCharacterEncoding("UTF-8");
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-   <%@ include file="../admin/AdminstyleHead.jsp" %>
 <title>ALL MY MENU</title>
 <script>$('#table_id').dataTable({});</script>
 
 </head>
 
 <body>
+   <%@ include file="../admin/AdminstyleHead.jsp" %>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<script type="text/javascript" charset="utf8"
@@ -86,6 +86,6 @@ response.setCharacterEncoding("UTF-8");
 		
 		
 		</script>
-
+<%@ include file="../admin/AdminstyleFoot.jsp" %>
 </body>
 </html>

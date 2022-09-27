@@ -124,7 +124,7 @@ response.setCharacterEncoding("UTF-8");
 		});
 	})
 	</script>
-	
+	<%@ include file="../admin/AdminstyleFoot.jsp" %>
 	
 </body>
 </html>

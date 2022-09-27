@@ -22,10 +22,10 @@ response.setCharacterEncoding("UTF-8");
 	
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.2/css/jquery.dataTables.css">
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
- <%@ include file="../admin/AdminstyleHead.jsp" %>
 </head>
 
 <body>
+ <%@ include file="../admin/AdminstyleHead.jsp" %>
   
 	<section>
 		<header>
@@ -175,7 +175,7 @@ response.setCharacterEncoding("UTF-8");
 	
 
 		</div>
-
+<%@ include file="../admin/AdminstyleFoot.jsp" %>
 		<script src="https://code.jquery.com/jquery-3.6.0.js"> </script>
 		<script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
 
