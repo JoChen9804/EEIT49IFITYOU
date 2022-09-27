@@ -51,12 +51,14 @@ public class PairingLog {
 	public void setPairingDate(String pairingDate) {
 		this.pairingDate = pairingDate;
 	}
-	public int getPairingNo() {
+	public Integer getPairingNo() {
 		return pairingNo;
 	}
-	public void setPairingNo(int pairingNo) {
+	public void setPairingNo(Integer pairingNo) {
 		this.pairingNo = pairingNo;
 	}
+	
+	
 	
 	
 }

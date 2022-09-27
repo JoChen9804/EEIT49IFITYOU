@@ -60,4 +60,9 @@ public class GymLogService {
 		return gymLogRespository.findByMember(member);
 	}
 	
+	//where gymNo=? and memberId<>?
+	public GymLog findPairTwoGymLogs(GymBean gym, MemberBean member){
+		return gymLogRespository.findPairTwoGymLogs(gym,member);
+	}
+	
 }

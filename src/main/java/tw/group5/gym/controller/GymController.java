@@ -70,7 +70,7 @@ public class GymController {
 	@PostMapping("/allDelete/{gname}")
 	public String processAllDeleteAction(@PathVariable("gname") String gymName) {
 		GymBean deletegym = gymService.queryName(gymName);
-		Set<GymLog> gymLogs = gymLogService.findByGym(deletegym);
+		List<GymLog> gymLogs = gymLogService.findByGym(deletegym);
 		for(GymLog log: gymLogs) {
 			gymLogService.deletelog(log);
 		}
@@ -88,7 +88,7 @@ public class GymController {
 		GymLog logStatus = gymLogService.findByMemberAndGym(member, gym);
 		System.out.println(logStatus);
 		if(logStatus!=null) {
-			Set<GymLog> memberlist = gymLogService.findByGym(gym);
+			List<GymLog> memberlist = gymLogService.findByGym(gym);
 			m.addAttribute("memberlist", memberlist);
 			m.addAttribute("logStatus", logStatus);			
 		}
