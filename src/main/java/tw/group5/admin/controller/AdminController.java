@@ -32,13 +32,6 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService;
 	
-//	@RequestMapping(path = "/logout", method = RequestMethod.POST)
-//	public String processMainAction(SessionStatus status) {
-//		status.setComplete();
-//		session.
-//		return "AdminLogin";
-//	}
-	
 	@RequestMapping(path = "/admin/fail", method = RequestMethod.POST)
 	public String adminLoginAction(Model m) {
 		Map<String, String> errorMsgMap = new HashMap<String, String>();
@@ -65,7 +58,7 @@ public class AdminController {
 	}
 	@RequestMapping("/user/UserCenter")
 	public String UserCenter() {
-		return "admin/UserCenter"; // 導向前台頁面
+		return "admin/UserCenter"; // 導向userCenter
 	}
 //	@RequestMapping("/group5/login")
 //	public String GoLogin() {
@@ -208,6 +201,8 @@ public class AdminController {
 			//修改
 		}else {
 			String modifyPassword;
+			System.out.println(originalRealPassword);
+			System.out.println(pwd);
 			if (pwd.equals("******")){
 				modifyPassword = originalRealPassword;
 			}else {
