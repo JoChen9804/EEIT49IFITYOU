@@ -229,7 +229,7 @@ h5 {
 							<label for="pwd2" class="t1">再次輸入密碼：</label><input id="pwd2"
 								type="password" name="pwd2" maxlength="15" required
 								onblur="validate()"> <span id="tishi"></span>
-								<input type="hidden" name="originalRealPassword" value="${OneMember.memberPassword}" id="originalRealPassword">
+								<input type="hidden" name="originalRealPassword" value="${OneMember.id}" id="originalRealPassword">
 						</div>
 						<div class="st1">
 							<label for="name1" class="t1">姓名：</label> <input id="name1"
@@ -295,6 +295,7 @@ h5 {
 			<br> <br>
 			<script>
 		$(function () {
+			console.log($('originalRealPassword').val());
 			$("#twzipcode").twzipcode({
 				css: ['addr-county', 'addr-district', 'addr-zipcode']
 			});
@@ -304,7 +305,6 @@ h5 {
 			$(location).attr("href", "adminMemberAction.controller")
 		});
 		$(document).ready(function() {
-			console.log($("#originalRealPassword").val());
 			var OneMember = "${OneMember.id}";
 			if (OneMember){
 				document.getElementById("id").setAttribute("style", "visibility:inline;");

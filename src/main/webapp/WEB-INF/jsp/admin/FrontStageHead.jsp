@@ -66,7 +66,7 @@
 				<div class="sidebar-brand-icon rotate-n-15">
 					<img src="img/i_ift_you.jpg" class="img-profile rounded-circle"
 						height=50 width=50 />
-				</div> <a class="nav-link page-scroll" href="FrontStageMain"
+				</div> <a class="nav-link page-scroll" href="/group5/FrontStageMain" 
 				style="font-size: 20px; color: white; text-decoration: none;">I
 					FIT YOU </a>
 			</a>

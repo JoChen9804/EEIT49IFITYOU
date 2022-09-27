@@ -82,6 +82,32 @@ public class MemberDetail {
 		this.pairInfo = pairInfo;
 		this.recentLoginDate = recentLoginDate;
 	}
+	
+	
+
+
+	public MemberDetail(Integer id, String gender, String nickname, String birthday, String cellphone,
+			String postalCode, String memberAddress, String referralCode, String registerReferralCode, Integer mute,
+			Integer postPermission, Integer pairWilling, String pairContactInfo, String pairRequest, String pairInfo,
+			String recentLoginDate) {
+		super();
+		this.id = id;
+		this.gender = gender;
+		this.nickname = nickname;
+		this.birthday = birthday;
+		this.cellphone = cellphone;
+		this.postalCode = postalCode;
+		this.memberAddress = memberAddress;
+		this.referralCode = referralCode;
+		this.registerReferralCode = registerReferralCode;
+		this.mute = mute;
+		this.postPermission = postPermission;
+		this.pairWilling = pairWilling;
+		this.pairContactInfo = pairContactInfo;
+		this.pairRequest = pairRequest;
+		this.pairInfo = pairInfo;
+		this.recentLoginDate = recentLoginDate;
+	}
 
 
 
