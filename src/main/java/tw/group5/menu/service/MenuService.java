@@ -6,6 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.fasterxml.jackson.core.sym.Name;
+
 import tw.group5.menu.model.MenuRepository;
 import tw.group5.menu.model.Menubean;
 
@@ -47,9 +50,58 @@ public class MenuService {
 		}
 	}
 	
+	
 	//Query ALL
 	public List<Menubean> findall(){
 		return menuRepository.findAll();
 	}
+	
+	//Query member
+	public List<Menubean>  findByAccount(String exrAccount) {
+		if(exrAccount == null) {
+			return null;
+		}
+		List<Menubean> findresult = menuRepository.findByExrAccount(exrAccount);
+		return findresult;
+	}
+	
+	//Query menuTitle
+	public List<Menubean>  findBymenuTitle(String menuTitle) {
+		if(menuTitle == null) {
+			return null;
+		}
+		List<Menubean> findresult = menuRepository.findBymenuTitle(menuTitle);
+		return findresult;
+	}
+	
+	//Query menuTitle 2 
+	public List<Menubean> DistinctFindbyAccount(String exrAccount){
+		List<Menubean> findresult = menuRepository.Distinctmenu(exrAccount);
+		return findresult; 
+		}
+	
+	
+	
+	
+	//Remove Duplicate
+	public static int remove_Duplicate_Elements(int arr[], int n){  
+        if (n==0 || n==1){  
+            return n;  
+        }  
+        int[] tempA = new int[n];  
+        int j = 0;  
+        for (int i=0; i<n-1; i++){  
+            if (arr[i] != arr[i+1]){  
+                tempA[j++] = arr[i];  
+            }  
+         }  
+        tempA[j++] = arr[n-1];       
+        for (int i=0; i<j; i++){  
+            arr[i] = tempA[i];  
+        }  
+        return j;  
+    }  
 
 }
+
+  

@@ -36,14 +36,16 @@ public class WriteIntoSQL {
 	      				+ " INSERT INTO menu "
 	      				+ "SELECT * FROM OPENJSON(@jsonData,'$.menu') "
 	      				+ "WITH(Partlist  nvarchar(50) '$.Partlist', "
-	      				+ "sectorlist  nvarchar(50) '$.sectorlist',"
+	      				+ "exercisename  nvarchar(50) '$.exercisename',"
 	      				+ "setCount  nvarchar(50) '$.setCount',"
 	      				+ "exercisekilloo  nvarchar(50) '$.exercisekilloo',"
 	      				+ "exerciseTimes  nvarchar(50) '$.exerciseTimes',"
 	      				+ "breakTime  nvarchar(50) '$.breakTime',"
-	      				+ "menuSet varchar(50),"
-	      				+ "exerciseNum varchar(50)"
+	      				+ "menuSet varchar(50) '$.menuSet',"
+	      				+ "exrAccount varchar(50) '$.exrAccount',"
+	      				+ "menuTitle varchar(50) '$.menuTitle'"
 	      				+ " );";
+	
 		
 		System.out.println(sqlString);
 		
