@@ -19,22 +19,21 @@ response.setCharacterEncoding("UTF-8");
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/1.11.2/css/jquery.dataTables.css">
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-
+ 
+ <script>$('#table_id').dataTable({});</script>
 </head>
 <body>
-
-	<%@ include file="../admin/AdminstyleHead.jsp"%>
-
+   <%@ include file="../admin/AdminstyleHead.jsp" %>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<script type="text/javascript" charset="utf8"
 		src="https://cdn.datatables.net/1.11.2/js/jquery.dataTables.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
 
+ 
 	<div id="show"></div>
 
-    <script>$('#table_id').dataTable({});</script>
+   
     
 	<script>
   $(function(){
@@ -44,10 +43,11 @@ response.setCharacterEncoding("UTF-8");
 	if(page=="menuall"){
 		
 		$('#show').html(`
-				<h3>目前菜單</h3>
+				<h3  class="h3 mb-2 text-gray-800">目前菜單</h3>
 				&emsp;&emsp;&emsp;
 				
-				<table id="table_id">
+				<table class="table table-bordered" id="dataTable" width="100%"
+					cellspacing="0">
 				<thead>
 				<tr>
 				<th>種類</th>
@@ -82,6 +82,13 @@ response.setCharacterEncoding("UTF-8");
 		</tr>
 		</c:forEach>
 		</table>	
+		
+		<form action="oneallxxmenu.controller" method="post">
+		<hidden type="text" class="data" name="complete" id="test1" value="">
+		<button type="submit" name="confirm_add" id="menuok" class="" value="">
+			<i>看看我的菜單</i>
+		</button>
+	     </form>
 	`);
 	}
     });
@@ -116,7 +123,6 @@ response.setCharacterEncoding("UTF-8");
 	})
 	</script>
 	
-	<%@ include file="../admin/AdminstyleFoot.jsp"%>
 	
 </body>
 </html>
