@@ -25,6 +25,7 @@ public class PairingController {
 		if(MatchingResult==null) {
 			m.addAttribute("SinglePair",MatchingResult);
 		}
+		System.out.println("controller內的查找cccccccccccccccc");
 		List<PairingLog> pairingLogs = pLogService.findAll();
 		m.addAttribute("pairingLogs",pairingLogs);
 		return "gym/pairingTest";

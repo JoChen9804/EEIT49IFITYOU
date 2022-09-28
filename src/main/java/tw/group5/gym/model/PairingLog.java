@@ -1,5 +1,7 @@
 package tw.group5.gym.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.springframework.stereotype.Component;
 
@@ -32,6 +35,8 @@ public class PairingLog {
 	@Column(name = "PAIRINGNO")
 	private Integer pairingNo;
 	
+	@Transient
+	private List<GymBean> gymList;
 	
 	public int getId() {
 		return id;
@@ -57,6 +62,13 @@ public class PairingLog {
 	public void setPairingNo(Integer pairingNo) {
 		this.pairingNo = pairingNo;
 	}
+	public List<GymBean> getGymList() {
+		return gymList;
+	}
+	public void setGymList(List<GymBean> gymList) {
+		this.gymList = gymList;
+	}
+	
 	
 	
 	
