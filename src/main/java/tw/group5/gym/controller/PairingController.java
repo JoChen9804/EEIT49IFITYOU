@@ -7,8 +7,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import tw.group5.admin.model.MemberBean;
+import tw.group5.admin.model.MemberDetail;
+import tw.group5.admin.service.AdminService;
 import tw.group5.gym.model.PairingLog;
 import tw.group5.gym.service.PairingLogService;
 
@@ -19,16 +22,36 @@ public class PairingController {
 	@Autowired
 	private PairingLogService pLogService;
 	
+	@Autowired
+	private AdminService adminService;
+	
 	@GetMapping("/pairingMain")
 	public String processAllMainAction(Model m) {
-		MemberBean MatchingResult = pLogService.dailyMatching();
-		if(MatchingResult==null) {
-			m.addAttribute("SinglePair",MatchingResult);
-		}
-		System.out.println("controller內的查找cccccccccccccccc");
+		String MatchingResult = pLogService.dailyMatching();
+		
+		System.out.println("controller內的查找cccccccccccccccc"+MatchingResult);
 		List<PairingLog> pairingLogs = pLogService.findAll();
 		m.addAttribute("pairingLogs",pairingLogs);
 		return "gym/pairingTest";
+	}
+	
+	
+	@GetMapping("/test")
+	@ResponseBody
+	public PairingLog processTestAction() {
+		PairingLog pl = new PairingLog();
+		MemberDetail memberDetail = new MemberDetail();
+		memberDetail.setMute(0);
+		memberDetail.setPostPermission(1);
+		memberDetail.setPairWilling(1);
+		MemberBean memberBean = new MemberBean("Amy","ddd",1,"Amy","amy@mail.com",memberDetail);
+		pl.setMember(memberBean);
+		pl.setPairingDate(adminService.getDate());
+		pl.setPairingNo(123);
+		PairingLog addedPairingLog = pLogService.updatePairingLog(pl); //add
+		System.out.println("here in test area for added");
+		
+		return addedPairingLog;
 	}
 	
 

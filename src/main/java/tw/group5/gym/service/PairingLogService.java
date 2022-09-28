@@ -53,83 +53,94 @@ public class PairingLogService {
 		for(MemberDetail md: mdList) {
 			PairingLog pl = new PairingLog();
 			pl.setMember(md.getMember());
-			List<GymBean> gymList = new List<GymBean>();
-			for(GymLog glog:gymLogService.findByMember(md.getMember())) {
-				gymList.add(glog.getGym());
-			}
-			pl.setGymList(gymList);
 			pl.setPairingDate(adminService.getDate());
 			pList.add(pl);
 		}
+
 		//新的清單塞到pairlog裡
 		List<PairingLog> saveAll = pLogRespository.saveAll(pList);
 		
 		if(saveAll.isEmpty()) {
 			System.out.println("fuckkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk!");
 			return "今日無配對需求";
-		}else {
-			System.out.println("清單insert2222222222");
-			int count = saveAll.size()/2; //配對次數
-			
-			MemberBean singleMember = null;
-			for(int i = 1;i<=count;i++) {
-				System.out.println("開始迴圈"+i);
-				PairingLog pairOne = pLogRespository.findOnePair(today); //找到1號
-				List<GymBean> gymList = pairOne.getGymList(); //1號收藏的健身房
-				PairingLog pairTwo = null;
-				if(gymList==null) {
-					//1號沒有收藏任何健身房，0代表沒有配對
-					pairOne.setPairingNo(0);
-					//抽下一位
-					continue;
-				}else {
-					//在1號收藏的健身房中隨機挑選1間
-					GymBean gym1=gymList.get((int) Math.random()*gymList.size());
-					//在該間健身房內隨機挑選1位會員(2號)>找到2號的gymlog
-					GymLog gLog2=gymLogService.findPairTwoGymLogs(gym1, pairOne.getMember());
-					//判斷這間健身房是不是只有1號收
-					if(gLog2==null) {
-						//這間健身房只有1號收
-						pairOne.setPairingNo(0);
-					}else{
-						//這間健身房不只有1號收(1號只收1間健身房)或是當1號收不只1間健身房時
-						while(true) {
-							//透過2號gymlog找到member2
-							MemberBean member2 = gLog2.getMember();
-							if(member2.getMemberDetail().getPairWilling()==1) {
-								//確認配對意願為true
-								//member2在pairlog中的位置>>找到pairTwo
-								pairTwo = pLogRespository.findTwoPairByMember(member2,today);
-								if(i==--count && pairTwo.getPairingNo()!=null) {
-									System.out.println("breakontwo"+i);
-									singleMember=pairOne.getMember();
-								}
-								break;
-							}else {
-								//確認配對意願為false，重抽新的2號gymlog
-								gLog2=gymLogService.findPairTwoGymLogs(gym1, pairOne.getMember());
-								//確認新的和舊的是不同人
-								if(gLog2.getMember()==member2) {
-									break;
-								}
-							}
-						}
-						//while迴圈結束
-					}
-				}
-				System.out.println("配對完!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-				//將配對編號寫進資料庫
-				pairOne.setPairingNo(i);
-				pairTwo.setPairingNo(i);
-				pLogRespository.save(pairOne);
-				pLogRespository.save(pairTwo);
-				System.out.println("!!!!!!!!!!!!!塞完資料"+i);
+		}
+		
+		System.out.println("清單insert2222222222");
+		int count = (saveAll.size()%2==1?(saveAll.size()/2)+1:(saveAll.size()/2)); //配對次數
+		System.out.println("!!!!!!!!!配對次數"+count);	
+		for(int i = 1;i<=count;i++) {
+			System.out.println("開始迴圈"+i);
+			PairingLog pairOne = pLogRespository.findOnePair(today); //找到1號
+			List<GymLog> findByMember = gymLogService.findByMember(pairOne.getMember());
+			List<GymBean> gymList = new ArrayList<GymBean>();
+			for(GymLog gLog: findByMember) {
+				gymList.add(gLog.getGym());
+				System.out.println("heyyyyyyyyyyyyyyyyyyyyyyyyyy");
 			}
-			System.out.println("要跳出方法了");
-			return singleMember;
-//		}
-//		return null;
+			
+			//如果1號沒收藏東西 或 如果是基數個配對人選，並且處理到最後一位了
+			if(gymList.isEmpty() || (i==count && saveAll.size()%2==1)) {
+				pairOne.setPairingNo(0);
+				pLogRespository.save(pairOne);				
+				continue; //再抽下一位1號
+			}
+						
+			//開始處理2號
+			PairingLog pairTwo = null;
+			int gymListSize=1;
+			while(true) {	
+				//隨機挑選出健身房
+				GymBean gym1 = gymList.get((int) Math.random()*gymList.size()); 
+				//找到會員清單
+				List<MemberBean> mList = gymLogService.findPairTwoGymLogs(gym1, pairOne.getMember());
+				if(gymList.size()==1) {
+					if(mList.isEmpty()) {
+						System.out.println("AC");
+						pairOne.setPairingNo(0);
+						pLogRespository.save(pairOne);
+						break; //break while
+					}
+					System.out.println("AD");
+					pairTwo = randomMember(mList);
+					break;
+				}else {
+					if(mList.isEmpty()) {
+						System.out.println("BC");
+						if(gymListSize==gymList.size()) {
+							break;
+						}
+						System.out.println("gymListSize"+gymListSize);
+						gymListSize++;
+						continue; //重抽gym
+					}
+					System.out.println("BD");
+					pairTwo = randomMember(mList);
+					break;
+				}
+			} //這個是while結束
+			
+			System.out.println("配對塞進資料庫");
+			//將配對編號寫進資料庫
+			pairOne.setPairingNo(i);
+			pLogRespository.save(pairOne);
+			if(pairTwo!=null) {
+				pairTwo.setPairingNo(i);
+				pLogRespository.save(pairTwo);			
+			}
+		
+		} //這個是for結束
+		return "配對完成";
 	}
 	
+	
+	//篩選出會員清單並抽出一個會員
+	public PairingLog randomMember(List<MemberBean> mList) {
+		System.out.println("in the random MEMBER");
+		if(mList.isEmpty()) {
+			return null;
+		}
+		MemberBean memberBean = mList.get((int) Math.random()*mList.size()); //隨機挑選出會員
+		return pLogRespository.findTwoPairByMember(memberBean,adminService.getDate());
+	}
 	
 }

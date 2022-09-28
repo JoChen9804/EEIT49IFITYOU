@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,7 +24,7 @@ public class PairingLog {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
-	private int id;
+	private int id;	
 	
 	@ManyToOne
 	@JoinColumn(name = "MEMBERID")
@@ -35,8 +36,9 @@ public class PairingLog {
 	@Column(name = "PAIRINGNO")
 	private Integer pairingNo;
 	
-	@Transient
-	private List<GymBean> gymList;
+
+	
+	
 	
 	public int getId() {
 		return id;
@@ -62,12 +64,7 @@ public class PairingLog {
 	public void setPairingNo(Integer pairingNo) {
 		this.pairingNo = pairingNo;
 	}
-	public List<GymBean> getGymList() {
-		return gymList;
-	}
-	public void setGymList(List<GymBean> gymList) {
-		this.gymList = gymList;
-	}
+
 	
 	
 	

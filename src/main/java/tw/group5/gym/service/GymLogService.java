@@ -1,6 +1,7 @@
 package tw.group5.gym.service;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -61,8 +62,15 @@ public class GymLogService {
 	}
 	
 	//where gymNo=? and memberId<>?
-	public GymLog findPairTwoGymLogs(GymBean gym, MemberBean member){
-		return gymLogRespository.findPairTwoGymLogs(gym,member);
+	public List<MemberBean> findPairTwoGymLogs(GymBean gym, MemberBean member){
+		Set<GymLog> gymLogsRaw = gymLogRespository.findPairTwoGymLogs(gym,member);
+		List<MemberBean> result = new ArrayList<MemberBean>();
+		for(GymLog glog:gymLogsRaw) {
+			if(glog.getMember().getMemberDetail().getPairWilling()==1) {
+				result.add(glog.getMember());
+			}
+		}
+		return result;
 	}
 	
 }

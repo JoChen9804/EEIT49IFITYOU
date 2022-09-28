@@ -10,7 +10,7 @@ import tw.group5.admin.model.MemberBean;
 
 public interface PairingLogRespository extends JpaRepository<PairingLog, Integer> {
 	
-	public List<PairingLog> findByMember(MemberBean member);
+	//public List<PairingLog> findByMember(MemberBean member);
 	
 	@Query(value = "select top 1 * from pairinglog where pairingno is null and pairingdate = :date order by newid()", nativeQuery = true)
 	public PairingLog findOnePair(@Param("date")String date);
