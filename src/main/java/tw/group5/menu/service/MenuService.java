@@ -75,8 +75,8 @@ public class MenuService {
 	}
 	
 	//Query menuTitle 2 
-	public List<Menubean> DistinctFindbyAccount(String exrAccount){
-		List<Menubean> findresult = menuRepository.Distinctmenu(exrAccount);
+	public List<String> DistinctFindbyAccount(String exrAccount){
+		List<String> findresult = menuRepository.Distinctmenu(exrAccount);
 		return findresult; 
 		}
 	

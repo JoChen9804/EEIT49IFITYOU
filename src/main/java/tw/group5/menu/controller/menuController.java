@@ -137,7 +137,7 @@ public class menuController extends HttpServlet {
 	
 	@PostMapping("/menuQueryDistinct.controller/{exrAccount}")
 	public String QueryDistinctMembermenus(@PathVariable("exrAccount") String exrAccount,Model m) {
-		List<Menubean> queryresult = menuService.DistinctFindbyAccount(exrAccount);
+		List<String> queryresult = menuService.DistinctFindbyAccount(exrAccount);
 		m.addAttribute("menu_queryAccount", queryresult);
 		m.addAttribute("page","queryresult");
 		return "menu/MenuQuery";

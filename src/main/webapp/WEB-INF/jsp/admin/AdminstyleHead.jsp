@@ -41,7 +41,7 @@
 			<!-- Sidebar - Brand -->
 			<a
 				class="sidebar-brand d-flex align-items-center justify-content-center"
-				href="AdminBackstage">
+				href="/group5/admin/AdminBackstage">
 				<div class="sidebar-brand-icon rotate-n-15">
 					<img src="/group5/img/i_ift_you.jpg" class="img-profile rounded-circle" height=50 width=50/>
 				</div>

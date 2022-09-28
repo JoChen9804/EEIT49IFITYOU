@@ -12,8 +12,8 @@ public interface MenuRepository extends JpaRepository<Menubean, Integer> {
 	
 	public List<Menubean> findBymenuTitle(String menuTitle);
 	
-	@Query(value = "SELECT　DISTINCT menutitle FROM menu where exrAccount = ?;",nativeQuery = true)
-	public List<Menubean> Distinctmenu(@Param("exrAccount") String exrAccount);
+	@Query(value = "SELECT DISTINCT menuset FROM menu where exrAccount = ?;",nativeQuery = true)
+	public List<String> Distinctmenu(String exrAccount);
 	
 	
 	
