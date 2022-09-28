@@ -1,26 +1,33 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js"
-	type="text/javascript"></script>
-<link
-	href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700&display=swap&subset=latin-ext"
-	rel="stylesheet">
-<link href="css/bootstrap.css" rel="stylesheet">
-<link href="css/fontawesome-all.css" rel="stylesheet">
-<link href="css/swiper.css" rel="stylesheet">
-<link href="css/magnific-popup.css" rel="stylesheet">
-<link href="css/styles.css" rel="stylesheet">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-
+<title>論壇貼文</title>
+<!-- <script -->
+<!-- 	src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" -->
+<!-- 	type="text/javascript"></script> -->
+<!-- <link -->
+<!-- 	href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700&display=swap&subset=latin-ext" -->
+<!-- 	rel="stylesheet"> -->
+<!-- <link href="css/bootstrap.css" rel="stylesheet"> -->
+<!-- <link href="css/fontawesome-all.css" rel="stylesheet"> -->
+<!-- <link href="css/swiper.css" rel="stylesheet"> -->
+<!-- <link href="css/magnific-popup.css" rel="stylesheet"> -->
+<!-- <link href="css/styles.css" rel="stylesheet"> -->
+<!-- <script -->
+<!-- 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script> -->
+<style>
+.imgfront {
+	width: 150px;
+	height: 120px;
+	padding: 2px 2px 2px 2px;
+	margin: 2px;
+}
+</style>
 <!-- Favicon  -->
-<link rel="icon" href="images/favicon.png">
 </head>
 <body>
 	<%@ include file="../admin/FrontStageHead.jsp"%>
@@ -31,7 +38,8 @@
 				<div class="col-lg-12">
 					<div class="above-heading">FEATURES</div>
 					<h2 class="h2-heading">論壇貼文</h2>
-					<img class="img"     width="100%" height="70%" src="postfolder/images/post.jpg">
+					<img class="img" width="100%" height="70%"
+						src="postfolder/images/post.jpg">
 					<p class="p-heading">無論是要給予正評或負評，發文內容請勿提及健身業者名稱
 						嚴禁任何形式的商業行為，以上規定適用於體育運動各版面 累犯或明知故犯，將依所犯情節懲處予以禁權 (禁言)
 						嚴禁回覆已過時效的主題炒作舊帖、嚴禁連續大量回文洗版</p>
@@ -50,12 +58,10 @@
 								class="fas fa-list"></i>全部貼文</a></li>
 						<li class="nav-item"><a class="nav-link" id="nav-tab-2"
 							data-toggle="tab" href="#tab-2" role="tab" aria-controls="tab-2"
-							aria-selected="false"><i class="fas fa-list"></i>我的分享貼文</a>
-						</li>
+							aria-selected="false"><i class="fas fa-list"></i>我的分享貼文</a></li>
 						<li class="nav-item"><a class="nav-link" id="nav-tab-3"
 							data-toggle="tab" href="#tab-3" role="tab" aria-controls="tab-3"
-							aria-selected="false"><i class="fas fa-chart-bar"></i>收藏貼文</a>
-						</li>
+							aria-selected="false"><i class="fas fa-chart-bar"></i>收藏貼文</a></li>
 					</ul>
 					<!-- end of tabs links -->
 
@@ -66,71 +72,71 @@
 						<div class="tab-pane fade show active" id="tab-1" role="tabpanel"
 							aria-labelledby="tab-1">
 							<div class="row">
-								<!-- <div class="col-lg-6">
-									<div class="image-container">
-										<img class="img-fluid" src=""
-											alt="alternative">
-									</div>-->
-									<!-- end of image-container -->
-								</div>
+								<!--<div class="col-lg-6">
+									<!--	<div class="image-container">
+									</div>
+								<!-- end of image-container -->
+								<!--	</div>-->
 								<!-- end of col -->
+                                <!-- //////////////////////	跳到發布貼文///////////////////////////// -->
 								<div class="col-lg-12">
 									<div class="text-container">
-									<table class="table table-bordered" id="table_id" class="compact hover stripe">
-    <thead>
-        <tr>
-        <th>圖片</th>
-        <th>貼文id</th>
-        <th>類型</th>
-        <th>標題</th>
-        <th>會員帳號</th>
-        <th>發布日期</th>
-        
-        </tr>
-    </thead>
-    <c:forEach var="allmpbs" items="${query}">
-        <tbody>
-         <tr>
-            <td><img class="img" src="${allmpbs.p_image}"></td>
-            <td>${allmpbs.mainPostNo}</td>
-            <td>${allmpbs.postTypeName}</td>
-            <td>${allmpbs.title}</td>
-            <!-- <td><a href="/MainPost.watch2/${allmpbs.mainPostNo}">${allmpbs.title}</a></td>  -->           
-            <td>${allmpbs.account}</td>
-            <td>${allmpbs.addtime}</td>
-            
-            </tr>
-        </tbody>
-     </c:forEach>
-            <tbody>
-            <tr><td colspan="9">${error}</td></tr></tbody>
-            </table> 
-									
-									
-									
-										<!--<h3>List Building Is Easier Than Ever</h3>
-										
-										<p>
-											It's very easy to start using Tivo. You just need to fill out
-											and submit the <a class="blue page-scroll"
-												href="sign-up.html">Sign Up Form</a> and you will receive
-											access to the app and all of its features in no more than
-											24h.
-										</p>
-										<ul class="list-unstyled li-space-lg">
-											<li class="media"><i class="fas fa-square"></i>
-												<div class="media-body">Create and embed on websites
-													newsletter sign up forms</div></li>
-											<li class="media"><i class="fas fa-square"></i>
-												<div class="media-body">Manage forms and landing pages
-													for your services</div></li>
-											<li class="media"><i class="fas fa-square"></i>
-												<div class="media-body">Add and remove subscribers
-													using the control panel</div></li>
-										</ul>-->
-										
 										<a class="btn-solid-reg popup-with-move-anim"
-											href="#details-lightbox-1">首頁</a>
+											href="#details-lightbox-1">發布貼文</a>
+										<div class="row g-2">
+											<div class="col-md">
+												<div class="form-floating">
+													<input type="text" name="title" class="form-control"
+														id="floatingInputGrid" placeholder="請輸入標題"
+														oninvalid="setCustomValidity('請輸入標題')"
+														oninput="setCustomValidity('')"> <label
+														for="floatingInputGrid">{error}</label>
+												</div>
+											</div>
+											<div class="col-md">
+												<div class="form-floating">
+													<input type="submit"
+														class="btn-solid-reg popup-with-move-anim"
+														name="inquireId" value="查詢">
+												</div>
+											</div>
+										</div>
+										<p>${error}</p>
+										<table class="table table-bordered">
+											<thead>
+												<tr>
+													<th>圖片</th>
+													<th>類型</th>
+													<th>標題</th>
+													<th>發布日期</th>
+													<th>最後回覆</th>
+													<th>觀看</th>
+												</tr>
+											</thead>
+											<c:forEach var="allmpbs" items="${query}">
+												<tbody>
+													<tr>
+														<!--<a href="/group5/PostWtch/${allmpbs.mainPostNo}"></a>-->
+														<td class="align-middle"><img class="imgfront"
+															src="${allmpbs.p_image}"></td>
+														<td class="align-middle">[${allmpbs.postTypeName}]</td>
+														<td class="align-middle">${allmpbs.title}</td>
+														<td class="align-middle">${allmpbs.account}<br />${allmpbs.addtime}</td>
+														<td class="align-middle">帳號<br />最後回覆</td>
+														<td class="align-middle">
+															<form action="PostWtch"
+																method="GET">
+																<input type="hidden" name="mainPostNo"
+																	value="${allmpbs.mainPostNo}">
+																<input type="submit" class="btn btn-outline-success"
+																	value="觀看">
+															</form>
+														</td>
+													</tr>
+												</tbody>
+											</c:forEach>
+										</table>
+
 									</div>
 									<!-- end of text-container -->
 								</div>
@@ -140,7 +146,7 @@
 						</div>
 						<!-- end of tab-pane -->
 						<!-- end of tab -->
-
+                        <!-- ////////////////////// 跳到發布貼文///////////////////////////// -->
 						<!-- Tab -->
 						<div class="tab-pane fade" id="tab-2" role="tabpanel"
 							aria-labelledby="tab-2">
@@ -246,38 +252,68 @@
 		<div class="container">
 			<div class="row">
 				<button title="Close (Esc)" type="button" class="mfp-close x-button">×</button>
-				<div class="col-lg-8">
+				<!--<div class="col-lg-8">
 					<div class="image-container">
-						<img class="img-fluid" src="images/details-lightbox.png"
+						 <img class="img-fluid" src="images/details-lightbox.png"
 							alt="alternative">
-					</div>
-					<!-- end of image-container -->
+					</div>-->
+				<!-- end of image-container -->
+			</div>
+			<!-- end of col -->
+			<div class="row justify-content-center">
+				<div class="col-lg-3">
+					<form action="/group5/Posting" enctype='multipart/form-data'
+						method="POST" onsubmit="return checkip()">
+						<h3>發布貼文</h3>
+						<table class="img-fluid">
+							<thead>
+								<tr>
+									<th><label> <input type="radio"
+											name="postTypeName" value="公告" id="" required
+											oninvalid="setCustomValidity('請輸入帳號')"
+											oninput="setCustomValidity('')">公告
+									</label> <label> <input type="radio" name="postTypeName"
+											value="分享" id="" checked>分享
+									</label> <label> <input type="radio" name="postTypeName"
+											value="問題" id="">問題
+									</label></th>
+								</tr>
+								<tr>
+									<th><div class="mb-3">
+											標題:<input type="text" name="title" class="form-control"
+												id="floatingInput" placeholder="請輸入標題"
+												oninvalid="setCustomValidity('請輸入標題')"
+												oninput="setCustomValidity('')"> <label
+												for="floatingInput">{請輸入標題}</label>
+										</div></th>
+								</tr>
+
+								<tr>
+
+									<th><div class="form-floating">
+											內容:
+											<textarea name="content" class="form-control" cols="60"
+												rows="10" placeholder="請輸入內容" id="floatingTextarea" required
+												oninvalid="setCustomValidity('請輸入內容')"
+												oninput="setCustomValidity('')"></textarea>
+											<label for="floatingTextarea">{請輸入內容}</label>
+										</div></th>
+								</tr>
+								<tr>
+									<th>請選擇圖片(最多五張，每張2MB以下):<input id="file1" type="file"
+										class="btn btn-outline-primary" name="file"
+										multiple="multiple" accept="image/*" onchange="checkip()">
+										<div id="imgs"></div></th>
+								</tr>
+							</thead>
+						</table>
+						<script src="/group5/js/jquery.min.js"></script>
+						<script src="js/images.js"></script>
+						<input type="submit" class="btn-solid-reg mfp-close" value="送出"><a
+							class="btn-outline-reg mfp-close as-button" href="#screenshots">取消</a>
+					</form>
 				</div>
-				<!-- end of col -->
-				<div class="col-lg-4">
-					<h3>List Building</h3>
-					<hr>
-					<h5>Core service</h5>
-					<p>It's very easy to start using Tivo. You just need to fill
-						out and submit the Sign Up Form and you will receive access to the
-						app.</p>
-					<ul class="list-unstyled li-space-lg">
-						<li class="media"><i class="fas fa-square"></i>
-							<div class="media-body">List building framework</div></li>
-						<li class="media"><i class="fas fa-square"></i>
-							<div class="media-body">Easy database browsing</div></li>
-						<li class="media"><i class="fas fa-square"></i>
-							<div class="media-body">User administration</div></li>
-						<li class="media"><i class="fas fa-square"></i>
-							<div class="media-body">Automate user signup</div></li>
-						<li class="media"><i class="fas fa-square"></i>
-							<div class="media-body">Quick formatting tools</div></li>
-						<li class="media"><i class="fas fa-square"></i>
-							<div class="media-body">Fast email checking</div></li>
-					</ul>
-					<a class="btn-solid-reg mfp-close" href="sign-up.html">SIGN UP</a>
-					<a class="btn-outline-reg mfp-close as-button" href="#screenshots">BACK</a>
-				</div>
+				<!--</div>-->
 				<!-- end of col -->
 			</div>
 			<!-- end of row -->
