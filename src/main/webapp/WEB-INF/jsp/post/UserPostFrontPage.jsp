@@ -1,12 +1,24 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" isErrorPage="true"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>論壇貼文</title>
-
+<!-- <script -->
+<!--    src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" -->
+<!--    type="text/javascript"></script> -->
+<!-- <link -->
+<!--    href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700&display=swap&subset=latin-ext" -->
+<!--    rel="stylesheet"> -->
+<!-- <link href="css/bootstrap.css" rel="stylesheet"> -->
+<!-- <link href="css/fontawesome-all.css" rel="stylesheet"> -->
+<!-- <link href="css/swiper.css" rel="stylesheet"> -->
+<!-- <link href="css/magnific-popup.css" rel="stylesheet"> -->
+<!-- <link href="css/styles.css" rel="stylesheet"> -->
+<!-- <script -->
+<!--    src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script> -->
 <style>
 .imgfront {
 	width: 150px;
@@ -61,17 +73,21 @@
 							aria-labelledby="tab-1">
 							<div class="row">
 								<!--<div class="col-lg-6">
-									<!--	<div class="image-container">
-									</div>
-								<!-- end of image-container -->
-								<!--	</div>-->
+                                    <!--    <div class="image-container">
+                                    </div>
+                                <!-- end of image-container -->
+								<!--    </div>-->
 								<!-- end of col -->
-								<!-- //////////////////////	跳到發布貼文///////////////////////////// -->
+								<!-- ////////////////////// 跳到發布貼文///////////////////////////// -->
+
+
 								<div class="col-lg-12">
 									<div class="text-container">
-										<form action="UserPostAll" method="GET">
-											<div class="row g-3">
 
+										<form action="UserPostAll" method="GET">
+											
+											
+											<div class="row g-3">
 												<div class="col-md">
 													<div class="form-floating">
 														<input type="text" name="title" class="form-control"
@@ -86,19 +102,28 @@
 														<input type="submit" class="btn-solid-reg" value="查詢">
 													</div>
 												</div>
+
+
+
 												<div class="col-md">
 													<div class="form-floating">
 														<a class="btn-solid-reg" href="/group5/UserPostAll">所有貼文</a>
 													</div>
 												</div>
+												
+												
 												<div class="col-md">
 													<div class="form-floating">
 														<a class="btn-solid-reg popup-with-move-anim"
 															href="#details-lightbox-1">發布貼文</a>
 													</div>
 												</div>
+
+
 											</div>
 										</form>
+
+
 
 
 										<table class="table table-sm">
@@ -121,7 +146,7 @@
 														<td class="align-middle">[${allmpbs.postTypeName}]</td>
 														<td class="align-middle">${allmpbs.title}</td>
 														<td class="align-middle">${allmpbs.account}<br />${allmpbs.addtime}</td>
-														<td class="align-middle">帳號<br />最後回覆
+														<td class="align-middle">改成回覆帳號<br />${allmpbs.lastReplyTime}
 														</td>
 														<td class="align-middle">
 															<form action="PostWtch" method="GET">
@@ -136,6 +161,10 @@
 											</c:forEach>
 										</table>
 										<h3>${error}</h3>
+
+
+
+
 									</div>
 									<!-- end of text-container -->
 								</div>
@@ -149,171 +178,166 @@
 
 
 
+
+
 						<!-- ////////////////////// 我的分享貼文///////////////////////////// -->
 						<!-- Tab -->
 						<div class="tab-pane fade" id="tab-2" role="tabpanel"
 							aria-labelledby="tab-2">
 							<div class="row">
-								<!-- end of col -->
+
 								<div class="col-lg-12">
 									<div class="text-container">
-										<div class="col-lg-12">
-											<div class="text-container">
-												<div class="row g-2">
-													<div class="col-md">
-														<div class="form-floating">
-															<input type="text" name="title" class="form-control"
-																id="floatingInputGrid" placeholder="請輸入標題"
-																oninvalid="setCustomValidity('請輸入標題')"
-																oninput="setCustomValidity('')"> <label
-																for="floatingInputGrid">{error}</label>
-														</div>
-													</div>
-													<div class="col-md">
-														<div class="form-floating">
-															<input type="submit"
-																class="btn-solid-reg popup-with-move-anim"
-																name="inquireId" value="查詢">
-														</div>
-													</div>
+									<form action="UserPostAll" method="GET">
+									
+									
+										<div class="row g-2">
+
+
+											<div class="col-md">
+												<div class="form-floating">
+													<input type="text" name="title" class="form-control"
+														id="floatingInputGrid" placeholder="請輸入標題"
+														oninvalid="setCustomValidity('請輸入標題')"
+														oninput="setCustomValidity('')"> <label
+														for="floatingInputGrid">{error}</label>
 												</div>
-												<p>${error}</p>
-												<table class="table table-sm">
-													<thead>
-														<tr>
-															<th>圖片</th>
-															<th>類型</th>
-															<th>標題</th>
-															<th>發布日期</th>
-															<th>最後回覆</th>
-															<th>狀態</th>
-															<th>編輯</th>
-														</tr>
-													</thead>
-													<c:forEach var="allmpbs" items="${userposts}">
-														<tbody>
-															<tr>
-																<!--<a href="/group5/PostWtch/${allmpbs.mainPostNo}"></a>-->
-																<td class="align-middle"><img class="imgfront"
-																	src="${allmpbs.p_image}"></td>
-																<td class="align-middle">[${allmpbs.postTypeName}]</td>
-																<td class="align-middle">${allmpbs.title}</td>
-																<td class="align-middle">${allmpbs.account}<br />${allmpbs.addtime}</td>
-																<td class="align-middle">帳號<br />最後回覆
-																</td>
-																<td class="align-middle">${allmpbs.postPermission}
-																</td>
-																<td class="align-middle">
-																	<form action="PostWtch" method="GET">
-																		<input type="hidden" name="mainPostNo"
-																			value="${allmpbs.mainPostNo}"> <input
-																			type="submit" class="btn btn-outline-success"
-																			value="刪除">
-																	</form>
-																	<form action="PostWtch" method="GET">
-																		<input type="hidden" name="mainPostNo"
-																			value="${allmpbs.mainPostNo}"> <input
-																			type="submit" class="btn btn-outline-success"
-																			value="修改">
-																	</form>
-																	
-																</td>
-															</tr>
-														</tbody>
-													</c:forEach>
-												</table>
-
 											</div>
-											<!-- end of text-container -->
+											<div class="col-md">
+												<div class="form-floating">
+													<input type="submit"
+														class="btn-solid-reg"
+														name="inquireId" value="查詢">
+												</div>
+											</div>
 										</div>
-										<!-- end of col -->
+										
+										
+										
+										</form>
+										<table class="table table-sm">
+											<thead>
+												<tr>
+													<th>圖片</th>
+													<th>類型</th>
+													<th>標題</th>
+													<th>發布日期</th>
+													<th>最後回覆</th>
+													<th>狀態</th>
+													<th>編輯</th>
+												</tr>
+											</thead>
+											<c:forEach var="allmpbs" items="${userposts}">
+												<tbody>
+													<tr>
+														<!--<a href="/group5/PostWtch/${allmpbs.mainPostNo}"></a>-->
+														<td class="align-middle"><img class="imgfront"
+															src="${allmpbs.p_image}"></td>
+														<td class="align-middle">[${allmpbs.postTypeName}]</td>
+														<td class="align-middle">${allmpbs.title}</td>
+														<td class="align-middle">${allmpbs.account}<br />${allmpbs.addtime}</td>
+														<td class="align-middle">改成回覆帳號<br />${allmpbs.lastReplyTime}
+														</td>
+														<td class="align-middle">${allmpbs.postPermission}</td>
+														<td class="align-middle">
+															<form action="UserPost" method="POST">
+															<input type="hidden" name="_method" value="DELETE">
+																<input type="hidden" name="mainPostNo"
+																	value="${allmpbs.mainPostNo}"> <input
+																	type="submit" class="btn btn-outline-success"
+																	value="刪除">
+															</form>
+															<form action="PostWtch" method="GET">
+																<input type="hidden" name="mainPostNo"
+																	value="${allmpbs.mainPostNo}"> <input
+																	type="submit" class="btn btn-outline-success"
+																	value="修改">
+															</form>
+
+														</td>
+													</tr>
+												</tbody>
+											</c:forEach>
+										</table>
+                                        <h3>${notYetPublished}</h3>
+
+
+
+
+
+
+
 									</div>
-
-
-
-
-									<!-- 										<h3>Campaigns Monitoring Tools</h3> -->
-									<!-- 										<p>Campaigns monitoring is a feature we've developed since -->
-									<!-- 											the beginning because it's at the core of Tivo and basically -->
-									<!-- 											to any marketing activity focused on results.</p> -->
-									<!-- 										<ul class="list-unstyled li-space-lg"> -->
-									<!-- 											<li class="media"><i class="fas fa-square"></i> -->
-									<!-- 												<div class="media-body">Easily plan campaigns and -->
-									<!-- 													schedule their starting date</div></li> -->
-									<!-- 											<li class="media"><i class="fas fa-square"></i> -->
-									<!-- 												<div class="media-body">Start campaigns and follow -->
-									<!-- 													their evolution closely</div></li> -->
-									<!-- 											<li class="media"><i class="fas fa-square"></i> -->
-									<!-- 												<div class="media-body">Evaluate campaign results and -->
-									<!-- 													optimize future actions</div></li> -->
-									<!-- 										</ul> -->
-									<a class="btn-solid-reg popup-with-move-anim"
-										href="#details-lightbox-2">LIGHTBOX</a>
 								</div>
-								<!-- end of text-container -->
 							</div>
-							<!-- end of col -->
+							<!-- end of row -->
 						</div>
-						<!-- end of row -->
-					</div>
-					<!-- end of tab-pane -->
-					<!-- end of tab -->
-					<!-- ////////////////////// 我的分享貼文///////////////////////////// -->
+						<!-- end of tab-pane -->
+						<!-- end of tab -->
 
-					<!-- Tab -->
-					<div class="tab-pane fade" id="tab-3" role="tabpanel"
-						aria-labelledby="tab-3">
-						<div class="row">
-							<div class="col-lg-6">
-								<div class="image-container">
-									<img class="img-fluid" src="images/features-3.png"
-										alt="alternative">
+
+
+
+						<!-- Tab -->
+						<div class="tab-pane fade" id="tab-3" role="tabpanel"
+							aria-labelledby="tab-3">
+							<div class="row">
+								<div class="col-lg-6">
+									<div class="image-container">
+										<img class="img-fluid" src="images/features-3.png"
+											alt="alternative">
+									</div>
+									<!-- end of image-container -->
 								</div>
-								<!-- end of image-container -->
-							</div>
-							<!-- end of col -->
-							<div class="col-lg-6">
-								<div class="text-container">
-									<h3>Analytics Control Panel</h3>
-									<p>Analytics control panel is important for every marketing
-										team so it's beed implemented from the begging and designed to
-										produce reports based on very little input information.</p>
-									<ul class="list-unstyled li-space-lg">
-										<li class="media"><i class="fas fa-square"></i>
-											<div class="media-body">If you set it up correctly you
-												will get acces to great intel</div></li>
-										<li class="media"><i class="fas fa-square"></i>
-											<div class="media-body">Easy to integrate in your
-												websites and landing pages</div></li>
-										<li class="media"><i class="fas fa-square"></i>
-											<div class="media-body">The generated reports are
-												important for your strategy</div></li>
-									</ul>
-									<a class="btn-solid-reg popup-with-move-anim"
-										href="#details-lightbox-3">LIGHTBOX</a>
+								<!-- end of col -->
+								<div class="col-lg-6">
+									<div class="text-container">
+										<h3>Analytics Control Panel</h3>
+										<p>Analytics control panel is important for every
+											marketing team so it's beed implemented from the begging and
+											designed to produce reports based on very little input
+											information.</p>
+										<ul class="list-unstyled li-space-lg">
+											<li class="media"><i class="fas fa-square"></i>
+												<div class="media-body">If you set it up correctly you
+													will get acces to great intel</div></li>
+											<li class="media"><i class="fas fa-square"></i>
+												<div class="media-body">Easy to integrate in your
+													websites and landing pages</div></li>
+											<li class="media"><i class="fas fa-square"></i>
+												<div class="media-body">The generated reports are
+													important for your strategy</div></li>
+										</ul>
+										<a class="btn-solid-reg popup-with-move-anim"
+											href="#details-lightbox-3">LIGHTBOX</a>
+									</div>
+									<!-- end of text-container -->
 								</div>
-								<!-- end of text-container -->
+								<!-- end of col -->
 							</div>
-							<!-- end of col -->
+							<!-- end of row -->
 						</div>
-						<!-- end of row -->
+						<!-- end of tab-pane -->
+						<!-- end of tab -->
+
 					</div>
-					<!-- end of tab-pane -->
-					<!-- end of tab -->
+					<!-- end of tab content -->
+					<!-- end of tabs content -->
 
 				</div>
-				<!-- end of tab content -->
-				<!-- end of tabs content -->
-
+				<!-- end of col -->
 			</div>
-			<!-- end of col -->
+			<!-- end of row -->
 		</div>
-		<!-- end of row -->
-	</div>
-	<!-- end of container -->
+		<!-- end of container -->
 	</div>
 	<!-- end of tabs -->
 	<!-- end of features -->
+
+
+
+
+
 
 
 	<!-- Details Lightboxes -->
@@ -324,16 +348,13 @@
 			<div class="row">
 				<button title="Close (Esc)" type="button" class="mfp-close x-button">×</button>
 				<!--<div class="col-lg-8">
-					<div class="image-container">
-						 <img class="img-fluid" src="images/details-lightbox.png"
-							alt="alternative">
-					</div>-->
+                    <div class="image-container">
+                         <img class="img-fluid" src="images/details-lightbox.png"
+                            alt="alternative">
+                    </div>-->
 				<!-- end of image-container -->
 			</div>
 			<!-- end of col -->
-
-
-
 			<div class="row justify-content-center">
 				<div class="col-lg-3">
 					<form action="/group5/Posting" enctype='multipart/form-data'

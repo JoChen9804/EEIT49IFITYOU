@@ -18,6 +18,12 @@ public interface MainPostRepository extends JpaRepository<MainPostBean, Integer>
     @Query(value = "from MainPostBean where title like concat('%',?1,'%')")
     public List<MainPostBean> allPostss(Object titles);
     
+    //個人會員貼文
     public List<MainPostBean> findByAccount(String account);
+    
+    //Hql 寫法
+    @Query(value = "from MainPostBean where title like concat('%',?1,'%') and account = ?2")
+    public List<MainPostBean> findByAccountAndTitles(String titles,String account);
+    
     
 }

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -53,7 +54,7 @@ public class UserPostController {
     public static final String USERPOSTDETAILS = "post/UserPostDetails";
     
     //會員資料
-    public String memberAccount ="test123" ;
+    public String memberAccount ="test666" ;
     public String postPermission ;
     public String postPhoto ;
     public String replyPhoto ;
@@ -84,16 +85,27 @@ public class UserPostController {
             List<MainPostBean> query = firstImagePath(mpService.allPosts(mpBean.getTitle()));
             if (query.isEmpty()) {
                 mav.addObject("error", "查無資料");
+            }else {
+                mav.addObject("query", query);
             }
-            mav.addObject("query", query);
             
         } else {
             List<MainPostBean> query = firstImagePath(mpService.allPosts());
             mav.addObject("query", query);
+            
             List<MainPostBean> userposts = firstImagePath(mpService.findByAccount(memberAccount));
-            mav.addObject("userposts", userposts);
-            System.out.println(userposts.get(0).getAccount());
-        }
+            if(!userposts.isEmpty()) {
+                mav.addObject("userposts", userposts);
+                System.out.println(userposts.get(0).getAccount());
+            }else if(mpBean.getTitle() != null && mpBean.getAccount() != null){
+                mpService.findByAccountAndTitles(mpBean.getTitle(),mpBean.getAccount());
+                
+                mav.addObject("userposts", userposts);
+            }else {
+                mav.addObject("notYetPublished", "尚未發布貼文");
+            }
+            
+        } 
         
         return mav;
     }
@@ -126,6 +138,7 @@ public class UserPostController {
     @GetMapping("/PostWtch")
     public ModelAndView watchPost(Integer mainPostNo) {
         MainPostBean queryOne = mpService.selectById(mainPostNo);
+        
         ModelAndView mavMpost = takeOutmpBean(queryOne,USERPOSTDETAILS);
         mavMpost.addObject("postPhoto", postPhoto);
         
@@ -139,6 +152,15 @@ public class UserPostController {
         return mavMpost;
     }
     
+    // 刪除 ok
+    @DeleteMapping("/UserPost")
+    public String deleteDainPost(Integer deletepost) {
+        mpService.deleteById(deletepost);
+        return "redirect:/UserPostAll";
+    }
+    
+    
+    
     //發表回復
     @PostMapping("/ReplyPost")
     public ModelAndView addingPostConfirming(ReplyPostBean rpBean,MainPostBean mpBean,
@@ -150,7 +172,11 @@ public class UserPostController {
             rpBean.setR_image("");
             rpBean.setReplyPhoto(replyPhoto);
             rpBean.setMainPostBean(mpBean);
+           
             MainPostBean queryOne = mpService.selectById(mpBean.getMainPostNo());
+            queryOne.setLastReplyTime(rpBean.getReplyTime());
+            mpService.update(queryOne);
+            
             ModelAndView mavmPost = takeOutmpBean(queryOne,USERPOSTDETAILS);
             mavmPost.addObject("postPhoto", postPhoto);
             
