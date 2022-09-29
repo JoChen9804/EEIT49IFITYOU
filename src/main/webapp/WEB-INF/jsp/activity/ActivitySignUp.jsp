@@ -14,7 +14,7 @@
 	<h1>${activityId}</h1>
 	
 	
-	<a class="card " href="/group5/toactivity/${activityId}"  style="text-decoration:none;">
+	<a  href="/group5/toactivity/${activityId}"  style="text-decoration:none;">
 		<button class="btn-solid-reg page-scroll">返回</button>
 	</a>
 
