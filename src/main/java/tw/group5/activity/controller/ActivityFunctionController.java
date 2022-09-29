@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -61,6 +62,20 @@ public class ActivityFunctionController extends HttpServlet {
 	@Autowired
 	private ActivityActivityService aService;
 	
+	//前往頁面
+	@GetMapping("/activityuser")
+	public String UserCenter(Model m) {
+		List<ActivityActivity> activity = aService.findAll();
+		m.addAttribute("activity_queryAll", activity);
+		return "activity/ActivityAllActivityUser"; 
+	}
+	
+	@PostMapping("/user/toactivitysignup")
+	public String toActivitySignUp(int activityId ,Model m) {
+		m.addAttribute("activityId", activityId);
+		return "activity/ActivitySignUp"; 
+	}
+	
 	@GetMapping("/admin/activitymain.controller")
 	public String processMainActivityAction(Model m) {
 		List<ActivityActivity> activity = aService.findAll();
@@ -69,6 +84,7 @@ public class ActivityFunctionController extends HttpServlet {
 		return "activity/ActivityQueryAll";
 	}
 	
+	//新增
 	@PostMapping("/admin/addactivity.controller")
 	public String voucherAdd(@ModelAttribute(name = "activity") ActivityActivity activity, String add, MultipartFile photo, Model m)
 			throws IllegalStateException, IOException {
@@ -91,6 +107,7 @@ public class ActivityFunctionController extends HttpServlet {
 		}
 	}
 	
+	//更新
 	@PostMapping("/admin/updateactivity.controller")
 	public String activityUpdate(@ModelAttribute(name = "activity") ActivityActivity activity, String update, int dataId, String oldimg, MultipartFile photo, Model m )
 			throws IllegalStateException, IOException {
@@ -122,10 +139,19 @@ public class ActivityFunctionController extends HttpServlet {
 		}
 	}
 	
+	//刪除
 	@PostMapping("/admin/deleteactivity.controller")
 	public String activityDelete(Model m, int dataId) {
 		aService.delete(dataId);
 		return "redirect:activitymain.controller";
+	}
+	
+	//查詢
+	@GetMapping("/toactivity/{activityId}")
+	public String toactivity(@PathVariable(name = "activityId")int activityId, Model m) {
+		ActivityActivity aa = aService.selectById(activityId);
+		m.addAttribute("query_activity", aa);
+		return "activity/ActivityActivityDetailUser"; 
 	}
 
 	@PostMapping("/admin/queryactivity.controller")
