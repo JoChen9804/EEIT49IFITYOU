@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,8 @@ import tw.group5.activity.model.ActivityActivity;
 import tw.group5.activity.model.ActivityVoucher;
 import tw.group5.activity.service.ActivityActivityService;
 import tw.group5.activity.service.ActivityVoucherService;
+import tw.group5.admin.model.MemberBean;
+import tw.group5.admin.service.AdminService;
 
 @Controller
 @RequestMapping("/group5")
@@ -71,8 +74,10 @@ public class ActivityFunctionController extends HttpServlet {
 	}
 	
 	@PostMapping("/user/toactivitysignup")
-	public String toActivitySignUp(int activityId ,Model m) {
-		m.addAttribute("activityId", activityId);
+	public String toActivitySignUp(int activityId, HttpSession session ,Model m) {
+		ActivityActivity aa = aService.selectById(activityId);
+		m.addAttribute("loginM", (MemberBean) session.getAttribute("loginMember"));
+		m.addAttribute("signUpActivity", aa);
 		return "activity/ActivitySignUp"; 
 	}
 	

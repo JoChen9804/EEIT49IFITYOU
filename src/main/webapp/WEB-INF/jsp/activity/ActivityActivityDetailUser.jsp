@@ -32,6 +32,7 @@
                    		<input type="hidden" name="activityId" value="${query_activity.activityId}"/>
                     	<input type="submit" class="btn-solid-reg page-scroll" value="我想報名"/>
                    	</form>
+                   	&emsp;
                     <a class="btn-solid-reg page-scroll" href="../activityuser">返回</a>
                     
                 </div> <!-- end of col -->
