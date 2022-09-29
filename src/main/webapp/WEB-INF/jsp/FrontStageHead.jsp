@@ -23,11 +23,11 @@
 	type="text/javascript"></script>
 <link
 	href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700&display=swap&subset=latin-ext" rel="stylesheet">
-<link href="/group5/css/bootstrap.css" rel="stylesheet">
-<link href="/group5/css/fontawesome-all.css" rel="stylesheet">
-<link href="/group5/css/swiper.css" rel="stylesheet">
-<link href="/group5/css/magnific-popup.css" rel="stylesheet">
-<link href="/group5/css/styles.css" rel="stylesheet">
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/fontawesome-all.css" rel="stylesheet">
+<link href="css/swiper.css" rel="stylesheet">
+<link href="css/magnific-popup.css" rel="stylesheet">
+<link href="css/styles.css" rel="stylesheet">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 
@@ -63,9 +63,11 @@
 				href="/group5/FrontStageMain" aria-haspopup="true"
 				aria-expanded="false">
 				<div class="sidebar-brand-icon rotate-n-15">
-					<img src="/group5/img/i_ift_you.jpg" class="img-profile rounded-circle"
+					<img src="img/i_ift_you.jpg" class="img-profile rounded-circle"
 						height=50 width=50 />
-				</div> <a class="nav-link page-scroll" href="/group5/FrontStageMain" style="font-size: 2rem; color: white; text-decoration: none;">I FIT YOU </a>
+				</div> <a class="nav-link page-scroll" href="FrontStageMain"
+				style="font-size: 20px; color: white; text-decoration: none;">I
+					FIT YOU </a>
 			</a>
 
 			<!-- Mobile Menu Toggle Button -->
@@ -81,18 +83,18 @@
 			<div class="collapse navbar-collapse" id="navbarsExampleDefault">
 				<ul class="navbar-nav ml-auto align-items-center">
 					<li class="nav-item dropdown"><a class="nav-link page-scroll"
-						href="#header" style="font-size: 1.4rem;">首頁<span
+						href="#header" style="font-size: 17px;">首頁<span
 							class="sr-only">(current)</span></a></li>
 					<li class="nav-item dropdown">
-					<a class="nav-link page-scroll" href="/group5/activityuser" style="font-size: 1.4rem;">活動</a></li>
+					<a class="nav-link page-scroll" href="/group5/activityuser" style="font-size: 17px;">活動</a></li>
 					<li class="nav-item dropdown"><a class="nav-link page-scroll"
-						href="#details" style="font-size: 1.4rem;">據點</a></li>
+						href="#details" style="font-size: 17px;">據點</a></li>
 
 					<!-- Dropdown Menu dropdown-toggle下拉紐-->
 					<li class="nav-item dropdown"><a
 						class="nav-link page-scroll" href="#video"
 						id="navbarDropdown" role="button" aria-haspopup="true"
-						aria-expanded="false" style="font-size: 1.4rem;">商品</a>
+						aria-expanded="false" style="font-size: 17px;">商品</a>
 						<!-- <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 							<a class="dropdown-item" href="article-details.html"><span
 								class="item-text">ARTICLE DETAILS</span></a>
@@ -106,9 +108,9 @@
 					<!-- end of dropdown menu -->
 
 					<li class="nav-item dropdown"><a class="nav-link page-scroll"
-						href="#pricing" style="font-size: 1.4rem;">貼文</a></li>
+						href="#pricing" style="font-size: 17px;">貼文</a></li>
 					<li class="nav-item dropdown"><a class="nav-link page-scroll"
-						href="#pricing" style="font-size: 1.4rem;">菜單</a></li>
+						href="#pricing" style="font-size: 17px;">菜單</a></li>
 
 					<li class="nav-item dropdown" style="display: none;"
 						id="memberShow"><a
@@ -118,19 +120,19 @@
 							src="${loginMember.memberPhoto}" height=45px width=45px></a> <!-- Dropdown - User Information -->
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 							<a class="dropdown-item" href="/group5/user/UserCenter"><span
-								class="item-text" style="font-size: 1.2rem">會員中心</span></a>
+								class="item-text">會員中心</span></a>
 							<div class="dropdown-items-divide-hr"></div>
 							<a class="dropdown-item" href="terms-conditions.html"><span
-								class="item-text" style="font-size: 1.2rem">健友配對</span></a>
+								class="item-text">健友配對</span></a>
 							<div class="dropdown-items-divide-hr"></div>
 							<a class="dropdown-item" href="/logout" data-toggle="modal"
-								data-target="#logoutModal"><span class="item-text" style="font-size: 1.2rem"><i
+								data-target="#logoutModal"><span class="item-text"><i
 									class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>登出</span></a>
 						</div></li>
 					<li class="nav-item dropdown" id="loginShow"><span
 						class="nav-item dropdown"> <a class="btn-outline-sm"
 							href="/group5/login"
-							style="border: 0.125rem solid #fff; padding: 0.875rem 1.5rem 0.875rem 1.5rem; font-size: 1.4rem; border-radius: 2rem;">登入</a>
+							style="border: 0.125rem solid #fff; padding: 0.875rem 1.5rem 0.875rem 1.5rem; font-size: 17px; border-radius: 2rem;">登入</a>
 					</span></li>
 
 

@@ -7,7 +7,11 @@
 <head>
 <meta charset="UTF-8">
 <title>管理員管理系統</title>
-
+<!--引用css sweet alert-->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" />
+<!--引用SweetAlert2.js-->
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <style>
 tr.active {
@@ -54,7 +58,7 @@ tr.active {
 		action="deleteMemberNameAction.controller" method="post">
 		<span class="icon text-white-50"> <i class="fas fa-trash"></i></span>
 		<span> <input id="del" type="hidden" name=deleteNames> <input
-			class="text" type="submit" value="批次刪除" 
+			class="text" type="button" value="批次刪除" id="deleteSubmitCheck"
 			style="border: none; background-color: #e74a3b; color: white" /></span>
 	</form>
 	<br>

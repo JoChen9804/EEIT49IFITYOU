@@ -2,29 +2,26 @@ package tw.group5.activity.controller;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.http.HttpServlet;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import tw.group5.activity.model.ActivityActivity;
-import tw.group5.activity.model.ActivityPromotions;
 import tw.group5.activity.model.ActivityVoucher;
 import tw.group5.activity.service.ActivityActivityService;
-import tw.group5.activity.service.ActivityPromotionsService;
 import tw.group5.activity.service.ActivityVoucherService;
-import tw.group5.admin.model.AdminBean;
-import tw.group5.admin.model.MemberBean;
 
 @Controller
 @RequestMapping("/group5")
@@ -46,53 +43,11 @@ public class ActivityFunctionController extends HttpServlet {
 	}
 
 	@PostMapping("/admin/addvoucher.controller")
-	public String voucherAdd(@ModelAttribute(name = "voucher") ActivityVoucher voucher, String add, MultipartFile photo, Model m)
-			throws IllegalStateException, IOException {
-		if (add.equals("新增")) {
-			ActivityVoucher vAdd = new ActivityVoucher();
-			m.addAttribute(vAdd);
-			return "activity/ActivityVoucherAdd";
-		} else {
-			if(!photo.isEmpty()) {
-				String imgName = vService.processImg(voucher.getVoucherNo(), photo);
-				voucher.setPhotoData(imgName);
-			}
-			voucher.setReviseTime(vService.getTime());
-			if (vService.insert(voucher)!=null) {
-				m.addAttribute("add_voucher", vService.selectById(voucher.getVoucherId()));
-				m.addAttribute("page", "voucher");
-				return "activity/ActivityConfirm";
-			}
-			return "redirect:vouchermain.controller";
-		}
-	}
-
-	@PostMapping("/admin/updatevoucher.controller")
-	public String voucherUpdate(@ModelAttribute(name = "voucher") ActivityVoucher voucher, String update, int dataId, String oldimg, MultipartFile photo, Model m )
-			throws IllegalStateException, IOException {
-		
-		System.out.println(update+"測試");
-		
-		if (update.equals("修改")) {
-			ActivityVoucher vUpdate = vService.selectById(dataId);
-			m.addAttribute("update_voucher", vUpdate);
-			return "activity/ActivityVoucherUpdate";
-		} else {
-			voucher.setReviseTime(vService.getTime());
-			if (photo.isEmpty()) {
-				voucher.setPhotoData(oldimg);
-			} else {
-				String imgName = vService.processImg(voucher.getVoucherNo(), photo);
-				voucher.setPhotoData(imgName);
-			}
-			if (vService.update(voucher) != null) {
-				m.addAttribute("update_voucher", voucher);
-				m.addAttribute("page", "voucher");
-				m.addAttribute("upd", true);
-				return "activity/ActivityConfirm";
-			}
-			return "redirect:vouchermain.controller";
-		}
+	@ResponseBody
+	public ActivityVoucher voucherAdd(@RequestBody ActivityVoucher voucher, Model m)
+		throws IllegalStateException, IOException {
+		voucher.setReviseTime(vService.getTime());
+		return vService.insert(voucher);
 	}
 
 	@PostMapping("/admin/deletevoucher.controller")
@@ -100,21 +55,26 @@ public class ActivityFunctionController extends HttpServlet {
 		vService.delete(dataId);
 		return "redirect:vouchermain.controller";
 	}
-
-	@PostMapping("/admin/queryvoucher.controller")
-	public String voucherQuery(@RequestParam("dataId") int id, Model m) {
-		ActivityVoucher v = vService.selectById(id);
-		m.addAttribute("query_voucher", v);
-		m.addAttribute("page", "voucher");
-		m.addAttribute("query", true);
-		return "activity/ActivityConfirm";
-	}
 	
 	/*
 	 * Activity
 	 */
 	@Autowired
 	private ActivityActivityService aService;
+	
+	//前往頁面
+	@GetMapping("/activityuser")
+	public String UserCenter(Model m) {
+		List<ActivityActivity> activity = aService.findAll();
+		m.addAttribute("activity_queryAll", activity);
+		return "activity/ActivityAllActivityUser"; 
+	}
+	
+	@PostMapping("/user/toactivitysignup")
+	public String toActivitySignUp(int activityId ,Model m) {
+		m.addAttribute("activityId", activityId);
+		return "activity/ActivitySignUp"; 
+	}
 	
 	@GetMapping("/admin/activitymain.controller")
 	public String processMainActivityAction(Model m) {
@@ -124,6 +84,7 @@ public class ActivityFunctionController extends HttpServlet {
 		return "activity/ActivityQueryAll";
 	}
 	
+	//新增
 	@PostMapping("/admin/addactivity.controller")
 	public String voucherAdd(@ModelAttribute(name = "activity") ActivityActivity activity, String add, MultipartFile photo, Model m)
 			throws IllegalStateException, IOException {
@@ -146,6 +107,7 @@ public class ActivityFunctionController extends HttpServlet {
 		}
 	}
 	
+	//更新
 	@PostMapping("/admin/updateactivity.controller")
 	public String activityUpdate(@ModelAttribute(name = "activity") ActivityActivity activity, String update, int dataId, String oldimg, MultipartFile photo, Model m )
 			throws IllegalStateException, IOException {
@@ -177,10 +139,19 @@ public class ActivityFunctionController extends HttpServlet {
 		}
 	}
 	
+	//刪除
 	@PostMapping("/admin/deleteactivity.controller")
 	public String activityDelete(Model m, int dataId) {
 		aService.delete(dataId);
 		return "redirect:activitymain.controller";
+	}
+	
+	//查詢
+	@GetMapping("/toactivity/{activityId}")
+	public String toactivity(@PathVariable(name = "activityId")int activityId, Model m) {
+		ActivityActivity aa = aService.selectById(activityId);
+		m.addAttribute("query_activity", aa);
+		return "activity/ActivityActivityDetailUser"; 
 	}
 
 	@PostMapping("/admin/queryactivity.controller")
@@ -190,28 +161,6 @@ public class ActivityFunctionController extends HttpServlet {
 		m.addAttribute("page", "activity");
 		m.addAttribute("query", true);
 		return "activity/ActivityConfirm";
-	}
-	
-	/*
-	 * Promotions
-	 */
-	@Autowired
-	private ActivityPromotionsService promotionsService;
-	
-	@PostMapping("/admin/promotionsmain.controller")
-	public String processPromotionsMainAction(Model m, int dataId) {
-		System.out.println("進入promotions總攬");
-		ActivityVoucher voucher = vService.selectById(dataId);
-		Set<ActivityPromotions> promotions = promotionsService.findByVoucher(voucher);
-		m.addAttribute("promotions_queryAll", promotions);
-		m.addAttribute("voucher_name", voucher.getVoucherTitle());
-		return "activity/ActivityPromotionsEdit";
-	}
-	
-	@PostMapping("/admin/deletepromotions.controller")
-	public String promotionsDelete(Model m, int dataId) {
-		promotionsService.delete(dataId);
-		return "redirect:promotionsmain.controller";
 	}
 	
 }

@@ -41,7 +41,7 @@
 			<!-- Sidebar - Brand -->
 			<a
 				class="sidebar-brand d-flex align-items-center justify-content-center"
-				href="AdminBackstage">
+				href="/group5/admin/AdminBackstage">
 				<div class="sidebar-brand-icon rotate-n-15">
 					<img src="/group5/img/i_ift_you.jpg" class="img-profile rounded-circle" height=50 width=50/>
 				</div>
@@ -139,8 +139,8 @@
 				<div id="collapseFitness" class="collapse"
 					aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
-						<a class="collapse-item" href="mainmenu.controller">查看菜單</a>
-						<a class="collapse-item" href="menuAdd.controller">新增菜單</a>
+						<a class="collapse-item" href="/group5/admin/mainmenu.controller">查看菜單</a>
+						<a class="collapse-item" href="/group5/admin/menuAdd.controller">新增菜單</a>
 					</div>
 				</div></li>
 		</ul>
@@ -206,11 +206,7 @@
 								class="mr-3 d-none d-lg-inline text-gray-600 big"><span>${loginMember.adminName}</span>
 							</span> <img class="img-profile rounded-circle"
 								src="${loginMember.adminPhoto}">
-								<script>
-								$(document).ready(function(){
-									console.log("${loginMember.authority}")
-									});
-								</script>
+
 						</a> <!-- Dropdown - User Information -->
 							<div
 								class="dropdown-menu dropdown-menu-right shadow animated--grow-in"

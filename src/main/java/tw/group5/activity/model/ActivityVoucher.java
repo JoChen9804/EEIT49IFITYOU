@@ -30,23 +30,14 @@ public class ActivityVoucher implements Serializable {
 	private String a_account;
 	
 	@Column(name = "vouchertitle")
-	private String voucherTitle;
+	private int voucherTitle;
 	
 	@Column(name = "expirytime")
 	private String expiryTime;
 	
-	@Column(name = "vouchercontent")
-	private String voucherContent;
-	
 	@Column(name = "revisetime")
 	private String reviseTime;
-	
-	@Column(name = "photodata")
-	private String photoData;
-	
-	public ActivityVoucher() {
-	}
-	
+
 	public int getVoucherId() {
 		return voucherId;
 	}
@@ -58,48 +49,46 @@ public class ActivityVoucher implements Serializable {
 	public String getVoucherNo() {
 		return voucherNo;
 	}
+
 	public void setVoucherNo(String voucherNo) {
 		this.voucherNo = voucherNo;
 	}
+
 	public String getA_account() {
 		return a_account;
 	}
+
 	public void setA_account(String a_account) {
 		this.a_account = a_account;
 	}
-	public String getVoucherTitle() {
+
+	public int getVoucherTitle() {
 		return voucherTitle;
 	}
-	public void setVoucherTitle(String voucherTitle) {
+
+	public void setVoucherTitle(int voucherTitle) {
 		this.voucherTitle = voucherTitle;
 	}
+
 	public String getExpiryTime() {
 		return expiryTime;
 	}
+
 	public void setExpiryTime(String expiryTime) {
 		this.expiryTime = expiryTime;
 	}
-	public String getVoucherContent() {
-		return voucherContent;
-	}
-	public void setVoucherContent(String voucherContent) {
-		this.voucherContent = voucherContent;
-	}
+
 	public String getReviseTime() {
 		return reviseTime;
 	}
+
 	public void setReviseTime(String reviseTime) {
 		this.reviseTime = reviseTime;
 	}
 
-	public String getPhotoData() {
-		return photoData;
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
-	public void setPhotoData(String photoData) {
-		this.photoData = photoData;
-	}
-	
-	
 	
 }

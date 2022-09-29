@@ -12,8 +12,11 @@
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/1.11.2/css/jquery.dataTables.css">
 
-<!-- CSS 連結 -->
-<!--link rel="stylesheet" href="dataTable.css"-->
+<!--引用css sweet alert-->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" />
+<!--引用SweetAlert2.js-->
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style>
 tr.active {
 	background-color: rgb(150, 255, 127)
@@ -49,7 +52,7 @@ tr.active {
 		action="deleteNameAction.controller" method="post">
 		<span class="icon text-white-50"> <i class="fas fa-trash"></i></span>
 		<span> <input id="del" type="hidden" name=deleteNames> <input
-			class="text" type="submit" value="批次刪除" 
+			class="text" type="button" value="批次刪除" id="deleteSubmitCheck"
 			style="border: none; background-color: #e74a3b; color: white" /></span>
 	</form>
 	<br>
@@ -97,7 +100,8 @@ tr.active {
 		</table>
 	</div>
 	<script>
-		$('#table_id').dataTable({});
+		$('#table_id').dataTable({});1
+
 	</script>
 	<script src="js/admin/adminDeleteBatch.js"></script>
 	<!-- Page level plugins -->
