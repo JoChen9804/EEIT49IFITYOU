@@ -15,7 +15,7 @@ public interface PairingLogRespository extends JpaRepository<PairingLog, Integer
 	@Query(value = "select top 1 * from pairinglog where pairingno is null and pairingdate = :date order by newid()", nativeQuery = true)
 	public PairingLog findOnePair(@Param("date")String date);
 	
-	@Query(value = "select * from pairinglog where memberid= :member and pairingdate = :date", nativeQuery = true)
+	@Query(value = "select * from pairinglog where memberid= :member and pairingdate = :date and pairingno is null", nativeQuery = true)
 	public PairingLog findTwoPairByMember(@Param("member")MemberBean member,@Param("date")String date);
 	
 }

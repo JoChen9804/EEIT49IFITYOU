@@ -68,9 +68,15 @@ public class PairingLogService {
 		System.out.println("清單insert2222222222");
 		int count = (saveAll.size()%2==1?(saveAll.size()/2)+1:(saveAll.size()/2)); //配對次數
 		System.out.println("!!!!!!!!!配對次數"+count);	
-		for(int i = 1;i<=count;i++) {
+		int i=0;
+		while(true) {
+			i++;
 			System.out.println("開始迴圈"+i);
 			PairingLog pairOne = pLogRespository.findOnePair(today); //找到1號
+			if(pairOne==null) {
+				//已經配完了
+				break;
+			}
 			List<GymLog> findByMember = gymLogService.findByMember(pairOne.getMember());
 			List<GymBean> gymList = new ArrayList<GymBean>();
 			for(GymLog gLog: findByMember) {
@@ -78,10 +84,11 @@ public class PairingLogService {
 				System.out.println("heyyyyyyyyyyyyyyyyyyyyyyyyyy");
 			}
 			
-			//如果1號沒收藏東西 或 如果是基數個配對人選，並且處理到最後一位了
-			if(gymList.isEmpty() || (i==count && saveAll.size()%2==1)) {
+			//如果1號沒收藏東西
+			if(gymList.isEmpty()) {
 				pairOne.setPairingNo(0);
-				pLogRespository.save(pairOne);				
+				pLogRespository.save(pairOne);
+				count++;
 				continue; //再抽下一位1號
 			}
 						
@@ -98,6 +105,7 @@ public class PairingLogService {
 						System.out.println("AC");
 						pairOne.setPairingNo(0);
 						pLogRespository.save(pairOne);
+						count++;
 						break; //break while
 					}
 					System.out.println("AD");
@@ -107,7 +115,11 @@ public class PairingLogService {
 					if(mList.isEmpty()) {
 						System.out.println("BC");
 						if(gymListSize==gymList.size()) {
-							break;
+							//收藏的健身房都沒有可配對的
+							pairOne.setPairingNo(0);
+							pLogRespository.save(pairOne);
+							count++;
+							break; 
 						}
 						System.out.println("gymListSize"+gymListSize);
 						gymListSize++;
@@ -121,13 +133,19 @@ public class PairingLogService {
 			
 			System.out.println("配對塞進資料庫");
 			//將配對編號寫進資料庫
-			pairOne.setPairingNo(i);
-			pLogRespository.save(pairOne);
+			
+			if(pairTwo!=null) { 
+				pairOne.setPairingNo(i);
+				pLogRespository.save(pairOne);
+			}else { //2號如果找不到的話1號也是配對失敗
+				pairOne.setPairingNo(0);
+				pLogRespository.save(pairOne);
+			}
 			if(pairTwo!=null) {
+				System.out.println("pairTwoooooooo"+pairTwo.getPairingNo());
 				pairTwo.setPairingNo(i);
 				pLogRespository.save(pairTwo);			
 			}
-		
 		} //這個是for結束
 		return "配對完成";
 	}
