@@ -141,7 +141,6 @@
 	</div>
 	
 <%@ include file="../admin/AdminstyleFoot.jsp" %>
-<script src="/group5/js/sb-admin-2.min.js"></script>
-<script src="/group5/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>

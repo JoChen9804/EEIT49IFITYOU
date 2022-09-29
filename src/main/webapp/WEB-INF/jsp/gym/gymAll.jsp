@@ -11,12 +11,6 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
 		crossorigin="anonymous"></script>
-		
-    <!-- Custom fonts for this template -->
-    <link rel="stylesheet" type="text/css" href="/group5/css/fontawsome-free-all.min.css">
-    
-    <!-- Custom styles for this template -->
-    <link href="/group5/css/sb-admin-2.min.css" rel="stylesheet">
 
     <!-- Custom styles for this page -->
     <link href="/group5/css/dataTables.bootstrap4.min.css" rel="stylesheet">
@@ -158,7 +152,7 @@
 								<td>${gymlist.gymOpenHours}</td>
 								<td>${gymlist.rating}</td>
 								<td><form action="/group5/admin/gym/gymDetail/${gymlist.gymName}" method="post">
-									<input type="hidden" value="${userAdmin.id }" name="memberIdNow">
+									<input type="hidden" value="10003" name="memberIdNow">
 									<input type="submit" class="btn btn-outline-success gymDetail" value="詳細資訊">
 								</form></td>
 								<td><button type="button" class="btn btn-outline-secondary edit" 
@@ -253,19 +247,12 @@
 		</div>
 	</div>
 	
-	
-	
-	
-
-	<!-- Bootstrap core JavaScript-->
+<%@ include file="../admin/AdminstyleFoot.jsp" %>	
     
-    <script src="/group5/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
     <script src="/group5/js/jquery.easing.min.js"></script>
-	
-    <!-- Custom scripts for all pages-->
-    <script src="/group5/js/sb-admin-2.min.js"></script>
+
 	
     <!-- Page level plugins -->
     <script src="/group5/js/jquery.dataTables.min.js"></script>
@@ -275,6 +262,6 @@
 
     <!-- Page level custom scripts -->
     <script src="/group5/js/datatables-demo.js"></script>
-<%@ include file="../admin/AdminstyleFoot.jsp" %>	
+    
 </body>
 </html>

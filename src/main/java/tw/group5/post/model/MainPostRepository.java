@@ -17,6 +17,4 @@ public interface MainPostRepository extends JpaRepository<MainPostBean, Integer>
     @Query(value = "from MainPostBean where title like concat('%',?1,'%')")
     public List<MainPostBean> allPostss(Object titles);
     
-    
-    
 }

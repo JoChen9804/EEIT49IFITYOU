@@ -28,7 +28,7 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 <div class="happy">
 	<form:form action="updateactivity.controller" method="post" enctype="multipart/form-data" modelAttribute="activity">
 		<form:input type="hidden" path="activityId" id="testgetID" value="${update_activity.activityId}"/>
-		<form:input type="hidden" path="a_account" value="暫空,修改"/>
+		<form:input type="hidden" path="a_account" value="${loginMember.adminName }"/>
 		<input type="hidden" name="dataId" value="123"/>
 		<h2>修改活動</h2>
 

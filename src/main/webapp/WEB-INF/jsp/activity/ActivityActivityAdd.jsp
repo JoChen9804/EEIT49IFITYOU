@@ -22,7 +22,7 @@ response.setCharacterEncoding("UTF-8");
 
 	<form:form action="/group5/admin/addactivity.controller" method="post" modelAttribute="activity" enctype="multipart/form-data">
 
-		<form:input type="hidden" path="a_account" value="暫空"/>
+		<form:input type="hidden" path="a_account" value="${loginMember.adminName }"/>
 
 		<div class="happy">
 		<fieldset>
@@ -111,7 +111,7 @@ response.setCharacterEncoding("UTF-8");
 				})
 		   		return;
 		    }
-			if($('#startTime').val() >= $('#endTime').val()){
+			if($('#startTime').val() > $('#endTime').val()){
 				Swal.fire({
 					title:'日期錯誤',
 					text:'開始日期大於結束日期',

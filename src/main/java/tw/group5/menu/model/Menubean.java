@@ -21,7 +21,7 @@ public class Menubean {
 	@Column(name = "PARTLIST")
 	private String part;
 
-	@Column(name = "SECTORLIST")
+	@Column(name = "exercisename")
 	private String exerciseName;
 
 	@Column(name = "SETCOUNT")
@@ -39,8 +39,11 @@ public class Menubean {
 	@Column(name = "MENUSET")
 	private String menuset;
 
-	@Column(name = "EXERCISENUM")
-	private String exercisenum;
+	@Column(name = "EXRACCOUNT")
+	private String exrAccount;
+	
+	@Column(name = "MENUTitle")
+	private String menuTitle;
 
 	public Menubean() {
 
@@ -122,12 +125,24 @@ public class Menubean {
 		this.menuset = menuset;
 	}
 
-	public String getExercisenum() {
-		return exercisenum;
+	public String getExrAccount() {
+		return exrAccount;
 	}
 
-	public void setExercisenum(String exercisenum) {
-		this.exercisenum = exercisenum;
+	public void setExrAccount(String exrAccount) {
+		this.exrAccount = exrAccount;
 	}
+
+	public String getMenuTitle() {
+		return menuTitle;
+	}
+
+	public void setMenuTitle(String menuTitle) {
+		this.menuTitle = menuTitle;
+	}
+
+
+
+
 
 }
