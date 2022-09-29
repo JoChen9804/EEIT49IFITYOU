@@ -119,6 +119,7 @@
     <script src="/group5/js/jquery.magnific-popup.js"></script> <!-- Magnific Popup for lightboxes -->
     <script src="/group5/js/validator.min.js"></script> <!-- Validator.js - Bootstrap plugin that validates forms -->
     <script src="/group5/js/scripts.js"></script> <!-- Custom scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery-twzipcode@1.7.14/jquery.twzipcode.min.js"></script>
 </body>
 
 </html>

@@ -32,13 +32,6 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService;
 	
-//	@RequestMapping(path = "/logout", method = RequestMethod.POST)
-//	public String processMainAction(SessionStatus status) {
-//		status.setComplete();
-//		session.
-//		return "AdminLogin";
-//	}
-	
 	@RequestMapping(path = "/admin/fail", method = RequestMethod.POST)
 	public String adminLoginAction(Model m) {
 		Map<String, String> errorMsgMap = new HashMap<String, String>();
@@ -65,8 +58,19 @@ public class AdminController {
 	}
 	@RequestMapping("/user/UserCenter")
 	public String UserCenter() {
-		return "admin/UserCenter"; // 導向前台頁面
+		return "admin/UserCenter"; // 導向userCenter
 	}
+	
+	@RequestMapping("/Register")
+	public String Register() {
+		return "admin/Register"; // 導向Register
+	}
+	
+	@RequestMapping("/ForgetPassword")
+	public String ForgetPassword() {
+		return "admin/ForgetPassword"; // 導向ForgetPassword
+	}
+	
 //	@RequestMapping("/group5/login")
 //	public String GoLogin() {
 //		return "admin/FrontStageMain"; // 導向前台頁面
@@ -208,6 +212,8 @@ public class AdminController {
 			//修改
 		}else {
 			String modifyPassword;
+			System.out.println(originalRealPassword);
+			System.out.println(pwd);
 			if (pwd.equals("******")){
 				modifyPassword = originalRealPassword;
 			}else {
@@ -256,4 +262,55 @@ public class AdminController {
 		return SearchMember(m);
 	}
 	
+
+@PostMapping(path = "/user/memberModify.controller") // 修改
+private String modifyUserAction(String account, String pwd, String modifyimage, 
+		String sub, String idNumString, String name, String email, String gender,
+		String nickname, String birthday, String cellphone, String zipcode, 
+		String address, String registerReferralCode, String match, String pairContactInfo,
+		String pairRequest, String pairInfo,String nowimage,@RequestParam("mute") String muteModify,
+		@RequestParam("referralCode") String referralCodeModify, String originalRealPassword,
+		@RequestParam("postPermission") String postPermissionModify, String hrefSubmit,
+		@RequestParam("recentLoginDate") String recentLoginDateModify, 
+		@RequestParam("filepath") MultipartFile mf, String detailId, Model m) {
+	
+	String memberPhoto;
+	Integer authority = 0;
+		//修改
+		String modifyPassword;
+		System.out.println(originalRealPassword);
+		System.out.println(pwd);
+		System.out.println(detailId);
+		System.out.println(match);
+		System.out.println(pairContactInfo);
+		System.out.println(hrefSubmit);
+
+		modifyPassword = originalRealPassword;
+		
+		String referralCode = referralCodeModify;
+		Integer mute = Integer.parseInt(muteModify);
+		Integer postPermission = Integer.parseInt(postPermissionModify);
+		String recentLoginDate = recentLoginDateModify;
+		MemberDetail mDetail = new MemberDetail(gender, nickname, birthday, cellphone, zipcode, address,
+				referralCode, registerReferralCode, mute, postPermission, Integer.parseInt(match), pairContactInfo, pairRequest,
+				pairInfo, recentLoginDate);
+		mDetail.setId(Integer.parseInt(detailId));
+		MemberBean mBean;
+		if(modifyimage.equals("true")) {
+			memberPhoto = adminService.imageProcess(account, modifyimage, mf, false);
+			mBean = new MemberBean(account, modifyPassword, authority, name, memberPhoto, email, mDetail);
+		}else {
+			mBean = new MemberBean(account, modifyPassword, authority, name, nowimage, email, mDetail);
+		}
+		Integer idNum = Integer.parseInt(idNumString);
+		mBean.setId(idNum);
+		
+		
+		MemberBean member = adminService.updateOne(mBean);
+		m.addAttribute("loginMember", member);
+		System.out.println("會員修改成功");
+		return "admin/UserCenter";		
+	
+	
+}
 }

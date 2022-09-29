@@ -229,7 +229,7 @@ h5 {
 							<label for="pwd2" class="t1">再次輸入密碼：</label><input id="pwd2"
 								type="password" name="pwd2" maxlength="15" required
 								onblur="validate()"> <span id="tishi"></span>
-								<input type="hidden" name="originalRealPassword" value="${pwd}" id="">
+								<input type="hidden" name="originalRealPassword" value="${OneMember.id}" id="originalRealPassword">
 						</div>
 						<div class="st1">
 							<label for="name1" class="t1">姓名：</label> <input id="name1"
@@ -295,6 +295,7 @@ h5 {
 			<br> <br>
 			<script>
 		$(function () {
+			console.log($('originalRealPassword').val());
 			$("#twzipcode").twzipcode({
 				css: ['addr-county', 'addr-district', 'addr-zipcode']
 			});
@@ -398,28 +399,7 @@ h5 {
 					document.getElementById("tishi").innerHTML = "<font color='red'>兩次密碼不相同</font>";
 					document.getElementById("sub1").disabled = true;
 				}
-			}
-			var result = document.getElementById("result");
-			var input = document.getElementById("file_input");
-
-			if (typeof FileReader === 'undefined') {
-				result.innerHTML = "Sorry, 瀏覽器不支持 FileReader";
-				input.setAttribute('disabled', 'disabled');
-			} else {
-				input.addEventListener('change', readFile, false);
-			}
-
-			function readFile() {
-				$('#modifyimage').val("true")
-				var file = this.files[0];
-				var reader = new FileReader();
-				reader.readAsDataURL(file);
-				reader.onload = function(e) {
-					result.innerHTML = '<img src="' + this.result + '" alt="" height="300" widht="300"/>'
-				}
-			}
-		
-		
+			}		
 		// 取得縣市 county（返回字串）
 		
 		$("#address").focus(function() {
@@ -436,6 +416,7 @@ h5 {
 
 		</script>
 		</form>
+		<script src="js/admin/adminPhotoShow.js"></script>
 	<%@ include file="AdminstyleFoot.jsp"%>
 </body>
 </html>

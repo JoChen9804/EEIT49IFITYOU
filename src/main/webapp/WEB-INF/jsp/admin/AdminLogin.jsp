@@ -4,17 +4,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="">
-<meta name="author" content="">
-
 <!-- Custom fonts for this template-->
 <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
 	type="text/css">
 
 <!-- Custom styles for this template-->
 <link href="css/sb-admin-2.min.css" rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+	rel="stylesheet">
 <style>
 /* CSS */
 
@@ -116,8 +114,6 @@
 	<header id="header" class="header">
 		<div class="header-content">
 			<!-- Bootstrap core JavaScript-->
-			<script
-				src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
 			<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 			<!-- Core plugin JavaScript-->
@@ -140,7 +136,7 @@
 									<div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
 									<div class="col-lg-6">
 										<div class="p-5">
-											<h3
+											<h3 class="h2 text-gray-900 mb-2"
 												style="position: absolute; color: gray; top: 6%; left: 40%;">LOGIN</h3>
 											<div class="cktoggle">
 												<input type="checkbox" class="cktoggle_checkbox"
@@ -152,14 +148,14 @@
 											</div>
 											<form class="user" ACTION="login" method="post">
 												<div class="form-group">
-													<br> <br> <input type="text"
+													<br> <br><input type="text"
 														class="form-control form-control-user" id="uname"
 														aria-describedby="emailHelp" placeholder="請輸入帳號..."
 														name="name" required> <input type="hidden"
 														name="username" id="username">
 												</div>
 												<div class="form-group">
-													<br> <br> <input type="password"
+													<input type="password"
 														class="form-control form-control-user"
 														id="exampleInputPassword" placeholder="請輸入密碼..."
 														name="password" required>
@@ -172,35 +168,51 @@
 															Me</label>
 													</div>
 												</div>
-												<br>
 												<p id="errorMsg">${errorMsgMap.LoginError}</p>
-												<br> <INPUT type="submit" value="login"
+												<INPUT type="submit" value="login"
 													class="btn btn-primary btn-user btn-block" id="loginbutton">
-												<br> <br>
+												<hr>
+												<a href="index.html"
+													class="btn btn-google btn-user btn-block"
+													style="color: #fff; background-color: #ea4335; border-color: #fff; text-decoration: none;">
+													<i class="fab fa-google fa-fw"></i> Login with Google
+												</a> <a href="index.html"
+													class="btn btn-facebook btn-user btn-block"
+													style="color: #fff; background-color: #3b5998; border-color: #fff; text-decoration: none;">
+													<i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
+												</a>
 											</form>
+											<hr>
+											<div class="text-center">
+												<a class="small" href="/group5/ForgetPassword">忘記密碼?</a>
+											</div>
+											<div class="text-center">
+												<a class="small" href="/group5/Register">沒有帳號嗎?加入I FIT
+													YOU!!</a>
 
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
+
 						</div>
 
 					</div>
 
 				</div>
-
 			</div>
+			<!-- end of header-content -->
 		</div>
-		<!-- end of header-content -->
 	</header>
 	<!-- end of header -->
 	<script>
-	$( document ).ready(function(){
-		$('#loginbutton').attr("style", "background-color:#4e73df")
-		$('#cktoggle_id2').val("on")
-		$('#group5control').attr('style', 'background-color: #53618b')	
-	});
-	
+		$(document).ready(function() {
+			$('#loginbutton').attr("style", "background-color:#4e73df")
+			$('#cktoggle_id2').val("on")
+			$('#group5control').attr('style', 'background-color: #53618b')
+		});
+
 		var unameValue = $('#uname').val();
 		$('#uname').on('focus', function() {
 			$('#errorMsg').html("");
@@ -230,5 +242,6 @@
 		})
 	</script>
 	<%@ include file="FrontStageFoot.jsp"%>
+
 </body>
 </html>
