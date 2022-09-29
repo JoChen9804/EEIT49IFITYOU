@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<!--引用css-->
+<!--引用css sweet alert-->
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
 <style>
@@ -28,7 +28,14 @@
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js"
 		type="text/javascript"></script>
-	<FORM ACTION="/group5/user/memberModify.controller" method="post"
+	<form action="/group5/user/memberPassword.controller" method="post"
+		id="passwordModifySubmit">
+		<input name="submitNewPassword" id="submitNewPassword" type="hidden">
+		<input name="submitOrginPassword" id="submitOrginPassword"
+			type="hidden"> <input name="idNumString"
+			value="${loginMember.id}" type="hidden">
+	</form>
+	<form action="/group5/user/memberModify.controller" method="post"
 		enctype="multipart/form-data" id="updateForm">
 		<input name="mute" value="${loginMember.memberDetail.mute}"> <input
 			name="referralCode" value="${loginMember.memberDetail.referralCode}">
@@ -44,7 +51,9 @@
 		<input name="nowimage" value="${loginMember.memberPhoto}"
 			type="hidden"> <input name="detailId"
 			value="${loginMember.memberDetail.id}" type="hidden"> <input
-			name="hrefSubmit" type="hidden" id="hrefSubmit">
+			name="hrefSubmit" type="hidden" id="hrefSubmit"><input
+			style="margin-bottom: 0.5em;" type="hidden" name="pwd" maxlength="16"
+			required onblur="validate()" value="******">
 
 		<!-- Features -->
 		<div id="features" class="tabs">
@@ -101,13 +110,37 @@
 												value="${loginMember.memberAccount}" disabled><br />
 											<label for="pwd1" class="t1">密碼：</label> <input
 												style="margin-bottom: 0.5em;" id="pwd1" type="password"
-												name="pwd" maxlength="15" required onblur="validate()"
-												value="******" disabled><br /> <label for="name1"
-												class="t1">姓名：</label> <input style="margin-bottom: 0.5em;"
-												id="name1" type="text" name="name" required
-												value="${loginMember.memberName}"><br /> <label
-												for="email1" class="t1">Email：</label><input id="email1"
-												type="email" name="email" required
+												maxlength="16" required onblur="testPassword()"
+												value="******" disabled> <input type="button"
+												value="修改密碼" class="btn-solid-reg" id="passwordChange"><br />
+											<div style="display: none" id="passwordAgain">
+												<label for="pwd2" class="t1">再次輸入密碼：</label><input id="pwd2"
+													type="password" name="pwd2" maxlength="16" required
+													onblur="testPassword()" style="margin-bottom: 0.5em;"><br />
+												<div style="height: 160px">
+													<ul>
+														<li class="media"><i class="fas fa-times"
+															style="color: red" id="iconSame"></i>
+															<div class="media-body">兩次輸入密碼須相同</div></li>
+														<li class="media"><i class="fas fa-times"
+															style="color: red" id="iconValid"></i>
+															<div class="media-body">密碼須為8~16為英數字組合</div></li>
+													</ul>
+													<label for="inputOrginal">請輸入原密碼：</label><input
+														id="inputOrginal" type="password" name="inputOrginal"
+														maxlength="16" required style="margin-bottom: 0.5em;"><br />
+
+													<input type="button" value="確認修改" class="btn-solid-reg"
+														id="passwordConfirm">
+
+												</div>
+											</div>
+
+											<label for="name1" class="t1">姓名：</label> <input
+												style="margin-bottom: 0.5em;" id="name1" type="text"
+												name="name" required value="${loginMember.memberName}"><br />
+											<label for="email1" class="t1">Email：</label><input
+												id="email1" type="email" name="email" required
 												style="margin-bottom: 0.7em;" value="${loginMember.email}">
 											<br /> <label for="" class="t1">生日：</label><input
 												type="date" name="birthday"
@@ -143,7 +176,6 @@
 											<input type="button" value="修改" id="sub1"
 												class="btn-solid-reg modifySubmit"
 												style="position: absolute; left: 30%">
-
 										</div>
 										<!-- end of text-container -->
 									</div>
@@ -292,10 +324,59 @@
 					result.innerHTML = '<img src="' + this.result + '"  width=350 height=350/>'
 				}
 			}
+			//按下修改密碼後出現再次輸入密碼
+			$('#passwordChange').on('click',function(){
+				if ($('#passwordChange').val()=="修改密碼"){
+					$('#passwordAgain').attr('style','');
+					$('#passwordChange').val("取消修改");
+					$('#pwd1').attr('disabled', false);
+					$('#pwd1').val('');
+					$('#pwd2').val('');
+					
+				}else{
+					$('#passwordAgain').attr('style','display:none');
+					$('#passwordAgain').val('');
+					$('#passwordChange').val("修改密碼");
+					$('#pwd1').attr('disabled', true);
+					$('#pwd1').val('******');
+					$('#pwd2').val('******');
+				}
+			})
+			//正則表達式專區
+			//密碼8-16位英數字組合
+			function testPassword(){
+			var passwordFilter = /^(?=.*[0-9\!@#\$%\^&\*])(?=.*[a-zA-Z]).{8,16}$/;
+			let blnTest = passwordFilter.test($('#pwd1').val());
+			if(blnTest){
+				$('#iconValid').attr('class', 'fas fa-check');
+				$('#iconValid').attr('style', 'color:green');
+				
+			}else{
+				$('#iconValid').attr('class', 'fas fa-times');
+				$('#iconValid').attr('style', 'color:red');
+			}
+			if ($('#pwd1').val() === $('#pwd2').val()){
+				$('#iconSame').attr('class', 'fas fa-check');
+				$('#iconSame').attr('style', 'color:green');
+				
+			}else{
+				$('#iconSame').attr('class', 'fas fa-times');
+				$('#iconSame').attr('style', 'color:red');
+			}
+			if(blnTest && $('#pwd1').val() === $('#pwd2').val()){
+				$('passwordConfirm').attr('disabled', true);
+				
+				
+			}else{
+				$('passwordConfirm').attr('disabled', false);
+			}
+			
+			}
+
+			
 			//兩次密碼輸入相同驗證
 			function validate() {
 				var pwd1 = document.getElementById("pwd1").value;
-
 				var pwd2 = document.getElementById("pwd2").value;
 
 				if (pwd1 == pwd2) {
@@ -342,14 +423,18 @@
 
 				});
 			$(".modifySubmit").on('click', function(event){
-
 						  Swal.fire({
 							  title:'修改成功!',
 							  icon:'success'
 						  }).then((result) => {
-					   		  $('#updateForm').submit();
+				$('#updateForm').submit();
 							});
 
+			});
+			$(".passwordConfirm").on('click', function(event){
+				$('submitNewPassword').val($('#pwd1').val());
+				$('submitOrginPassword').val($('#inputOrginal').val());
+				
 			});
 			
 		</script>

@@ -12,6 +12,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!--引用css sweet alert-->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
+<!--引用SweetAlert2.js-->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" type="text/javascript"></script>
 <style>
 fieldset {
 	width: 950px;
@@ -68,12 +74,12 @@ legend {
 
 <body>
 	<%@ include file="AdminstyleHead.jsp"%>
-
 	<FORM ACTION="adminSubmitActionModifyAndNew.controller" method="post"
-		enctype="multipart/form-data">
+		enctype="multipart/form-data" id="updateForm">
 		<input name="idNumString" value="${account}" type="hidden"> <input
 			name="modifyimage" value="false" type="hidden" id="modifyimage">
-		<input name="modifyAdminPhoto" value="${modifyAdminPhoto}" type="hidden">
+		<input name="modifyAdminPhoto" value="${modifyAdminPhoto}"
+			type="hidden">
 		<fieldset>
 			<legend>管理員資料填寫</legend>
 			<div class="happy">
@@ -100,8 +106,8 @@ legend {
 					<div class="st1">
 						<label for="pwd2" class="t1">再次輸入密碼：</label><input id="pwd2"
 							type="password" name="pwd2" maxlength="15" required
-							onblur="validate()"> <span id="tishi"></span>
-							<input type="hidden" name="originalRealPassword" value="${pwd}" id="">
+							onblur="validate()"> <span id="tishi"></span> <input
+							type="hidden" name="originalRealPassword" value="${pwd}" id="">
 					</div>
 					<div class="st1">
 						<label for="" class="t1">權限：</label> <label> <input
@@ -120,7 +126,7 @@ legend {
 		<br> <input class="pic" type="file" name="filepath"
 			accept="image/*" id="file_input"> <br>
 		<div class="sub">
-			<input type="submit" value="送出" id="sub1"> <input
+			<input type="button" value="送出" id="sub1" class="modifySubmit"> <input
 				type="reset" value="清除"> <input type="button" id="goback"
 				value="返回">
 		</div>
@@ -200,6 +206,16 @@ legend {
 					result.innerHTML = '<img src="' + this.result + '" alt="" height="300" widht="300"/>'
 				}
 			}
+			$(".modifySubmit").on('click', function(event){
+
+				  Swal.fire({
+					  title:'送出成功!',
+					  icon:'success'
+				  }).then((result) => {
+			   		  $('#updateForm').submit();
+					});
+
+	});
 		</script>
 	</form>
 	<%@ include file="AdminstyleFoot.jsp"%>
