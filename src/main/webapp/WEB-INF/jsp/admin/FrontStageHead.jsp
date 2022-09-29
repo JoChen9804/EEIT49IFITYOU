@@ -24,11 +24,11 @@
 <link
 	href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700&display=swap&subset=latin-ext"
 	rel="stylesheet">
-<link href="css/bootstrap.css" rel="stylesheet">
-<link href="css/fontawesome-all.css" rel="stylesheet">
-<link href="css/swiper.css" rel="stylesheet">
-<link href="css/magnific-popup.css" rel="stylesheet">
-<link href="css/styles.css" rel="stylesheet">
+<link href="/group5/css/bootstrap.css" rel="stylesheet">
+<link href="/group5/css/fontawesome-all.css" rel="stylesheet">
+<link href="/group5/css/swiper.css" rel="stylesheet">
+<link href="/group5/css/magnific-popup.css" rel="stylesheet">
+<link href="/group5/css/styles.css" rel="stylesheet">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 

@@ -14,4 +14,5 @@ public interface MemberRepository extends JpaRepository<MemberBean, Integer> {
 	void deleteByIdIn(List<Integer> memberListInteger);
 	public Optional<MemberBean> findByAccount(String adminName);
 
+	
 }

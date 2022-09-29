@@ -30,10 +30,27 @@ public class PairingLogService {
 	private GymLogService gymLogService;
 	
 	
-//	public PairingLog findByMember(MemberBean member) {
-//		return pLogRespository.findByMember(member);
-//	}
+	public PairingLog findByMemberAndToday(MemberBean member) {
+		return pLogRespository.findByMemberAndPairingDate(member,adminService.getDate());
+	}
 	
+	public PairingLog findByPairingNoAndPairingDate(int pairingNo, PairingLog userPairing) {
+		List<PairingLog> result = pLogRespository.findByPairingNoAndPairingDate(pairingNo,adminService.getDate());
+		PairingLog pl=null;
+		System.out.println(userPairing.getId());
+		System.out.println(result.size());
+		for(PairingLog p:result) {
+			if(p.getId()!=userPairing.getId()) {
+				System.out.println(p.getId());
+				pl=p;
+				break;
+			}
+		}
+		return pl;
+	
+	}
+	
+	//目前還沒用到-0929
 	public PairingLog updatePairingLog(PairingLog pLog) {
 		return pLogRespository.save(pLog);
 	}
