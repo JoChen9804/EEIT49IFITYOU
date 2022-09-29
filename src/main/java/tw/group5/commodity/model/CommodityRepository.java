@@ -18,11 +18,21 @@ public interface CommodityRepository extends JpaRepository<Commodity, Integer> {
 	
 	
 	
+	
 	//購物頁面
 	@Query(value = "select * from Commodity where onShelf = 1", nativeQuery = true)
 	public List<Commodity> findAllOnShelf();
 	
 	@Query(value = "select * from Commodity where commodityName Like ?1 and onShelf = 1", nativeQuery = true)
 	public List<Commodity> findBycommodityNameLikeAndOnShelf(String commodityName);
+	
+	@Query(value = "select * from Commodity where commodityType = ?1 and onShelf = 1", nativeQuery = true)
+	public List<Commodity> findBycommodityTypeAndOnShelf(String commodityType);
+	
+
+    
+	
+	
+	
 
 }

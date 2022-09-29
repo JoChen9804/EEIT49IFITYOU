@@ -58,15 +58,36 @@ public class CommodityService {
 		return cRepo.findBycommodityNameLike(SQLSearchCommodityName);
 	}
 	
+	
+	
+	
 	//查詢所有上架商品(供購物頁面使用)
 	public List<Commodity> findAllOnShelf() {
 		return cRepo.findAllOnShelf();
 	}
 	
 	//以名子查找上架商品(供購物頁面使用)
-		public List<Commodity> findBycommodityNameLikeAndOnShelf(String commodityName) {
-			String SQLSearchCommodityName = "%"+commodityName+"%";
-			return cRepo.findBycommodityNameLikeAndOnShelf(SQLSearchCommodityName);
+	public List<Commodity> findBycommodityNameLikeAndOnShelf(String commodityName) {
+		String SQLSearchCommodityName = "%"+commodityName+"%";
+		return cRepo.findBycommodityNameLikeAndOnShelf(SQLSearchCommodityName);
+	}
+	
+	//以商品類別查找上架商品(供購物頁面使用)
+		public List<Commodity> findBycommodityTypeAndOnShelf(String commodityType) {
+			return cRepo.findBycommodityTypeAndOnShelf(commodityType);
 		}
+		
+	//以commodityNo找單一商品(供單項商品詳情呈現)
+		public Commodity selectCommodityById(Integer commodityNo) {
+			Optional<Commodity> selectedCommodity = cRepo.findById(commodityNo);
+			
+			if (selectedCommodity.isPresent()) {
+				return selectedCommodity.get();
+			}
+			return null;
+		}
+		
+		
+		
 
 }
