@@ -76,5 +76,18 @@ public class CommodityService {
 		public List<Commodity> findBycommodityTypeAndOnShelf(String commodityType) {
 			return cRepo.findBycommodityTypeAndOnShelf(commodityType);
 		}
+		
+	//以commodityNo找單一商品(供單項商品詳情呈現)
+		public Commodity selectCommodityById(Integer commodityNo) {
+			Optional<Commodity> selectedCommodity = cRepo.findById(commodityNo);
+			
+			if (selectedCommodity.isPresent()) {
+				return selectedCommodity.get();
+			}
+			return null;
+		}
+		
+		
+		
 
 }

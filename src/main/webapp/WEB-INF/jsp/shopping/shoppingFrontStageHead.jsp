@@ -34,6 +34,19 @@
 
 <!-- Favicon  -->
 <link rel="icon" href="images/favicon.png">
+
+<style>
+#cart a {
+    background-image: url(/shoppingCss/ShoppingCart.gif);
+    background-size:30px 32px;
+    color:white;
+    background-repeat: no-repeat;
+    background-position: 3px -3px;
+}
+
+
+</style>
+
 </head>
 <body data-spy="scroll" data-target=".fixed-top">
 
@@ -112,6 +125,11 @@
 						href="#pricing" style="font-size: 17px;">貼文</a></li>
 					<li class="nav-item dropdown"><a class="nav-link page-scroll"
 						href="#pricing" style="font-size: 17px;">菜單</a></li>
+						
+					<li class="nav-item dropdown" id="cart"><a class="nav-link page-scroll fancyLogin" 
+						href="https://www.lativ.com.tw/Shopping/ShoppingAdapter" rel="nofollow" style="font-size: 17px;">
+						<span id="tradeCount">2</span>個商品
+						</a></li>
 
 					<li class="nav-item dropdown" style="display: none;"
 						id="memberShow"><a

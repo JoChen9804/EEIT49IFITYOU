@@ -21,7 +21,7 @@
   	String commodityImage = "/group5/commodityImages/"+commodity.getCommodityNo()+"_image1.jpg";
     %>
     
-    <li><a class="imgd" href="/Detail/59078011">
+    <li><a class="imgd" href="http://localhost:8080/group5/shopping.detail/<%=commodity.getCommodityNo()%>">
         <img id="59078011" class=""
              src="<%=commodityImage %>"
              alt="<%=commodity.getCommodityName()%>" title="<%=commodity.getCommodityName()%>">      

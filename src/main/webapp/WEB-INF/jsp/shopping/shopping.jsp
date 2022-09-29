@@ -113,28 +113,28 @@
                                    			</a>
             							<%}else if(session.getAttribute("banner").equals("protein")){ %>
             								<a id="category0" name="category0"
-                                   			   href="https://www.lativ.com.tw/Detail/59156011" target="_blank"
+                                   			   href="http://localhost:8080/group5/shopping.detail/1" target="_blank"
                                    			   style="cursor: pointer;">
                                    			<img src="/group5/shoppingBanners/protein_banner.jpg"
                                    				 alt="" class="grid_38 alpha omega">
                                    			</a>
                                    		<%}else if(request.getAttribute("banner").equals("clothes")){ %>	
                                    			<a id="category0" name="category0"
-                                   			   href="https://www.lativ.com.tw/Detail/59156011" target="_blank"
+                                   			   href="http://localhost:8080/group5/shopping.detail/7" target="_blank"
                                    			   style="cursor: pointer;">
                                    			<img src="/group5/shoppingBanners/clothes_banner.jpg"
                                    				 alt="" class="grid_38 alpha omega">
                                    			</a>
                                    		<%}else if(request.getAttribute("banner").equals("accessory")){ %>
                                    			<a id="category0" name="category0"
-                                   			   href="https://www.lativ.com.tw/Detail/59156011" target="_blank"
+                                   			   href="http://localhost:8080/group5/shopping.detail/8" target="_blank"
                                    			   style="cursor: pointer;">
                                    			<img src="/group5/shoppingBanners/accessory_banner.jpg"
                                    				 alt="" class="grid_38 alpha omega">
                                    			</a>
                                    		<%}else if(request.getAttribute("banner").equals("equipment")){ %>
                                    			<a id="category0" name="category0"
-                                   			   href="https://www.lativ.com.tw/Detail/59156011" target="_blank"
+                                   			   href="http://localhost:8080/group5/shopping.detail/9" target="_blank"
                                    			   style="cursor: pointer;">
                                    			<img src="/group5/shoppingBanners/equipment_banner.jpg"
                                    				 alt="" class="grid_38 alpha omega">

@@ -82,11 +82,11 @@ public class CommodityOnShelfController {
 		String image5Path = savePath + File.separator + commodityNo+"_"+"image5"+".jpg";
 		
 		Commodity newCommodity = new Commodity(commodityNo, commodityType, commodityName, commodityStyle, commodityPrice, commodityInventory, 
-				                               image1.isEmpty() ? "null" : image1Path , 
-				                               image2.isEmpty() ? "null" : image2Path , 
-				                               image3.isEmpty() ? "null" : image3Path , 
-				                               image4.isEmpty() ? "null" : image4Path , 
-				                               image5.isEmpty() ? "null" : image5Path , 
+				                               image1.isEmpty() ? null : image1Path , 
+				                               image2.isEmpty() ? null : image2Path , 
+				                               image3.isEmpty() ? null : image3Path , 
+				                               image4.isEmpty() ? null : image4Path , 
+				                               image5.isEmpty() ? null : image5Path , 
 				                               commodityDescription, onShelf);
 		
 		//裝結果訊息的Map
