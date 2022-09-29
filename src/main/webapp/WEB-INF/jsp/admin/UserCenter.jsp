@@ -37,12 +37,12 @@
 	</form>
 	<form action="/group5/user/memberModify.controller" method="post"
 		enctype="multipart/form-data" id="updateForm">
-		<input name="mute" value="${loginMember.memberDetail.mute}"> <input
-			name="referralCode" value="${loginMember.memberDetail.referralCode}">
+		<input name="mute" value="${loginMember.memberDetail.mute}" type="hidden"> <input
+			name="referralCode" value="${loginMember.memberDetail.referralCode}" type="hidden">
 		<input name="postPermission"
-			value="${loginMember.memberDetail.postPermission}"> <input
+			value="${loginMember.memberDetail.postPermission}" type="hidden"> <input
 			name="recentLoginDate"
-			value="${loginMember.memberDetail.recentLoginDate}"> <input
+			value="${loginMember.memberDetail.recentLoginDate}" type="hidden"> <input
 			name="idNumString" value="${loginMember.id}" type="hidden"> <input
 			name="account" value="${loginMember.memberAccount}" type="hidden">
 		<input name="originalRealPassword"
@@ -436,7 +436,8 @@
 				$('submitOrginPassword').val($('#inputOrginal').val());
 				
 			});
-			
+			//css調整專區
+			$('#features').attr('style','padding-top:6rem');
 		</script>
 	</form>
 	<%@ include file="FrontStageFoot.jsp"%>
