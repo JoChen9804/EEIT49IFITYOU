@@ -9,7 +9,15 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<!--引用css sweet alert-->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
+<!--引用css sweet alert-->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
+<!--引用SweetAlert2.js-->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" type="text/javascript"></script>
 <style>
 fieldset {
 	width: 1000px;
@@ -105,13 +113,17 @@ h5 {
 
 <body>
 	<%@ include file="AdminstyleHead.jsp"%>
+	<!--引用SweetAlert2.js-->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js"
+		type="text/javascript"></script>
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/jquery-twzipcode@1.7.14/jquery.twzipcode.min.js"></script>
 
 		<FORM ACTION="adminMemberModifyAndNew.controller" method="post"
-			enctype="multipart/form-data">
+			enctype="multipart/form-data" id="updateForm">
 			<input name="idNumString" value="${OneMember.id}" type="hidden"> <input
 				name="modifyimage" value="false" type="hidden" id="modifyimage">
 			<input name="nowimage" value="${OneMember.memberPhoto}" type="hidden">
@@ -121,6 +133,7 @@ h5 {
 						<input id="sub" type="text" name="sub">
 						<input id="muteNew">
 						<input id="postPermissionNew">
+						<input name="detailId" type="hidden" value="${OneMember.memberDetail.id}">
 					</div>
 				<div class="happy">
 					<!-- 左邊欄位!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
@@ -229,7 +242,7 @@ h5 {
 							<label for="pwd2" class="t1">再次輸入密碼：</label><input id="pwd2"
 								type="password" name="pwd2" maxlength="15" required
 								onblur="validate()"> <span id="tishi"></span>
-								<input type="hidden" name="originalRealPassword" value="${pwd}" id="">
+								<input type="hidden" name="originalRealPassword" value="${OneMember.memberPassword}" id="originalRealPassword">
 						</div>
 						<div class="st1">
 							<label for="name1" class="t1">姓名：</label> <input id="name1"
@@ -287,7 +300,7 @@ h5 {
 			</fieldset>
 			<fieldset>
 				<div>
-					<input type="submit" value="送出" id="sub1"> <input
+					<input type="button" value="送出" id="sub1" class="modifySubmit"> <input
 						type="reset" value="清除"> <input type="button" id="goback"
 						value="返回">
 				</div>
@@ -295,6 +308,7 @@ h5 {
 			<br> <br>
 			<script>
 		$(function () {
+			console.log($('originalRealPassword').val());
 			$("#twzipcode").twzipcode({
 				css: ['addr-county', 'addr-district', 'addr-zipcode']
 			});
@@ -398,28 +412,7 @@ h5 {
 					document.getElementById("tishi").innerHTML = "<font color='red'>兩次密碼不相同</font>";
 					document.getElementById("sub1").disabled = true;
 				}
-			}
-			var result = document.getElementById("result");
-			var input = document.getElementById("file_input");
-
-			if (typeof FileReader === 'undefined') {
-				result.innerHTML = "Sorry, 瀏覽器不支持 FileReader";
-				input.setAttribute('disabled', 'disabled');
-			} else {
-				input.addEventListener('change', readFile, false);
-			}
-
-			function readFile() {
-				$('#modifyimage').val("true")
-				var file = this.files[0];
-				var reader = new FileReader();
-				reader.readAsDataURL(file);
-				reader.onload = function(e) {
-					result.innerHTML = '<img src="' + this.result + '" alt="" height="300" widht="300"/>'
-				}
-			}
-		
-		
+			}		
 		// 取得縣市 county（返回字串）
 		
 		$("#address").focus(function() {
@@ -433,9 +426,20 @@ h5 {
 				$('#address').val(county + district);
 				}
 		});
+		$(".modifySubmit").on('click', function(event){
+			  Swal.fire({
+				  title:'送出成功!',
+				  icon:'success'
+			  }).then((result) => {
+		   		  $('#updateForm').submit();
+				});
+
+});
+		
 
 		</script>
 		</form>
+		<script src="js/admin/adminPhotoShow.js"></script>
 	<%@ include file="AdminstyleFoot.jsp"%>
 </body>
 </html>
