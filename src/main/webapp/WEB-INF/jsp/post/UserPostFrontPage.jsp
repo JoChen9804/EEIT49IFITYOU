@@ -6,19 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>論壇貼文</title>
-<!-- <script -->
-<!-- 	src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" -->
-<!-- 	type="text/javascript"></script> -->
-<!-- <link -->
-<!-- 	href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700&display=swap&subset=latin-ext" -->
-<!-- 	rel="stylesheet"> -->
-<!-- <link href="css/bootstrap.css" rel="stylesheet"> -->
-<!-- <link href="css/fontawesome-all.css" rel="stylesheet"> -->
-<!-- <link href="css/swiper.css" rel="stylesheet"> -->
-<!-- <link href="css/magnific-popup.css" rel="stylesheet"> -->
-<!-- <link href="css/styles.css" rel="stylesheet"> -->
-<!-- <script -->
-<!-- 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script> -->
+
 <style>
 .imgfront {
 	width: 150px;
@@ -26,6 +14,7 @@
 	padding: 2px 2px 2px 2px;
 	margin: 2px;
 }
+
 </style>
 <!-- Favicon  -->
 </head>
@@ -102,7 +91,7 @@
 											</div>
 										</div>
 										<p>${error}</p>
-										<table class="table table-bordered">
+										<table class="table table-sm">
 											<thead>
 												<tr>
 													<th>圖片</th>
@@ -151,31 +140,89 @@
 						<div class="tab-pane fade" id="tab-2" role="tabpanel"
 							aria-labelledby="tab-2">
 							<div class="row">
-								<div class="col-lg-6">
-									<div class="image-container">
-										<img class="img-fluid" src="images/features-2.png"
-											alt="alternative">
-									</div>
-									<!-- end of image-container -->
-								</div>
 								<!-- end of col -->
-								<div class="col-lg-6">
+								<div class="col-lg-12">
 									<div class="text-container">
-										<h3>Campaigns Monitoring Tools</h3>
-										<p>Campaigns monitoring is a feature we've developed since
-											the beginning because it's at the core of Tivo and basically
-											to any marketing activity focused on results.</p>
-										<ul class="list-unstyled li-space-lg">
-											<li class="media"><i class="fas fa-square"></i>
-												<div class="media-body">Easily plan campaigns and
-													schedule their starting date</div></li>
-											<li class="media"><i class="fas fa-square"></i>
-												<div class="media-body">Start campaigns and follow
-													their evolution closely</div></li>
-											<li class="media"><i class="fas fa-square"></i>
-												<div class="media-body">Evaluate campaign results and
-													optimize future actions</div></li>
-										</ul>
+									                               <div class="col-lg-12">
+                                    <div class="text-container">
+                                        <div class="row g-2">
+                                            <div class="col-md">
+                                                <div class="form-floating">
+                                                    <input type="text" name="title" class="form-control"
+                                                        id="floatingInputGrid" placeholder="請輸入標題"
+                                                        oninvalid="setCustomValidity('請輸入標題')"
+                                                        oninput="setCustomValidity('')"> <label
+                                                        for="floatingInputGrid">{error}</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md">
+                                                <div class="form-floating">
+                                                    <input type="submit"
+                                                        class="btn-solid-reg popup-with-move-anim"
+                                                        name="inquireId" value="查詢">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p>${error}</p>
+                                        <table class="table table-sm">
+                                            <thead>
+                                                <tr>
+                                                    <th>圖片</th>
+                                                    <th>類型</th>
+                                                    <th>標題</th>
+                                                    <th>發布日期</th>
+                                                    <th>最後回覆</th>
+                                                    <th>狀態</th>
+                                                </tr>
+                                            </thead>
+                                            <c:forEach var="allmpbs" items="${query}">
+                                                <tbody>
+                                                    <tr>
+                                                        <!--<a href="/group5/PostWtch/${allmpbs.mainPostNo}"></a>-->
+                                                        <td class="align-middle"><img class="imgfront"
+                                                            src="${allmpbs.p_image}"></td>
+                                                        <td class="align-middle">[${allmpbs.postTypeName}]</td>
+                                                        <td class="align-middle">${allmpbs.title}</td>
+                                                        <td class="align-middle">${allmpbs.account}<br />${allmpbs.addtime}</td>
+                                                        <td class="align-middle">帳號<br />最後回覆</td>
+                                                        <td class="align-middle">
+                                                            <form action="PostWtch"
+                                                                method="GET">
+                                                                <input type="hidden" name="mainPostNo"
+                                                                    value="${allmpbs.mainPostNo}">
+                                                                <input type="submit" class="btn btn-outline-success"
+                                                                    value="觀看">
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </c:forEach>
+                                        </table>
+
+                                    </div>
+                                    <!-- end of text-container -->
+                                </div>
+                                <!-- end of col -->
+                            </div>
+									
+									
+									
+									
+<!-- 										<h3>Campaigns Monitoring Tools</h3> -->
+<!-- 										<p>Campaigns monitoring is a feature we've developed since -->
+<!-- 											the beginning because it's at the core of Tivo and basically -->
+<!-- 											to any marketing activity focused on results.</p> -->
+<!-- 										<ul class="list-unstyled li-space-lg"> -->
+<!-- 											<li class="media"><i class="fas fa-square"></i> -->
+<!-- 												<div class="media-body">Easily plan campaigns and -->
+<!-- 													schedule their starting date</div></li> -->
+<!-- 											<li class="media"><i class="fas fa-square"></i> -->
+<!-- 												<div class="media-body">Start campaigns and follow -->
+<!-- 													their evolution closely</div></li> -->
+<!-- 											<li class="media"><i class="fas fa-square"></i> -->
+<!-- 												<div class="media-body">Evaluate campaign results and -->
+<!-- 													optimize future actions</div></li> -->
+<!-- 										</ul> -->
 										<a class="btn-solid-reg popup-with-move-anim"
 											href="#details-lightbox-2">LIGHTBOX</a>
 									</div>

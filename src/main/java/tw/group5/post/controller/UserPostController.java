@@ -1,6 +1,8 @@
 package tw.group5.post.controller;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,14 +13,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import tw.group5.admin.model.AdminBean;
+import tw.group5.admin.model.MemberBean;
 import tw.group5.admin.service.AdminService;
+import tw.group5.admin.service.AuthUserDetailService;
 import tw.group5.post.model.MainPostBean;
 import tw.group5.post.model.ReplyPostBean;
 import tw.group5.post.service.MainPostService;
@@ -37,16 +43,20 @@ public class UserPostController {
     @Autowired
     private ReplyPostService rpService;
     
-    //會員
+    //管理員
     @Autowired
     private AdminService amService;
+    
+    //管理員
+    @Autowired
+    private AuthUserDetailService audService;
     
     //view
     public static final String USERPOSTFRONTPAGE = "post/UserPostFrontPage";
     public static final String USERPOSTDETAILS = "post/UserPostDetails";
     
     //會員資料
-    public String memberAccount ;
+    public String memberAccount ="test123" ;
     public String postPermission ;
     public String postPhoto ;
     public String replyPhoto ;
@@ -59,6 +69,13 @@ public class UserPostController {
         replyPhoto = adminBean.getAdminPhoto();
     }
     
+    public void memberBean() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        MemberBean memBer = amService.findByAccountMember(username);
+        memberAccount = memBer.getMemberAccount();
+        postPhoto = memBer.getMemberPhoto();
+        replyPhoto = memBer.getMemberPhoto();
+    }
     
     
     //貼文首頁
@@ -67,6 +84,7 @@ public class UserPostController {
         ModelAndView mav = new ModelAndView(USERPOSTFRONTPAGE);
         List<MainPostBean> query = firstImagePath(mpService.allPosts());
         mav.addObject("query", query);
+       
         return mav;
     }
     
@@ -93,21 +111,9 @@ public class UserPostController {
         return "redirect:/group5/UserPostAll";
     }
     
-   // 觀看
-    @GetMapping("/UserPostAllss")
-    public ModelAndView userPostDetails(MainPostBean mpBean) {
-        ModelAndView mav = new ModelAndView(USERPOSTFRONTPAGE);
-        List<MainPostBean> query = firstImagePath(mpService.allPosts());
-        mav.addObject("query", query);
-        return mav;
-    }
-    
-    
-    
     // 觀看ok
     @GetMapping("/PostWtch")
     public ModelAndView watchPost(Integer mainPostNo) {
-        
         MainPostBean queryOne = mpService.selectById(mainPostNo);
         ModelAndView mavMpost = takeOutmpBean(queryOne,USERPOSTDETAILS);
         mavMpost.addObject("postPhoto", postPhoto);
@@ -122,6 +128,35 @@ public class UserPostController {
         return mavMpost;
     }
     
+    //發表回復
+    @PostMapping("/ReplyPost")
+    public ModelAndView addingPostConfirming(ReplyPostBean rpBean,MainPostBean mpBean,
+                                       @RequestParam("replyfile") List<MultipartFile> mfs) throws FileNotFoundException {
+            
+            rpBean.setReplyTime(mpService.currentDateFormat("date"));
+            rpBean.setReplyLikeNumber("");
+            rpBean.setReplyAccount(memberAccount);
+            rpBean.setR_image("");
+            rpBean.setReplyPhoto(replyPhoto);
+            rpBean.setMainPostBean(mpBean);
+            MainPostBean queryOne = mpService.selectById(mpBean.getMainPostNo());
+            ModelAndView mavmPost = takeOutmpBean(queryOne,USERPOSTDETAILS);
+            mavmPost.addObject("postPhoto", postPhoto);
+            
+            if("".equals(queryOne.getP_image())) {
+                queryOne.setP_image(null);
+            }
+            
+            if(!mfs.get(0).isEmpty()) {
+                String replyImages = mpService.addPostImages(mfs);
+                rpBean.setR_image(replyImages);
+            }
+            rpService.insert(rpBean);
+            
+            List<ReplyPostBean> allReply = rpService.allReply(mpBean.getMainPostNo());
+            ModelAndView mav = takeOutrpBean(allReply,mavmPost);
+            return mav;
+    }
     
     
     
@@ -164,7 +199,86 @@ public class UserPostController {
         return null;
     }
     
+    //貼文點讚
+    @PutMapping("/LikesAJAX") @ResponseBody
+    public MainPostBean LikesAJAX(MainPostBean mpBean) {
+       
+        ModelAndView mav = new ModelAndView();
+        System.out.println("有找到嗎?");
+        MainPostBean queryOne = mpService.selectById(mpBean.getMainPostNo());
+        
+        String[] oldlikes = queryOne.getLikeNumber().split(",");
+        
+        int i = 0; // 找到一樣的就+1
+        for (String like : oldlikes) {
+            System.out.println(like);
+            if (like.equals(memberAccount)) {
+                i++;
+                List<String> list = new ArrayList<String>(Arrays.asList(oldlikes));
+                list.remove(memberAccount);
+
+                String newlinkes = "";
+                for(String lists : list) {
+                    newlinkes += lists+","; 
+                    
+                    System.out.println(list.toArray());
+                }
+                queryOne.setLikeNumber(newlinkes);
+                mpService.update(queryOne);
+                break;
+            }
+        }
+        if (i == 0) {
+            String newLike = queryOne.getLikeNumber() + memberAccount + ",";
+            queryOne.setLikeNumber(newLike);
+            mpService.update(queryOne);
+        }
+        
+        if (!"".equals(queryOne.getLikeNumber())) {
+            queryOne.setLikeNumber(String.valueOf(oldlikes.length));
+            mav.addObject("likes", queryOne.getLikeNumber().split(",").length);
+        }
+        else {
+            queryOne.setLikeNumber("0");
+        }
+        return queryOne;
+    }
     
+    //回覆點讚
+    @PutMapping("/ReplyLikesAJAX") @ResponseBody
+    public ReplyPostBean ReplyLikesAJAX(ReplyPostBean rpBean) {
+        ReplyPostBean replyPostBean = rpService.selectById(rpBean.getReplyNo());
+        String[] oldReplylikes = replyPostBean.getReplyLikeNumber().split(",");
+        int j = 0; // 找到一樣的就+1
+        for (String likeReply : oldReplylikes) {
+            if (likeReply.equals(memberAccount)) {
+                j++;
+                List<String> list = new ArrayList<String>(Arrays.asList(oldReplylikes));
+                list.remove(memberAccount);
+    
+                String newlinkes = "";
+                for(String lists : list) {
+                    newlinkes += lists + ","; 
+                }
+                replyPostBean.setReplyLikeNumber(newlinkes);
+                rpService.update(replyPostBean);
+                break;
+            }
+        }
+        
+        if (j == 0) {
+            String newLikeReply = replyPostBean.getReplyLikeNumber() + memberAccount + ",";
+            replyPostBean.setReplyLikeNumber(newLikeReply);
+            rpService.update(replyPostBean);
+        }
+        if (!"".equals(replyPostBean.getReplyLikeNumber())) {
+            replyPostBean.setReplyLikeNumber(String.valueOf(oldReplylikes.length));
+        }
+        else {
+            replyPostBean.setReplyLikeNumber("0");
+        }
+        return replyPostBean;
+    }
     
     
     

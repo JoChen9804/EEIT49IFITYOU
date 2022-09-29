@@ -115,7 +115,6 @@ public class MainPostServlet {
     public ModelAndView postPage(String addpost) {
         ModelAndView mav = new ModelAndView(postMainPosting);
         mav.addObject("memberAccount", memberAccount);
-
         return mav;
     }
 
