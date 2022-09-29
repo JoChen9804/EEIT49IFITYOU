@@ -1,6 +1,7 @@
 package tw.group5.post.model;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,5 +17,7 @@ public interface MainPostRepository extends JpaRepository<MainPostBean, Integer>
     //Hql 寫法
     @Query(value = "from MainPostBean where title like concat('%',?1,'%')")
     public List<MainPostBean> allPostss(Object titles);
+    
+    public List<MainPostBean> findByAccount(String account);
     
 }

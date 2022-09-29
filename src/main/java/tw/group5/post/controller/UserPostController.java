@@ -43,13 +43,10 @@ public class UserPostController {
     @Autowired
     private ReplyPostService rpService;
     
-    //管理員
+    //管理員與會員
     @Autowired
     private AdminService amService;
     
-    //管理員
-    @Autowired
-    private AuthUserDetailService audService;
     
     //view
     public static final String USERPOSTFRONTPAGE = "post/UserPostFrontPage";
@@ -72,7 +69,7 @@ public class UserPostController {
     public void memberBean() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         MemberBean memBer = amService.findByAccountMember(username);
-        memberAccount = memBer.getMemberAccount();
+        //memberAccount = memBer.getMemberAccount();
         postPhoto = memBer.getMemberPhoto();
         replyPhoto = memBer.getMemberPhoto();
     }
@@ -80,11 +77,24 @@ public class UserPostController {
     
     //貼文首頁
     @GetMapping("/UserPostAll")
-    public ModelAndView postFornt(MainPostBean mpBean,HttpServletRequest request) {
+    public ModelAndView postFornt(MainPostBean mpBean) {
         ModelAndView mav = new ModelAndView(USERPOSTFRONTPAGE);
-        List<MainPostBean> query = firstImagePath(mpService.allPosts());
-        mav.addObject("query", query);
-       
+        
+        if (mpBean.getTitle() != null) {
+            List<MainPostBean> query = firstImagePath(mpService.allPosts(mpBean.getTitle()));
+            if (query.isEmpty()) {
+                mav.addObject("error", "查無資料");
+            }
+            mav.addObject("query", query);
+            
+        } else {
+            List<MainPostBean> query = firstImagePath(mpService.allPosts());
+            mav.addObject("query", query);
+            List<MainPostBean> userposts = firstImagePath(mpService.findByAccount(memberAccount));
+            mav.addObject("userposts", userposts);
+            System.out.println(userposts.get(0).getAccount());
+        }
+        
         return mav;
     }
     
@@ -100,6 +110,7 @@ public class UserPostController {
         addPost.setLikeNumber("");
         addPost.setP_image("");
         addPost.setLastReplyTime(mpService.currentDateFormat("date"));
+        addPost.setPostPermission("待審核");
 
         // 測試用路徑串接
         if (!mfs.get(0).isEmpty()) {

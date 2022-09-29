@@ -44,6 +44,11 @@ public class MainPostService {
         return null;
     }
 
+    public List<MainPostBean> findByAccount(String account) {
+        return mpResp.findByAccount(account);
+    }
+    
+    
     public List<MainPostBean> allPosts(Object titles) {
         return mpResp.allPostss(titles);
     }
