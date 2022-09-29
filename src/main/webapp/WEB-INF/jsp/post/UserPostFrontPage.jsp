@@ -6,19 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>論壇貼文</title>
-<!-- <script -->
-<!--    src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" -->
-<!--    type="text/javascript"></script> -->
-<!-- <link -->
-<!--    href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700&display=swap&subset=latin-ext" -->
-<!--    rel="stylesheet"> -->
-<!-- <link href="css/bootstrap.css" rel="stylesheet"> -->
-<!-- <link href="css/fontawesome-all.css" rel="stylesheet"> -->
-<!-- <link href="css/swiper.css" rel="stylesheet"> -->
-<!-- <link href="css/magnific-popup.css" rel="stylesheet"> -->
-<!-- <link href="css/styles.css" rel="stylesheet"> -->
-<!-- <script -->
-<!--    src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script> -->
+
 <style>
 .imgfront {
 	width: 150px;
@@ -85,8 +73,8 @@
 									<div class="text-container">
 
 										<form action="UserPostAll" method="GET">
-											
-											
+
+
 											<div class="row g-3">
 												<div class="col-md">
 													<div class="form-floating">
@@ -110,8 +98,8 @@
 														<a class="btn-solid-reg" href="/group5/UserPostAll">所有貼文</a>
 													</div>
 												</div>
-												
-												
+
+
 												<div class="col-md">
 													<div class="form-floating">
 														<a class="btn-solid-reg popup-with-move-anim"
@@ -188,32 +176,31 @@
 
 								<div class="col-lg-12">
 									<div class="text-container">
-									<form action="UserPostAll" method="GET">
-									
-									
-										<div class="row g-2">
+										<form action="UserPostAll" method="GET">
 
 
-											<div class="col-md">
-												<div class="form-floating">
-													<input type="text" name="title" class="form-control"
-														id="floatingInputGrid" placeholder="請輸入標題"
-														oninvalid="setCustomValidity('請輸入標題')"
-														oninput="setCustomValidity('')"> <label
-														for="floatingInputGrid">{error}</label>
+											<div class="row g-2">
+
+
+												<div class="col-md">
+													<div class="form-floating">
+														<input type="text" name="title" class="form-control"
+															id="floatingInputGrid" placeholder="請輸入標題"
+															oninvalid="setCustomValidity('請輸入標題')"
+															oninput="setCustomValidity('')"> <label
+															for="floatingInputGrid">{error}</label>
+													</div>
+												</div>
+												<div class="col-md">
+													<div class="form-floating">
+														<input type="submit" class="btn-solid-reg"
+															name="inquireId" value="查詢">
+													</div>
 												</div>
 											</div>
-											<div class="col-md">
-												<div class="form-floating">
-													<input type="submit"
-														class="btn-solid-reg"
-														name="inquireId" value="查詢">
-												</div>
-											</div>
-										</div>
-										
-										
-										
+
+
+
 										</form>
 										<table class="table table-sm">
 											<thead>
@@ -241,25 +228,68 @@
 														<td class="align-middle">${allmpbs.postPermission}</td>
 														<td class="align-middle">
 															<form action="UserPost" method="POST">
-															<input type="hidden" name="_method" value="DELETE">
-																<input type="hidden" name="mainPostNo"
+																<input type="hidden" name="_method" value="DELETE">
+																<input type="hidden" name="deletepost"
 																	value="${allmpbs.mainPostNo}"> <input
 																	type="submit" class="btn btn-outline-success"
 																	value="刪除">
 															</form>
-															<form action="PostWtch" method="GET">
+															<form action="PostRevise" method="GET">
 																<input type="hidden" name="mainPostNo"
 																	value="${allmpbs.mainPostNo}"> <input
 																	type="submit" class="btn btn-outline-success"
-																	value="修改">
-															</form>
+																	value="修改" >
+															</form> 
+															<a id="${allmpbs.mainPostNo}" class="btn-solid-reg popup-with-move-anim"
+															href="#details-lightbox-2">修改</a>
+															<script type="text/javascript">
+															$(function() {
+					                                            var onereply = document.getElementById("${allmpbs.mainPostNo}");
 
+					                                            onereply.onclick = function(event) {
+					                                                
+					                                                console.log("${allmpbs.mainPostNo}");
+					                                                let mpBean = {
+					                                                    "updatepost" : "${allmpbs.mainPostNo}"
+					                                                };
+					                                                $.ajax({
+					                                                     type : "post",
+					                                                     url : '/group5/PostRevise',
+					                                                     data : mpBean,
+					                                                     dataType : 'json',
+					                                                     success : function(data) {
+					                                                    	 console.log(data);
+					                                                           
+					                                                    	 
+					                                                           
+					                                                           
+					                                                           
+					                                                           var img =data.p_image.split(',');
+					                                                           
+					                                                           
+					                                                           for(var i=0; i < img.length; i++)
+					                                                        	   console.log(img[i]);
+					                                                           
+					                                                           var imgss = $("<img width='300' height='200'>").attr('src', img[i]);
+					                                                           console.log(imgss);
+					                                                           
+					                                                           $("#imgs").append(img[i]);
+					                                                           
+					                                                            }
+					                                                
+					                                                        });
+					                                            }
+
+					                                        });
+													</script>
+															
+															
 														</td>
 													</tr>
 												</tbody>
 											</c:forEach>
 										</table>
-                                        <h3>${notYetPublished}</h3>
+										<h3>${notYetPublished}</h3>
 
 
 
@@ -455,6 +485,8 @@
 					</ul>
 					<a class="btn-solid-reg mfp-close" href="sign-up.html">SIGN UP</a>
 					<a class="btn-outline-reg mfp-close as-button" href="#screenshots">BACK</a>
+					
+					<div id="imgs"></div>
 				</div>
 				<!-- end of col -->
 			</div>

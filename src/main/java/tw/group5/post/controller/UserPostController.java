@@ -70,7 +70,7 @@ public class UserPostController {
     public void memberBean() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         MemberBean memBer = amService.findByAccountMember(username);
-        //memberAccount = memBer.getMemberAccount();
+        memberAccount = memBer.getMemberAccount();
         postPhoto = memBer.getMemberPhoto();
         replyPhoto = memBer.getMemberPhoto();
     }
@@ -156,16 +156,44 @@ public class UserPostController {
     @DeleteMapping("/UserPost")
     public String deleteDainPost(Integer deletepost) {
         mpService.deleteById(deletepost);
-        return "redirect:/UserPostAll";
+        return "redirect:/group5/UserPostAll";
     }
     
+    // 跳到修改頁面 ajax
+    @PostMapping("/PostRevise") @ResponseBody
+    public MainPostBean modifyPages(Integer updatepost) {
+        MainPostBean queryContent = mpService.selectById(updatepost);
+        return queryContent;
+    }
+    
+    @PostMapping("/postimges")@ResponseBody
+    public String[] imges(String imges) {
+        System.out.println("sdfsdf"+imges);
+        return null;
+    }
+    
+    
+    // 跳到修改頁面ok
+    @PostMapping("/MainPostingServlet")
+    public ModelAndView modifyPage(Integer updatepost) {
+        ModelAndView mav = new ModelAndView(postChangePost);
+        MainPostBean queryContent = mpService.selectById(updatepost);
+
+        if (!"".equals(queryContent.getP_image()) && queryContent.getP_image() != null) {
+            String[] allImages = queryContent.getP_image().split(",");
+            mav.addObject("updatImages", allImages);
+        } else {
+            queryContent.setP_image("");
+        }
+        mav.addObject("queryContent", queryContent);
+        return mav;
+    }
     
     
     //發表回復
     @PostMapping("/ReplyPost")
     public ModelAndView addingPostConfirming(ReplyPostBean rpBean,MainPostBean mpBean,
                                        @RequestParam("replyfile") List<MultipartFile> mfs) throws FileNotFoundException {
-            
             rpBean.setReplyTime(mpService.currentDateFormat("date"));
             rpBean.setReplyLikeNumber("");
             rpBean.setReplyAccount(memberAccount);
