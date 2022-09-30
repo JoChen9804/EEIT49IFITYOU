@@ -42,14 +42,17 @@ public class GymFrontController {
 	@PostMapping("/searchDetail/{gName}")
 	public String processDetailPageAction(@PathVariable("gName") String gName, int memberIdNow, Model m) {
 		GymBean gym = gymService.queryName(gName);
-		m.addAttribute("gymDetail", gym);		
-		MemberBean member = adminService.selectOneMember(memberIdNow);		
-		GymLog logStatus = gymLogService.findByMemberAndGym(member, gym);
-		System.out.println(logStatus);
-		if(logStatus!=null) {
-			List<GymLog> memberlist = gymLogService.findByGym(gym);
-			m.addAttribute("memberlist", memberlist);
-			m.addAttribute("logStatus", logStatus);			
+		m.addAttribute("gymDetail", gym);
+		System.out.println(memberIdNow);
+		if(memberIdNow!=0) {
+			MemberBean member = adminService.selectOneMember(memberIdNow);		
+			GymLog logStatus = gymLogService.findByMemberAndGym(member, gym);
+			System.out.println(logStatus);
+			if(logStatus!=null) {
+				List<GymLog> memberlist = gymLogService.findByGym(gym);
+				m.addAttribute("memberlist", memberlist);
+				m.addAttribute("logStatus", logStatus);			
+			}
 		}
 		return "/gym/gymFrontDetail";
 	}

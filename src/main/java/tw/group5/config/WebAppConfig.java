@@ -32,7 +32,6 @@ public class WebAppConfig implements WebMvcConfigurer{
 		
 		//商品圖片的
 		registry.addResourceHandler("/group5/commodityImages/**").addResourceLocations("/WEB-INF/resources/commodityImages/");
-
 	}
 
 }

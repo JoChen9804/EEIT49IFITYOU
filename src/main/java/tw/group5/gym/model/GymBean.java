@@ -56,6 +56,8 @@ public class GymBean implements Serializable{
 	@Transient
 	private Set<GymLog> gymLogs = new HashSet<GymLog>();
 	
+	@Column(name = "GYMPICTURE")
+	private String gymPicture;
 	
 	public GymBean() {
 		
@@ -131,6 +133,16 @@ public class GymBean implements Serializable{
 
 	public void setGymLogs(Set<GymLog> favoriteGyms) {
 		this.gymLogs = favoriteGyms;
+	}
+
+
+	public String getGymPicture() {
+		return gymPicture;
+	}
+
+
+	public void setGymPicture(String gymPicture) {
+		this.gymPicture = gymPicture;
 	}
 
 

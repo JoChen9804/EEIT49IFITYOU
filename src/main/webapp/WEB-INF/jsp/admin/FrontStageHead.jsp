@@ -119,13 +119,8 @@
 							<a class="dropdown-item" href="/group5/user/UserCenter"><span
 								class="item-text" style="font-size: 1.2rem">會員中心</span></a>
 							<div class="dropdown-items-divide-hr"></div>
-<<<<<<< HEAD
-							<a class="dropdown-item" href=""><span
-								class="item-text">健友配對</span></a>
-=======
 							<a class="dropdown-item" href="terms-conditions.html"><span
 								class="item-text" style="font-size: 1.2rem">健友配對</span></a>
->>>>>>> 968f4c193128ebd704b83cb8486d2fe1baaf5955
 							<div class="dropdown-items-divide-hr"></div>
 							<a class="dropdown-item" href="/logout" data-toggle="modal"
 								data-target="#logoutModal"><span class="item-text" style="font-size: 1.2rem"><i
