@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,15 +25,14 @@ import tw.group5.admin.model.MemberBean;
 import tw.group5.admin.model.MemberDetail;
 import tw.group5.admin.service.AdminService;
 
-
 //@MultipartConfig Spring Boot不需要加
-@SessionAttributes(names = {"loginMember"})
+@SessionAttributes(names = { "loginMember" })
 @Controller
 @RequestMapping("/group5")
 public class AdminController {
 	@Autowired
 	private AdminService adminService;
-	
+
 	@RequestMapping(path = "/admin/fail", method = RequestMethod.POST)
 	public String adminLoginAction(Model m) {
 		Map<String, String> errorMsgMap = new HashMap<String, String>();
@@ -39,45 +40,48 @@ public class AdminController {
 		errorMsgMap.put("LoginError", "帳號或密碼錯誤，請重新輸入");
 		return "admin/AdminLogin";
 	}
-	
+
 	@RequestMapping("/admin/AdminNew")
 	public String adminNew() {
 		return "admin/AdminNew"; // 導向AdminNew.jsp頁面
 	}
+
 	@RequestMapping("/admin/AdminBackstage")
 	public String adminBackstage(Model m) {
 		return "admin/AdminBackstage"; // 導向AdminBackstage.jsp頁面
 	}
+
 	@RequestMapping("/admin/AdminMemberNew")
 	public String adminMemberNew() {
 		return "admin/AdminMemberNew"; // 導向AdminMemberNew.jsp頁面
 	}
+
 	@RequestMapping("/FrontStageMain")
 	public String FrontStageMain() {
 		return "admin/FrontStageMain"; // 導向前台頁面
 	}
+
 	@RequestMapping("/user/UserCenter")
 	public String UserCenter() {
 		return "admin/UserCenter"; // 導向userCenter
 	}
-	
+
 	@RequestMapping("/Register")
 	public String Register() {
 		return "admin/Register"; // 導向Register
 	}
-	
+
 	@RequestMapping("/ForgetPassword")
 	public String ForgetPassword() {
 		return "admin/ForgetPassword"; // 導向ForgetPassword
 	}
-	
+
 //	@RequestMapping("/group5/login")
 //	public String GoLogin() {
 //		return "admin/FrontStageMain"; // 導向前台頁面
 //	}
-	
-	
-	//常常使用到的查找管理員
+
+	// 常常使用到的查找管理員
 	private String SearchAdmin(Model m) {
 		List<String> adminTitleList = adminService.adminTitleList();
 		List<AdminBean> result = adminService.selectAll();
@@ -86,18 +90,18 @@ public class AdminController {
 		m.addAttribute("adminTitleList", adminTitleList);
 		return "admin/AdminAdmin";
 	}
-	
+
 	@RequestMapping(path = "/admin/adminAdminAction.controller")
 	private String adminAdminAction(Model m) {
 		return SearchAdmin(m);
 	}
 
-	@PostMapping(path = "/admin/adminSubmitActionModifyAndNew.controller") //新增+修改
-	private String newAdminSubmitAction(String account, String pwd, Integer authority, 
-			String modifyimage, String sub, String idNumString, String modifyAdminPhoto, 
-			String originalRealPassword, @RequestParam("filepath") MultipartFile mf, Model m) {
+	@PostMapping(path = "/admin/adminSubmitActionModifyAndNew.controller") // 新增+修改
+	private String newAdminSubmitAction(String account, String pwd, Integer authority, String modifyimage, String sub,
+			String idNumString, String modifyAdminPhoto, String originalRealPassword,
+			@RequestParam("filepath") MultipartFile mf, Model m) {
 		String adminPhoto;
-		//新增
+		// 新增
 		String bcEncode = new BCryptPasswordEncoder().encode(pwd);
 		if (sub.equals("newAdminSubmitAction")) {
 			adminPhoto = adminService.imageProcess(account, modifyimage, mf, false);
@@ -105,30 +109,30 @@ public class AdminController {
 			adminService.insert(adminBean);
 			System.out.println("管理員新增成功");
 		}
-		//修改******
+		// 修改******
 		else {
 			AdminBean adminBean;
 			String modifyPassword;
-			if (pwd.equals("******")){
+			if (pwd.equals("******")) {
 				System.out.println("123456" + originalRealPassword);
 				modifyPassword = originalRealPassword;
-			}else {
+			} else {
 				modifyPassword = new BCryptPasswordEncoder().encode(pwd);
 			}
-			if(modifyimage.equals("true")) {
+			if (modifyimage.equals("true")) {
 				adminPhoto = adminService.imageProcess(account, modifyimage, mf, false);
 				adminBean = new AdminBean(account, modifyPassword, authority, adminPhoto);
-			}else {
+			} else {
 				adminBean = new AdminBean(account, modifyPassword, authority, modifyAdminPhoto);
 			}
 			Integer idNum = Integer.parseInt(idNumString);
 			adminBean.setId(idNum);
-			AdminBean aBean= adminService.updateOne(adminBean);
+			AdminBean aBean = adminService.updateOne(adminBean);
 			System.out.println((m.getAttribute("loginMember")));
-			//圖片更動 修改頭像
+			// 圖片更動 修改頭像
 			AdminBean nowBean = (AdminBean) m.getAttribute("loginMember");
-			if (aBean.getId().equals(nowBean.getId())){
-			m.addAttribute("loginMember", aBean);				
+			if (aBean.getId().equals(nowBean.getId())) {
+				m.addAttribute("loginMember", aBean);
 			}
 			System.out.println("管理員修改成功");
 		}
@@ -136,8 +140,8 @@ public class AdminController {
 	}
 
 	@RequestMapping(path = "/admin/modifyAdminNameAction.controller")
-	private String modifyAdminNameAction(String modifyId, String modifyAdminPhoto, 
-			String modifyAdminName, String modifyAdminPwd, String modifyAuthority, Model m) {
+	private String modifyAdminNameAction(String modifyId, String modifyAdminPhoto, String modifyAdminName,
+			String modifyAdminPwd, String modifyAuthority, Model m) {
 		m.addAttribute("account", modifyId);
 		m.addAttribute("modifyAdminPhoto", modifyAdminPhoto);
 		m.addAttribute("name", modifyAdminName);
@@ -147,17 +151,18 @@ public class AdminController {
 		return "admin/AdminNew";
 	}
 
-	@PostMapping(path = "/admin/deleteNameAction.controller") //刪除，回傳id字串
+	@PostMapping(path = "/admin/deleteNameAction.controller") // 刪除，回傳id字串
 	private String deleteNameAction(String deleteNames, Model m) {
 		String[] memberList = deleteNames.split(" ");
 		List<Integer> memberListInteger = new ArrayList<Integer>();
-		for(int i=0; i<memberList.length; i++) {
+		for (int i = 0; i < memberList.length; i++) {
 			memberListInteger.add(Integer.parseInt(memberList[i]));
 		}
 		adminService.deleteData(memberListInteger);
 		return SearchAdmin(m);
 	}
-	//常常使用到的查找會員
+
+	// 常常使用到的查找會員
 	private String SearchMember(Model m) {
 		List<String> memberTitleList = adminService.memberTitleList();
 		List<MemberBean> resultMember = adminService.selectAllMember();
@@ -166,27 +171,26 @@ public class AdminController {
 		m.addAttribute("memberTitleList", memberTitleList);
 		return "admin/AdminMember";
 	}
-	
+
 	@RequestMapping(path = "/admin/adminMemberAction.controller")
 	private String adminMemberAction(Model m) {
 		return SearchMember(m);
 	}
 
-	@PostMapping(path = "/admin/adminMemberModifyAndNew.controller") //新增+修改
-	private String newMemberSubmitAction(String account, String pwd, String modifyimage, 
-			String sub, String idNumString, String name, String email, String gender,
-			String nickname, String birthday, String cellphone, String zipcode, 
-			String address, String registerReferralCode, String match, String pairContactInfo,
-			String pairRequest, String pairInfo,String nowimage,@RequestParam("mute") String muteModify,
+	@PostMapping(path = "/admin/adminMemberModifyAndNew.controller") // 新增+修改
+	private String newMemberSubmitAction(String account, String pwd, String modifyimage, String sub, String idNumString,
+			String name, String email, String gender, String nickname, String birthday, String cellphone,
+			String zipcode, String address, String registerReferralCode, String match, String pairContactInfo,
+			String pairRequest, String pairInfo, String nowimage, @RequestParam("mute") String muteModify,
 			@RequestParam("referralCode") String referralCodeModify, String originalRealPassword,
 			@RequestParam("postPermission") String postPermissionModify,
-			@RequestParam("recentLoginDate") String recentLoginDateModify, 
-			@RequestParam("filepath") MultipartFile mf,Model m) {
-		
+			@RequestParam("recentLoginDate") String recentLoginDateModify, @RequestParam("filepath") MultipartFile mf,
+			Model m, String detailId) {
+
 		String memberPhoto;
 		Integer authority = 0;
 		Integer pairWilling = Integer.parseInt(match);
-		//新增
+		// 新增
 		if (sub.equals("newMemberSubmitAction")) {
 			String bcEncode = new BCryptPasswordEncoder().encode(pwd);
 			System.out.println("正在新增會員");
@@ -208,15 +212,15 @@ public class AdminController {
 			memberDetail.setReferralCode(referralCode);
 			adminService.updateCodeById(memberDetail);
 			System.out.println("會員新增成功");
-			
-			//修改
-		}else {
+
+			// 修改
+		} else {
 			String modifyPassword;
 			System.out.println(originalRealPassword);
 			System.out.println(pwd);
-			if (pwd.equals("******")){
+			if (pwd.equals("******")) {
 				modifyPassword = originalRealPassword;
-			}else {
+			} else {
 				modifyPassword = new BCryptPasswordEncoder().encode(pwd);
 			}
 			String referralCode = referralCodeModify;
@@ -226,91 +230,98 @@ public class AdminController {
 			MemberDetail mDetail = new MemberDetail(gender, nickname, birthday, cellphone, zipcode, address,
 					referralCode, registerReferralCode, mute, postPermission, pairWilling, pairContactInfo, pairRequest,
 					pairInfo, recentLoginDate);
+			mDetail.setId(Integer.parseInt(detailId));
 			MemberBean mBean;
-			if(modifyimage.equals("true")) {
+			if (modifyimage.equals("true")) {
 				memberPhoto = adminService.imageProcess(account, modifyimage, mf, false);
 				mBean = new MemberBean(account, modifyPassword, authority, name, memberPhoto, email, mDetail);
-			}else {
+			} else {
 				mBean = new MemberBean(account, modifyPassword, authority, name, nowimage, email, mDetail);
 			}
 			Integer idNum = Integer.parseInt(idNumString);
 			mBean.setId(idNum);
 			adminService.updateOne(mBean);
-			System.out.println("會員修改成功");			
+			System.out.println("會員修改成功");
 		}
 		return SearchMember(m);
 	}
 
-	@PostMapping(path = "/admin/modifyMemberNameAction.controller") 
-	private String modifyMemberNameAction(@RequestParam("modifyId") String modifyId ,Model m) {
+	@PostMapping(path = "/admin/modifyMemberNameAction.controller")
+	private String modifyMemberNameAction(@RequestParam("modifyId") String modifyId, Model m) {
 		Integer id = Integer.parseInt(modifyId);
 		MemberBean resultMember = adminService.selectOneMember(id);
 		System.out.println("查找單一資料成功");
 		m.addAttribute("OneMember", resultMember);
 		return "admin/AdminMemberNew";
-		}
-	
-	@PostMapping(path = "/admin/deleteMemberNameAction.controller") //刪除會員(字串Ids)
+	}
+
+	@PostMapping(path = "/admin/deleteMemberNameAction.controller") // 刪除會員(字串Ids)
 	private String deleteMemberNameAction(String deleteNames, Model m) {
 		System.out.println("進入刪除");
 		String[] memberList = deleteNames.split(" ");
 		List<Integer> memberListInteger = new ArrayList<Integer>();
-		for(int i=0; i<memberList.length; i++) {
+		for (int i = 0; i < memberList.length; i++) {
 			memberListInteger.add(Integer.parseInt(memberList[i]));
 		}
 		adminService.deleteMemberData(memberListInteger);
 		return SearchMember(m);
 	}
-	
 
-@PostMapping(path = "/user/memberModify.controller") // 修改
-private String modifyUserAction(String account, String pwd, String modifyimage, 
-		String sub, String idNumString, String name, String email, String gender,
-		String nickname, String birthday, String cellphone, String zipcode, 
-		String address, String registerReferralCode, String match, String pairContactInfo,
-		String pairRequest, String pairInfo,String nowimage,@RequestParam("mute") String muteModify,
-		@RequestParam("referralCode") String referralCodeModify, String originalRealPassword,
-		@RequestParam("postPermission") String postPermissionModify, String hrefSubmit,
-		@RequestParam("recentLoginDate") String recentLoginDateModify, 
-		@RequestParam("filepath") MultipartFile mf, String detailId, Model m) {
-	
-	String memberPhoto;
-	Integer authority = 0;
-		//修改
+	@PostMapping(path = "/user/memberModify.controller") // 修改
+	private String modifyUserAction(String account, String pwd, String modifyimage, String sub, String idNumString,
+			String name, String email, String gender, String nickname, String birthday, String cellphone,
+			String zipcode, String address, String registerReferralCode, String match, String pairContactInfo,
+			String pairRequest, String pairInfo, String nowimage, @RequestParam("mute") String muteModify,
+			@RequestParam("referralCode") String referralCodeModify, String originalRealPassword,
+			@RequestParam("postPermission") String postPermissionModify, String hrefSubmit,
+			@RequestParam("recentLoginDate") String recentLoginDateModify, @RequestParam("filepath") MultipartFile mf,
+			String detailId, Model m) {
+
+		String memberPhoto;
+		Integer authority = 0;
+		// 修改
 		String modifyPassword;
-		System.out.println(originalRealPassword);
-		System.out.println(pwd);
-		System.out.println(detailId);
-		System.out.println(match);
-		System.out.println(pairContactInfo);
-		System.out.println(hrefSubmit);
+//		System.out.println(originalRealPassword);
+//		System.out.println(pwd);
+//		System.out.println(detailId);
+//		System.out.println(match);
+//		System.out.println(pairContactInfo);
+//		System.out.println(hrefSubmit);
 
 		modifyPassword = originalRealPassword;
-		
+
 		String referralCode = referralCodeModify;
 		Integer mute = Integer.parseInt(muteModify);
 		Integer postPermission = Integer.parseInt(postPermissionModify);
 		String recentLoginDate = recentLoginDateModify;
-		MemberDetail mDetail = new MemberDetail(gender, nickname, birthday, cellphone, zipcode, address,
-				referralCode, registerReferralCode, mute, postPermission, Integer.parseInt(match), pairContactInfo, pairRequest,
+		MemberDetail mDetail = new MemberDetail(gender, nickname, birthday, cellphone, zipcode, address, referralCode,
+				registerReferralCode, mute, postPermission, Integer.parseInt(match), pairContactInfo, pairRequest,
 				pairInfo, recentLoginDate);
 		mDetail.setId(Integer.parseInt(detailId));
 		MemberBean mBean;
-		if(modifyimage.equals("true")) {
+		if (modifyimage.equals("true")) {
 			memberPhoto = adminService.imageProcess(account, modifyimage, mf, false);
 			mBean = new MemberBean(account, modifyPassword, authority, name, memberPhoto, email, mDetail);
-		}else {
+		} else {
 			mBean = new MemberBean(account, modifyPassword, authority, name, nowimage, email, mDetail);
 		}
 		Integer idNum = Integer.parseInt(idNumString);
 		mBean.setId(idNum);
-		
-		
+
 		MemberBean member = adminService.updateOne(mBean);
 		m.addAttribute("loginMember", member);
 		System.out.println("會員修改成功");
-		return "admin/UserCenter";		
-	
-	
-}
+		return "admin/UserCenter";
+	}
+
+//	@PostMapping(path = "/user/memberPassword.controller") // 修改
+//	private ResponseEntity<String> modifyUserPasswordAction() {
+//		Boolean rlt = todoService.updateTodo(id ,todo);
+//        if (!rlt) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Status 欄位不能為空");
+//        }
+//        return ResponseEntity.status(HttpStatus.OK).body("");
+//    }return null;
+//}
+
 }

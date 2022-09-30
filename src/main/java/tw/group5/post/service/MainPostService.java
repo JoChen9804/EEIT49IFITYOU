@@ -6,10 +6,8 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import tw.group5.post.model.MainPostBean;
 import tw.group5.post.model.MainPostRepository;
-import tw.group5.post.model.PostImageBean;
 
 @Service
 @Transactional
@@ -65,41 +62,8 @@ public class MainPostService {
         return null;
     }
 
-    // 照片位置與貼文id寫到Set<PostImageBean>
-    public Set<PostImageBean> addPostImages(List<MultipartFile> mfs, MainPostBean mainPostBean) {
-        Set<PostImageBean> imgsrcs = new LinkedHashSet<PostImageBean>();
-        for (MultipartFile ms : mfs) {
-
-            String submittedFileName = ms.getOriginalFilename();
-            if (submittedFileName != null && submittedFileName != "") {
-                // 檔名
-                String imageName = currentDateFormat("millisecond") + "_" + submittedFileName;
-
-                String sqlImage = "";
-                String imgsrc = "C:/images/posts/";
-
-                try {
-
-                    File file = new File(imgsrc, imageName);
-                    ms.transferTo(file);
-
-                    sqlImage = "/images" + "/" + imageName;
-                    PostImageBean img = new PostImageBean();
-                    img.setP_image(sqlImage); // 寫入照片位置
-                    img.setMainPostBean(mainPostBean);// 寫入貼文的編號
-                    imgsrcs.add(img);
-                    System.out.println("檔名已更新");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return imgsrcs;
-    }
-
     // 用,隔開寫入
     public String addPostImages(List<MultipartFile> mfs) {
-
         String sqlImage = "";
         String imgsrc = "C:/images/posts/";
         for (MultipartFile ms : mfs) {
@@ -108,23 +72,17 @@ public class MainPostService {
                 String newImageName = currentDateFormat("millisecond") + "_" + imageName;
                 try {
                     File file = new File(imgsrc, newImageName);
-
                     ms.transferTo(file);
                     sqlImage += "/images" + "/" + newImageName + ",";
-
                 } catch (IllegalStateException | IOException e) {
                     e.printStackTrace();
                 }
             }
         }
-
         return sqlImage;
     }
 
-    // 貼文id找照片
-//    public List<PostImageBean> allImages(int postnoDao) {
-//        return mainPostDAO.allImages(postnoDao);
-//    }
+
 
     // 當前系統日期與毫秒數
     public String currentDateFormat(String format) {
@@ -141,5 +99,38 @@ public class MainPostService {
         }
         return returnString;
     }
+    
+      
+    // 照片位置與貼文id寫到Set<PostImageBean>
+//    public Set<PostImageBean> addPostImages(List<MultipartFile> mfs, MainPostBean mainPostBean) {
+//        Set<PostImageBean> imgsrcs = new LinkedHashSet<PostImageBean>();
+//        for (MultipartFile ms : mfs) {
+//
+//            String submittedFileName = ms.getOriginalFilename();
+//            if (submittedFileName != null && submittedFileName != "") {
+//                // 檔名
+//                String imageName = currentDateFormat("millisecond") + "_" + submittedFileName;
+//
+//                String sqlImage = "";
+//                String imgsrc = "C:/images/posts/";
+//
+//                try {
+//
+//                    File file = new File(imgsrc, imageName);
+//                    ms.transferTo(file);
+//
+//                    sqlImage = "/images" + "/" + imageName;
+//                    PostImageBean img = new PostImageBean();
+//                    img.setP_image(sqlImage); // 寫入照片位置
+//                    img.setMainPostBean(mainPostBean);// 寫入貼文的編號
+//                    imgsrcs.add(img);
+//                    System.out.println("檔名已更新");
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+//        return imgsrcs;
+//    }
 
 }

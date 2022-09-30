@@ -1,0 +1,106 @@
+/*//////////////////////////////////////////////////////////////////
+  [ 新增商品按鈕 ]*/
+.add_button{
+        display: inline-block;
+    	margin-left:850px;
+    	background: #4e73df;
+  		border-radius: 999px;
+  		box-shadow: #5E5DF0 0 10px 20px -10px;
+  		box-sizing: border-box;
+  		color: #FFFFFF;
+  		cursor: pointer;
+ 		font-family: Inter,Helvetica,"Apple Color Emoji","Segoe UI Emoji",NotoColorEmoji,"Noto Color Emoji","Segoe UI Symbol","Android Emoji",EmojiSymbols,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans",sans-serif;
+  		font-size: 16px;
+  		font-weight: 700;
+  		line-height: 24px;
+  		opacity: 1;
+  		outline: 0 solid transparent;
+  		padding: 8px 18px;
+  		user-select: none;
+  		-webkit-user-select: none;
+  		touch-action: manipulation;
+  		width: fit-content;
+  		word-break: break-word;
+  		border: 0;
+    }
+    
+/*//////////////////////////////////////////////////////////////////
+  [ 搜尋商品框 ]*/
+.searchCommodity{
+	border-radius: 999px;
+	font-family: Inter,Helvetica,"Apple Color Emoji","Segoe UI Emoji",NotoColorEmoji,"Noto Color Emoji","Segoe UI Symbol","Android Emoji",EmojiSymbols,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans",sans-serif;
+  	font-size: 16px;
+  	font-weight: 700;
+  	line-height: 20px;
+  	opacity: 1;
+  	outline: 0 solid transparent;
+  	padding: 8px 18px;
+  	user-select: none;
+  	-webkit-user-select: none;
+  	touch-action: manipulation;
+  	width: fit-content;
+  	word-break: break-word;
+  	border: 2px solid #4e73df;
+}
+
+/*//////////////////////////////////////////////////////////////////
+  [ 搜尋按鈕 ]*/
+.searchCommodityButton{
+	font-size: 16px;
+	font-weight: 700;
+  	line-height: 20px;
+	background: 00;
+	border:0
+}
+
+/*//////////////////////////////////////////////////////////////////
+  [ 刪除與修改按鈕 ]*/
+.delete, .update{
+	height: 40px;
+ 	width: 40px;
+ 	border-radius: 50%;	
+ 	font-size: 18px;
+  	font-weight: 700;
+  	line-height: 24px;
+  	color:#4e73df;
+ 	background: 00;
+ 	border: 2px solid #4e73df;
+}
+
+
+.commodityTypeUpdate, .commodityNameUpdate{
+	border-radius: 999px;
+	font-family: Inter,Helvetica,"Apple Color Emoji","Segoe UI Emoji",NotoColorEmoji,"Noto Color Emoji","Segoe UI Symbol","Android Emoji",EmojiSymbols,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans",sans-serif;
+  	font-size: 16px;
+  	font-weight: 700;
+  	line-height: 20px;
+  	opacity: 1;
+  	outline: 0 solid transparent;
+  	user-select: none;
+  	-webkit-user-select: none;
+  	touch-action: manipulation;
+  	width: fit-content;
+  	word-break: break-word;
+  	border: 2px solid #4e73df;
+}
+
+.commodityPriceUpdate, .commodityInventoryUpdate{
+	border-radius: 999px;
+	font-family: Inter,Helvetica,"Apple Color Emoji","Segoe UI Emoji",NotoColorEmoji,"Noto Color Emoji","Segoe UI Symbol","Android Emoji",EmojiSymbols,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans",sans-serif;
+  	font-size: 16px;
+  	font-weight: 700;
+  	line-height: 20px;
+  	opacity: 1;
+  	outline: 0 solid transparent;
+  	user-select: none;
+  	-webkit-user-select: none;
+  	touch-action: manipulation;
+  	word-break: break-word;
+  	width:50px;
+  	border: 2px solid #4e73df;
+}
+	
+
+
+
+

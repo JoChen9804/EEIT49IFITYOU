@@ -51,6 +51,7 @@ public class GymLogController {
 	@ResponseBody
 	public GymLog processAddFavoriteAction(@RequestBody GymLog gLog) {
 		gLog.setGym(gymService.findById(gLog.getGymId()));
+		gLog.setMember(adminService.selectOneMember(gLog.getMemberId()));
 		return gLogService.addGymLog(gLog);
 	}
 	

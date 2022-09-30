@@ -52,6 +52,7 @@
 			                                <li>地址：<br><span>${gymInSearch.gymAddress}</span></li>
 			                            </ul>
 			                            <form action="/group5/gym/searchDetail/${gymInSearch.gymName}" method="post">
+			                            	<input type="hidden" value="${}"/>
 			                            	<button type="submit" class="btn-solid-reg page-scroll">點我看更多地點資訊</button>
 			                            </form>
 		                            </div>

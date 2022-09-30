@@ -16,17 +16,17 @@ response.setCharacterEncoding("UTF-8");
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <head>
 <title>Menu Build</title>
-<link rel="stylesheet" type="text/css"
-	href="https://cdn.datatables.net/1.11.2/css/jquery.dataTables.css">
+
+<!-- JQuery  連結-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.2/css/jquery.dataTables.css">
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-
 </head>
 
 <body>
-
-	<%@ include file="../admin/AdminstyleHead.jsp"%>
-
+ <%@ include file="../admin/AdminstyleHead.jsp" %>
+  
 	<section>
 		<header>
 			<h2>Build Up Your Menu</h2>
@@ -37,7 +37,7 @@ response.setCharacterEncoding("UTF-8");
 			<select id="Partlist" onchange="changePart(this.selectedIndex)"></select>
 
 			<h4>選擇動作....</h4>
-			<select id="sectorlist"></select>
+			<select id="exercisename"></select>
 		</div>
 
 		<script>
@@ -76,12 +76,40 @@ response.setCharacterEncoding("UTF-8");
                         + sectors[index][i] + '</option>';
                 }
                 console.log(Sinner);
-                var sectorSelect = document.getElementById("sectorlist");
+                var sectorSelect = document.getElementById("exercisename");
                 sectorSelect.innerHTML = Sinner;
             }
-            changePart(document.getElementById("Partlist").selectedIndex);
+            changePart(document.getElementById("Partlist").selectedIndex);    
         </script>
-
+        
+        <!-- 
+         <button class="randomNum">點我產生菜單號</button>
+        
+        <script src="https://code.jquery.com/jquery-3.6.0.js"> </script>
+         
+           <div id="menuSet"></div>  
+        <script type="text/javascript">
+        
+        $(".randomNum").on('click', function(){ 
+        	 var arr = ["A", "B", "C", "D", "4", "5", "6", "7", "8", "9"];
+             var lastarr = new Array();
+             while (lastarr.length < 5) {
+                 var num = Math.floor(Math.random() * 10);
+                 if (lastarr.indexOf(arr[num]) === -1) {
+                     lastarr += arr[num];
+                 }
+             }
+             var menuSetx = `${lastarr}`; //亂數編號
+             console.log(menuSetx)
+      
+             if (menuSet !=null){
+                $('#menuSet').append("<input id='menuSet' value ="+menuSetx+">");
+                console.log("$('#menuSet')")
+             } 		
+        })
+        </script>
+         -->
+        
 		<div>
 			<h4>組數:</h4>
 			<input class="te" id="setCount" type="text" placeholder="請輸入組數">組
@@ -100,6 +128,19 @@ response.setCharacterEncoding("UTF-8");
 			<h4>休息間隔:</h4>
 			<input class="te" id="breakTime" type="text" placeholder="休息間隔">秒
 		</div>
+		
+		
+		<div>
+			<h4>菜單號碼</h4>
+			<input class="te" id="menuSet" type="text" placeholder="編號" value="F5G7C">
+		</div>
+		
+			 
+		<div>
+			<h4>會員</h4>
+			<input class="te" id="exrAccount" type="text" placeholder="會員" value="ANDY">
+		</div>
+			
 		<div>
 			<button id="add">
 				<i>ADD</i>
@@ -107,7 +148,7 @@ response.setCharacterEncoding("UTF-8");
 		</div>
 
 		<div class="container">
-			<table>
+			<table id="table_id" class="h3 mb-2 text-gray-800">
 				<thead>
 					<th>動作種類</th>
 					<th>動作</th>
@@ -115,6 +156,8 @@ response.setCharacterEncoding("UTF-8");
 					<th>公斤數</th>
 					<th>次數</th>
 					<th>休息間隔</th>
+					<th>菜單號碼</th>
+					<th>會員</th>
 					<th>功能</th>
 				</thead>
 				<tbody>
@@ -128,9 +171,11 @@ response.setCharacterEncoding("UTF-8");
 					<i>完成菜單</i>
 				</button>
 			</form>
+			
+	
 
 		</div>
-
+<%@ include file="../admin/AdminstyleFoot.jsp" %>
 		<script src="https://code.jquery.com/jquery-3.6.0.js"> </script>
 		<script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
 
@@ -138,35 +183,46 @@ response.setCharacterEncoding("UTF-8");
             $(function () {
 
                 let menuArray = new Array;
-                function addJson(Partlist, sectorlist, setCount, exercisekilloo, exerciseTimes, breakTime) {
+                function addJson(Partlist, exercisename, setCount, exercisekilloo, exerciseTimes, breakTime, menuSet, exrAccount,menuTitle) {
                     let Menu = {
                         Partlist: Partlist,
-                        sectorlist: sectorlist,
+                        exercisename: exercisename,
                         setCount: setCount,
                         exercisekilloo: exercisekilloo,
                         exerciseTimes: exerciseTimes,
-                        breakTime: breakTime
+                        breakTime: breakTime,
+                        menuSet: menuSet,
+                        exrAccount: exrAccount,
+                        menuTitle: menuTitle
                     }
                     console.log(Menu);
                     menuArray.push(Menu);
                 }
                 $('#add').on('click', function () {
                     let Partlist = $('#Partlist').val(),
-                        sectorlist = $('#sectorlist').val(),
+                    exercisename = $('#exercisename').val(),
                         setCount = $('#setCount').val(),
                         exercisekilloo = $('#exercisekilloo').val(),
                         exerciseTimes = $('#exerciseTimes').val(),
-                        breakTime = $('#breakTime').val()
+                        breakTime = $('#breakTime').val(),
+                        menuSet = $('#menuSet').val(),
+                        exrAccount= $('#exrAccount').val()
+                        menuTitle= $('menuTitle').val
+                        
 
-                    addJson(Partlist, sectorlist, setCount, exercisekilloo, exerciseTimes, breakTime);
+                    addJson(Partlist, exercisename, setCount, exercisekilloo, exerciseTimes, breakTime, menuSet, exrAccount, menuTitle);
                     let content = `
                         <tr>
                         <td><%="${Partlist}"%></td>
-                        <td><%="${sectorlist}"%></td>
+                        <td><%="${exercisename}"%></td>
                         <td><%="${setCount}"%></td>
                         <td><%="${exercisekilloo}"%></td>
                         <td><%="${exerciseTimes}"%></td>
                         <td><%="${breakTime}"%></td>
+                        <td><%="${menuSet}"%></td>
+                        <td><%="${exrAccount}"%></td>
+                       
+                      
                         <td><button class="del">del</button></td>
                     </tr> 
                 `
@@ -208,14 +264,16 @@ response.setCharacterEncoding("UTF-8");
                          
             })
             })
+            
+            $('#table_id').dataTable({});
+            
             })
            
 					
-            		
-    
+
       //   $(function(){
       //  	$('#submitAdd').on("click",function(){
-      //  		let menubean={"Partlist":"part","sectorlist":"exerciseName","setCount":"setCount","exercisekilloo":"exercisekilloo","exerciseTimes":"exerciseTimes","breakTime":"breakTime"}
+      //  		let menubean={"Partlist":"part","exercisename":"exerciseName","setCount":"setCount","exercisekilloo":"exercisekilloo","exerciseTimes":"exerciseTimes","breakTime":"breakTime"}
       //  		Swal.fire({
       //             title: 'Do you want to save ?',
       //             showDenyButton: true,
@@ -225,7 +283,7 @@ response.setCharacterEncoding("UTF-8");
       //         	 if (result.isConfirmed) {
       //         		 Swal.fire({
       //                     icon: 'Saved!',
-      //                    html: '<p>類別：'+Partlist+'</p><p>運動：'+sectorlist+'</p><p>組數：'+setCount+'</p>'+'</p><p>重量數：'+exercisekilloo+'</p>'+'</p><p>次數：'+exerciseTimes+'</p>'+'</p><p>休息時間：'+breakTime+'</p>',
+      //                    html: '<p>類別：'+Partlist+'</p><p>運動：'+exercisename+'</p><p>組數：'+setCount+'</p>'+'</p><p>重量數：'+exercisekilloo+'</p>'+'</p><p>次數：'+exerciseTimes+'</p>'+'</p><p>休息時間：'+breakTime+'</p>',
       //                     showCancelButton: true,
       //                    confirmButtonText: '確定新增',
       //                 }).then((result2)=>{
@@ -256,15 +314,9 @@ response.setCharacterEncoding("UTF-8");
       		
       //	});
      
-          
+            
             </script>
 
-
-
-
 	</section>
-	
-	<%@ include file="../admin/AdminstyleFoot.jsp"%>
-	
 </body>
 </html>
