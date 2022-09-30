@@ -12,6 +12,13 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>新增確認</title>
 <link rel="stylesheet" href="/group5/css/voucherStyle.css">
+
+<link href="/group5/css/bootstrap.css" rel="stylesheet">
+<link href="/group5/css/fontawesome-all.css" rel="stylesheet">
+<link href="/group5/css/swiper.css" rel="stylesheet">
+<link href="/group5/css/magnific-popup.css" rel="stylesheet">
+<link href="/group5/css/styles.css" rel="stylesheet">
+
 </head>
 <body>
 
@@ -19,82 +26,91 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 
 	<!-- JQuery  連結-->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
-	<div id="show"></div>
-
 	
-	<script type="text/javascript">
-		$(function() {
-			var page = `${page}`;
-			console.log("顯示頁面 : " + page);
-			
-			if(page=="activity"){
-				$('#show').html(`
-						<h2>活動詳細資料確認</h2>
-						<form action="activitymain.controller" method="get">
-							<fieldset>
-								<legend>活動資料</legend>
-								<div class="st1">
-									<label class="t1">活動名稱:</label>
-									<c:choose>
+	<!-- DataTable 連結 -->
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.2/js/jquery.dataTables.js"></script>
+	<script src="/group5/js/dataTables.bootstrap4.min.js"></script>
+
+	<h1 style="text-align: left">活動詳細資料確認</h1>
+	
+	<!-- Details -->
+    <div id="details" class="basic-1" style="padding-top: 2.5rem; padding-bottom: 2.5rem;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="text-container">
+                        <form action="/group5/user/signupadd.controller" method="post">
+                        <ul class="list-unstyled li-space-lg">
+                            <li class="media">
+                                <i class="fas fa-square"></i>
+                                <div class="media-body">
+										活動名稱:
+										<c:choose>
 											<c:when test="${upd}">${update_activity.activityTitle}</c:when>
 											<c:when test="${query}">${query_activity.activityTitle}</c:when>
 											<c:otherwise>${add_activity.activityTitle}</c:otherwise>
-									</c:choose>
-								</div>
-
-								<div class="st1">
-									<label class="t1">活動類型:</label> <label>
+										</c:choose>
+									</div>
+								</li>
+                            <li class="media">
+                                <i class="fas fa-square"></i>
+                                <div class="media-body">
+                               		活動類型:
 										<c:choose>
 											<c:when test="${upd}">${update_activity.typeContent}</c:when>
 											<c:when test="${query}">${query_activity.typeContent}</c:when>
 											<c:otherwise>${add_activity.typeContent}</c:otherwise>
 										</c:choose>
-									</label>
-								</div>
-
-								<div class="st1">
-									<label class="t1">主辦方:</label>
-									<c:choose>
-										<c:when test="${upd}">${update_activity.holder}</c:when>
-										<c:when test="${query}">${query_activity.holder}</c:when>
-										<c:otherwise>${add_activity.holder}</c:otherwise>
-									</c:choose>
-								</div>
-								
-								<div class="st1">
-									<label class="t1">活動地點:</label>
-									<c:choose>
-										<c:when test="${upd}">${update_activity.location}</c:when>
-										<c:when test="${query}">${query_activity.location}</c:when>
-										<c:otherwise>${add_activity.location}</c:otherwise>
-									</c:choose>
-								</div>
-								
-								<div class="st1">
-									<label class="t1">活動開始日:</label>
-									<c:choose>
-										<c:when test="${upd}">${update_activity.startTime}</c:when>
-										<c:when test="${query}">${query_activity.startTime}</c:when>
-										<c:otherwise>${add_activity.startTime}</c:otherwise>
-									</c:choose>
-								</div>
-								
-								<div class="st1">
-									<label class="t1">活動結束日:</label>
+									</div>
+                            </li>
+                            <li class="media">
+                                <i class="fas fa-square"></i>
+                                <div class="media-body">
+										主辦方:
+										<c:choose>
+											<c:when test="${upd}">${update_activity.holder}</c:when>
+											<c:when test="${query}">${query_activity.holder}</c:when>
+											<c:otherwise>${add_activity.holder}</c:otherwise>
+										</c:choose>
+									</div>
+                            </li>
+                            <li class="media">
+                                <i class="fas fa-square"></i>
+                                <div class="media-body">
+										活動地點:
+										<c:choose>
+											<c:when test="${upd}">${update_activity.location}</c:when>
+											<c:when test="${query}">${query_activity.location}</c:when>
+											<c:otherwise>${add_activity.location}</c:otherwise>
+										</c:choose>
+									</div>
+                            </li>
+                            <li class="media">
+                                <i class="fas fa-square"></i>
+                                <div class="media-body">
+										活動開始日:
+										<c:choose>
+											<c:when test="${upd}">${update_activity.startTime}</c:when>
+											<c:when test="${query}">${query_activity.startTime}</c:when>
+											<c:otherwise>${add_activity.startTime}</c:otherwise>
+										</c:choose>
+									</div>
+                            </li>
+                            <li class="media">
+                                <i class="fas fa-square"></i>
+                                <div class="media-body">
+									活動結束日:
 									<c:choose>
 										<c:when test="${upd}">${update_activity.endTime}</c:when>
 										<c:when test="${query}">${query_activity.endTime}</c:when>
 										<c:otherwise>${add_activity.endTime}</c:otherwise>
 									</c:choose>
 								</div>
-							</fieldset>
-
-							<fieldset>
-								<legend>說明內容</legend>
-
-									<label style="float: left; margin: 3px;">活動內容:</label>
-								<div class="st1">
+							</li>
+							<li class="media">
+                                <i class="fas fa-square"></i>
+                                <div class="media-body">
+									活動內容:
 									<br>
 									<c:choose>
 										<c:when test="${upd}">${update_activity.activityContent}</c:when>
@@ -102,28 +118,81 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 										<c:otherwise>${add_activity.activityContent}</c:otherwise>
 									</c:choose>
 								</div>
-								
-								<div class="st1">
-									<label for="memo" style="float: left; margin: 3px;">圖片:</label> 
-									<br>
-									<br>
-									<img width="400" src='/Path/<c:choose>
+							</li>
+                        </ul>
+                        </form>
+                       
+                    </div> <!-- end of text-container -->
+                </div> <!-- end of col -->
+                <div class="col-lg-6" style="align-items: center; display: flex;">
+                    <div class="image-container">
+                    <img width="600" src='/Path/<c:choose>
 										<c:when test="${upd}">${update_activity.photoData}</c:when>
 										<c:when test="${query}">${query_activity.photoData}</c:when>
 										<c:otherwise>${add_activity.photoData}</c:otherwise>
 									</c:choose>' />
-								</div>
-								
-							</fieldset>
-							
-							<div class="sub">
-								<input type="submit" value="返回查詢">
-							</div>
-						</form>
-				`);
-			}
+					</div> <!-- end of image-container -->
+                </div> <!-- end of col -->
+            </div> <!-- end of row -->
+        </div> <!-- end of container -->
+    </div> <!-- end of basic-1 -->
+    <!-- end of details -->
+    
+    <div id="showSignUp">
+    
+    <hr>
+    <h1 style="text-align: left">報名名單</h1>
+    <br>
+	<table class="table table-bordered" id="table_id"
+		class="compact hover stripe">
+		<thead>
+			<tr>
+				<th>報名帳號</th>
+				<th>報名姓名</th>
+				<th style="width: 250px">email</th>
+				<th>連絡電話</th>
+				<th style="width: 250px">報名時間</th>
+				<th style="width: 70px">操作</th>
+			</tr>
+		</thead>
+		<c:forEach var="sqa" items="${signUp_queryAll}">
+			<tr>
+				<td>${sqa.memberId}</td>
+				<td>${sqa.memberName}</td>
+				<td>${sqa.email}</td>
+				<td>${sqa.phone}</td>
+				<td>${sqa.signUpTime}</td>
+				<td>
+					<form ACTION="deletesignup.controller" name="ddeell" method="post" style="float: left; margin-left: 3px">
+						<input type="hidden" name="dataId" value="${aqa.activityId}" id="dd" /> 
+						<input type="hidden" name="voucherTitle" value="${aqa.activityTitle}" /> 
+						<input type="submit" id="delete" name="delete" value="刪除" class="del btn btn-outline-danger " />
+					</form>
+				</td>
+			</tr>
+		</c:forEach>
+	</table>
+
+	</div>
+
+	<form action="activitymain.controller" method="get">
+		<div class="sub">
+			<input type="submit" class="btn-solid-reg page-scroll" value="返回查詢">
+		</div>
+	</form>
+	
+	<script type="text/javascript">
+		$(function() {
 			
+			$('#forColor').attr('style', 'background-color:white' );
 			
+			if("${notShowSignUp}"){
+				$('#showSignUp').attr('style', 'display:none' );
+			};
+			
+			$('#table_id').dataTable({
+				'bAutoWidth' : false
+			});
 		});
 	</script>
 	

@@ -55,7 +55,6 @@ input {
 
 	<div id="show"></div>
 	
-	
 	<script>
 	$(function() {
 		var page = `${page}`;
@@ -144,9 +143,8 @@ input {
 			$('#show').append(`
 				<H2 style="display: inline">活動總覽</H2>
 				&emsp;&emsp;&emsp;
-				<form id="add" action="addactivity.controller" enctype="multipart/form-data" method="post" class="btn btn-info btn-icon-split">
-					<span class="icon text-white-50"> <i class="fas fa-flag"></i></span>
-					<input type="submit" name="add" value="新增" class="text" style="border: none; background-color: #36b9cc; color: white"/>
+				<form id="add" action="addactivity.controller" enctype="multipart/form-data" method="post" style="display: inline">
+					<input type="submit" name="add" value="新增" class=" btn btn-info btn-icon-split" style="border: none; background-color: #36b9cc; color: white"/>
 				</form>
 				<table class="table table-bordered" id="table_id" class="compact hover stripe">
 					<thead>
