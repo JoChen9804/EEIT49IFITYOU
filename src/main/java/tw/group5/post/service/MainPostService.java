@@ -31,7 +31,11 @@ public class MainPostService {
     public MainPostBean update(MainPostBean javaBean) {
         return mpResp.save(javaBean);
     }
-
+    
+    public void updatePermission(String permerission,Integer mainPostNoList) {
+         mpResp.updatePermission(permerission,mainPostNoList);
+    }
+    
     public void deleteById(Integer id) {
         mpResp.deleteById(id);
     }

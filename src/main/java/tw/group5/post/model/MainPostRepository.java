@@ -4,7 +4,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 
 
@@ -24,6 +27,12 @@ public interface MainPostRepository extends JpaRepository<MainPostBean, Integer>
     //Hql 寫法
     @Query(value = "from MainPostBean where title like concat('%',?1,'%') and account = ?2")
     public List<MainPostBean> findByAccountAndTitles(String titles,String account);
+    
+
+    
+    @Modifying(clearAutomatically = true)
+    @Query(value = "update MainPostBean set postPermission = :permerission where mainPostNo = :mpNo")
+    public void updatePermission(@Param("permerission")String permerission,@Param("mpNo")Integer mainPostNo);
     
     
     //審核狀態

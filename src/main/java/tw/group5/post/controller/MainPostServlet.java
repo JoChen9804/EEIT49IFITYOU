@@ -68,7 +68,7 @@ public class MainPostServlet {
     
     @GetMapping("/AllPostStatus")
     public ModelAndView allPostStatus(MainPostBean mpBean) {
-        ModelAndView mav = new ModelAndView(postChangePost);
+        ModelAndView mav = new ModelAndView(postFrontPage);
         
         if (mpBean.getMainPostNo() != null) {
             List<MainPostBean> query = firstImagePath(mpService.query(mpBean.getMainPostNo()));
@@ -96,7 +96,6 @@ public class MainPostServlet {
                 mav.addObject("query", query);
             }
                 
-            
 
         }  else if (mpBean != null ) {
             System.out.println("所有貼文");
@@ -107,19 +106,24 @@ public class MainPostServlet {
         }
         
         
-        
-        
-        
         return mav;
     }
     
-    
-    
-    
-    
-    
-    
-    
+    //審核
+    @PostMapping("/auditPost") 
+    public String audit(String auditNo) {
+        
+        System.out.println(auditNo);
+        String[] mpNoList = auditNo.split(",");
+        System.out.println(mpNoList.length);
+        for(String mpNoLists : mpNoList) {
+            System.out.println(mpNoLists);
+            mpService.updatePermission("已發布",Integer.parseInt(mpNoLists));
+        }
+        
+        return "redirect:MainPost.all";
+    }
+
     
     ////////////////////////////////////下面已搬到前台/////////////////////////
     

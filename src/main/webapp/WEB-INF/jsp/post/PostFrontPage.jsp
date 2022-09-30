@@ -12,6 +12,13 @@
       <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.2/js/jquery.dataTables.js"></script>
       <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
       
+
+<!--引用css sweet alert-->
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" />
+<!--引用SweetAlert2.js-->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+      
       
       <TITLE>貼文首頁</TITLE>
     <style>
@@ -25,6 +32,14 @@ fieldset {
     background: #f7f4dd;
 }   
    
+    .imgfront {
+        width: 150px;
+        height: 120px;
+        padding: 2px 2px 2px 2px;
+        margin: 2px;
+    }   
+   
+   
     </style>
       
    </HEAD>
@@ -35,6 +50,76 @@ fieldset {
      <a class="btn-solid-reg popup-with-move-anim"
                                             href="/group5/admin/AllPostStatus">貼文管理</a>
        
+     
+     <!-- JQuery  -->
+    <script src="/group5/js/jquery.min.js"></script>
+    <!-- Custom scripts for all pages-->
+    <!-- DataTable 連結 -->
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.11.2/js/jquery.dataTables.js"></script>
+     
+     
+     
+   <form id="audit" class="btn btn-danger btn-icon-split"
+     action="auditPost" method="post">
+     
+      <input id="del" type="hidden" name=auditNo> 
+     <input class="text" type="button" value="批次審核" id="deleteSubmitCheck"
+         style="border: none; background-color: #e74a3b; color: white" />
+         
+ </form>
+ 
+	<form action="AllPostStatus" method="GET">
+	    <input type="submit" class="btn btn-outline-primary" name="postPermission" value="待審核">
+	</form>
+ 
+ 
+  
+     <div class="table-responsive">
+     <table class="table table-bordered" id="table_id" class="compact hover stripe">
+         <thead>
+             <tr>
+                <th>選取<br>全選<input class="delete" type="checkbox" onclick="checkAll()"></th>
+                <th>貼文編號</th>
+                <th>圖片</th>
+                <th>類型</th>
+                <th>標題</th>
+                <th>會員/發布日期</th>
+                <th>最後回覆</th>
+                <th>觀看</th>
+                <th>狀態</th>
+             </tr>
+         </thead>
+         <tbody>
+            <c:forEach var="allmpbs" items="${query}">
+                 
+                 <tr class="content">
+                     <td class="align-middle"><input class="delete" type="checkbox"></td>
+    
+                     <td class="align-middle">${allmpbs.mainPostNo}</td>
+                     <td class="align-middle"><img class="imgfront" src="${allmpbs.p_image}"></td>
+                     <td class="align-middle">${allmpbs.postTypeName}</td>
+
+                     <td class="align-middle">${allmpbs.title}</td>
+                     <td class="align-middle">${allmpbs.account}<br />${allmpbs.addtime}</td>
+                     <td class="align-middle">改成回覆帳號<br />${allmpbs.lastReplyTime}</td>
+                     <td class="align-middle">
+                        <form action="PostWtch" method="GET">
+                        <input type="hidden" name="mainPostNo" value="${allmpbs.mainPostNo}"> <input
+                            type="submit" class="btn btn-outline-success" value="觀看">
+                    </form></td>
+
+                     <td class="align-middle">${allmpbs.postPermission}</td>
+                 </tr>
+             </c:forEach>
+         </tbody>
+     </table>
+ </div>
+ <script>
+     $('#table_id').dataTable({});
+ </script>
+     
+     
        
        
        
@@ -137,10 +222,9 @@ fieldset {
             <tr><td colspan="9">${error}</td></tr></tbody>
             </table> 
            
-            <script src="/group5/js/jquery.min.js"></script>
-          <script>
-          $('#table_id').dataTable({});
-            </script>
+      
+         
+           
             
              </div> 
                 <div class="sub">
@@ -150,6 +234,95 @@ fieldset {
                </div>
                 </div>
         </fieldset>
+
+        <script>
+        
+        var members = new Set([]);
+        $('.delete').on('click', function() {
+            let checked = $(this).prop('checked')
+            
+            console.log(members);
+           
+            if (checked) {
+                $(this).closest('tr').addClass('active')
+                var deleteObject = $(this).parent().next().text()
+                members.add(deleteObject);
+            } else {
+                var deleteObject = $(this).parent().next().text()
+                members.delete(deleteObject);
+                $(this).closest('tr').removeClass('active')
+            }
+        });
+
+        $("#deleteSubmitCheck").on('click', function(event) {
+            console.log(Array.from(members).join(',').length);
+            if (Array.from(members).join(',').length != 0) {
+                $('#del').val(Array.from(members).join(','));
+                Swal.fire({
+                    title: '確定審核選取資料?',
+                    text: '',
+                    icon: 'warning',
+                    cancelButtonText: '取消',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '發布'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire({
+                            title: '發布成功',
+                            icon: 'success'
+                        }).then((result) => {
+                            $('#audit').submit();
+                        });
+                    }
+                });
+            } else {
+                Swal.fire({
+                    title: '請選取審核貼文',
+                    icon: 'warning',
+                    cancelButtonColor: '#d33'
+                })
+
+            }
+        });
+        
+        function checkAll(){
+            var hobby  = document.getElementsByClassName("delete");
+            var members = new Set([]);
+            for(var i  =0;i<hobby.length;i++){
+                var h = hobby[i];
+                if(h.checked != true){
+	                h.checked = true;               
+               }else if(h.checked == true){
+                	 h.checked = false;
+               }
+                
+                //全選 無效
+//                if(h.checked = true){
+//                    $(this).closest('tr').addClass('active')
+//                    var deleteObject = $(this).parent().next().text()
+//                    members.add(deleteObject);
+//                } else {
+//                    var deleteObject = $(this).parent().next().text()
+//                    members.delete(deleteObject);
+//                    $(this).closest('tr').removeClass('active')
+//                }
+                
+                
+                
+            
+            }
+            
+   
+            
+                        
+        }
+
+        
+        
+        </script>
+
 
         <%@ include file="../admin/AdminstyleFoot.jsp"%>
         
