@@ -5,6 +5,19 @@
 <html>
 <head>
 <meta charset="UTF-8">
+    <!-- official Bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+        crossorigin="anonymous"></script>
+
+    <!-- Custom styles for this page -->
+    <link href="/group5/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <script src="/group5/js/jquery.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+
 <title>論壇貼文</title>
 
 <style>
@@ -53,6 +66,9 @@
 					</ul>
 					<!-- end of tabs links -->
 
+
+
+<!-- ////////////////////// 全部貼文///////////////////////////// -->
 					<!-- Tabs Content -->
 					<div class="tab-content" id="argoTabsContent">
 
@@ -60,15 +76,8 @@
 						<div class="tab-pane fade show active" id="tab-1" role="tabpanel"
 							aria-labelledby="tab-1">
 							<div class="row">
-								<!--<div class="col-lg-6">
-                                    <!--    <div class="image-container">
-                                    </div>
-                                <!-- end of image-container -->
-								<!--    </div>-->
-								<!-- end of col -->
-								<!-- ////////////////////// 跳到發布貼文///////////////////////////// -->
-
-
+								
+								
 								<div class="col-lg-12">
 									<div class="text-container">
 
@@ -162,7 +171,7 @@
 						</div>
 						<!-- end of tab-pane -->
 						<!-- end of tab -->
-						<!-- ////////////////////// 跳到發布貼文///////////////////////////// -->
+						<!-- ////////////////////// 全部貼文///////////////////////////// -->
 
 
 
@@ -227,13 +236,13 @@
 														</td>
 														<td class="align-middle">${allmpbs.postPermission}</td>
 														<td class="align-middle">
-															<form action="UserPost" method="POST">
+															<!--  <form action="UserPost" method="POST">-->
 																<input type="hidden" name="_method" value="DELETE">
-																<input type="hidden" name="deletepost"
+																<input type="hidden" name="deletepost" class="postid" 
 																	value="${allmpbs.mainPostNo}"> <input
-																	type="submit" class="btn btn-outline-success"
+																	type="submit" class="btn btn-outline-success deletepost" 
 																	value="刪除">
-															</form>
+															<!--</form>-->
 															<form action="PostRevise" method="GET">
 																<input type="hidden" name="mainPostNo"
 																	value="${allmpbs.mainPostNo}"> <input
@@ -243,11 +252,15 @@
 															<a id="${allmpbs.mainPostNo}" class="btn-solid-reg popup-with-move-anim"
 															href="#details-lightbox-2">修改</a>
 															<script type="text/javascript">
+															
 															$(function() {
 					                                            var onereply = document.getElementById("${allmpbs.mainPostNo}");
-
 					                                            onereply.onclick = function(event) {
-					                                                
+					                                            	  $("#oldimgs").html(""); // 清除預覽
+		                                                                readURL(this);
+		                                                                $("#imgs").html(""); // 清除
+                                                                        readURL(this);
+					                                            	
 					                                                console.log("${allmpbs.mainPostNo}");
 					                                                let mpBean = {
 					                                                    "updatepost" : "${allmpbs.mainPostNo}"
@@ -259,28 +272,81 @@
 					                                                     dataType : 'json',
 					                                                     success : function(data) {
 					                                                    	 console.log(data);
-					                                                           
 					                                                    	 
-					                                                           
-					                                                           
-					                                                           
-					                                                           var img =data.p_image.split(',');
-					                                                           
-					                                                           
-					                                                           for(var i=0; i < img.length; i++)
-					                                                        	   console.log(img[i]);
-					                                                           
-					                                                           var imgss = $("<img width='300' height='200'>").attr('src', img[i]);
-					                                                           console.log(imgss);
-					                                                           
-					                                                           $("#imgs").append(img[i]);
+					                                                    	 //單選還是有問題~
+					                                                    	 $(".revisecontent").text(data.content);
+					                                                    	 $(".revisetitle").val(data.title);
+					                                                    	 $("input[name='postTypeName'][value='"+data.postTypeName+"']").attr("checked",true);
+					                                                    	 $(".reviseaccount").val(data.account);
+					                                                    	 $(".reviseamainPostNo").val(data.mainPostNo);
+					                                                    	 
+					                                                           //照片處理
+					                                                    	   var img =data.p_image.split(',');
+					                                                           for(var i=0; i <img.length -1; i++){
+					                                                        	   var imgss = $("<img width='300' height='200'>").attr('src', img[i]);
+	                                                                               console.log(img.length);
+	                                                                               $("#oldimgs").append(imgss);
+					                                                           }
 					                                                           
 					                                                            }
 					                                                
 					                                                        });
 					                                            }
-
-					                                        });
+					                                            
+					                                            
+					                                            $(".deletepost").click(function(){
+                                                                    
+					                                            	let deletepost = $(this).prev().val();
+					                                            	console.log(deletepost);
+					                                            	
+                                                                    Swal.fire({
+                                                                        title: '確定刪除貼文？',
+                                                                        text: "",
+                                                                        icon: 'warning',
+                                                                        showCancelButton: true,
+                                                                        confirmButtonColor: '#3085d6',
+                                                                        cancelButtonColor: '#d33',
+                                                                        confirmButtonText: '刪除'
+                                                                      }).then((result) => {
+                                                                          if (result.isConfirmed) {
+                                                                        	  let deleteid = $(this).prev().val();
+                                                                        	  deletePost(deleteid);
+                                                                        	  location.reload();
+//                                                                      
+                                                                            }
+                                                                          });
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                                 });
+					                                            
+					                                        
+															
+															
+															});
+															
+															
+															function deletePost(deletepost){
+																console.log(deletepost)
+																let mpBean = {
+                                                                        "deletepost" : deletepost
+                                                                    };
+																
+																
+													            $.ajax({
+													                type: "Delete",
+													                url: "/group5/UserPost",
+													                data : mpBean,
+													                dataType : 'json',
+													                success: function(){
+													                    console.log("deleted!!")
+													                }
+													            })
+													        }
+															
+															
+															
 													</script>
 															
 															
@@ -369,7 +435,7 @@
 
 
 
-
+<!-- ////////////////////////////////////發布貼文畫面////////////////////////////////////////// -->
 	<!-- Details Lightboxes -->
 	<!-- Details Lightbox 1 -->
 	<div id="details-lightbox-1"
@@ -390,6 +456,7 @@
 					<form action="/group5/Posting" enctype='multipart/form-data'
 						method="POST" onsubmit="return checkip()">
 						<h3>發布貼文</h3>
+						
 						<table class="img-fluid">
 							<thead>
 								<tr>
@@ -432,8 +499,7 @@
 								</tr>
 							</thead>
 						</table>
-						<script src="/group5/js/jquery.min.js"></script>
-						<script src="js/images.js"></script>
+					
 						<input type="submit" class="btn-solid-reg mfp-close" value="送出"><a
 							class="btn-outline-reg mfp-close as-button" href="#screenshots">取消</a>
 					</form>
@@ -448,45 +514,85 @@
 	<!-- end of lightbox-basic -->
 	<!-- end of details lightbox 1 -->
 
+
+
+<!--///////////////////////////////// 有問題 暫時先到調轉到新畫面//////////////////////////////////   -->
 	<!-- Details Lightbox 2 -->
 	<div id="details-lightbox-2"
 		class="lightbox-basic zoom-anim-dialog mfp-hide">
 		<div class="container">
-			<div class="row">
+			<div class="row" >
 				<button title="Close (Esc)" type="button" class="mfp-close x-button">×</button>
-				<div class="col-lg-8">
-					<div class="image-container">
-						<img class="img-fluid" src="images/details-lightbox.png"
-							alt="alternative">
-					</div>
-					<!-- end of image-container -->
-				</div>
+			
+				<!--</div> -->
 				<!-- end of col -->
-				<div class="col-lg-4">
-					<h3>Campaign Monitoring</h3>
-					<hr>
-					<h5>Core service</h5>
-					<p>It's very easy to start using Tivo. You just need to fill
-						out and submit the Sign Up Form and you will receive access to the
-						app.</p>
-					<ul class="list-unstyled li-space-lg">
-						<li class="media"><i class="fas fa-square"></i>
-							<div class="media-body">List building framework</div></li>
-						<li class="media"><i class="fas fa-square"></i>
-							<div class="media-body">Easy database browsing</div></li>
-						<li class="media"><i class="fas fa-square"></i>
-							<div class="media-body">User administration</div></li>
-						<li class="media"><i class="fas fa-square"></i>
-							<div class="media-body">Automate user signup</div></li>
-						<li class="media"><i class="fas fa-square"></i>
-							<div class="media-body">Quick formatting tools</div></li>
-						<li class="media"><i class="fas fa-square"></i>
-							<div class="media-body">Fast email checking</div></li>
-					</ul>
-					<a class="btn-solid-reg mfp-close" href="sign-up.html">SIGN UP</a>
-					<a class="btn-outline-reg mfp-close as-button" href="#screenshots">BACK</a>
+				<div class="col-lg-12">
+				<form action="/group5/UserPost" enctype='multipart/form-data'
+                        method="POST" onsubmit="return checkip()">
+                        <input type="hidden" name="_method" value="PUT">
+                        
+                        <input type="hidden" name="account" class="reviseaccount">
+                        <input type="hidden" name="mainPostNo" class="reviseamainPostNo">
+                        
+				                        <h3>修改貼文</h3>
+                        <table class="img-fluid">
+                            <thead>
+                                <tr>
+                                    <th><label> <input type="radio" class="revisepostType"
+                                            name="postTypeName" value="公告"  required
+                                            oninvalid="setCustomValidity('請輸入帳號')"
+                                            oninput="setCustomValidity('')">公告
+                                    </label> <label> <input type="radio" class="revisepostType" name="postTypeName"
+                                            value="分享"  checked>分享
+                                    </label> <label> <input type="radio" class="revisepostType" name="postTypeName"
+                                            value="問題" >問題
+                                    </label></th>
+                                </tr>
+                                <tr>
+                                    <th><div class="mb-3">
+                                            標題:<input type="text" name="title" class="form-control revisetitle" 
+                                                id="floatingInput" placeholder="請輸入標題"
+                                                oninvalid="setCustomValidity('請輸入標題')"
+                                                oninput="setCustomValidity('')"> <label
+                                                for="floatingInput">{請輸入標題}</label>
+                                        </div></th>
+                                </tr>
+
+                                <tr>
+
+                                    <th><div class="form-floating">
+                                            內容:
+                                            <textarea name="content" class="form-control revisecontent" cols="60"
+                                                rows="10" placeholder="請輸入內容" id="floatingTextarea" required
+                                                oninvalid="setCustomValidity('請輸入內容')"
+                                                oninput="setCustomValidity('')"></textarea>
+                                            <label for="floatingTextarea">{請輸入內容}</label>
+                                        </div></th>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <div id="oldimgs"></div><br>
+                                         重新選擇圖片(最多五張，每張2MB以下):<input id="file1" type="file"
+                                        class="btn btn-outline-primary" name="changeimages"
+                                        multiple="multiple" accept="image/*" onchange="checkip()">
+                                        
+                                        <div id="imgs"></div>
+                                        
+                                        </th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <input type="submit" class="btn-solid-reg mfp-close" value="修改送出">
+                        <a class="btn-outline-reg mfp-close as-button" href="#screenshots">取消</a>
+                        
+                        </form>
+            
 					
-					<div id="imgs"></div>
+				<!--	<a class="btn-solid-reg mfp-close" href="sign-up.html">SIGN UP</a>
+					<a class="btn-outline-reg mfp-close as-button" href="#screenshots">BACK</a>-->
+					
+					
+					
 				</div>
 				<!-- end of col -->
 			</div>
@@ -547,7 +653,8 @@
 
 
 
-
+    <script src="/group5/js/jquery.min.js"></script>
+    <script src="js/images.js"></script>
 
 
 	<%@ include file="../admin/FrontStageFoot.jsp"%>

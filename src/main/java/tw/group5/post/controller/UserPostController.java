@@ -174,20 +174,49 @@ public class UserPostController {
     
     
     // 跳到修改頁面ok
-    @PostMapping("/MainPostingServlet")
-    public ModelAndView modifyPage(Integer updatepost) {
-        ModelAndView mav = new ModelAndView(postChangePost);
-        MainPostBean queryContent = mpService.selectById(updatepost);
-
-        if (!"".equals(queryContent.getP_image()) && queryContent.getP_image() != null) {
-            String[] allImages = queryContent.getP_image().split(",");
-            mav.addObject("updatImages", allImages);
-        } else {
-            queryContent.setP_image("");
+//    @PostMapping("/MainPostingServlet")
+//    public ModelAndView modifyPage(Integer updatepost) {
+//        ModelAndView mav = new ModelAndView(postChangePost);
+//        MainPostBean queryContent = mpService.selectById(updatepost);
+//
+//        if (!"".equals(queryContent.getP_image()) && queryContent.getP_image() != null) {
+//            String[] allImages = queryContent.getP_image().split(",");
+//            mav.addObject("updatImages", allImages);
+//        } else {
+//            queryContent.setP_image("");
+//        }
+//        mav.addObject("queryContent", queryContent);
+//        return mav;
+//    }
+    
+    @PutMapping("/UserPost")
+    public ModelAndView updateMainPost(MainPostBean mpBean, @RequestParam("changeimages") List<MultipartFile> mfs) {
+        mpBean.setAddtime(mpService.currentDateFormat("date"));
+        
+        System.out.println(mpBean.getAccount());
+        
+        if("".equals(mpBean.getLikeNumber()) || mpBean.getLikeNumber() == null) {
+            mpBean.setLikeNumber("");
         }
-        mav.addObject("queryContent", queryContent);
-        return mav;
+
+        if ("".equals(mpBean.getP_image())) {
+            mpBean.setP_image("");
+        }
+
+        if (!mfs.get(0).isEmpty()) {
+            String addPostImages = mpService.addPostImages(mfs);
+            mpBean.setP_image(addPostImages);
+        }
+
+        MainPostBean queryContent = mpService.update(mpBean);
+        if (queryContent != null) {
+            return new ModelAndView("redirect:/group5/UserPostAll");
+        }
+        return null;
     }
+    
+    
+    
     
     
     //發表回復
