@@ -123,7 +123,7 @@
 							<a class="dropdown-item" href="/group5/user/UserCenter"><span
 								class="item-text">會員中心</span></a>
 							<div class="dropdown-items-divide-hr"></div>
-							<a class="dropdown-item" href="terms-conditions.html"><span
+							<a class="dropdown-item" href=""><span
 								class="item-text">健友配對</span></a>
 							<div class="dropdown-items-divide-hr"></div>
 							<a class="dropdown-item" href="/logout" data-toggle="modal"

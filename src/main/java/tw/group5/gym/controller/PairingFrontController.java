@@ -15,7 +15,7 @@ import tw.group5.gym.model.PairingLog;
 import tw.group5.gym.service.PairingLogService;
 
 @Controller
-@RequestMapping("/group5")
+@RequestMapping("/group5/paring")
 //@SessionAttributes(names = {"uPair"})
 public class PairingFrontController {
 	
@@ -24,10 +24,6 @@ public class PairingFrontController {
 	
 	@Autowired
 	private AdminService adminService;
-	
-	@Autowired
-	private MemberRepository mRepository;
-	
 	
 	@GetMapping("/pairing")
 	public String showPairingPage(Model m) {
@@ -56,4 +52,5 @@ public class PairingFrontController {
 		
 		return "/gym/pairingFront";
 	}
+	
 }

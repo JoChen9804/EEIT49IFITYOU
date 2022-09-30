@@ -36,23 +36,6 @@ public class PairingController {
 	}
 	
 	
-	@GetMapping("/test")
-	@ResponseBody
-	public PairingLog processTestAction() {
-		PairingLog pl = new PairingLog();
-		MemberDetail memberDetail = new MemberDetail();
-		memberDetail.setMute(0);
-		memberDetail.setPostPermission(1);
-		memberDetail.setPairWilling(1);
-		MemberBean memberBean = new MemberBean("Amy","ddd",1,"Amy","amy@mail.com",memberDetail);
-		pl.setMember(memberBean);
-		pl.setPairingDate(adminService.getDate());
-		pl.setPairingNo(123);
-		PairingLog addedPairingLog = pLogService.updatePairingLog(pl); //add
-		System.out.println("here in test area for added");
-		
-		return addedPairingLog;
-	}
 	
 
 }
