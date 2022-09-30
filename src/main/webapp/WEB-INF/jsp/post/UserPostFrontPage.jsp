@@ -6,12 +6,12 @@
 <head>
 <meta charset="UTF-8">
     <!-- official Bootstrap-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+<!--     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous"> -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
         crossorigin="anonymous"></script>
 
-    <!-- Custom styles for this page -->
+<!--     Custom styles for this page -->
     <link href="/group5/css/dataTables.bootstrap4.min.css" rel="stylesheet">
     <script src="/group5/js/jquery.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -93,7 +93,7 @@
 															oninput="setCustomValidity('')"> <label
 															for="floatingInputGrid">{改js----驗證-----}</label>
 													</div>
-												</div>
+												</div>  
 												<div class="col-md">
 													<div class="form-floating">
 														<input type="submit" class="btn-solid-reg" value="查詢">
@@ -243,62 +243,24 @@
 																	type="submit" class="btn btn-outline-success deletepost" 
 																	value="刪除">
 															<!--</form>-->
-															<form action="PostRevise" method="GET">
-																<input type="hidden" name="mainPostNo"
+															<form action="UserPostChange" method="POST">
+																<input type="hidden" name="updatepost"
 																	value="${allmpbs.mainPostNo}"> <input
 																	type="submit" class="btn btn-outline-success"
 																	value="修改" >
 															</form> 
-															<a id="${allmpbs.mainPostNo}" class="btn-solid-reg popup-with-move-anim"
-															href="#details-lightbox-2">修改</a>
+															
+															<!--<a id="${allmpbs.mainPostNo}" class="btn-solid-reg popup-with-move-anim"
+															href="#details-lightbox-2">修改</a>-->
+															
 															<script type="text/javascript">
 															
 															$(function() {
-					                                            var onereply = document.getElementById("${allmpbs.mainPostNo}");
-					                                            onereply.onclick = function(event) {
-					                                            	  $("#oldimgs").html(""); // 清除預覽
-		                                                                readURL(this);
-		                                                                $("#imgs").html(""); // 清除
-                                                                        readURL(this);
-					                                            	
-					                                                console.log("${allmpbs.mainPostNo}");
-					                                                let mpBean = {
-					                                                    "updatepost" : "${allmpbs.mainPostNo}"
-					                                                };
-					                                                $.ajax({
-					                                                     type : "post",
-					                                                     url : '/group5/PostRevise',
-					                                                     data : mpBean,
-					                                                     dataType : 'json',
-					                                                     success : function(data) {
-					                                                    	 console.log(data);
-					                                                    	 
-					                                                    	 //單選還是有問題~
-					                                                    	 $(".revisecontent").text(data.content);
-					                                                    	 $(".revisetitle").val(data.title);
-					                                                    	 $("input[name='postTypeName'][value='"+data.postTypeName+"']").attr("checked",true);
-					                                                    	 $(".reviseaccount").val(data.account);
-					                                                    	 $(".reviseamainPostNo").val(data.mainPostNo);
-					                                                    	 
-					                                                           //照片處理
-					                                                    	   var img =data.p_image.split(',');
-					                                                           for(var i=0; i <img.length -1; i++){
-					                                                        	   var imgss = $("<img width='300' height='200'>").attr('src', img[i]);
-	                                                                               console.log(img.length);
-	                                                                               $("#oldimgs").append(imgss);
-					                                                           }
-					                                                           
-					                                                            }
-					                                                
-					                                                        });
-					                                            }
-					                                            
-					                                            
-					                                            $(".deletepost").click(function(){
+															     $(".deletepost").click(function(){
                                                                     
-					                                            	let deletepost = $(this).prev().val();
-					                                            	console.log(deletepost);
-					                                            	
+                                                                    let deletepost = $(this).prev().val();
+                                                                    console.log(deletepost);
+                                                                    
                                                                     Swal.fire({
                                                                         title: '確定刪除貼文？',
                                                                         text: "",
@@ -309,19 +271,55 @@
                                                                         confirmButtonText: '刪除'
                                                                       }).then((result) => {
                                                                           if (result.isConfirmed) {
-                                                                        	  let deleteid = $(this).prev().val();
-                                                                        	  deletePost(deleteid);
-                                                                        	  location.reload();
-//                                                                      
+                                                                              let deleteid = $(this).prev().val();
+                                                                              deletePost(deleteid);
+                                                                              location.reload();
+                                                                    
                                                                             }
                                                                           });
                                                                     
-                                                                    
-                                                                    
-                                                                    
                                                                  });
+															     
+// 					                                            var onereply = document.getElementById("${allmpbs.mainPostNo}");
+// 					                                            onereply.onclick = function(event) {
+// 					                                            	  $("#oldimgs").html(""); // 清除預覽
+// 		                                                                readURL(this);
+// 		                                                                $("#imgs").html(""); // 清除
+//                                                                         readURL(this);
+					                                            	
+// 					                                                console.log("${allmpbs.mainPostNo}");
+// 					                                                let mpBean = {
+// 					                                                    "updatepost" : "${allmpbs.mainPostNo}"
+// 					                                                };
+// 					                                                $.ajax({
+// 					                                                     type : "post",
+// 					                                                     url : '/group5/PostRevise',
+// 					                                                     data : mpBean,
+// 					                                                     dataType : 'json',
+// 					                                                     success : function(data) {
+// 					                                                    	 console.log(data);
+					                                                    	 
+// 					                                                    	 //單選還是有問題~
+// 					                                                    	 $(".revisecontent").text(data.content);
+// 					                                                    	 $(".revisetitle").val(data.title);
+// 					                                                    	 $("input[name='postTypeName'][value='"+data.postTypeName+"']").attr("checked",true);
+// 					                                                    	 $(".reviseaccount").val(data.account);
+// 					                                                    	 $(".reviseamainPostNo").val(data.mainPostNo);
+					                                                    	 
+// 					                                                           //照片處理
+// 					                                                    	   var img =data.p_image.split(',');
+// 					                                                           for(var i=0; i <img.length -1; i++){
+// 					                                                        	   var imgss = $("<img width='300' height='200'>").attr('src', img[i]);
+// 	                                                                               console.log(img.length);
+// 	                                                                               $("#oldimgs").append(imgss);
+// 					                                                           }
+					                                                           
+// 					                                                            }
+					                                                
+// 					                                                        });
+// 					                                            }
 					                                            
-					                                        
+					                                            
 															
 															
 															});
@@ -332,7 +330,6 @@
 																let mpBean = {
                                                                         "deletepost" : deletepost
                                                                     };
-																
 																
 													            $.ajax({
 													                type: "Delete",

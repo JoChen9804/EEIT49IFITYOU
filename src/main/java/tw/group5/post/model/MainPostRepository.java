@@ -26,4 +26,8 @@ public interface MainPostRepository extends JpaRepository<MainPostBean, Integer>
     public List<MainPostBean> findByAccountAndTitles(String titles,String account);
     
     
+    //審核狀態
+    public List<MainPostBean> findByPostPermission(String postPermission);
+    
+    
 }

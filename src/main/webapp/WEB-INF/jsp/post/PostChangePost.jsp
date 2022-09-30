@@ -24,6 +24,12 @@ fieldset {
 }
     
     
+    .imgfront {
+    width: 150px;
+    height: 120px;
+    padding: 2px 2px 2px 2px;
+    margin: 2px;
+}
     
     
     </style>
@@ -32,6 +38,82 @@ fieldset {
     
     <%@ include file="../admin/AdminstyleHead.jsp" %>
 
+                 <table class="table table-bordered" class="compact hover stripe">
+           <tr><th>
+                <form  action="AllPostStatus" method="GET">
+                <input type="submit" class="btn btn-outline-primary" name="postPermission" value="待審核">
+                </form> 
+           </th>
+        </tr>
+         
+           <tr>
+              <th> 
+                <form action="AllPostStatus" method="GET">
+                <input type="submit" class="btn btn-outline-primary"  name="postPermission" value="已審核" >
+                </form>
+              </th>
+            </tr>
+    </table>
+  
+   <form action="MainPost.return" method="GET">
+        <input type="submit" class="btn btn-outline-primary"  name="returns" value="所有貼文" >
+   </form>
+
+
+
+     <table class="table table-sm">
+    <thead>
+        <tr>
+            <th>圖片</th>
+            <th>類型</th>
+            <th>標題</th>
+            <th>發布日期</th>
+            <th>最後回覆</th>
+            <th>觀看</th>
+            <th>狀態</th>
+        </tr>
+    </thead>
+    
+    <c:forEach var="allmpbs" items="${query}">
+        <tbody>
+            <tr>
+                <!--<a href="/group5/PostWtch/${allmpbs.mainPostNo}"></a>-->
+                <td class="align-middle"><img class="imgfront"
+                    src="${allmpbs.p_image}"></td>
+                <td class="align-middle">[${allmpbs.postTypeName}]</td>
+                <td class="align-middle">${allmpbs.title}</td>
+                <td class="align-middle">${allmpbs.account}<br />${allmpbs.addtime}</td>
+                <td class="align-middle">改成回覆帳號<br />${allmpbs.lastReplyTime}
+                </td>
+                <td class="align-middle">
+                    <form action="PostWtch" method="GET">
+                        <input type="hidden" name="mainPostNo"
+                            value="${allmpbs.mainPostNo}"> <input
+                            type="submit" class="btn btn-outline-success"
+                            value="觀看">
+                    </form>
+                </td>
+                <td class="align-middle">${allmpbs.postPermission}</td>
+            </tr>
+        </tbody>
+    </c:forEach>
+</table>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <fieldset>
     <H1 ALIGN=CENTER>修改貼文</H1>
       <form ACTION="MainPostServlet" method="post" enctype='multipart/form-data'>

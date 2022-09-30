@@ -42,7 +42,7 @@ $(function(){
 }
 
 .table1 {
-	width: 600px;
+	width: 1000px;
 	table-layout: fixed;
 	margin-left: auto;
 	margin-right: auto;
@@ -73,7 +73,7 @@ $(function(){
 }
 
 .column4 {
-	width: 800px;
+	width: 1000px;
 	text-align: center;
 	background-color: #f7f4dd;
 }
@@ -179,7 +179,7 @@ $(function(){
 							<td class="column3"><img class="img" src="${postPhoto}"></td>
 							<td><div class="content">
 
-									<textarea name="replyContent" id="content1" cols="85" rows="10"
+									<textarea name="replyContent" id="content1" cols="80" rows="10"
 										required oninvalid="setCustomValidity('請輸入內容')"
 										oninput="setCustomValidity('')"></textarea>
 

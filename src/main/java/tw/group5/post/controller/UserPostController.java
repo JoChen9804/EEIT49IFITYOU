@@ -5,14 +5,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +22,6 @@ import org.springframework.web.servlet.ModelAndView;
 import tw.group5.admin.model.AdminBean;
 import tw.group5.admin.model.MemberBean;
 import tw.group5.admin.service.AdminService;
-import tw.group5.admin.service.AuthUserDetailService;
 import tw.group5.post.model.MainPostBean;
 import tw.group5.post.model.ReplyPostBean;
 import tw.group5.post.service.MainPostService;
@@ -52,12 +48,19 @@ public class UserPostController {
     //view
     public static final String USERPOSTFRONTPAGE = "post/UserPostFrontPage";
     public static final String USERPOSTDETAILS = "post/UserPostDetails";
+    public static final String USERPOSTCHANGEPOST = "post/UserPostChangePost";
     
     //會員資料
     public String memberAccount ="test666" ;
     public String postPermission ;
     public String postPhoto ;
     public String replyPhoto ;
+    
+    
+    //預設資料
+    public String presetPhotos = "postfolder/images/defaultScreen.jpg";
+    public String state = "待審核";
+    
     
     public void adminBean() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -122,7 +125,7 @@ public class UserPostController {
         addPost.setLikeNumber("");
         addPost.setP_image("");
         addPost.setLastReplyTime(mpService.currentDateFormat("date"));
-        addPost.setPostPermission("待審核");
+        addPost.setPostPermission(state);
 
         // 測試用路徑串接
         if (!mfs.get(0).isEmpty()) {
@@ -159,39 +162,31 @@ public class UserPostController {
         return "redirect:/group5/UserPostAll";
     }
     
-    // 跳到修改頁面 ajax
-    @PostMapping("/PostRevise") @ResponseBody
-    public MainPostBean modifyPages(Integer updatepost) {
-        MainPostBean queryContent = mpService.selectById(updatepost);
-        return queryContent;
-    }
-    
-    @PostMapping("/postimges")@ResponseBody
-    public String[] imges(String imges) {
-        System.out.println("sdfsdf"+imges);
-        return null;
-    }
-    
     
     // 跳到修改頁面ok
-//    @PostMapping("/MainPostingServlet")
-//    public ModelAndView modifyPage(Integer updatepost) {
-//        ModelAndView mav = new ModelAndView(postChangePost);
-//        MainPostBean queryContent = mpService.selectById(updatepost);
-//
-//        if (!"".equals(queryContent.getP_image()) && queryContent.getP_image() != null) {
-//            String[] allImages = queryContent.getP_image().split(",");
-//            mav.addObject("updatImages", allImages);
-//        } else {
-//            queryContent.setP_image("");
-//        }
-//        mav.addObject("queryContent", queryContent);
-//        return mav;
-//    }
+    @PostMapping("/UserPostChange")
+    public ModelAndView modifyPage(Integer updatepost) {
+        
+        System.out.println("3212131");
+        ModelAndView mav = new ModelAndView(USERPOSTCHANGEPOST);
+        
+        MainPostBean queryContent = mpService.selectById(updatepost);
+
+        if (!"".equals(queryContent.getP_image()) && queryContent.getP_image() != null) {
+            String[] allImages = queryContent.getP_image().split(",");
+            mav.addObject("updatImages", allImages);
+        } else {
+            queryContent.setP_image("");
+        }
+        mav.addObject("queryContent", queryContent);
+        return mav;
+    }
     
+    //修改
     @PutMapping("/UserPost")
     public ModelAndView updateMainPost(MainPostBean mpBean, @RequestParam("changeimages") List<MultipartFile> mfs) {
         mpBean.setAddtime(mpService.currentDateFormat("date"));
+        mpBean.setPostPermission(state);
         
         System.out.println(mpBean.getAccount());
         
@@ -214,9 +209,6 @@ public class UserPostController {
         }
         return null;
     }
-    
-    
-    
     
     
     //發表回復
@@ -272,7 +264,7 @@ public class UserPostController {
         mav.addObject("queryOne", mpBean);
         return mav;
     }
-    
+    //回覆重新整理一個bean
     public ModelAndView takeOutrpBean(List<ReplyPostBean> rpBeans,ModelAndView mav) {
         if (!rpBeans.isEmpty() && rpBeans != null) {
             for (ReplyPostBean oneReply : rpBeans) {
@@ -374,9 +366,6 @@ public class UserPostController {
         return replyPostBean;
     }
     
-    
-    
-    
     // 主貼文抓取第一張圖片並重新寫入Bean，找不到給預設圖片
     public List<MainPostBean> firstImagePath(List<MainPostBean> mpBean) {
         if (mpBean != null) {
@@ -386,7 +375,7 @@ public class UserPostController {
                     System.out.println("===" + oneBean.getP_image().substring(0, oneBean.getP_image().indexOf(",")));
                     oneBean.setP_image(oneBean.getP_image().substring(0, (oneBean.getP_image().indexOf(","))));
                 } else {
-                    oneBean.setP_image("imagestest/defaultScreen.jpg");
+                    oneBean.setP_image(presetPhotos);
                 }
             }
             return mpBean;
@@ -394,4 +383,21 @@ public class UserPostController {
         return null;
     }
 
+    
+    
+    
+    
+    
+    // 跳到修改頁面 ajax
+//  @PostMapping("/PostRevise") @ResponseBody
+//  public MainPostBean modifyPages(Integer updatepost) {
+//      MainPostBean queryContent = mpService.selectById(updatepost);
+//      return queryContent;
+//  }
+//  
+//  @PostMapping("/postimges")@ResponseBody
+//  public String[] imges(String imges) {
+//      System.out.println("sdfsdf"+imges);
+//      return null;
+//  }
 }

@@ -52,6 +52,10 @@ public class MainPostService {
         return mpResp.findByAccountAndTitles(titles,account);
     }
     
+    public List<MainPostBean> findByPostPermission(String postPermission){
+        return mpResp.findByPostPermission(postPermission);
+    }
+    
     
     public List<MainPostBean> allPosts(Object titles) {
         return mpResp.allPostss(titles);

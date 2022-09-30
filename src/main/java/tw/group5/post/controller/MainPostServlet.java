@@ -59,7 +59,6 @@ public class MainPostServlet {
     public String postPhoto ="";
     public String replyPhoto ="";
     
-    
     public AdminBean adminBean() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         AdminBean admin = amService.findByAccount(username);
@@ -67,6 +66,62 @@ public class MainPostServlet {
     }
     
     
+    @GetMapping("/AllPostStatus")
+    public ModelAndView allPostStatus(MainPostBean mpBean) {
+        ModelAndView mav = new ModelAndView(postChangePost);
+        
+        if (mpBean.getMainPostNo() != null) {
+            List<MainPostBean> query = firstImagePath(mpService.query(mpBean.getMainPostNo()));
+            if (query == null) {
+                mav.addObject("error", "查無資料");
+            }
+            mav.addObject("query", query);
+        } else if (mpBean.getTitle() != null) {
+            System.out.println("所有貼文");
+            List<MainPostBean> query = firstImagePath(mpService.allPosts(mpBean.getTitle()));
+            if (query.isEmpty()) {
+                mav.addObject("error", "查無資料");
+            }
+            mav.addObject("query", query);
+      
+        } else if (mpBean.getPostPermission() != null) {
+            System.out.println(mpBean.getPostPermission());
+            List<MainPostBean> query = firstImagePath(mpService.findByPostPermission(mpBean.getPostPermission() ));
+            
+            
+            if (query.isEmpty()) {
+                mav.addObject("error", "查無資料");
+            }else {
+                System.out.println(query.get(0).getPostPermission());
+                mav.addObject("query", query);
+            }
+                
+            
+
+        }  else if (mpBean != null ) {
+            System.out.println("所有貼文");
+         
+            List<MainPostBean> query = firstImagePath(mpService.allPosts());
+            mav.addObject("query", query);
+
+        }
+        
+        
+        
+        
+        
+        return mav;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    ////////////////////////////////////下面已搬到前台/////////////////////////
     
     // 首頁進入
     // 推薦使用四種方式最終都是封裝成ModelAndView
@@ -77,8 +132,6 @@ public class MainPostServlet {
         memberAccount = adminBean.getAdminName();
         postPhoto = adminBean.getAdminPhoto();
         replyPhoto = adminBean.getAdminPhoto();
-        
- 
         
         if (mpBean.getMainPostNo() != null) {
             List<MainPostBean> query = firstImagePath(mpService.query(mpBean.getMainPostNo()));

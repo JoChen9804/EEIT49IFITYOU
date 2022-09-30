@@ -31,8 +31,11 @@ fieldset {
     <body>
     
     <%@ include file="../admin/AdminstyleHead.jsp" %>
-       
      
+     <a class="btn-solid-reg popup-with-move-anim"
+                                            href="/group5/admin/AllPostStatus">貼文管理</a>
+       
+       
        
        
    <fieldset>
