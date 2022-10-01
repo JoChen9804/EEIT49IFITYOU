@@ -84,8 +84,9 @@
 							class="sr-only">(current)</span></a></li>
 					<li class="nav-item dropdown">
 					<a class="nav-link page-scroll" href="/group5/activityuser" style="font-size: 1.4rem;">活動</a></li>
+					
 					<li class="nav-item dropdown"><a class="nav-link page-scroll"
-						href="#details" style="font-size: 1.4rem;">據點</a></li>
+						href="/group5/gym/search" style="font-size: 1.4rem;">據點</a></li>
 
 					<!-- Dropdown Menu dropdown-toggle下拉紐-->
 					<li class="nav-item dropdown"><a

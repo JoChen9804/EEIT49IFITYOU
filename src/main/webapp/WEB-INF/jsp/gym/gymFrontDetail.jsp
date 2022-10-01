@@ -49,6 +49,11 @@
 							<li class="media"><i class="fas fa-square"></i>
 								<div class="media-body">健友評分：${gymDetail.rating}</div></li>
 						</ul>
+						<input type="hidden" value="${selectedGym.gymId}" id="gymIdFromDetail">
+                    	<input type="hidden" value="${logStatus.logId }" id="gymLogIdNow">
+                    	<input type="hidden" value="${logStatus.favorite }" id="logFavorite">
+                    	<input type="hidden" value="${logStatus.rating }" id="logRating">
+                    	<input type="hidden" value="${loginMember.id }" id="memberIdNow">
 						<div class="saved">
 							收藏： <input type="checkbox" id="saved" name="saved" /><label
 								for="saved"></label>
@@ -56,32 +61,35 @@
 						<div class="rating-wrap">
 							<span>評分:</span>
 							<div class="center">
-								<div class="rating" style="padding-top: 15px">
-									<input type="radio" id="start5" name="rating" value="5"
-										class="star" /><label for="start5" class="full"></label> <input
-										type="radio" id="start4" name="rating" value="4" class="star" /><label
-										for="start4" class="full"></label> <input type="radio"
-										id="start3" name="rating" value="3" class="star" /><label
-										for="start3" class="full"></label> <input type="radio"
-										id="start2" name="rating" value="2" class="star" /><label
-										for="start2" class="full"></label> <input type="radio"
-										id="start1" name="rating" value="1" class="star" /><label
-										for="start1" class="full"></label>
+								<div class="rating d-flex" style="padding-top: 15px">
+									<input type="radio" id="start5" name="rating" value="5" class="star" /><label for="start5" class="full order-4"></label>
+									<input type="radio" id="start4" name="rating" value="4" class="star" /><label for="start4" class="full order-3"></label>
+									<input type="radio" id="start3" name="rating" value="3" class="star" /><label for="start3" class="full order-2"></label>
+									<input type="radio" id="start2" name="rating" value="2" class="star" /><label for="start2" class="full order-1"></label>
+									<input type="radio" id="start1" name="rating" value="1" class="star" /><label for="start1" class="full order-0"></label>
 								</div>
 							</div>
 							<div id="rating-value"></div>
 							<input type="hidden" name="ratingValue" value="評分"
 								id="ratingValue">
 						</div>
-					</div>
-					<!-- end of col -->
-					<div class="col-lg-6">
-						<div>
-							<div id="map" style="margin: 20px; width: 500px; height: 500px;"></div>
+						<br>
+						<h2>Fit With You!</h2>
+						<div class="row">
+							<div class="col-lg-6">男女比例：</div>
+							<div class="col-lg-6">收藏人數：</div>
 						</div>
-						<!-- end of image-container -->
+						<a class="btn-solid-reg popup-with-move-anim" href="#">我要配對</a>
+					</div><!-- end of text-container -->
+				</div><!-- end of col -->
+					
+				<div class="col-lg-6">
+					<div>
+						<div id="map" style="margin: 20px; width: 500px; height: 500px;"></div>
 					</div>
-					<!-- end of col -->
+					<!-- end of image-container -->
+				</div>
+				<!-- end of col -->
 				</div>
 				<!-- end of row -->
 			</div>

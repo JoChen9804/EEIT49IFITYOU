@@ -9,11 +9,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import tw.group5.admin.model.MemberBean;
 import tw.group5.admin.service.AdminService;
 import tw.group5.gym.model.GymBean;
 import tw.group5.gym.model.GymLog;
+import tw.group5.gym.model.GymLogCount;
 import tw.group5.gym.service.GymLogService;
 import tw.group5.gym.service.GymService;
 
@@ -54,6 +56,13 @@ public class GymFrontController {
 				m.addAttribute("logStatus", logStatus);			
 			}
 		}
+		
 		return "/gym/gymFrontDetail";
+	}
+	
+	@PostMapping("/countFavorite")
+	@ResponseBody
+	public GymLogCount processCountFavoriteAction() {
+		return gymLogService.countGymLog(new GymBean());
 	}
 }

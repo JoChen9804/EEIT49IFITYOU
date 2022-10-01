@@ -15,6 +15,7 @@ import tw.group5.admin.model.MemberBean;
 import tw.group5.gym.model.GymBean;
 import tw.group5.gym.model.GymLog;
 import tw.group5.gym.model.GymLogRespository;
+import tw.group5.gym.model.GymLogCount;
 
 @Service
 @Transactional
@@ -73,4 +74,19 @@ public class GymLogService {
 		return result;
 	}
 	
+	//where favorite=1 and gymNo=?
+	public GymLogCount countGymLog(GymBean gym) {
+		List<GymLog> result = gymLogRespository.findByFavoriteAndGym(1, gym);
+		int male=0;
+		int female=0;
+		for(GymLog gl: result) {
+			if(gl.getMember().getMemberDetail().getGender()=="男") {
+				male++;
+			}else if(gl.getMember().getMemberDetail().getGender()=="女"){
+				female++;
+			}
+		}
+		return new GymLogCount(result.size(),male,female);
+
+	}
 }

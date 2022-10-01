@@ -22,4 +22,7 @@ public interface GymLogRespository extends JpaRepository<GymLog, Integer> {
 	
 	@Query(value = "select * from GymLog where gymno= :gym And memberid<> :member and favorite=1", nativeQuery = true)
 	public Set<GymLog> findPairTwoGymLogs(@Param("gym") GymBean gymBean, @Param("member") MemberBean member);
+
+	public List<GymLog> findByFavoriteAndGym(Integer favorite, GymBean gymBean);
+
 }
