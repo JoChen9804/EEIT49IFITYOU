@@ -80,12 +80,14 @@ public class GymLogService {
 		int male=0;
 		int female=0;
 		for(GymLog gl: result) {
-			if(gl.getMember().getMemberDetail().getGender()=="男") {
+			System.out.println(gl.getMember().getMemberDetail().getGender());
+			if(gl.getMember().getMemberDetail().getGender().equals("男")) {
 				male++;
-			}else if(gl.getMember().getMemberDetail().getGender()=="女"){
+			}else if(gl.getMember().getMemberDetail().getGender().equals("女")){
 				female++;
 			}
 		}
+		System.out.println("男"+male+"女"+female);
 		return new GymLogCount(result.size(),male,female);
 
 	}

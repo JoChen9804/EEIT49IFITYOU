@@ -27,6 +27,9 @@
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://kit.fontawesome.com/a3daa825b8.js"
 	crossorigin="anonymous"></script>
+<script>
+$()
+</script>
 
 </head>
 <body>
@@ -68,8 +71,8 @@
 										</ul>
 										<form action="/group5/gym/searchDetail/${gymInSearch.gymName}"
 											method="post">
-											<% if(request.getAttribute("loginMember")!=null){%>
-													<input type="hidden" value="${loginMember.id }" name="memberIdNow" />
+											<% if(request.getAttribute("loginMember")!=""){%>
+													<input type="hidden" value=${loginMember.id } name="memberIdNow" />
 											<%}else{ %>
 												<input type="hidden" value="0" name="memberIdNow" />
 											<%}%>

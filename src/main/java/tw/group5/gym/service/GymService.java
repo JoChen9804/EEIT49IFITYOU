@@ -23,13 +23,11 @@ public class GymService{
 
 	//新增，屬性id須為空
 	public GymBean add(GymBean gymBean) {
-		gymBean.setAdmin("group5");
 		return gymRespository.save(gymBean);
 	}
 
 	//更新，屬性id需不可為空
 	public GymBean update(GymBean gymBean) {
-		gymBean.setAdmin("group5");
 		return gymRespository.save(gymBean);
 	}
 	

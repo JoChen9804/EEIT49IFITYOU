@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -45,7 +46,7 @@ public class GymFrontController {
 	public String processDetailPageAction(@PathVariable("gName") String gName, int memberIdNow, Model m) {
 		GymBean gym = gymService.queryName(gName);
 		m.addAttribute("gymDetail", gym);
-		System.out.println(memberIdNow);
+		System.out.println("memberidrrrrrrrrrrrrrrrrrrrrrrr"+memberIdNow);
 		if(memberIdNow!=0) {
 			MemberBean member = adminService.selectOneMember(memberIdNow);		
 			GymLog logStatus = gymLogService.findByMemberAndGym(member, gym);
@@ -62,7 +63,7 @@ public class GymFrontController {
 	
 	@PostMapping("/countFavorite")
 	@ResponseBody
-	public GymLogCount processCountFavoriteAction() {
-		return gymLogService.countGymLog(new GymBean());
+	public GymLogCount processCountFavoriteAction(@RequestBody GymBean gym) {
+		return gymLogService.countGymLog(gym);
 	}
 }

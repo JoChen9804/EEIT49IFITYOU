@@ -22,13 +22,73 @@
 <!-- Core plugin JavaScript-->
 <script src="/group5/js/jquery.min.js"></script>
 <script src="/group5/js/jquery.easing.min.js"></script>
-<!-- Page level custom scripts -->
 <!-- Page level plugins -->
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://kit.fontawesome.com/a3daa825b8.js"
 	crossorigin="anonymous"></script>
-<script src="/group5/js/ratingAndSaved.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+<!-- Page level custom scripts -->
 
+<script>
+$(function(){
+	countFavorite();
+	if("${logStatus.favorite}"==1){
+		$("#saved").prop("checked","true");
+	}
+	let logRating="${logStatus.rating}"
+	if(logRating!=""){
+	$("#start"+logRating).prop("checked","true");
+	}
+	
+	console.log("${logStatus.logId}")
+	
+})
+
+let gymBean={"gymId":"${gymDetail.gymId}","gymName":"${gymDetail.gymName }","gymAddress":"${gymDetail.gymAddress }","gymOpenHours":"${gymDetail.gymOpenHours }","rating":"${gymDetail.rating }","gymPicture":"${gymDetail.gymPicture }"};
+function countFavorite(){
+	$.ajax({
+		type:'post',
+		url:'/group5/gym/countFavorite',
+		dataType:'json',
+		contentType:'application/json',
+		data:JSON.stringify(gymBean),
+		success:function(data){
+			$('#numberOfFavorite').append(data.numberOfFavorite);
+			$('#genderPart').append(data.numberOfMale+"："+data.numberOfFemale);
+			
+			const genderData = {
+					labels: ['男', '女'],
+					datasets: [{
+								 	label: '收藏性別比',
+								    data: [data.numberOfMale,data.numberOfFemale],
+								    backgroundColor: ["#a8baef","#7d98e7"]
+								}]
+					};
+			const genderConfig = {
+						  type: 'pie',
+						  data: genderData,
+						  options: {
+						    responsive: true
+						  },
+						};
+			
+			const ctx = $('#genderChart')[0].getContext('2d');
+	        const myChart = new Chart(ctx, genderConfig);
+			
+		},
+		error: function(){
+			console.log("errorrrrrrrrrrrrrrrrrrrrr");
+		}
+		
+	})		
+}
+
+function saveAndRating(){
+	
+}
+</script>
+<script src="/group5/js/ratingAndSaved.js" defer></script>
 </head>
 <body>
 	<%@ include file="../admin/FrontStageHead.jsp"%>
@@ -36,7 +96,7 @@
 	<div id="details" class="basic-1">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-6">
+				<div class="col-lg-6 d-flex align-items-center">
 					<div class="text-container">
 						<h2>${gymDetail.gymName }</h2>
 						<ul class="list-unstyled li-space-lg">
@@ -49,10 +109,6 @@
 							<li class="media"><i class="fas fa-square"></i>
 								<div class="media-body">健友評分：${gymDetail.rating}</div></li>
 						</ul>
-						<input type="hidden" value="${selectedGym.gymId}" id="gymIdFromDetail">
-                    	<input type="hidden" value="${logStatus.logId }" id="gymLogIdNow">
-                    	<input type="hidden" value="${logStatus.favorite }" id="logFavorite">
-                    	<input type="hidden" value="${logStatus.rating }" id="logRating">
                     	<input type="hidden" value="${loginMember.id }" id="memberIdNow">
 						<div class="saved">
 							收藏： <input type="checkbox" id="saved" name="saved" /><label
@@ -73,13 +129,6 @@
 							<input type="hidden" name="ratingValue" value="評分"
 								id="ratingValue">
 						</div>
-						<br>
-						<h2>Fit With You!</h2>
-						<div class="row">
-							<div class="col-lg-6">男女比例：</div>
-							<div class="col-lg-6">收藏人數：</div>
-						</div>
-						<a class="btn-solid-reg popup-with-move-anim" href="#">我要配對</a>
 					</div><!-- end of text-container -->
 				</div><!-- end of col -->
 					
@@ -90,6 +139,24 @@
 					<!-- end of image-container -->
 				</div>
 				<!-- end of col -->
+				</div>
+				<!-- end of row -->
+				<div class="row" style="background-color:rgba(211,220,247,0.2);">
+					<div class="col-lg-6 d-flex align-items-center justify-content-end">
+						<div class="text-container">
+							<h2><span class="material-symbols-outlined">waving_hand</span>&nbsp;健友在這裡</h2>
+							<p id="numberOfFavorite">收藏人數：</p>
+							<p id="genderPart">收藏性別（男／女）</p>
+							<a class="btn-solid-reg popup-with-move-anim" href="#">我要配對</a>
+						</div><!-- end of text-container -->
+					</div><!-- end of col -->
+					<div class="col-lg-6">
+						<div class="text-container">
+							<div style="width:285px; padding:25px;">
+								<canvas id="genderChart"></canvas>
+							</div>
+						</div><!-- end of text-container -->
+					</div><!-- end of col -->
 				</div>
 				<!-- end of row -->
 			</div>
