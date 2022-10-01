@@ -51,7 +51,7 @@ public class UserPostController {
     public static final String USERPOSTCHANGEPOST = "post/UserPostChangePost";
     
     //會員資料
-    public String memberAccount ="test666" ;
+    public String memberAccount ="text123";
     public String postPermission ;
     public String postPhoto ;
     public String replyPhoto ;
@@ -60,6 +60,7 @@ public class UserPostController {
     //預設資料
     public String presetPhotos = "postfolder/images/defaultScreen.jpg";
     public String state = "待審核";
+    public String published = "已發布";
     
     
     public void adminBean() {
@@ -93,17 +94,21 @@ public class UserPostController {
             }
             
         } else {
-            List<MainPostBean> query = firstImagePath(mpService.allPosts());
+            
+            List<MainPostBean> query = firstImagePath(mpService.findByPostPermission(published));
             mav.addObject("query", query);
+            
             
             List<MainPostBean> userposts = firstImagePath(mpService.findByAccount(memberAccount));
             if(!userposts.isEmpty()) {
                 mav.addObject("userposts", userposts);
-                System.out.println(userposts.get(0).getAccount());
+                
             }else if(mpBean.getTitle() != null && mpBean.getAccount() != null){
                 mpService.findByAccountAndTitles(mpBean.getTitle(),mpBean.getAccount());
                 
                 mav.addObject("userposts", userposts);
+            }else if(mpBean.getAccount() ==null){
+                mav.addObject("notYetPublished", "請登入會員或加入會員");
             }else {
                 mav.addObject("notYetPublished", "尚未發布貼文");
             }
@@ -117,13 +122,13 @@ public class UserPostController {
     @PostMapping("/Posting")
     public String addingPostConfirming(MainPostBean addPost, @RequestParam("file") List<MultipartFile> mfs)
             throws FileNotFoundException {
-
         addPost.setPostPhoto(postPhoto);
         addPost.setPostPermission(postPermission);
         addPost.setAccount(memberAccount);
         addPost.setAddtime(mpService.currentDateFormat("date"));
         addPost.setLikeNumber("");
         addPost.setP_image("");
+        addPost.setReplyAccount(memberAccount);
         addPost.setLastReplyTime(mpService.currentDateFormat("date"));
         addPost.setPostPermission(state);
 
@@ -224,6 +229,7 @@ public class UserPostController {
            
             MainPostBean queryOne = mpService.selectById(mpBean.getMainPostNo());
             queryOne.setLastReplyTime(rpBean.getReplyTime());
+            queryOne.setReplyAccount(memberAccount);
             mpService.update(queryOne);
             
             ModelAndView mavmPost = takeOutmpBean(queryOne,USERPOSTDETAILS);

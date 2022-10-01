@@ -42,9 +42,6 @@ public class MainPostBean {
     @Column(name = "addtime")
     private String addtime;               //新增時間
     
-    @Column(name = "lastreplytime")
-    private String lastReplyTime;         //最後回覆時間
-    
     @Column(name = "content")
     private String content;             //內容
     
@@ -53,6 +50,14 @@ public class MainPostBean {
     
     @Column(name = "p_image")
     private String p_image;
+    
+    @Column(name = "lastreplytime")
+    private String lastReplyTime;         //最後回覆時間
+    
+    @Column(name = "replyaccount")
+    private String replyAccount;         //最後回覆會員
+    
+    
     
     //照片寫入 之後用不到了
 //    @OneToMany(fetch = FetchType.LAZY,mappedBy = "mainPostBean",cascade = CascadeType.ALL)
@@ -121,6 +126,12 @@ public class MainPostBean {
     }
     public void setAddtime(String addtime) {
         this.addtime = addtime;
+    }
+    public String getReplyAccount() {
+        return replyAccount;
+    }
+    public void setReplyAccount(String replyAccount) {
+        this.replyAccount = replyAccount;
     }
     public String getLastReplyTime() {
         return lastReplyTime;

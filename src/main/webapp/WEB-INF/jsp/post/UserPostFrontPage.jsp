@@ -143,7 +143,7 @@
 														<td class="align-middle">[${allmpbs.postTypeName}]</td>
 														<td class="align-middle">${allmpbs.title}</td>
 														<td class="align-middle">${allmpbs.account}<br />${allmpbs.addtime}</td>
-														<td class="align-middle">改成回覆帳號<br />${allmpbs.lastReplyTime}
+														<td class="align-middle">${allmpbs.replyAccount}<br />${allmpbs.lastReplyTime}
 														</td>
 														<td class="align-middle">
 															<form action="PostWtch" method="GET">
@@ -232,7 +232,7 @@
 														<td class="align-middle">[${allmpbs.postTypeName}]</td>
 														<td class="align-middle">${allmpbs.title}</td>
 														<td class="align-middle">${allmpbs.account}<br />${allmpbs.addtime}</td>
-														<td class="align-middle">改成回覆帳號<br />${allmpbs.lastReplyTime}
+														<td class="align-middle">${allmpbs.replyAccount}<br />${allmpbs.lastReplyTime}
 														</td>
 														<td class="align-middle">${allmpbs.postPermission}</td>
 														<td class="align-middle">
@@ -337,6 +337,7 @@
 													                data : mpBean,
 													                dataType : 'json',
 													                success: function(){
+													                	location.reload();
 													                    console.log("deleted!!")
 													                }
 													            })
