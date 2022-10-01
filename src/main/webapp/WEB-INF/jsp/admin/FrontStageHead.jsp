@@ -81,7 +81,7 @@
 			<div class="collapse navbar-collapse" id="navbarsExampleDefault">
 				<ul class="navbar-nav ml-auto align-items-center">
 					<li class="nav-item dropdown"><a class="nav-link page-scroll"
-						href="#header" style="font-size: 1.4rem;">首頁<span
+						href="/group5/FrontStageMain" style="font-size: 1.4rem;">首頁<span
 							class="sr-only">(current)</span></a></li>
 					<li class="nav-item dropdown">
 					<a class="nav-link page-scroll" href="/group5/activityuser" style="font-size: 1.4rem;">活動</a></li>
@@ -115,7 +115,7 @@
 						class="btn-outline-sm dropdown-toggle page-scroll"
 						id="navbarDropdown" role="button" aria-haspopup="true"
 						aria-expanded="false"> <img class="img-profile rounded-circle"
-							src="${loginMember.memberPhoto}" height=45px width=45px></a> <!-- Dropdown - User Information -->
+							src="${loginMember.memberPhoto}" height=55px width=55px></a> <!-- Dropdown - User Information -->
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 							<a class="dropdown-item" href="/group5/user/UserCenter"><span
 								class="item-text" style="font-size: 1.2rem">會員中心</span></a>
@@ -142,7 +142,6 @@
 	<!-- end of navigation -->
 	<script type="text/javascript">
 		$().ready(function() {
-			console.log("${loginMember.id}");
 			var OneMember = "${loginMember.id}";
 			if (OneMember) {
 				$('#memberShow').attr('style', '');

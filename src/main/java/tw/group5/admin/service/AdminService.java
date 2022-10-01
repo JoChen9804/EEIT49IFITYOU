@@ -174,5 +174,29 @@ public class AdminService {
 
 		return s;
 	}
-
+	
+	//------------前台---------------------
+	public boolean findAccount(String newUser){
+		Optional<MemberBean> op = memberRepo.findByAccount(newUser);
+		if (op.isEmpty()) {
+			return false;
+		}
+		return true;
+	}
+	public boolean findEmail(String newEmail){
+		Optional<MemberBean> op = memberRepo.findByEmail(newEmail);
+		if (op.isEmpty()) {
+			return false;
+		}
+		return true;
+	}
+	public boolean findByReferralCode(String referralCode){
+		Optional<MemberDetail> op = memberDetailRepo.findByReferralCode(referralCode);
+		if (op.isEmpty()) {
+			return false;
+		}
+		return true;
+	}
+	
+	
 }

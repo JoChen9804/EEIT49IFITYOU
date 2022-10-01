@@ -9,12 +9,22 @@
 	type="text/css">
 <!-- Custom styles for this template-->
 <link href="css/sb-admin-2.min.css" rel="stylesheet">
+<style>
+.btn{
+	font-size:1.2rem !important;
+}
+.form-control-user{
+	font-size:1.2rem !important;
+}
+
+
+</style>
 </head>
 <body>
 	<%@ include file="FrontStageHead.jsp"%>
 	<!-- Header -->
 	<header id="header" class="header">
-		<div class="header-content">
+		<div class="header-content" style="padding-top: 7rem;">
 			<div class="container">
 
 				<!-- Outer Row -->

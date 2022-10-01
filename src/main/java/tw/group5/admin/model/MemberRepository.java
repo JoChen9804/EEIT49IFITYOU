@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface MemberRepository extends JpaRepository<MemberBean, Integer> {
@@ -12,6 +13,7 @@ public interface MemberRepository extends JpaRepository<MemberBean, Integer> {
 	@Transactional
 //	@Query("delete from Admin where Admin.id in (?1)")
 	void deleteByIdIn(List<Integer> memberListInteger);
-	public Optional<MemberBean> findByAccount(String adminName);
-
+	public Optional<MemberBean> findByAccount(String memberName);
+	public Optional<MemberBean> findByEmail(String memberEmail);
+	
 }

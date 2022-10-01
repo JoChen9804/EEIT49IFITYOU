@@ -53,7 +53,7 @@
 			value="${loginMember.memberDetail.id}" type="hidden"> <input
 			name="hrefSubmit" type="hidden" id="hrefSubmit"><input
 			style="margin-bottom: 0.5em;" type="hidden" name="pwd" maxlength="16"
-			required onblur="validate()" value="******">
+			required value="******">
 
 		<!-- Features -->
 		<div id="features" class="tabs">
@@ -121,10 +121,10 @@
 													<ul>
 														<li class="media"><i class="fas fa-times"
 															style="color: red" id="iconSame"></i>
-															<div class="media-body">兩次輸入密碼須相同</div></li>
+															<div class="media-body" style="font-size:1.2rem">&ensp;兩次輸入密碼須相同</div></li>
 														<li class="media"><i class="fas fa-times"
 															style="color: red" id="iconValid"></i>
-															<div class="media-body">密碼須為8~16為英數字組合</div></li>
+															<div class="media-body" style="font-size:1.2rem">&ensp;密碼須為8~16為英數字組合</div></li>
 													</ul>
 													<label for="inputOrginal">請輸入原密碼：</label><input
 														id="inputOrginal" type="password" name="inputOrginal"
@@ -372,11 +372,11 @@
 				$('#iconSame').attr('style', 'color:red');
 			}
 			if(blnTest && $('#pwd1').val() === $('#pwd2').val()){
-				$('passwordConfirm').attr('disabled', true);
+				$('#passwordConfirm').attr('disabled', true);
 				
 				
 			}else{
-				$('passwordConfirm').attr('disabled', false);
+				$('#passwordConfirm').attr('disabled', false);
 			}
 			
 			}
@@ -425,7 +425,7 @@
 							});
 
 			});
-			$(".passwordConfirm").on('click', function(event){
+			$("#passwordConfirm").on('click', function(event){
 				$('submitNewPassword').val($('#pwd1').val());
 				$('submitOrginPassword').val($('#inputOrginal').val());
 				

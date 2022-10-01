@@ -6,18 +6,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 
 import tw.group5.admin.model.AdminBean;
@@ -75,11 +71,6 @@ public class AdminController {
 	public String ForgetPassword() {
 		return "admin/ForgetPassword"; // 導向ForgetPassword
 	}
-
-//	@RequestMapping("/group5/login")
-//	public String GoLogin() {
-//		return "admin/FrontStageMain"; // 導向前台頁面
-//	}
 
 	// 常常使用到的查找管理員
 	private String SearchAdmin(Model m) {
@@ -246,7 +237,7 @@ public class AdminController {
 		return SearchMember(m);
 	}
 
-	@PostMapping(path = "/admin/modifyMemberNameAction.controller")
+	@PostMapping(path = "/admin/modifyMemberNameAction.controller") //查找會員資料
 	private String modifyMemberNameAction(@RequestParam("modifyId") String modifyId, Model m) {
 		Integer id = Integer.parseInt(modifyId);
 		MemberBean resultMember = adminService.selectOneMember(id);
@@ -266,62 +257,5 @@ public class AdminController {
 		adminService.deleteMemberData(memberListInteger);
 		return SearchMember(m);
 	}
-
-	@PostMapping(path = "/user/memberModify.controller") // 修改
-	private String modifyUserAction(String account, String pwd, String modifyimage, String sub, String idNumString,
-			String name, String email, String gender, String nickname, String birthday, String cellphone,
-			String zipcode, String address, String registerReferralCode, String match, String pairContactInfo,
-			String pairRequest, String pairInfo, String nowimage, @RequestParam("mute") String muteModify,
-			@RequestParam("referralCode") String referralCodeModify, String originalRealPassword,
-			@RequestParam("postPermission") String postPermissionModify, String hrefSubmit,
-			@RequestParam("recentLoginDate") String recentLoginDateModify, @RequestParam("filepath") MultipartFile mf,
-			String detailId, Model m) {
-
-		String memberPhoto;
-		Integer authority = 0;
-		// 修改
-		String modifyPassword;
-//		System.out.println(originalRealPassword);
-//		System.out.println(pwd);
-//		System.out.println(detailId);
-//		System.out.println(match);
-//		System.out.println(pairContactInfo);
-//		System.out.println(hrefSubmit);
-
-		modifyPassword = originalRealPassword;
-
-		String referralCode = referralCodeModify;
-		Integer mute = Integer.parseInt(muteModify);
-		Integer postPermission = Integer.parseInt(postPermissionModify);
-		String recentLoginDate = recentLoginDateModify;
-		MemberDetail mDetail = new MemberDetail(gender, nickname, birthday, cellphone, zipcode, address, referralCode,
-				registerReferralCode, mute, postPermission, Integer.parseInt(match), pairContactInfo, pairRequest,
-				pairInfo, recentLoginDate);
-		mDetail.setId(Integer.parseInt(detailId));
-		MemberBean mBean;
-		if (modifyimage.equals("true")) {
-			memberPhoto = adminService.imageProcess(account, modifyimage, mf, false);
-			mBean = new MemberBean(account, modifyPassword, authority, name, memberPhoto, email, mDetail);
-		} else {
-			mBean = new MemberBean(account, modifyPassword, authority, name, nowimage, email, mDetail);
-		}
-		Integer idNum = Integer.parseInt(idNumString);
-		mBean.setId(idNum);
-
-		MemberBean member = adminService.updateOne(mBean);
-		m.addAttribute("loginMember", member);
-		System.out.println("會員修改成功");
-		return "admin/UserCenter";
-	}
-
-//	@PostMapping(path = "/user/memberPassword.controller") // 修改
-//	private ResponseEntity<String> modifyUserPasswordAction() {
-//		Boolean rlt = todoService.updateTodo(id ,todo);
-//        if (!rlt) {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Status 欄位不能為空");
-//        }
-//        return ResponseEntity.status(HttpStatus.OK).body("");
-//    }return null;
-//}
 
 }
