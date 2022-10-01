@@ -21,6 +21,10 @@ public interface MainPostRepository extends JpaRepository<MainPostBean, Integer>
     @Query(value = "from MainPostBean where title like concat('%',?1,'%')")
     public List<MainPostBean> allPostss(Object titles);
     
+    //Hql  找狀泰已發布的標題
+    @Query(value = "from MainPostBean where title like concat('%',?1,'%') and postpermission = ?2")
+    public List<MainPostBean> userallPosts(Object titles,String permission);
+    
     //個人會員貼文
     public List<MainPostBean> findByAccount(String account);
     
@@ -29,10 +33,12 @@ public interface MainPostRepository extends JpaRepository<MainPostBean, Integer>
     public List<MainPostBean> findByAccountAndTitles(String titles,String account);
     
 
-    
+    //更新貼文狀態
     @Modifying(clearAutomatically = true)
     @Query(value = "update MainPostBean set postPermission = :permerission where mainPostNo = :mpNo")
     public void updatePermission(@Param("permerission")String permerission,@Param("mpNo")Integer mainPostNo);
+    
+    
     
     
     //審核狀態

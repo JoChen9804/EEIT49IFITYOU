@@ -51,7 +51,7 @@ public class UserPostController {
     public static final String USERPOSTCHANGEPOST = "post/UserPostChangePost";
     
     //會員資料
-    public String memberAccount ="text123";
+    public String memberAccount ;
     public String postPermission ;
     public String postPhoto ;
     public String replyPhoto ;
@@ -84,9 +84,16 @@ public class UserPostController {
     @GetMapping("/UserPostAll")
     public ModelAndView postFornt(MainPostBean mpBean) {
         ModelAndView mav = new ModelAndView(USERPOSTFRONTPAGE);
+        if(memberAccount !=null) {
+            memberBean();
+        }
         
+        
+        System.out.println(memberAccount);
+        
+        //查詢標題已發布的
         if (mpBean.getTitle() != null) {
-            List<MainPostBean> query = firstImagePath(mpService.allPosts(mpBean.getTitle()));
+            List<MainPostBean> query = firstImagePath(mpService.userallPosts(mpBean.getTitle(),published));
             if (query.isEmpty()) {
                 mav.addObject("error", "查無資料");
             }else {
@@ -327,7 +334,9 @@ public class UserPostController {
         }
         
         if (!"".equals(queryOne.getLikeNumber())) {
-            queryOne.setLikeNumber(String.valueOf(oldlikes.length));
+            String[] newlikes = queryOne.getLikeNumber().split(",");
+            
+            queryOne.setLikeNumber(String.valueOf(newlikes.length));
             mav.addObject("likes", queryOne.getLikeNumber().split(",").length);
         }
         else {
@@ -364,7 +373,8 @@ public class UserPostController {
             rpService.update(replyPostBean);
         }
         if (!"".equals(replyPostBean.getReplyLikeNumber())) {
-            replyPostBean.setReplyLikeNumber(String.valueOf(oldReplylikes.length));
+            String[] newReplylikes = replyPostBean.getReplyLikeNumber().split(",");
+            replyPostBean.setReplyLikeNumber(String.valueOf(newReplylikes.length));
         }
         else {
             replyPostBean.setReplyLikeNumber("0");

@@ -87,20 +87,37 @@
 											<div class="row g-3">
 												<div class="col-md">
 													<div class="form-floating">
-														<input type="text" name="title" class="form-control"
+														<input type="text" name="title" class="form-control entertitle"
 															placeholder="請輸入標題" required
 															oninvalid="setCustomValidity('請輸入標題')"
-															oninput="setCustomValidity('')"> <label
-															for="floatingInputGrid">{改js----驗證-----}</label>
+															oninput="setCustomValidity('')"><label style="color:#FF0000"
+															for="floatingInputGrid"></label>
 													</div>
 												</div>  
 												<div class="col-md">
 													<div class="form-floating">
-														<input type="submit" class="btn-solid-reg" value="查詢">
+														<input type="submit" class="btn-solid-reg inquiretitle" value="查詢">
 													</div>
 												</div>
-
-
+												
+												<script>
+                                                   $(".inquiretitle").on('click', function(event){
+										            var rs = false;
+										            $(".entertitle").each(function(){
+										                if($(this).val()==""){
+										                    console.log('請輸入標題');
+										                    Swal.fire({
+										                        title:'請輸入標題',
+										                        icon:'warning'
+										                    });
+										                    $(this).next().text('請輸入標題');
+										                    rs = true;
+										                }
+										            });
+										            if(rs)return;
+										            
+										        });
+                                                   </script>
 
 												<div class="col-md">
 													<div class="form-floating">
@@ -119,8 +136,6 @@
 
 											</div>
 										</form>
-
-
 
 
 										<table class="table table-sm">
@@ -249,6 +264,13 @@
 																	type="submit" class="btn btn-outline-success"
 																	value="修改" >
 															</form> 
+															 <form action="PostWtch" method="GET">
+                                                                <input type="hidden" name="mainPostNo"
+                                                                    value="${allmpbs.mainPostNo}"> <input
+                                                                    type="submit" class="btn btn-outline-success"
+                                                                    value="觀看">
+                                                            </form>
+															
 															
 															<!--<a id="${allmpbs.mainPostNo}" class="btn-solid-reg popup-with-move-anim"
 															href="#details-lightbox-2">修改</a>-->
@@ -268,12 +290,21 @@
                                                                         showCancelButton: true,
                                                                         confirmButtonColor: '#3085d6',
                                                                         cancelButtonColor: '#d33',
-                                                                        confirmButtonText: '刪除'
+                                                                        confirmButtonText: '刪除',
+                                                                        cancelButtonText: '取消',
+                                                                        reverseButtons: true
+                                                                        
                                                                       }).then((result) => {
                                                                           if (result.isConfirmed) {
                                                                               let deleteid = $(this).prev().val();
                                                                               deletePost(deleteid);
-                                                                              location.reload();
+                                                                              Swal.fire(
+                                                                            		  '已刪除貼文!'
+                                                                              ).then((result)=>{
+                                                                            	  if(result.isConfirmed){
+                                                                                      location.reload();
+                                                                                  }
+                                                                              });
                                                                     
                                                                             }
                                                                           });
@@ -323,7 +354,6 @@
 															
 															
 															});
-															
 															
 															function deletePost(deletepost){
 																console.log(deletepost)
@@ -432,12 +462,11 @@
 
 
 
-
 <!-- ////////////////////////////////////發布貼文畫面////////////////////////////////////////// -->
 	<!-- Details Lightboxes -->
 	<!-- Details Lightbox 1 -->
 	<div id="details-lightbox-1"
-		class="lightbox-basic zoom-anim-dialog mfp-hide">
+        class="lightbox-basic zoom-anim-dialog mfp-hide" >
 		<div class="container">
 			<div class="row">
 				<button title="Close (Esc)" type="button" class="mfp-close x-button">×</button>

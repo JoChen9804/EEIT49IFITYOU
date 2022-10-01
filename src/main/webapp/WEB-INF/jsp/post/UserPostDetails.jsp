@@ -7,6 +7,9 @@
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8" />
 <title>${queryOne.title}</title>
 <script src="/group5/js/jquery.min.js"></script>
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script type="text/javascript">
 $(function(){
     $("#likemainpost").on("click",function(){
@@ -137,36 +140,36 @@ $(function(){
 										value="${onereply.replyLikeNumber}">
 										讚${onereply.replyLikeNumber}</button>
 
-									<script type="text/javascript">
-										$(function() {
-											var onereply = document
-													.getElementById("${onereply.replyNo}");
+							<script type="text/javascript">
+    $(function () {
+        var onereply = document
+            .getElementById("${onereply.replyNo}");
 
-											onereply.onclick = function(event) {
-												var replyNo = $(this).prev()
-														.val();
-												console.log(replyNo);
-												let ReplyPostBean = {
-													"replyNo" : replyNo
-												};
-												$.ajax({
-															type : "put",
-															url : '/group5/ReplyLikesAJAX',
-															data : ReplyPostBean,
-															dataType : 'json',
-															success : function(
-																	data) {
-																console
-																		.log(data);
-																document
-																		.getElementById("${onereply.replyNo}").innerText = "讚"
-																		+ data.replyLikeNumber
-															}
-														});
-											}
+        onereply.onclick = function (event) {
+            var replyNo = $(this).prev()
+                .val();
+            console.log(replyNo);
+            let ReplyPostBean = {
+                "replyNo": replyNo
+            };
+            $.ajax({
+                type: "put",
+                url: '/group5/ReplyLikesAJAX',
+                data: ReplyPostBean,
+                dataType: 'json',
+                success: function (
+                    data) {
+                    console
+                        .log(data);
+                    document
+                        .getElementById("${onereply.replyNo}").innerText = "讚"
+                        + data.replyLikeNumber
+                }
+            });
+        }
 
-										});
-									</script>
+    });
+</script>
 								</div>
 							</td>
 						</tr>
@@ -192,9 +195,9 @@ $(function(){
 								<div class="row g-2">
                                             <div class="col-md">
                                                 <div class="form-floating">
-                                                    <input type="submit" class="btn-solid-reg "
-                                                        id="floatingInputGrid" value="發表回復"> <label
-                                                        for="floatingInputGrid">{error}</label>
+                                                    <input type="submit" class="btn-solid-reg replycontent"
+                                                        id="floatingInputGrid" value="發表回復"> 
+                                                        <label style="color:#FF0000" for="floatingInputGrid"></label>
                                                 </div>
                                             </div>
                                             <div class="col-md">
@@ -206,6 +209,32 @@ $(function(){
 								
 								</td>
 								</tr>
+					<script>
+                                      
+                                                   
+                                                   $(".replycontent").on('click', function(event){
+                                                       var rs = false;
+                                                       $("#content1").each(function(){
+                                                           if($(this).val()==""){
+                                                               console.log('請輸入內容');
+                                                               
+                                                               Swal.fire({
+                                                                   title:'請輸入內容',
+                                                                   icon:'warning'
+                                                               });
+                                                               
+                                                               $(".replycontent").next().text('請輸入內容');
+                                                               rs = true;
+                                                           }
+                                                       });
+                                                       if(rs)return;
+                                                       
+                                                   });
+                                                   
+                                                   
+                                                   </script>
+					
+					
 					</form>
            
 				</table>
@@ -222,7 +251,10 @@ $(function(){
 <!-- 				value="返回首頁" margin="auto"> -->
 <!-- 		</div> -->
 <!-- 	</form> -->
+    
 
+    
+ 
 
 	<%@ include file="../admin/FrontStageFoot.jsp"%>
 </body>

@@ -35,6 +35,8 @@
 							<input type="hidden" name="account" value="${queryContent.account}">
                             <input type="hidden" name="likeNumber" value="${queryContent.likeNumber}">
                             <input type="hidden" id="p_image" name="p_image" value="${queryContent.p_image}">
+                            <input type="hidden" name="likeNumber" value="${queryContent.replyAccount}">
+                            <input type="hidden" name="likeNumber" value="${queryContent.lastReplyTime}">
 
 							<table class="img-fluid">
 								<thead>

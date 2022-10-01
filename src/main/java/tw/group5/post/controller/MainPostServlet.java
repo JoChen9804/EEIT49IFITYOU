@@ -55,7 +55,7 @@ public class MainPostServlet {
 
     // 改成會員帳號 與會員權限
     public String memberAccount = "";
-    public String postPermission = "一般會員";
+    public String postPermission ;
     public String postPhoto ="";
     public String replyPhoto ="";
     
@@ -66,10 +66,16 @@ public class MainPostServlet {
     }
     
     
-    @GetMapping("/AllPostStatus")
+    @GetMapping("/MainPost.all")
     public ModelAndView allPostStatus(MainPostBean mpBean) {
-        ModelAndView mav = new ModelAndView(postFrontPage);
+        AdminBean adminBean = adminBean();
+        memberAccount = adminBean.getAdminName();
+        postPhoto = adminBean.getAdminPhoto();
+        replyPhoto = adminBean.getAdminPhoto();
+        System.out.println(memberAccount);
         
+        
+        ModelAndView mav = new ModelAndView(postFrontPage);
         if (mpBean.getMainPostNo() != null) {
             List<MainPostBean> query = firstImagePath(mpService.query(mpBean.getMainPostNo()));
             if (query == null) {
@@ -109,10 +115,24 @@ public class MainPostServlet {
         return mav;
     }
     
+    // 觀看ok
+    @PostMapping("/MainPost.watch")
+    public ModelAndView watchPost(MainPostBean mpBean) {
+        MainPostBean queryOne = mpService.selectById(mpBean.getMainPostNo());
+        ModelAndView mavMpost = takeOutmpBean(queryOne,postDetails);
+        mavMpost.addObject("postPhoto", postPhoto);
+        // -----------上面是主貼文------------
+        List<ReplyPostBean> allReply = rpService.allReply(mpBean.getMainPostNo());
+        if(!allReply.isEmpty()) {
+            ModelAndView mav = takeOutrpBean(allReply,mavMpost);
+            return mav;
+        }
+        return mavMpost;
+    }
+    
     //審核
     @PostMapping("/auditPost") 
     public String audit(String auditNo) {
-        
         System.out.println(auditNo);
         String[] mpNoList = auditNo.split(",");
         System.out.println(mpNoList.length);
@@ -120,16 +140,26 @@ public class MainPostServlet {
             System.out.println(mpNoLists);
             mpService.updatePermission("已發布",Integer.parseInt(mpNoLists));
         }
-        
         return "redirect:MainPost.all";
     }
+    //駁回
+    @PostMapping("/turnDownPost") 
+    public String turnDown(Integer mainPostNo,String xreason) {
+        System.out.println(xreason);
+        System.out.println(mainPostNo);
+        mpService.updatePermission("駁回，"+xreason,mainPostNo);
+        return "redirect:MainPost.all";
+    }
+    
+    
 
     
     ////////////////////////////////////下面已搬到前台/////////////////////////
     
+    
     // 首頁進入
     // 推薦使用四種方式最終都是封裝成ModelAndView
-    @GetMapping("/MainPost.all")
+    //@GetMapping("/MainPost.all")
     public ModelAndView postHomepage2(MainPostBean mpBean,HttpServletRequest request) {
         ModelAndView mav = new ModelAndView(postFrontPage);
         AdminBean adminBean = adminBean();
@@ -201,25 +231,7 @@ public class MainPostServlet {
         return "redirect:MainPost.all";
     }
 
-    // 觀看ok
-    @PostMapping("/MainPost.watch")
-    public ModelAndView watchPost(Integer watch) {
-        
-        
-        
-        MainPostBean queryOne = mpService.selectById(watch);
-        ModelAndView mavMpost = takeOutmpBean(queryOne,postDetails);
-        mavMpost.addObject("postPhoto", postPhoto);
-        
-        // -----------上面是主貼文------------
 
-        List<ReplyPostBean> allReply = rpService.allReply(watch);
-        if(!allReply.isEmpty()) {
-            ModelAndView mav = takeOutrpBean(allReply,mavMpost);
-            return mav;
-        }
-        return mavMpost;
-    }
 
     // 刪除 ok
     @DeleteMapping("/MainPostingServlet")
@@ -360,7 +372,7 @@ public class MainPostServlet {
     
     @PutMapping("/LikesAJAX") @ResponseBody
     public MainPostBean LikesAJAX(MainPostBean mpBean) {
-        
+        System.out.println(mpBean.getAccount());
        
         ModelAndView mav = new ModelAndView();
         System.out.println("有找到嗎?");
@@ -392,14 +404,19 @@ public class MainPostServlet {
             queryOne.setLikeNumber(newLike);
             mpService.update(queryOne);
         }
-        
+        //bug在這辣
         if (!"".equals(queryOne.getLikeNumber())) {
-            queryOne.setLikeNumber(String.valueOf(oldlikes.length));
+            String[] newlikes = queryOne.getLikeNumber().split(",");
+            
+            queryOne.setLikeNumber(String.valueOf(newlikes.length));
             mav.addObject("likes", queryOne.getLikeNumber().split(",").length);
         }
         else {
             queryOne.setLikeNumber("0");
         }
+        
+        System.out.println(memberAccount);
+        System.out.println("多少喇:"+oldlikes.length);
         return queryOne;
     }
     
@@ -431,7 +448,8 @@ public class MainPostServlet {
             rpService.update(replyPostBean);
         }
         if (!"".equals(replyPostBean.getReplyLikeNumber())) {
-            replyPostBean.setReplyLikeNumber(String.valueOf(oldReplylikes.length));
+            String[] newReplylikes = replyPostBean.getReplyLikeNumber().split(",");
+            replyPostBean.setReplyLikeNumber(String.valueOf(newReplylikes.length));
         }
         else {
             replyPostBean.setReplyLikeNumber("0");

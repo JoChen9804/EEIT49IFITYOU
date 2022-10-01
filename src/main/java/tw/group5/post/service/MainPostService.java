@@ -69,6 +69,11 @@ public class MainPostService {
         return mpResp.allPosts();
     }
 
+    public List<MainPostBean> userallPosts(Object titles,String permission){
+        return mpResp.userallPosts(titles,permission);
+    }
+    
+    
     public List<MainPostBean> query(Integer id) {
         Optional<MainPostBean> optional = mpResp.findById(id);
         if (optional.isPresent()) {

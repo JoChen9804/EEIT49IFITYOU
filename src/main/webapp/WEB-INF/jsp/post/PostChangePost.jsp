@@ -124,6 +124,8 @@ fieldset {
              <input type="hidden" id="mainPostNo" name="mainPostNo" value="${queryContent.mainPostNo}">
              <input type="hidden" name="account" value="${queryContent.account}">
              <input type="hidden" name="likeNumber" value="${queryContent.likeNumber}">
+             <input type="hidden" name="likeNumber" value="${queryContent.replyAccount}">
+             <input type="hidden" name="likeNumber" value="${queryContent.lastReplyTime}">
              </div>
              
              
