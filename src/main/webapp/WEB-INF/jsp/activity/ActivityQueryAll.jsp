@@ -108,7 +108,7 @@ input {
 			      				<div style="display: inline">
 									<label for="voucherTitle">優惠券折數:</label>
 									<select name="voucherTitle" id="voucherTitle" >
-										<option disabled selected value style="display:none">請選擇</option>
+										<option disabled selected style="display:none">請選擇</option>
 			                			<option value="95">95折</option>
 			               	 			<option value="90">9折</option>
 			               	 			<option value="85">85折</option>
@@ -136,6 +136,7 @@ input {
 			    		</div>
 			  		</div>
 				</div>
+				<!-- end of Modal -->
 			`);
 			
 		}else if(page=="activity"){

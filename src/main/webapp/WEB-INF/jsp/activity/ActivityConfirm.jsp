@@ -19,6 +19,8 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 <link href="/group5/css/magnific-popup.css" rel="stylesheet">
 <link href="/group5/css/styles.css" rel="stylesheet">
 
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 <body>
 
@@ -30,6 +32,9 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 	<!-- DataTable 連結 -->
 	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.2/js/jquery.dataTables.js"></script>
 	<script src="/group5/js/dataTables.bootstrap4.min.js"></script>
+	
+	<!-- sweetalert2   連結-->
+	<script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
 
 	<h1 style="text-align: left">活動詳細資料確認</h1>
 	
@@ -143,6 +148,8 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
     <hr>
     <h1 style="text-align: left">報名名單</h1>
     <br>
+    <div id= "tableVal"></div>
+		<!-- 
 	<table class="table table-bordered" id="table_id"
 		class="compact hover stripe">
 		<thead>
@@ -156,22 +163,20 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 			</tr>
 		</thead>
 		<c:forEach var="sqa" items="${signUp_queryAll}">
-			<tr>
-				<td>${sqa.memberId}</td>
-				<td>${sqa.memberName}</td>
-				<td>${sqa.email}</td>
-				<td>${sqa.phone}</td>
-				<td>${sqa.signUpTime}</td>
+			<tr id ="tr">
+				<td id="mId">${sqa.memberId}</td>
+				<td id="mName">${sqa.memberName}</td>
+				<td id="mEail">${sqa.email}</td>
+				<td id="mPhone">${sqa.phone}</td>
+				<td id="mTime">${sqa.signUpTime}</td>
 				<td>
-					<form ACTION="deletesignup.controller" name="ddeell" method="post" style="float: left; margin-left: 3px">
-						<input type="hidden" name="dataId" value="${aqa.activityId}" id="dd" /> 
-						<input type="hidden" name="voucherTitle" value="${aqa.activityTitle}" /> 
-						<input type="submit" id="delete" name="delete" value="刪除" class="del btn btn-outline-danger " />
-					</form>
+					<input type="hidden" name="dataId" value="${sqa.signUpId}" id="dd" /> 
+					<input type="button" id="delete" name="delete" value="刪除" class="del btn btn-outline-danger " />
 				</td>
 			</tr>
 		</c:forEach>
 	</table>
+		 -->
 
 	</div>
 
@@ -184,16 +189,99 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 	<script type="text/javascript">
 		$(function() {
 			
+			reloadTable("${query_activity.activityId}");
+			
+			$('#table_id').dataTable({
+				'bAutoWidth' : false
+			});
+			
 			$('#forColor').attr('style', 'background-color:white' );
 			
 			if("${notShowSignUp}"){
 				$('#showSignUp').attr('style', 'display:none' );
 			};
 			
-			$('#table_id').dataTable({
-				'bAutoWidth' : false
+			$('.del').on('click', function(){
+				
+				console.log("抓刪除健");
+				
+				var id = $(this).prev().val();
+				var activityId = ${query_activity.activityId};
+				console.log("抓取刪除:" + id);
+				console.log("抓取活動:" + activityId);
+				Swal.fire({
+					  title:'確定要刪除'+id+'?',
+					  text: '如刪除後不可復原...',
+					  icon: 'warning',
+					  showCancelButton: true,
+					  confirmButtonColor: '#3085d6',
+					  cancelButtonColor: '#d33',
+					  confirmButtonText: '確認',
+					  cancelButtonText: '取消'
+					}).then((result) => {
+					  if (result.isConfirmed) {
+						  $.ajax({
+								type: "post",
+								url: "/group5/admin/signupdelete.controller",
+								data: id,
+								contentType: "application/json",
+								success: function(data){
+									console.log("delete signUp success");
+									reloadTable(activityId);
+									Swal.fire({
+										      title:'刪除成功!',
+										      text:'已刪除',
+										      icon:'success',
+											  confirmButtonColor: '#3085d6',
+											  cancelButtonColor: '#d33',
+											  confirmButtonText: '確定',
+									});
+								},
+								error: function(){
+									console.log("delete signUp error");
+									Swal.fire(
+										      '刪除失敗!',
+										      '請在試一次',
+										      'error'
+										    ).then((result) => {
+										    	reloadTable(id);
+										    });
+								}
+							
+							});
+					  }
+					});
 			});
+			
 		});
+		
+		function reloadTable(id) {
+			console.log("抓reload ID=" + id);
+			let table = '<table class="table table-bordered" id="table_id" class="compact hover stripe"><thead><tr><th>報名帳號</th><th>報名姓名</th><th style="width: 250px">email</th><th>連絡電話</th><th style="width: 250px">報名時間</th><th style="width: 70px">操作</th></tr></thead>';
+			$.ajax({
+				type: "post",
+				url: "/group5/admin/queryactivityajax.controller/"+id,
+				data:{},
+				contentType: "application/json",
+				success: function(data){
+					console.log(data);
+					data.forEach(element => table+='<tr><td>'+element.memberId+'</td><td>'+element.memberName+'</td><td>'+element.email+'</td><td>'+element.phone+'</td><td>'+element.signUpTime+'</td><td><input type="hidden" name="dataId" value="'+element.signUpId+'" id="dd" /><input type="button" id="delete" name="delete" value="刪除" class="del btn btn-outline-danger " /></td></tr>');
+					table+='</table>';
+					$('#tableVal').html(table);
+				},
+				error: function(){
+					console.log("reload showSignUp error");
+					Swal.fire(
+						      'reload!',
+						      '請在試一次',
+						      'error'
+						    );
+				}
+				
+			});
+			
+		}
+		
 	</script>
 	
 	<%@ include file="../admin/AdminstyleFoot.jsp"%>

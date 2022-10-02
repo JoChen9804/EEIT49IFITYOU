@@ -5,9 +5,16 @@
 <head>
 <meta charset="UTF-8">
 <title>I FIT YOU</title>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 <%@ include file="../admin/FrontStageHead.jsp"%>
+
+<!-- JQuery  連結-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<!-- sweetalert2   連結-->
+	<script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
 
 
 	<!-- Details -->
@@ -48,19 +55,19 @@
                             <li class="media">
                                 <i class="fas fa-square"></i>
                                 <div class="media-body">
-                                email: <input type="text" style="margin-bottom: 0.5em;" name="memberEmail" value="${loginM.email}">
+                                email: <input type="text" style="margin-bottom: 0.5em;" name="memberEmail" id="signUpMail" value="${loginM.email}">
 								</div>
                             </li>
                             <li class="media">
                                 <i class="fas fa-square"></i>
                                 <div class="media-body">
-                                連絡電話: <input type="text" style="margin-bottom: 0.5em;" name="memberPhone"value="${loginM.memberDetail.cellphone}"/>
+                                連絡電話: <input type="text" style="margin-bottom: 0.5em;" name="memberPhone" id="signUpPhone" value="${loginM.memberDetail.cellphone}"/>
 								</div>
                             </li>
                         </ul>
                         <input type="hidden" name="memberId" value="${loginM.id}"/>
                         <input type="hidden" name="activityId" value="${signUpActivity.activityId}"/>
-                        <input type="submit" value="確定報名" class="btn-solid-reg page-scroll"/>
+                        <input type="button" id="confirmSignUp" value="確定報名" class="btn-solid-reg page-scroll"/>
                          &emsp;
                         <a class="btn-solid-reg page-scroll" href="/group5/toactivity/${signUpActivity.activityId}">返回</a>
                         </form>
@@ -71,7 +78,40 @@
         </div> <!-- end of container -->
     </div> <!-- end of basic-1 -->
     <!-- end of details -->
-
+    
+    <script type="text/javascript">
+    	$('#confirmSignUp').click(function(){
+    		if($('#signUpMail').val()=='' || $('#signUpPhone').val()==''){
+				Swal.fire({
+					title:'資料不完整',
+					text:'聯絡資料不可空白',
+					icon:'warning'
+				});
+			}else{
+			Swal.fire({
+				  title:'聯絡資料確認無誤?',
+				  text: 'Email、連絡電話',
+				  icon: 'question',
+				  showCancelButton: true,
+				  confirmButtonColor: '#3085d6',
+				  cancelButtonColor: '#d33',
+				  confirmButtonText: '確認',
+				  cancelButtonText: '取消'
+				}).then((result) => {
+				  if (result.isConfirmed) {
+					  Swal.fire(
+						      '報名成功!',
+						      '已幫您登入資料',
+						      'success'
+						    ).then((result) => {
+				   				 $(this).parent().submit();
+						    });
+				  }
+				});
+			}
+    	});
+    </script>
+    
 <%@ include file="../admin/FrontStageFoot.jsp"%>
 </body>
 </html>

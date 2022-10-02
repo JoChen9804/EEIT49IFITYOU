@@ -27,7 +27,6 @@ import tw.group5.activity.service.ActivityActivityService;
 import tw.group5.activity.service.ActivitySignUpService;
 import tw.group5.activity.service.ActivityVoucherService;
 import tw.group5.admin.model.MemberBean;
-import tw.group5.admin.service.AdminService;
 
 @Controller
 @RequestMapping("/group5")
@@ -35,8 +34,6 @@ public class ActivityFunctionController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	//外部service
-	@Autowired
-	private AdminService adminService;
 	
 	/*
 	 * voucher
@@ -86,6 +83,14 @@ public class ActivityFunctionController extends HttpServlet {
 		m.addAttribute("loginM", (MemberBean) session.getAttribute("loginMember"));
 		m.addAttribute("signUpActivity", aa);
 		return "activity/ActivitySignUp"; 
+	}
+	
+	//查詢
+	@GetMapping("/toactivity/{activityId}")
+	public String toactivity(@PathVariable(name = "activityId")int activityId, Model m) {
+		ActivityActivity aa = avtivityService.selectById(activityId);
+		m.addAttribute("query_activity", aa);
+		return "activity/ActivityActivityDetailUser"; 
 	}
 	
 	@GetMapping("/admin/activitymain.controller")
@@ -159,14 +164,6 @@ public class ActivityFunctionController extends HttpServlet {
 		return "redirect:activitymain.controller";
 	}
 	
-	//查詢
-	@GetMapping("/toactivity/{activityId}")
-	public String toactivity(@PathVariable(name = "activityId")int activityId, Model m) {
-		ActivityActivity aa = avtivityService.selectById(activityId);
-		m.addAttribute("query_activity", aa);
-		return "activity/ActivityActivityDetailUser"; 
-	}
-
 	@PostMapping("/admin/queryactivity.controller")
 	public String activityQuery(@RequestParam("dataId") int id, Model m) {
 		ActivityActivity aa = avtivityService.selectById(id);
@@ -177,23 +174,25 @@ public class ActivityFunctionController extends HttpServlet {
 		return "activity/ActivityConfirm";
 	}
 	
+	@PostMapping("/admin/queryactivityajax.controller/{id}")
+	@ResponseBody
+	public Set<ActivitySignUp> activityQueryAjax(@PathVariable int id, Model m) {
+		ActivityActivity aa = avtivityService.selectById(id);
+		m.addAttribute("query_activity", aa);
+		Set<ActivitySignUp> signUp = signUpService.queryByActivity(aa);
+		m.addAttribute("signUp_queryAll", signUp);
+		m.addAttribute("query", true);
+		return signUp;
+	}
+	
 	/*
 	 * signUp--------------------------------------------------------------------------------
 	 */
 	@Autowired
 	private ActivitySignUpService signUpService;
 	
-	//前往頁面
-	@PostMapping("/admin/signupmain.controller")
-	public String signUpMain(int activityId, Model m) {
-		Set<ActivitySignUp> signUp = signUpService.queryByActivity(avtivityService.selectById(activityId));
-		m.addAttribute("signUp_queryAll", signUp);
-		return "activity/ActivityAllSignup"; 
-	}
-	
 	//新增
 	@PostMapping("/user/signupadd.controller")
-	@ResponseBody
 	public String signUpAdd(Model m, String memberAccount, 
 									int memberId,
 									String memberName,
@@ -213,7 +212,25 @@ public class ActivityFunctionController extends HttpServlet {
 		ActivitySignUp signUp1 = signUpService.insert(signUp);
 		
 		m.addAttribute("signUp_add", signUp1);
-		return "success!"; 
+		return "redirect:/group5/toactivity/"+activityId; 
+	}
+	
+	//前往頁面
+	@PostMapping("/admin/signupmain.controller")
+	public String signUpMain(int activityId, Model m) {
+		Set<ActivitySignUp> signUp = signUpService.queryByActivity(avtivityService.selectById(activityId));
+		m.addAttribute("signUp_queryAll", signUp);
+		return "activity/ActivityAllSignup"; 
+	}
+	
+	//刪除
+	@PostMapping("/admin/signupdelete.controller")
+	@ResponseBody
+	public void signDelete(@RequestBody int id) {
+		
+		System.out.println("抓刪除ID="+id);
+		
+		signUpService.delete(id);
 	}
 	
 }
