@@ -83,11 +83,8 @@ public class UserPostController {
     //貼文首頁
     @GetMapping("/UserPostAll")
     public ModelAndView postFornt(MainPostBean mpBean) {
-        ModelAndView mav = new ModelAndView(USERPOSTFRONTPAGE);
-        if(memberAccount !=null) {
-            memberBean();
-        }
         
+        ModelAndView mav = new ModelAndView(USERPOSTFRONTPAGE);
         
         System.out.println(memberAccount);
         
@@ -179,7 +176,6 @@ public class UserPostController {
     @PostMapping("/UserPostChange")
     public ModelAndView modifyPage(Integer updatepost) {
         
-        System.out.println("3212131");
         ModelAndView mav = new ModelAndView(USERPOSTCHANGEPOST);
         
         MainPostBean queryContent = mpService.selectById(updatepost);

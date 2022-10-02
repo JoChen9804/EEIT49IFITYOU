@@ -682,6 +682,12 @@
 
     <script src="/group5/js/jquery.min.js"></script>
     <script src="js/images.js"></script>
+    
+    
+    
+    
+    
+    
 
 
 	<%@ include file="../admin/FrontStageFoot.jsp"%>
