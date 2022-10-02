@@ -47,16 +47,83 @@ fieldset {
     
     <%@ include file="../admin/AdminstyleHead.jsp" %>
      
-     <a class="btn-solid-reg " href="/group5/admin/AllPostStatus">貼文管理</a>
+<!--      <a class="btn-solid-reg " href="/group5/admin/AllPostStatus">貼文管理</a> -->
        
-     
-     <!-- JQuery  -->
-    <script src="/group5/js/jquery.min.js"></script>
-    <!-- Custom scripts for all pages-->
-    <!-- DataTable 連結 -->
-    <script type="text/javascript" charset="utf8"
-        src="https://cdn.datatables.net/1.11.2/js/jquery.dataTables.js"></script>
-     
+<!-- Content Row -->
+
+<div class="row">
+
+    <!-- Area Chart -->
+    <div class="col-xl-8 col-lg-7">
+        <div class="card shadow mb-4">
+            <!-- Card Header - Dropdown -->
+            <div
+                class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">貼文數量</h6>
+            </div>
+            <input type="hidden" class="jan" value="${jan}">
+            <input type="hidden" class="feb" value="${feb}">
+            <input type="hidden" class="mar" value="${mar}">
+            <input type="hidden" class="apr" value="${apr}">
+            <input type="hidden" class="may" value="${may}">
+            <input type="hidden" class="jun" value="${jun}">
+            <input type="hidden" class="jul" value="${jul}">
+            <input type="hidden" class="aug" value="${aug}">
+            <input type="hidden" class="sep" value="${sep}">
+            <input type="hidden" class="oct" value="${oct}">
+            <input type="hidden" class="nov" value="${nov}">
+            <input type="hidden" class="dec" value="${dec}">
+            
+            <!-- Card Body -->
+            <div class="card-body">
+                <div class="chart-area">
+                    <canvas id="myAreaChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pie Chart -->
+    <div class="col-xl-4 col-lg-5">
+        <div class="card shadow mb-4">
+            <!-- Card Header - Dropdown -->
+            <div
+                class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">貼文類型</h6>
+       
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <div class="chart-pie pt-4 pb-2">
+                    <canvas id="myPieChart"></canvas>
+                </div>
+                <div class="mt-4 text-center small">
+                    <span class="mr-2">
+                        <i class="fas fa-circle text-primary"></i>公告 ${announcement}
+                        <input type="hidden" class="announcement" value="${announcement}">
+                    </span>
+                    <span class="mr-2">
+                        <i class="fas fa-circle text-success"></i>分享 ${share}
+                        <input type="hidden" class="share" value="${share}">
+                    </span>
+                    <span class="mr-2">
+                        <i class="fas fa-circle text-info"></i>問題 ${question}
+                        <input type="hidden" class="question" value="${question}">
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+  
+  
+  
+  
+  
+  
+
      
      
    <form id="audit" class="btn btn-danger btn-icon-split"
@@ -363,7 +430,29 @@ fieldset {
        
         
         </script>
+        
+        
+       <!-- JQuery  -->
+    <script src="/group5/js/jquery.min.js"></script>
+    <!-- Custom scripts for all pages-->
+    <!-- DataTable 連結 -->
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.11.2/js/jquery.dataTables.js"></script>      
 
+  <!-- Bootstrap core JavaScript-->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- Core plugin JavaScript-->
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+  <!-- Custom scripts for all pages-->
+  <script src="js/sb-admin-2.min.js"></script>
+  <!-- Page level plugins -->
+  <script src="vendor/chart.js/Chart.min.js"></script>
+
+  <!-- Page level custom scripts -->
+  <script src="postfolder/demo/chart-area-demo.js"></script>
+  <script src="postfolder/demo/chart-pie-demo.js"></script>
+<!--   <script src="postfolder/demo/chart-bar-demo.js"></script> -->
 
         <%@ include file="../admin/AdminstyleFoot.jsp"%>
         

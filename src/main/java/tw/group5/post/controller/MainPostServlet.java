@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.sound.midi.Soundbank;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -107,8 +108,13 @@ public class MainPostServlet {
             System.out.println("所有貼文");
          
             List<MainPostBean> query = firstImagePath(mpService.allPosts());
+            
             mav.addObject("query", query);
 
+            
+            ModelAndView statistics = statistics(query,mav);
+            
+            return statistics;
         }
         
         
@@ -458,7 +464,80 @@ public class MainPostServlet {
     }
     
     
-    
+    public ModelAndView statistics(List<MainPostBean> listmpBean,ModelAndView mav) {
+        //貼文類型
+        int share = 0 ,announcement = 0 , question = 0;
+        
+        //貼文每月比數
+        int jan = 0, feb =0, mar=0, apr=0, may=0, jun=0, jul=0, aug=0, sep=0, oct=0, nov=0, dec=0;
+        
+  
+        
+        
+        
+        for(MainPostBean oneBean : listmpBean) {
+            if("分享".equals(oneBean.getPostTypeName())) {
+                share++;
+            }
+            if("公告".equals(oneBean.getPostTypeName())) {
+                announcement++;
+            }
+            if("問題".equals(oneBean.getPostTypeName())) {
+                question++;
+            }
+            
+            
+            switch (oneBean.getAddtime().substring(5, oneBean.getAddtime().indexOf("-",oneBean.getAddtime().indexOf("-")+1))) {
+            case  "1": jan ++; break;
+            case  "2": feb ++; break;
+            case  "3": mar ++; break;
+            case  "4": apr ++; break;  
+            case  "5": may ++; break; 
+            case  "6": jun ++; break; 
+            case  "7": jul ++; break; 
+            case  "8": aug ++; break; 
+            case  "9": sep ++; break;
+            case "10": oct ++; break;
+            case "11": nov ++; break;
+            case "12": dec ++; break;
+            default: break;
+            }
+            
+
+        
+            if ("10".equals(oneBean.getAddtime().substring(5, oneBean.getAddtime().indexOf("-",oneBean.getAddtime().indexOf("-")+1))) ) {
+                
+                System.out.println("===" + oneBean.getAddtime().substring(5, oneBean.getAddtime().indexOf("-",oneBean.getAddtime().indexOf("-")+1)));
+//                oneBean.setP_image(oneBean.getP_image().substring(0, (oneBean.getP_image().indexOf(","))));
+            }
+            
+            
+            
+            
+            
+            System.out.println(oct);
+        
+        }
+        //貼文類型
+        mav.addObject("share",share);
+        mav.addObject("announcement",announcement);
+        mav.addObject("question",question);
+        
+        mav.addObject("jan",jan);
+        mav.addObject("feb",feb);
+        mav.addObject("mar",mar);
+        mav.addObject("apr",apr);
+        mav.addObject("may",may);
+        mav.addObject("jun",jun);
+        mav.addObject("jul",jul);
+        mav.addObject("aug",aug);
+        mav.addObject("sep",sep);
+        mav.addObject("oct",oct);
+        mav.addObject("nov",nov);
+        mav.addObject("dec",dec);
+        
+        return mav;   
+    }
     
     
     
