@@ -71,7 +71,7 @@ $()
 										</ul>
 										<form action="/group5/gym/searchDetail/${gymInSearch.gymName}"
 											method="post">
-											<% if(request.getAttribute("loginMember")!=""){%>
+											<% if(request.getSession().getAttribute("loginMember")!=null){%>
 													<input type="hidden" value=${loginMember.id } name="memberIdNow" />
 											<%}else{ %>
 												<input type="hidden" value="0" name="memberIdNow" />

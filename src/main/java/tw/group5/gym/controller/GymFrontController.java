@@ -66,4 +66,56 @@ public class GymFrontController {
 	public GymLogCount processCountFavoriteAction(@RequestBody GymBean gym) {
 		return gymLogService.countGymLog(gym);
 	}
+	
+	
+	//更新收藏狀態為true(1)
+	@PostMapping("/user/gymFavorite/{logId}")
+	@ResponseBody
+	public GymLog processUpdateFavoriteAction(@PathVariable("logId") int logId) {
+		GymLog gymLog = gymLogService.findById(logId);
+		gymLog.setGymId(gymLog.getGym().getGymId());
+		if(gymLog.getFavorite()==null || gymLog.getFavorite()==0) {
+			System.out.println("set true");
+			gymLog.setFavorite(1);
+			return gymLogService.updateGymLog(gymLog);
+		}else {
+			System.out.println("set false");
+			gymLog.setFavorite(0);
+			return gymLogService.updateGymLog(gymLog);
+		}
+	}
+	
+	//新增收藏
+	@PostMapping("/user/gymFavorite")
+	@ResponseBody
+	public GymLog processAddFavoriteAction(@RequestBody GymLog gLog) {
+		gLog.setGym(gymService.findById(gLog.getGymId()));
+		gLog.setMember(adminService.selectOneMember(gLog.getMemberId()));
+		return gymLogService.addGymLog(gLog);
+	}
+	
+	
+	//更新評分
+	@PostMapping("/user/gymRating/{logId}/{rating}")
+	@ResponseBody
+	public GymLog processUpdateRatingAction(@PathVariable("logId") int logId,@PathVariable("rating") int rating) {
+		GymLog gymLog = gymLogService.findById(logId);
+		gymLog.setRating(rating);
+		System.out.println(rating+"rattttttttttttttttttttttttting");
+		GymLog gymLogResult = gymLogService.updateGymLog(gymLog);
+		gymService.updateGymRating(gymLog.getGym().getGymId());
+		return gymLogResult;
+	}
+	
+	//新增評分
+	@PostMapping("/user/gymRating")
+	@ResponseBody
+	public GymLog processAddRatingAction(@RequestBody GymLog gLog) {
+		gLog.setGym(gymService.findById(gLog.getGymId()));
+		gLog.setMember(adminService.selectOneMember(gLog.getMemberId()));
+		GymLog gymLogResult = gymLogService.addGymLog(gLog);
+		gymService.updateGymRating(gLog.getGymId());
+		return gymLogResult;
+	}
+	
 }

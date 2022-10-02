@@ -41,10 +41,11 @@ $(function(){
 	$("#start"+logRating).prop("checked","true");
 	}
 	
-	console.log("${logStatus.logId}")
+	console.log("123123++++${logStatus.logId}")
 	
 })
-
+let mId = "${loginMember.id }";
+let logId = '${logStatus.logId}';
 let gymBean={"gymId":"${gymDetail.gymId}","gymName":"${gymDetail.gymName }","gymAddress":"${gymDetail.gymAddress }","gymOpenHours":"${gymDetail.gymOpenHours }","rating":"${gymDetail.rating }","gymPicture":"${gymDetail.gymPicture }"};
 function countFavorite(){
 	$.ajax({
@@ -88,7 +89,7 @@ function saveAndRating(){
 	
 }
 </script>
-<script src="/group5/js/ratingAndSaved.js" defer></script>
+<script src="/group5/js/ratingAndSavedFront.js" defer></script>
 </head>
 <body>
 	<%@ include file="../admin/FrontStageHead.jsp"%>
