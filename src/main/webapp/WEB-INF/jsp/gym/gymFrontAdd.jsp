@@ -28,6 +28,72 @@
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://kit.fontawesome.com/a3daa825b8.js"
 	crossorigin="anonymous"></script>
+<script>
+$(function(){
+	$('#submitAdd').on("click",function(){
+		let name =$(".showNameText").text();
+		let address =$(".showAddressText").text();
+		let openhours =$(".showTimesText").text();
+		let gymBean={"gymName":name, "gymAddress": address, "gymOpenHours": openhours, "gymPicture":$("#imagePathF").val()}
+		Swal.fire({
+            title: '請問是否確定新增',
+            showDenyButton: true,
+            confirmButtonText: '確定新增',
+            denyButtonText: `再想一下`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    icon: 'Saved!',
+                    html: '<p>建立名稱：'+name+'</p><p>地址：'+address+'</p><p>營業時間：'+openhours+'</p>',
+                    showCancelButton: true,
+                    confirmButtonText: '確定新增',
+                }).then((result2)=>{
+                		if(result2.isConfirmed){
+                			$.ajax({
+                				type: "post",
+                				url: "/group5/user/gym/addGym",
+                				data: JSON.stringify(gymBean),
+                				dataType: "json",
+                				contentType: "application/json",
+                				success: function(data){
+                					let showResult="<p>建立完成</p><p>建立名稱："+data.gymName+"</p><p>地址："
+                									+data.gymAddress+"</p><p>營業時間："+data.gymOpenHours+"</p>";	
+                					},
+                					error: function(){
+                						console.log("error");
+                					}
+                				});
+                				Swal.fire('Saved!', '新增成功', 'success').then((result3)=>{
+                					location.reload();
+                				});
+                			}
+                		});
+                
+            } else if (result.isDenied) {
+                Swal.fire('Changes are not saved', '', 'info');
+            }
+        })
+	})
+	
+	//picture
+	$('#ff').on('change', function(e){      
+		let file = this.files[0];
+		let imagePath="/group5/images/"+file.name;
+		$('#imagePathF').val(imagePath);
+		//console.log();
+		//預覽
+		let objectURL = URL.createObjectURL(file);
+		$('#img1').attr('src', objectURL);
+	});
+	
+	//saving picture with ajax
+	function savePicture(){
+		
+	}
+	
+});
+
+</script>
 </head>
 <body onload="city()">
 	<%@ include file="../admin/FrontStageHead.jsp"%>
@@ -93,10 +159,18 @@
 						<input type="hidden" id="hiddenP">
 						<input type="hidden" id="hiddenDiv">
 					</div>
+					<div class="md-3">
+						<div class="st1">
+							<label>修改圖片:</label>
+							<input type="file" id="ff" name="photo"/>
+							<img id="img1" width="230" />
+						</div>
+					</div>
 					<div style="padding-bottom: 16px;">
 						<p class="showNameText"></p>
 						<p class="showAddressText"></p>
 						<p class="showTimesText"></p>
+						<input type="hidden" id="imagePathF">
 					</div>
 					<div class="col-12">
 						<button class="btn-solid-reg page-scroll" type="submit" id="submitAdd">新增</button>

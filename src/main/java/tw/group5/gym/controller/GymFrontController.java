@@ -125,4 +125,11 @@ public class GymFrontController {
 		return "/gym/gymFrontAdd";
 	}
 	
+	
+	@PostMapping("/user/gym/addGym")
+	@ResponseBody
+	public GymBean processAddAction(@RequestBody GymBean gym1) {
+		return gymService.add(gym1);
+	}
+	
 }

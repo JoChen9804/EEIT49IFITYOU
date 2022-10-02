@@ -1,5 +1,7 @@
 package tw.group5.gym.service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -7,6 +9,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import tw.group5.gym.model.GymBean;
 import tw.group5.gym.model.GymLog;
@@ -75,6 +78,16 @@ public class GymService{
 			return result.get();
 		}
 		return null;
+	}
+	
+	
+	//圖片處理>>上傳檔案至資料夾並回傳檔名
+	public String processImg(String voucherNo, MultipartFile photoData)throws IllegalStateException, IOException {
+		String fileName = voucherNo+System.currentTimeMillis()+".jpg";
+		String saveFileDir = "C:/images/admin";
+		File saveFilePath = new File(saveFileDir, fileName);
+		photoData.transferTo(saveFilePath);
+		return fileName;
 	}
 	
 }
