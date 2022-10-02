@@ -87,12 +87,11 @@
 							<span class="input-group-text">結束營業時間：</span> <input
 								class="form-control closeTime" type="time" name="closeTime">
 						</div>
-						<div class="col-10" id="morePeriodsDiv" style="padding-bottom: 12px;">
-							<button class="btn btn-success" id="morePeriods">多段營業時間</button>
-							<button class="btn btn-success" id="finishedAddPeriods" disabled>新增營業時間</button>
+						<div class="col-lg-12 d-flex justify-content-start" id="morePeriodsDiv" style="padding:0px;">
+							<button class="btn btn-success" id="finishedAddPeriods">新增營業時間</button>
 						</div>
-						<p id="hiddenP"></p>
-						<div id="hiddenDiv"></div>
+						<input type="hidden" id="hiddenP">
+						<input type="hidden" id="hiddenDiv">
 					</div>
 					<div style="padding-bottom: 16px;">
 						<p class="showNameText"></p>
