@@ -56,7 +56,7 @@ $(function(){
         if($("#hiddenP").val()!=""){
             $("#finishedAddPeriods").prop("disabled",null);
             $("#hiddenDiv").append($("#hiddenP").val()+"<br>");
-            $(".btn-group").children("input:checked").prop("disabled","true");
+            //$(".btn-group").children("input:checked").prop("disabled","true");
             number=[];
             $('#hiddenP').val("");
         }

@@ -36,9 +36,15 @@ $(function(){
 	if("${logStatus.favorite}"==1){
 		$("#saved").prop("checked","true");
 	}
+	if("${loginMember.id}"==""){
+		$("#saved").next().css("display","none");
+		$(".saved").append("<span style='color:red'>請登入開啟收藏功能</span>");
+		$(".center").css("display","none");
+		$("#rating-text").append("<span style='color:red'>&nbsp;請登入開啟評分功能</span>");
+	}
 	let logRating="${logStatus.rating}"
 	if(logRating!=""){
-	$("#start"+logRating).prop("checked","true");
+		$("#start"+logRating).prop("checked","true");
 	}
 	
 	console.log("123123++++${logStatus.logId}")
@@ -116,7 +122,7 @@ function saveAndRating(){
 								for="saved"></label>
 						</div>
 						<div class="rating-wrap">
-							<span>評分:</span>
+							<span id="rating-text">評分:</span>
 							<div class="center">
 								<div class="rating d-flex" style="padding-top: 15px">
 									<input type="radio" id="start5" name="rating" value="5" class="star" /><label for="start5" class="full order-4"></label>

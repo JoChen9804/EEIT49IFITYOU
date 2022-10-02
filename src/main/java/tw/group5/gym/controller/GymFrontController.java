@@ -21,7 +21,7 @@ import tw.group5.gym.service.GymLogService;
 import tw.group5.gym.service.GymService;
 
 @Controller
-@RequestMapping("/group5/gym")
+@RequestMapping("/group5")
 public class GymFrontController {
 	
 	@Autowired
@@ -33,7 +33,7 @@ public class GymFrontController {
 	@Autowired
 	private AdminService adminService;
 	
-	@GetMapping("/search")
+	@GetMapping("/gym/search")
 	public String showGymsDataPage(Model m) {
 		List<GymBean> list =gymService.findGyms(new GymBean());
 		m.addAttribute("searchAllGym",list);
@@ -42,7 +42,7 @@ public class GymFrontController {
 	
 	
 	//傳到detail頁面
-	@PostMapping("/searchDetail/{gName}")
+	@PostMapping("/gym/searchDetail/{gName}")
 	public String processDetailPageAction(@PathVariable("gName") String gName, int memberIdNow, Model m) {
 		GymBean gym = gymService.queryName(gName);
 		m.addAttribute("gymDetail", gym);
@@ -61,7 +61,7 @@ public class GymFrontController {
 		return "/gym/gymFrontDetail";
 	}
 	
-	@PostMapping("/countFavorite")
+	@PostMapping("/gym/countFavorite")
 	@ResponseBody
 	public GymLogCount processCountFavoriteAction(@RequestBody GymBean gym) {
 		return gymLogService.countGymLog(gym);
@@ -69,7 +69,7 @@ public class GymFrontController {
 	
 	
 	//更新收藏狀態為true(1)
-	@PostMapping("/user/gymFavorite/{logId}")
+	@PostMapping("/user/gym/gymFavorite/{logId}")
 	@ResponseBody
 	public GymLog processUpdateFavoriteAction(@PathVariable("logId") int logId) {
 		GymLog gymLog = gymLogService.findById(logId);
@@ -86,7 +86,7 @@ public class GymFrontController {
 	}
 	
 	//新增收藏
-	@PostMapping("/user/gymFavorite")
+	@PostMapping("/user/gym/gymFavorite")
 	@ResponseBody
 	public GymLog processAddFavoriteAction(@RequestBody GymLog gLog) {
 		gLog.setGym(gymService.findById(gLog.getGymId()));
@@ -96,7 +96,7 @@ public class GymFrontController {
 	
 	
 	//更新評分
-	@PostMapping("/user/gymRating/{logId}/{rating}")
+	@PostMapping("/user/gym/gymRating/{logId}/{rating}")
 	@ResponseBody
 	public GymLog processUpdateRatingAction(@PathVariable("logId") int logId,@PathVariable("rating") int rating) {
 		GymLog gymLog = gymLogService.findById(logId);
@@ -108,14 +108,21 @@ public class GymFrontController {
 	}
 	
 	//新增評分
-	@PostMapping("/user/gymRating")
+	@PostMapping("/user/gym/gymRating")
 	@ResponseBody
 	public GymLog processAddRatingAction(@RequestBody GymLog gLog) {
-		gLog.setGym(gymService.findById(gLog.getGymId()));
+//		gLog.setGym(gymService.findById(gLog.getGymId()));
+		System.out.println(gLog.getMemberId());
 		gLog.setMember(adminService.selectOneMember(gLog.getMemberId()));
 		GymLog gymLogResult = gymLogService.addGymLog(gLog);
 		gymService.updateGymRating(gLog.getGymId());
 		return gymLogResult;
+	}
+	
+	
+	@GetMapping("/user/gym/add")
+	public String processAddGymFrontAction() {
+		return "/gym/gymFrontAdd";
 	}
 	
 }

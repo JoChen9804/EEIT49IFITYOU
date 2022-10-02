@@ -38,11 +38,9 @@ public class GymLog implements Serializable{
 	@Column(name = "LOGID")
 	private int logId;
 	
-	@Column(name = "MEMBERID")
 	@Transient
 	private Integer memberId;
 	
-	@Column(name = "GYMNO")
 	@Transient
 	private Integer gymId;
 	

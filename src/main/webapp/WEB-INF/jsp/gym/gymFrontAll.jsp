@@ -28,7 +28,11 @@
 <script src="https://kit.fontawesome.com/a3daa825b8.js"
 	crossorigin="anonymous"></script>
 <script>
-$()
+$(function(){
+	$("#addGym").on("click",function(){
+		location.href = '/group5/user/gym/add';
+	})
+})
 </script>
 
 </head>
@@ -82,10 +86,25 @@ $()
 		                        </div>
 	                        </div>
 	                    </div>
+	                    <!-- Card-->
                     </div>
 					<!-- end of col -->
                     <!-- end of card -->
-                </c:forEach>  
+                </c:forEach>
+                <div class="col-lg-4 d-flex">
+						<div class="card flex-fill">
+							<div class="feature-item h-100 d-flex align-items-center" id="addGym">
+								<div class="card-body">
+									<div class="card-text">
+										<h1 style="color:gray">
+											新增據點<br>
+											<i class="fa-solid fa-circle-plus"></i>
+										</h1>
+		                            </div>
+		                        </div>
+	                        </div>
+	                    </div>
+	                </div> 
             </div> <!-- end of row -->
         </div> <!-- end of container -->
     </div> <!-- end of cards-1 -->
