@@ -112,7 +112,7 @@
 	<%@ include file="FrontStageHead.jsp"%>
 	<!-- Header -->
 	<header id="header" class="header">
-		<div class="header-content">
+		<div class="header-content" style="padding-top: 4rem;">
 			<!-- Bootstrap core JavaScript-->
 			<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
@@ -151,14 +151,14 @@
 													<br> <br><input type="text"
 														class="form-control form-control-user" id="uname"
 														aria-describedby="emailHelp" placeholder="請輸入帳號..."
-														name="name" required> <input type="hidden"
+														name="name" required style="font-size:1.2rem"> <input type="hidden"
 														name="username" id="username">
 												</div>
 												<div class="form-group">
 													<input type="password"
 														class="form-control form-control-user"
 														id="exampleInputPassword" placeholder="請輸入密碼..."
-														name="password" required>
+														name="password" required style="font-size:1.2rem">
 												</div>
 												<div class="form-group">
 													<div class="custom-control custom-checkbox small">
@@ -174,13 +174,9 @@
 												<hr>
 												<a href="index.html"
 													class="btn btn-google btn-user btn-block"
-													style="color: #fff; background-color: #ea4335; border-color: #fff; text-decoration: none;">
+													style="color: #fff; background-color: #ea4335; border-color: #fff; text-decoration: none;font-size:1.2rem;">
 													<i class="fab fa-google fa-fw"></i> Login with Google
-												</a> <a href="index.html"
-													class="btn btn-facebook btn-user btn-block"
-													style="color: #fff; background-color: #3b5998; border-color: #fff; text-decoration: none;">
-													<i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
-												</a>
+												</a> 
 											</form>
 											<hr>
 											<div class="text-center">
@@ -208,9 +204,9 @@
 	<!-- end of header -->
 	<script>
 		$(document).ready(function() {
-			$('#loginbutton').attr("style", "background-color:#4e73df")
+			$('#loginbutton').attr("style", "background-color:#4e73df;font-size:1.2rem;")
 			$('#cktoggle_id2').val("on")
-			$('#group5control').attr('style', 'background-color: #53618b')
+			$('#group5control').attr('style', 'background-color: #53618b;font-size:1.2rem;')
 		});
 
 		var unameValue = $('#uname').val();
@@ -221,12 +217,12 @@
 		console.log($('#username').val());
 		$('#cktoggle_id2').on('change', function() {
 			if ($('#cktoggle_id2').val() == "on") {
-				$('#loginbutton').attr("style", "background-color:#53618b");
+				$('#loginbutton').attr("style", "background-color:#53618b;font-size:1.2rem;");
 				$('#cktoggle_id2').val("off");
 				var unameValue = $('#uname').val();
 				$('#username').val(unameValue + ",off");
 			} else {
-				$('#loginbutton').attr("style", "background-color:#4e73df");
+				$('#loginbutton').attr("style", "background-color:#4e73df;font-size:1.2rem;");
 				$('#cktoggle_id2').val("on");
 				var unameValue = $('#uname').val();
 				$('#username').val(unameValue + ",on");

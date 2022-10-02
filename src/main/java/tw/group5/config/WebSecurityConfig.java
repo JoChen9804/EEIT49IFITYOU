@@ -82,8 +82,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		  // 異常處理
 			http.exceptionHandling()
 				//.accessDeniedPage("/異常處理頁面");  // 請自行撰寫
-				.accessDeniedHandler(myAccessDeniedHandler);
-			
+				.accessDeniedHandler(myAccessDeniedHandler);	
 	}
 
 }
