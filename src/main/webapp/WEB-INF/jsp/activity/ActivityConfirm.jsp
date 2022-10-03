@@ -144,40 +144,10 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
     <!-- end of details -->
     
     <div id="showSignUp">
-    
     <hr>
     <h1 style="text-align: left">報名名單</h1>
     <br>
     <div id= "tableVal"></div>
-		<!-- 
-	<table class="table table-bordered" id="table_id"
-		class="compact hover stripe">
-		<thead>
-			<tr>
-				<th>報名帳號</th>
-				<th>報名姓名</th>
-				<th style="width: 250px">email</th>
-				<th>連絡電話</th>
-				<th style="width: 250px">報名時間</th>
-				<th style="width: 70px">操作</th>
-			</tr>
-		</thead>
-		<c:forEach var="sqa" items="${signUp_queryAll}">
-			<tr id ="tr">
-				<td id="mId">${sqa.memberId}</td>
-				<td id="mName">${sqa.memberName}</td>
-				<td id="mEail">${sqa.email}</td>
-				<td id="mPhone">${sqa.phone}</td>
-				<td id="mTime">${sqa.signUpTime}</td>
-				<td>
-					<input type="hidden" name="dataId" value="${sqa.signUpId}" id="dd" /> 
-					<input type="button" id="delete" name="delete" value="刪除" class="del btn btn-outline-danger " />
-				</td>
-			</tr>
-		</c:forEach>
-	</table>
-		 -->
-
 	</div>
 
 	<form action="activitymain.controller" method="get">

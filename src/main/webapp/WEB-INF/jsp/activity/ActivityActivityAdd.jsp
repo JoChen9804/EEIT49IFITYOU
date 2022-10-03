@@ -49,6 +49,11 @@ response.setCharacterEncoding("UTF-8");
 			</div>
 			
 			<div class="st1">
+				<label class="t1">報名截止日:</label> 
+				<form:input type="date" path="startTime" id="deadline" class="need"/>＊
+			</div>
+			
+			<div class="st1">
 				<label class="t1">活動開始日:</label> 
 				<form:input type="date" path="startTime" id="startTime" class="need"/>＊
 			</div>
@@ -103,7 +108,7 @@ response.setCharacterEncoding("UTF-8");
     		if(rs)return;
     		
     		let date = new Date();
-			if(date.toISOString().split('T')[0] >= $('#endTime').val()){
+			if(date.toISOString().split('T')[0] >= $('#endTime').val() || date.toISOString().split('T')[0] >= $('#deadline').val()){
 				Swal.fire({
 					title:'日期錯誤',
 					text:'結束日期已過請重新選擇',

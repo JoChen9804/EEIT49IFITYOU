@@ -31,6 +31,9 @@ public class ActivityActivity {
 	@Column(name = "activitycontent")
 	private String activityContent;
 	
+	@Column(name = "signupdeadline")
+	private String signUpDeadline;
+	
 	@Column(name = "starttime")
 	private String startTime;
 	
@@ -86,6 +89,14 @@ public class ActivityActivity {
 		this.activityContent = activityContent;
 	}
 
+	public String getSignUpDeadline() {
+		return signUpDeadline;
+	}
+
+	public void setSignUpDeadline(String signUpDeadline) {
+		this.signUpDeadline = signUpDeadline;
+	}
+
 	public String getStartTime() {
 		return startTime;
 	}
@@ -133,8 +144,6 @@ public class ActivityActivity {
 	public void setPhotoData(String photoData) {
 		this.photoData = photoData;
 	}
-	
-	
-	
+
 	
 }

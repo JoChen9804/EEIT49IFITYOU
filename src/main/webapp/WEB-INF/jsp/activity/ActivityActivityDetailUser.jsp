@@ -27,10 +27,11 @@
                     <div class="p-heading">
                     	${query_activity.activityContent}
                     </div>
+                    <p>123456</p>
                    	<form action="/group5/user/toactivitysignup" method="post" style="display:inline">
                    		<input type="hidden" name="userId" value=""/>
                    		<input type="hidden" name="activityId" value="${query_activity.activityId}"/>
-                    	<input type="submit" class="btn-solid-reg page-scroll" value="我想報名"/>
+                    	<input type="submit" id="wantToSignUp" class="btn-solid-reg page-scroll" value="我想報名"/>
                    	</form>
                    	&emsp;
                     <a class="btn-solid-reg page-scroll" href="../activityuser">返回</a>
@@ -40,6 +41,20 @@
         </div> <!-- end of container -->
     </div> <!-- end of basic-2 -->
     <!-- end of video -->
+    
+    <script type="text/javascript">
+    	$(function(){
+    		let date = new Date();
+    		console.log('今天日期='+date.toISOString().split('T')[0]);
+    		console.log('國棟截止=' + '${query_activity.signUpDeadline}');
+    		console.log('已過期=' + (date.toISOString().split('T')[0] >= '${query_activity.signUpDeadline}'));
+    		if(date.toISOString().split('T')[0] >= '${query_activity.signUpDeadline}'){
+    			$('#wantToSignUp').attr("disabled","disabled")
+    								.attr("style", "background-color:gray;border:gray;color:white")
+    								.attr('value', '報名截止');
+    		}
+    	});
+    </script>
 
 <%@ include file="../admin/FrontStageFoot.jsp"%>
 </body>
