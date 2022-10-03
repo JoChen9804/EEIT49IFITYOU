@@ -96,7 +96,35 @@ fieldset {
                                     class="fas fa-envelope-open-text"></i>Campaigns</a>
                     </ul>
                     <!-- end of tabs links -->
+<script>
 
+                        /*Bootstrap 3：在页面刷新时保持选中的选项卡*/
+                        $(document).ready(function () {
+                            if (location.hash) {
+                                $("a[href='" + location.hash + "']").tab("show");
+                            }
+                            $(document.body).on("click", "a[data-toggle='tab']", function (event) {
+                                location.hash = this.getAttribute("href");
+                            });
+                        });
+                        $(window).on("popstate", function () {
+                            var anchor = location.hash || $("a[data-toggle='tab']").first().attr("href");
+                            $("a[href='" + anchor + "']").tab("show");
+                        });
+
+                        $(document).ready(function () {
+                            if (location.hash) {
+                                $("a[href='" + location.hash + "']").tab("show");
+                            }
+                            $(document.body).on("click", "a[data-toggle='tab']", function (event) {
+                                location.hash = this.getAttribute("href");
+                            });
+                        });
+                        $(window).on("popstate", function () {
+                            var anchor = location.hash || $("a[data-toggle='tab']").first().attr("href");
+                            $("a[href='" + anchor + "']").tab("show");
+                        });
+                    </script>
                     <!-- Tabs Content -->
                     <div class="tab-content" id="argoTabsContent">
 
@@ -190,12 +218,12 @@ fieldset {
 
                                 <div class="col-lg-12">
                                     <div class="text-container">
-                                        <form id="audit" class="btn btn-danger btn-icon-split" action="auditPost"
+                                        <form id="audit" class="btn btn-success btn-icon-split" action="auditPost"
                                             method="post">
-
-                                            <input id="del" type="hidden" name=auditNo>
+                                           <span class="icon text-white-50"><i class="fas fa-check"></i></span>
+                                            <span><input id="del" type="hidden" name=auditNo>
                                             <input class="text" type="button" value="批次審核" id="deleteSubmitCheck"
-                                                style="border: none; background-color: #e74a3b; color: white" />
+                                                style="border: none; background-color: #1cc88a; color: white" /></span>
                                         </form>
 
                                         <!--    <form action="MainPost.all" method="GET"> -->
@@ -241,21 +269,32 @@ fieldset {
                                                             </td>
                                                             <td class="align-middle">${allmpbs.postPermission}</td>
                                                             <td class="align-middle">
-                                                                <form action="MainPost.watch" method="POST">
-                                                                    <input type="hidden" name="mainPostNo"
-                                                                        value="${allmpbs.mainPostNo}">
-                                                                    <input type="submit" class="btn btn-outline-success"
-                                                                        value="觀看">
+                                                                <form action="MainPost.watch" class="btn btn-info btn-icon-split" method="POST">
+                                                               
+                                                                <span class="icon text-white-50"><i class="fas fa-info-circle"></i></span>
+<%--                                                                     <span><input type="hidden" name="mainPostNo" value="${allmpbs.mainPostNo}"> --%>
+<!--                                                                     <input type="submit" value="觀看" class="btn btn-info btn-icon-split" -->
+<!--                                                                         style="border: none; background-color: #36b9cc; color: white" ></span> -->
+                                                                        
+<!--                                                                         <span class="icon text-white-50"><i class="fas fa-info-circle"></i></span> -->
+                                                                        <input type="hidden" name="mainPostNo" value="${allmpbs.mainPostNo}">
+                                                                        <button type="submit" class="btn btn-info btn-icon-split" value="觀看">
+                                                                            <span class="text">觀看</span>
+                                                                        </button>
                                                                 </form>
 
                                                                 <!--                         <form action="turnDownPost" method="POST"> -->
-                                                                <input type="hidden" name="xreason" value="">
-                                                                <input type="hidden" name="mainPostNo"
-                                                                    value="${allmpbs.mainPostNo}">
-                                                                <input type="submit"
-                                                                    class="btn btn-outline-primary turnDown" value="駁回">
+                                        
+<!--                                                                 <span class="icon text-white-50"><i class="fas fa-exclamation-triangle"></i></span> -->
+<!--                                                                 <span><input type="hidden" name="xreason" value=""> -->
+<%--                                                                 <input type="hidden" name="mainPostNo" value="${allmpbs.mainPostNo}"> --%>
+<!--                                                                 <input type="submit" class="btn btn-outline-primary turnDown" value="駁回"></span> -->
                                                                 <!--                         </form> -->
-
+                                                                <input type="hidden" name="xreason" value="">
+                                                                <input type="hidden" name="mainPostNo" value="${allmpbs.mainPostNo}">
+                                                                <button type="submit" class="btn btn-warning btn-icon-split turnDown" value="駁回">
+                                                                <span class="icon text-white-50"><i class="fas fa-exclamation-triangle"></i></span>
+                                                                <span class="text">駁回</span></button>
                                                             </td>
 
                                                         </tr>
@@ -603,9 +642,11 @@ fieldset {
         
         function checkAll(){
             var hobby  = document.getElementsByClassName("delete");
+           
             var members = new Set([]);
             for(var i  =0;i<hobby.length;i++){
                 var h = hobby[i];
+                console.log(h);
                 if(h.checked != true){
 	                h.checked = true;               
                }else if(h.checked == true){
@@ -653,7 +694,7 @@ fieldset {
                            dataType : 'json',
                            success: function(){
                         	   console.log("ok");
-                        	   document.getElementById("nav-tab-2").click();
+                        	   //document.getElementById("nav-tab-2").click();
                            }
                        })
         			
@@ -669,6 +710,9 @@ fieldset {
         		})()
        
         });
+        
+        
+        
         
        
         

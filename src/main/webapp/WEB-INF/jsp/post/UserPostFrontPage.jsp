@@ -682,7 +682,35 @@
 
     <script src="/group5/js/jquery.min.js"></script>
     <script src="js/images.js"></script>
-    
+                        <script>
+
+                        /*Bootstrap 3：在页面刷新时保持选中的选项卡*/
+                        $(document).ready(function () {
+                            if (location.hash) {
+                                $("a[href='" + location.hash + "']").tab("show");
+                            }
+                            $(document.body).on("click", "a[data-toggle='tab']", function (event) {
+                                location.hash = this.getAttribute("href");
+                            });
+                        });
+                        $(window).on("popstate", function () {
+                            var anchor = location.hash || $("a[data-toggle='tab']").first().attr("href");
+                            $("a[href='" + anchor + "']").tab("show");
+                        });
+
+                        $(document).ready(function () {
+                            if (location.hash) {
+                                $("a[href='" + location.hash + "']").tab("show");
+                            }
+                            $(document.body).on("click", "a[data-toggle='tab']", function (event) {
+                                location.hash = this.getAttribute("href");
+                            });
+                        });
+                        $(window).on("popstate", function () {
+                            var anchor = location.hash || $("a[data-toggle='tab']").first().attr("href");
+                            $("a[href='" + anchor + "']").tab("show");
+                        });
+                    </script>
     
     
     

@@ -190,7 +190,7 @@ $(function(){
                 <td><div class="content">
                 
                                                 
-            <textarea name="replyContent" id="content1" cols="90" rows="10" 
+            <textarea name="replyContent" id="content1" cols="85" rows="10" 
             required oninvalid="setCustomValidity('請輸入內容')" oninput="setCustomValidity('')"></textarea>
             
   
