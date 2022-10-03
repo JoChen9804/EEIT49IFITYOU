@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import tw.group5.commodity.model.Commodity;
 import tw.group5.commodity.model.CommodityRepository;
 
-@Service
+@Service(value = "cService")
 @Transactional
 public class CommodityService {
 	
@@ -56,6 +56,12 @@ public class CommodityService {
 	public List<Commodity> findBycommodityNameLike(String commodityName) {
 		String SQLSearchCommodityName = "%"+commodityName+"%";
 		return cRepo.findBycommodityNameLike(SQLSearchCommodityName);
+	}
+	
+	//由id查找
+	public Commodity findCommodityById(Integer commodityNo) {
+		Optional<Commodity> optional = cRepo.findById(commodityNo);
+		return optional.get();
 	}
 	
 	

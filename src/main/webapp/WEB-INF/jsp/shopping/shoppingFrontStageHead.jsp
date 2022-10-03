@@ -29,6 +29,9 @@
 <link href="/shoppingCss/swiper.css" rel="stylesheet">
 <link href="/shoppingCss/magnific-popup.css" rel="stylesheet">
 <link href="/shoppingCss/styles.css" rel="stylesheet">
+
+<link href="/shoppingCss/shoppingcart.css" rel="stylesheet">
+
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 
@@ -36,12 +39,16 @@
 <link rel="icon" href="images/favicon.png">
 
 <style>
-#cart a {
+#cart {
     background-image: url(/shoppingCss/ShoppingCart.gif);
     background-size:30px 32px;
     color:white;
     background-repeat: no-repeat;
     background-position: 3px -3px;
+}
+
+#shoppingcartWindow{
+	background-color:white
 }
 
 
@@ -93,43 +100,121 @@
 					class="navbar-toggler-awesome fas fa-times"></span>
 			</button>
 			<!-- end of mobile menu toggle button -->
+			
+			
+			
+	<!-- Header區塊 -->	
+			<div class="collapse navbar-collapse layout-nav-menu nav-submenu layout-wrapper hide-when-lower-ie" id="navbarsExampleDefault">
+				<div class="layout-top cms-static__header fix-style" id="officialHeader" ng-controller="HeaderController as HeaderCtrl">
+					<div id="layout-header-fix" class="layout-header header-bottom-wrapper layout-header-fix cms-header cms-nav">
+						<div class="inner-wrap" ng-class="{'multi-shop-category-relative-block': HeaderCtrl.isMultiShopCategoryHeaderMenuEnabled}">
+							<nav data-main-menu="" class="layout-nav">
+								<div class="layout-nav-menu nav-submenu">
+			
+			
+									<ul class="navbar-nav ml-auto align-items-center nav-menu-ul">
+									
+										<li class="nav-item dropdown">
+											<a class="nav-link page-scroll" href="#header" style="font-size: 17px;">首頁<span class="sr-only">(current)</span></a>
+										</li>
+								
+										<li class="nav-item dropdown">
+											<a class="nav-link page-scroll" href="#features" style="font-size: 17px;">活動</a>
+										</li>
+								
+										<li class="nav-item dropdown">
+											<a class="nav-link page-scroll" href="#details" style="font-size: 17px;">據點</a>
+										</li>
 
-			<div class="collapse navbar-collapse" id="navbarsExampleDefault">
-				<ul class="navbar-nav ml-auto align-items-center">
-					<li class="nav-item dropdown"><a class="nav-link page-scroll"
-						href="#header" style="font-size: 17px;">首頁<span
-							class="sr-only">(current)</span></a></li>
-					<li class="nav-item dropdown"><a class="nav-link page-scroll"
-						href="#features" style="font-size: 17px;">活動</a></li>
-					<li class="nav-item dropdown"><a class="nav-link page-scroll"
-						href="#details" style="font-size: 17px;">據點</a></li>
 
-					<!-- Dropdown Menu dropdown-toggle下拉紐-->
-					<li class="nav-item dropdown"><a
-						class="nav-link page-scroll" href="#video"
-						id="navbarDropdown" role="button" aria-haspopup="true"
-						aria-expanded="false" style="font-size: 17px;">商品</a>
-						<!-- <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<a class="dropdown-item" href="article-details.html"><span
-								class="item-text">ARTICLE DETAILS</span></a>
-							<div class="dropdown-items-divide-hr"></div>
-							<a class="dropdown-item" href="terms-conditions.html"><span
-								class="item-text">TERMS CONDITIONS</span></a>
-							<div class="dropdown-items-divide-hr"></div>
-							<a class="dropdown-item" href="privacy-policy.html"><span
-								class="item-text">PRIVACY POLICY</span></a>
-						</div>--></li>
-					<!-- end of dropdown menu -->
-
-					<li class="nav-item dropdown"><a class="nav-link page-scroll"
-						href="#pricing" style="font-size: 17px;">貼文</a></li>
-					<li class="nav-item dropdown"><a class="nav-link page-scroll"
-						href="#pricing" style="font-size: 17px;">菜單</a></li>
+										<!-- Dropdown Menu dropdown-toggle下拉紐-->
+										<li class="nav-item dropdown">
+											<a class="nav-link page-scroll" href="/group5/shopping" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false" style="font-size: 17px;">商品</a>
 						
-					<li class="nav-item dropdown" id="cart"><a class="nav-link page-scroll fancyLogin" 
-						href="https://www.lativ.com.tw/Shopping/ShoppingAdapter" rel="nofollow" style="font-size: 17px;">
-						<span id="tradeCount">2</span>個商品
-						</a></li>
+						                <!-- Dropdown Menu dropdown-toggle下拉選單\-->
+										<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+										
+							            	<a class="dropdown-item" href="/group5/shopping">
+							            		<span class="item-text">iFit購物</span>
+							            	</a>
+							            	<div class="dropdown-items-divide-hr"></div>
+							         
+											<a class="dropdown-item" href="terms-conditions.html">
+											<span class="item-text">我的收藏</span></a>
+											<div class="dropdown-items-divide-hr"></div>
+											
+											<a class="dropdown-item" href="privacy-policy.html">
+											<span class="item-text">訂單查詢</span></a>
+										</div>
+						
+										</li>
+										<!-- end of dropdown menu -->
+
+
+										<li class="nav-item dropdown"><a class="nav-link page-scroll"
+										href="#pricing" style="font-size: 17px;">貼文</a></li>
+										<li class="nav-item dropdown"><a class="nav-link page-scroll"
+										href="#pricing" style="font-size: 17px;">菜單</a></li>
+						
+						
+										<!-- 主選單購物車 -->	
+										<li class="nav-item dropdown" id="cart">
+											<a class="nav-link page-scroll" id="shoppingCartDropdown" role="button" aria-haspopup="true" aria-expanded="false"
+												href="/group5/user/shopping.cart" style="font-size: 17px;">購物車
+											</a>
+						
+											<!--購物車選單顯示內容-->
+											<div class="dropdown-menu" aria-labelledby="shoppingCartDropdown" id="shoppingcartWindow">
+						
+							<a class="has-shopping-cart-item" href="article-details.html">
+								<span>
+									<div class="has-item-text">最新加入項目</div>								
+								</span>
+							</a>
+							
+								
+								
+								
+								
+							
+						</div>
+					</li>
+					
+						
+						
+				
+
+                                    
+                                               
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 					<li class="nav-item dropdown" style="display: none;"
 						id="memberShow"><a
@@ -147,16 +232,29 @@
 							<a class="dropdown-item" href="/logout" data-toggle="modal"
 								data-target="#logoutModal"><span class="item-text"><i
 									class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>登出</span></a>
-						</div></li>
+						</div>
+					</li>
+					
 					<li class="nav-item dropdown" id="loginShow"><span
 						class="nav-item dropdown"> <a class="btn-outline-sm"
 							href="/group5/login"
 							style="border: 0.125rem solid #fff; padding: 0.875rem 1.5rem 0.875rem 1.5rem; font-size: 17px; border-radius: 2rem;">登入</a>
-					</span></li>
+					</span>
+					</li>
 
 
 				</ul>
+				
+				
+				
+				</div>
+				</nav>
+				</div>
 			</div>
+			</div>
+			</div>
+
+		
 			<!-- end of container -->
 	</nav>
 	<!-- end of navbar -->

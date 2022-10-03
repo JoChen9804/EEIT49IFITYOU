@@ -215,42 +215,38 @@
     
     
     <script type="text/javascript">
+    
     $(function(){
     	$(".addTocart").on("click",function(){
     		
+    		var account = '${loginMember.memberAccount}';
     		var commodityNo = $(this).prev().prev().prev().prev().val();
     		var commodityPrice = $(this).prev().prev().prev().val();
     		var quantity = $(this).prev().val();
-    		
-    		
-    		var account = ${loginMember.memberName};
+    		var subtotal = commodityPrice*quantity;
  
-    		cosole.log(account);
     		var params = null;
-    		if(SecurityContextHolder.getContext().getAuthentication().isAuthenticated()){
-    			params = {"account":${loginMember.account},"commodityNo":''+commodityNo , "commodityPrice":''+commodityPrice , "quantity":''+quantity};
-    		}else if(!SecurityContextHolder.getContext().getAuthentication().isAuthenticated()){
-    			params = {"account":null,"commodityNo":''+commodityNo , "commodityPrice":''+commodityPrice , "quantity":''+quantity};
+    		if(account != null){
+    			params = {"account":''+account,"commodityNo":''+commodityNo , "commodityPrice":''+commodityPrice , "quantity":''+quantity, "subtotal":''+subtotal};
+    		}else if(account == null){
+    			params = {"account":null,"commodityNo":''+commodityNo , "commodityPrice":''+commodityPrice , "quantity":''+quantity, "subtotal":''+subtotal};
     		}
     		
-    		cosole.log(params);
     		
-    		var params = {"commodityNo":''+commodityNo , "commodityPrice":''+commodityPrice , "quantity":''+quantity};
     		$.ajax({
-    			type:'post',
-				url:'shopping.addToCart',
+    			type:'POST',
+				url:'/group5/shopping.addToCart',
 				contentType:'application/json',
-				data:JSON.stringify(params)
-				
-				
+				data:JSON.stringify(params),
+				dataType:'text',
+				success:function(data){
+					alert(data)
+				}
     		});
-    		
-    		
+
     	});
     });
-    
-    
-    
+
     </script>
     
 </body>
