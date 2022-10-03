@@ -38,16 +38,20 @@ $(function(){
 	}
 	if("${loginMember.id}"==""){
 		$("#saved").next().css("display","none");
-		$(".saved").append("<span style='color:red'>請登入開啟收藏功能</span>");
+		$(".saved").append("<span style='color:#C62828'>請登入開啟收藏功能</span>");
 		$(".center").css("display","none");
-		$("#rating-text").append("<span style='color:red'>&nbsp;請登入開啟評分功能</span>");
+		$("#rating-text").append("<span style='color:#C62828'>&nbsp;請登入開啟評分功能</span>");
+		$("#preDelete").css("display","none");
+		$("#editGym").css("display","none");
 	}
 	let logRating="${logStatus.rating}"
 	if(logRating!=""){
 		$("#start"+logRating).prop("checked","true");
 	}
 	
-	console.log("123123++++${logStatus.logId}")
+	$("#preDelete").on("click",function(){
+		preDelete();
+	})
 	
 })
 let mId = "${loginMember.id }";
@@ -91,7 +95,24 @@ function countFavorite(){
 	})		
 }
 
-function saveAndRating(){
+function preDelete(){
+	let gymlog={"logId":logId, "member": "${logStatus.member}", "gym":"${logStatus.gym}","rating":"${logStatus.rating}","favorite"；"${logStatus.favorte}","gymDel":1};
+	$.ajax({
+		type:'post',
+		url:'/group5/user/gym/delete',
+		contentType:'application/json',
+		data:JSON.stringify(gymBean),
+		success:function(){
+			$("#preDelete").text("已提出刪除申請");
+		},
+		error:function(){
+			Swal.fire(
+					  '刪除失敗',
+					  '請洽管理員諮，或詢稍後再試一次！',
+					  'error'
+					)
+		}
+	})
 	
 }
 </script>
@@ -112,11 +133,14 @@ function saveAndRating(){
 									地址：<span id="address">${gymDetail.gymAddress}</span>
 								</div></li>
 							<li class="media"><i class="fas fa-square"></i>
-								<div class="media-body">營業時間：${gymDetail.gymOpenHours}</div></li>
+								<div class="media-body">營業時間：<br>${gymDetail.gymOpenHours}</div></li>
 							<li class="media"><i class="fas fa-square"></i>
 								<div class="media-body">健友評分：${gymDetail.rating}</div></li>
 						</ul>
+						<a class="btn-outline-reg" href="/group5/user/gym/edit/${gymDetail.gymId }" id="editGym">編輯</a>
+						<button class="btn-outline-red" id="preDelete">申請刪除</button>
                     	<input type="hidden" value="${loginMember.id }" id="memberIdNow">
+						<hr>
 						<div class="saved">
 							收藏： <input type="checkbox" id="saved" name="saved" /><label
 								for="saved"></label>

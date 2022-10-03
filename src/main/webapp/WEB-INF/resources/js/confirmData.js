@@ -25,8 +25,11 @@ $(function(){
     
     let number=[];
     let weekdays=[];
+    let weekday;
     $(".btn-group").children("input").on("click",function(){
-        let weekday =$(this).val();
+		if($(this).prop("checked")){
+	        weekday=$(this).val();
+		}
         if(number.indexOf(weekday)==-1){
             number.push(weekday);
         }else{

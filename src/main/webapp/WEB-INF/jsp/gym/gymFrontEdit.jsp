@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>新增健身房地點</title>
+<title>編輯健身房地點</title>
 <!--   official Bootstrap -->
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
@@ -17,7 +17,6 @@
 	crossorigin="anonymous"></script>
 
 <!-- Custom styles for this page -->
-<link href="/group5/css/gymFrontAllStyle.css" rel="stylesheet">
 <!-- Core plugin JavaScript-->
 <script src="/group5/js/jquery.min.js"></script>
 <script src="/group5/js/jquery.easing.min.js"></script>
@@ -29,85 +28,82 @@
 <script src="https://kit.fontawesome.com/a3daa825b8.js"
 	crossorigin="anonymous"></script>
 <script>
-$(function(){
-	$('#submitAdd').on("click",function(){
-		let name =$(".showNameText").text();
-		let address =$(".showAddressText").text();
-		let openhours =$(".showTimesText").html();
-		let gymBean={"gymName":name, "gymAddress": address, "gymOpenHours": openhours}
-		Swal.fire({
-            title: '請問是否確定新增',
-            showDenyButton: true,
-            confirmButtonText: '確定新增',
-            denyButtonText: `再想一下`,
-        }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire({
-                    icon: 'Saved!',
-                    html: '<p>建立名稱：'+name+'</p><p>地址：'+address+'</p><p>營業時間：'+openhours+'</p>',
-                    showCancelButton: true,
-                    confirmButtonText: '確定新增',
-                }).then((result2)=>{
-                		if(result2.isConfirmed){
-                			$.ajax({
-                				type: "post",
-                				url: "/group5/user/gym/addGym",
-                				data: JSON.stringify(gymBean),
-                				dataType: "json",
-                				contentType: "application/json",
-                				success: function(data){
-                					let showResult="<p>建立完成</p><p>建立名稱："+data.gymName+"</p><p>地址："
-                									+data.gymAddress+"</p><p>營業時間："+data.gymOpenHours+"</p>";
-                					$("#ffid").val(data.gymId);
-                					},
-                					error: function(){
-                						console.log("error");
-                					}
-                				});
-                				Swal.fire('Saved!', '新增成功', 'success').then(result=>{
-                					if (result.isConfirmed) {
-                					    savePicture();
-                					  }
-                				});
-                			}
-                		});
-                
-            } else if (result.isDenied) {
-                Swal.fire('Changes are not saved', '', 'info');
-            }
-        })
-	})
+	let addressNow="${update.gymAddress }"
+    let cityNow=addressNow.substring(0,3);
+    let districtNow=addressNow.substring(3,6);
+    let weekdaysChoose="${update.gymOpenHours }";
+    $(function(){
+    	/*
+        weekdaysChoose.split('<br>').forEach(element => element.split(',').forEach(function(x){
+            $(".btn-group label:contains("+x.substring(2,3)+")").prev().prop("checked","true");
+        }));
+		*/
+        city();
+        $("option:contains("+cityNow+")").prop("selected","true");
+        $("#district").append("<option value="+districtNow+" selected id='preSelected'>"+districtNow);
+        $("#gymAddressDetail").val(addressNow.substring(6));
+    	
+        
+        $("#submitUpdate").on("click",function(){
+			let gName=$(".showNameText").text();
+			let gAddress=$(".showAddressText").text();
+			let gTime=$(".showTimesText").html();
+			let gymBean={"gymId": "${update.gymId}", "gymName":gName, "gymAddress": gAddress, "gymOpenHours": gTime}
+			$.ajax({
+				type: "post",
+				url: "/group5/user/gym/editAction",
+				dataType: "json",
+				data: JSON.stringify(gymBean),
+				contentType: "application/json",
+				success: function(data){
+					console.log("success");
+					Swal.fire(
+							  '更改完成',
+							  '已更新'+data.gymName+'資訊',
+							  'success'
+							).then(result=>{
+            					if (result.isConfirmed) {
+            					    savePicture();
+            					  }
+            				});
+				},
+				error: function(){
+					console.log("error");
+				}
+				
+			});
+			
+		});
 	
-	//picture
-	$('#ff').on('change', function(e){      
-		let file = this.files[0];
-		let imagePath="/group5/images/"+file.name;
-		$('#imagePathF').val(imagePath);
-		//console.log();
-		//預覽
-		let objectURL = URL.createObjectURL(file);
-		$('#img1').attr('src', objectURL);
+		//picture
+		$('#ff').on('change', function(e){      
+			let file = this.files[0];
+			let imagePath="/group5/images/"+file.name;
+			$('#imagePathF').val(imagePath);
+			//預覽
+			let objectURL = URL.createObjectURL(file);
+			$('#img1').attr('src', objectURL);
+		});
+		
+		//saving picture with ajax
+		function savePicture(){
+			$("#picture").submit();
+		}
+	
 	});
-	
-	//saving picture with ajax
-	function savePicture(){
-		$("#picture").submit();
-	}
-	
-});
 
 </script>
 </head>
-<body onload="city()">
+<body>
 	<%@ include file="../admin/FrontStageHead.jsp"%>
 	<div class="cards-2">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">
-					<h1>新增健身房</h1>
+					<h1>編輯健身房</h1>
 					<div class="input-group mb-3">
 						<label class="input-group-text" for="gymName">名稱：</label> <input
-							type="text" name="gymName" placeholder="請輸入健身房名稱" id="gymName"
+							type="text" name="gymName" value="${update.gymName }" id="gymName"
 							class="form-control">
 					</div>
 					<div class="input-group mb-4">
@@ -163,23 +159,23 @@ $(function(){
 						<input type="hidden" id="hiddenDiv">
 					</div>
 					<div class="md-3 d-flex justify-content-start" style="border: 1px solid lightgray; padding: 16px; border-radius: 15px;">
-						<form class="st1" id="picture" action="/group5/user/gym/addPicture" method="post" enctype="multipart/form-data">
+						<form class="st1" id="picture" action="/group5/user/gym/editPicture" method="post" enctype="multipart/form-data">
 							<label>新增照片:</label>
 							<input type="file" id="ff" name="photo"/>
-							<input type="hidden" name="gymId" id="ffid">
-							<img id="img1" width="230" />
+							<input type="hidden" name="gymId" value="${update.gymId}">
+							<img id="img1" width="230" src="${update.gymPicture}"/>
 						</form>
 					</div>
 					<div style="padding-bottom: 16px;">
-						<p class="showNameText"></p>
-						<p class="showAddressText"></p>
-						<p class="showTimesText"></p>
+						<p class="showNameText">${update.gymName}</p>
+						<p class="showAddressText">${update.gymAddress}</p>
+						<p class="showTimesText">${update.gymOpenHours }</p>
 						<input type="hidden" id="imagePathF">
 					</div>
 					<div class="col-12">
-						<button class="btn-solid-reg page-scroll" type="submit" id="submitAdd">新增</button>
+						<button class="btn-solid-reg page-scroll" type="submit" id="submitUpdate">編輯</button>
 					</div>
-					<div id="addResult" style="padding-top: 12px;"></div>
+					
 				</div>
 			</div>
 		</div>

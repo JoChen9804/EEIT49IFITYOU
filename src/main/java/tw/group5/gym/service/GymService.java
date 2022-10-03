@@ -82,11 +82,11 @@ public class GymService{
 	
 	
 	//圖片處理>>上傳檔案至資料夾並回傳檔名
-	public String processImg(String voucherNo, MultipartFile photoData)throws IllegalStateException, IOException {
-		String fileName = voucherNo+System.currentTimeMillis()+".jpg";
-		String saveFileDir = "C:/images/admin";
-		File saveFilePath = new File(saveFileDir, fileName);
-		photoData.transferTo(saveFilePath);
+	public String processImg(int gymId, MultipartFile photoData)throws IllegalStateException, IOException {
+		String fileName = "gym-"+gymId+".jpg";
+		String saveFileDir = "./src/main/webapp/WEB-INF/resources/images/"+fileName;
+		File saveFilePath = new File(saveFileDir);
+		photoData.transferTo(saveFilePath.getAbsoluteFile());
 		return fileName;
 	}
 	

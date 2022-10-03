@@ -61,17 +61,17 @@
                     <div class="rating-wrap">
                         <span>評分:</span>
                         <div class="center">
-                            <div class="rating">
+                            <div class="rating d-flex" style="padding-top: 15px">
                                 <input type="radio" id="start5" name="rating" value="5" class="star" /><label
-                                    for="start5" class="full"></label>
+                                    for="start5" class="full order-4"></label>
                                 <input type="radio" id="start4" name="rating" value="4" class="star" /><label
-                                    for="start4" class="full"></label>
+                                    for="start4" class="full order-3"></label>
                                 <input type="radio" id="start3" name="rating" value="3" class="star" /><label
-                                    for="start3" class="full"></label>
+                                    for="start3" class="full order-2"></label>
                                 <input type="radio" id="start2" name="rating" value="2" class="star" /><label
-                                    for="start2" class="full"></label>
+                                    for="start2" class="full order-1"></label>
                                 <input type="radio" id="start1" name="rating" value="1" class="star" /><label
-                                    for="start1" class="full"></label>
+                                    for="start1" class="full order-0"></label>
                             </div>
                         </div>
                         <div id="rating-value"></div>

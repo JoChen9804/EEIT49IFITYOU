@@ -60,7 +60,7 @@ $(function(){
 								<div class="card-body">
 									<div class="card-title">
 										<h4>
-											<i class="fa-solid fa-map-pin"></i>&nbsp;&nbsp;&nbsp;${gymInSearch.gymName}
+											<i class="fa-solid fa-map-pin"></i>&nbsp;&nbsp;${gymInSearch.gymName}
 										</h4>
 									</div>
 									<div class="card-image">
@@ -96,7 +96,7 @@ $(function(){
 							<div class="feature-item h-100 d-flex align-items-center" id="addGym">
 								<div class="card-body">
 									<div class="card-text">
-										<h1 style="color:gray">
+										<h1 style="color:#a8baef" onMouseOver="this.style.color='#4e73df'" onMouseOut="this.style.color='#a8baef'">
 											新增據點<br>
 											<i class="fa-solid fa-circle-plus"></i>
 										</h1>

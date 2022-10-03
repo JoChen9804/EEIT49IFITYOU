@@ -51,12 +51,12 @@ public class GymBean implements Serializable{
 	@Column(name = "GYMPICTURE")
 	private String gymPicture;
 	
+	
+	
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "gym", cascade = CascadeType.ALL)
 	@Transient
 	private Set<GymLog> gymLogs = new HashSet<GymLog>();
-	
-
 	
 	public GymBean() {
 		
@@ -134,7 +134,6 @@ public class GymBean implements Serializable{
 	public void setGymPicture(String gymPicture) {
 		this.gymPicture = gymPicture;
 	}
-
 
 	
 	

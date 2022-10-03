@@ -50,6 +50,9 @@ public class GymLog implements Serializable{
 	@Column(name = "FAVORITE")
 	private Integer favorite;
 	
+	@Column(name="GYMDEL")
+	private Integer gymDel;
+	
 	@JoinColumn(name = "GYMNO")
 	@ManyToOne
 	private GymBean gym;
@@ -117,6 +120,14 @@ public class GymLog implements Serializable{
 
 	public void setMember(MemberBean member) {
 		this.member = member;
+	}
+
+	public Integer getGymDel() {
+		return gymDel;
+	}
+
+	public void setGymDel(Integer gymDel) {
+		this.gymDel = gymDel;
 	}
 	
 	
