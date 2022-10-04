@@ -193,7 +193,17 @@ public class GymFrontController {
 	@PostMapping("/user/gym/delete")
 	@ResponseBody
 	public String processDelete(@RequestBody GymLog gymLog,Model m) {
+		System.out.println(gymLog.getLogId());
 		gymLogService.updateGymLog(gymLog);
+		return "申請刪除成功";
+	}
+	
+	@PostMapping("/user/gym/delete/{logId}")
+	@ResponseBody
+	public String processDelete2(@PathVariable("logId")Integer logId,Model m) {
+		GymLog glog2 = gymLogService.findById(logId);
+		glog2.setGymDel(1);
+		gymLogService.updateGymLog(glog2);
 		return "申請刪除成功";
 	}
 	

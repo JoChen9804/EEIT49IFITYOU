@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Update Delete Query database</title>
+<title>查詢地點</title>
 	<!--   official Bootstrap -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
@@ -110,15 +110,11 @@
 </head>
 <body>
 <%@ include file="../admin/AdminstyleHead.jsp" %>
-	<div class="container-fluid">
-
-		<!-- Page Heading -->
-		<h1 class="h3 mb-2 text-gray-800">Gym Tables</h1>		
+	<div class="container-fluid">		
 		<!-- DataTales Example -->
 		<div class="card shadow mb-4">
 			<div class="card-header py-3">
-				<h6 class="m-0 font-weight-bold text-primary">DataTables
-					Example</h6>
+				<h6 class="m-0 font-weight-bold text-primary">健身房地點</h6>
 			</div>
 			<div class="card-body">
 				<div class="table-responsive">
