@@ -203,6 +203,14 @@ public class AdminService {
 		}
 		return true;
 	}
+	
+	public MemberBean findMemberByEmail(String newEmail) {
+		Optional<MemberBean> op = memberRepo.findByEmail(newEmail);
+		if (op.isEmpty()) {
+			return null;			
+		}
+		return op.get();
+	}
 
 	public boolean findByReferralCode(String referralCode) {
 		Optional<MemberDetail> op = memberDetailRepo.findByReferralCode(referralCode);

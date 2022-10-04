@@ -12,6 +12,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import tw.group5.admin.service.AuthUserDetailService;
+import tw.group5.admin.service.MemberOAuth2UserService;
+import tw.group5.handler.GoogleLoginSuccessHandler;
 import tw.group5.handler.LoginSuccessHandler;
 import tw.group5.handler.MyAccessDeniedHandler;
 
@@ -29,6 +31,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	MyAccessDeniedHandler myAccessDeniedHandler;
+	
+	@Autowired 
+	GoogleLoginSuccessHandler googleLoginSuccessHandler;
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -67,10 +72,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		  //登入成功要造訪的頁面，使用Handle實現跳轉前後台
 		  .defaultSuccessUrl("/group5").successHandler(loginSuccessHandle)
 		  // 登入失敗後要造訪的頁面
-		  .failureForwardUrl("/group5/admin/fail");
+		  .failureForwardUrl("/group5/admin/fail")
+		  .and()
+		  .oauth2Login()
+		  	.loginPage("/login")
+		  	.userInfoEndpoint().userService(oauthUserService)
+		  	.and()
+		  	.successHandler(googleLoginSuccessHandler);
 		  
+		  http
 		  // 登出  
-		   http.logout()
+		  .logout()
 		  // 設定觸發登出功能的 URL，預設為 /logout               
 		  //刪除cookies JSESSIONID
 		  .deleteCookies("JSESSIONID")
@@ -84,5 +96,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				//.accessDeniedPage("/異常處理頁面");  // 請自行撰寫
 				.accessDeniedHandler(myAccessDeniedHandler);	
 	}
+	
+	 @Autowired
+	 private MemberOAuth2UserService oauthUserService;
 
 }

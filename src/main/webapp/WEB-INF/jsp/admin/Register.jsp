@@ -133,21 +133,16 @@ hr {
 												</label>
 											</div>
 											<div class="col-sm-6"
-												style="align-items: center; display: flex;">
-												<input type="button" id="registerAccount"
-													class="btn btn-primary btn-user btn-block"
-													style="text-decoration: none;" value="Register Account">
-											</div>
+												style="align-items: center; display: flex;"></div>
 										</div>
 										<hr style="margin-bottom: 0.5rem; margin-top: 0.5rem">
-										<a href="index.html" class="btn btn-google btn-user btn-block"
-											style="color: #fff; background-color: #ea4335; border-color: #fff; text-decoration: none;">
-											<i class="fab fa-google fa-fw"></i> Register with Google
-										</a>
-
-
+										<input type="button" id="registerAccount"
+											class="btn btn-primary btn-user btn-block"
+											style="text-decoration: none;" value="Register Account">
 									</form>
-									<hr style="margin-bottom: 0.5rem; margin-top: 0.5rem">
+
+
+									<hr style="margin-bottom: 0.5rem; margin-top: 0.5rem;border-radius: 10rem;">
 									<div class="text-center">
 										<a class="small" href="/group5/ForgetPassword">忘記密碼?</a>
 									</div>

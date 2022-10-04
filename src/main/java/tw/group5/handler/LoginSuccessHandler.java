@@ -23,7 +23,7 @@ import tw.group5.admin.service.AdminService;
 @Component
 public class LoginSuccessHandler implements AuthenticationSuccessHandler{
 	
-	@Autowired //攔截器會在service前載入，故注入無效
+	@Autowired 
 	private AdminService adminService;
 //	AdminService adminService = SpringContextHolder.getBean(AdminService.class);
 
@@ -38,13 +38,12 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler{
         	AdminBean aBean = adminService.findByAccount(name);
         	session.setAttribute("loginMember", aBean);
             response.sendRedirect("admin/backstage");
-            return;
+
         }
         System.out.println("抓到了"+name);
         MemberBean mBean = adminService.findByAccountMember(name);
-        session.setAttribute("loginMember", mBean);
+        session.setAttribute("loginMember", mBean);		
         response.sendRedirect("FrontStageMain");
-		
 	}
 
 }
