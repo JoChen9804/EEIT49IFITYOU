@@ -25,5 +25,5 @@ public interface GymLogRespository extends JpaRepository<GymLog, Integer> {
 
 	public List<GymLog> findByFavoriteAndGym(Integer favorite, GymBean gymBean);
 	
-	public int countByGymDelAndGym(Integer gymDel, GymBean gymBean);
+	public List<GymLog> findByGymDelAndGym(Integer gymDel, GymBean gymBean);
 }

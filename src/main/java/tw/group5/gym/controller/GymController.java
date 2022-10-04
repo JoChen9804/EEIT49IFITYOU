@@ -59,29 +59,13 @@ public class GymController {
 		Map<Integer, Integer> countDel = new HashMap<Integer, Integer>();
 		Map<Integer, Integer> countFavorite = new HashMap<Integer, Integer>();
 		for(GymBean g: list) {
-			countDel.put(g.getGymId(), gymLogService.countByGymDelAndGym(g));
+			countDel.put(g.getGymId(), gymLogService.findByGymDelAndGym(g).size());
 			countFavorite.put(g.getGymId(), gymLogService.countGymLog(g).getNumberOfFavorite());
 		}
 		m.addAttribute("countDel",countDel);
 		m.addAttribute("countFavorite",countFavorite);
 		System.out.println(countDel);
 		return "gym/gymAll";
-	}
-	
-	//總表資料
-	@PostMapping("/main/data")
-	@ResponseStatus(HttpStatus.OK)
-	public void processMainDataAction(Model m) {
-
-//		Map<Integer, Integer> countDel = new HashMap<Integer, Integer>();
-//		Map<Integer, Integer> countFavorite = new HashMap<Integer, Integer>();
-//		for(GymBean g: list) {
-//			countDel.put(g.getGymId(), gymLogService.countByGymDelAndGym(g));
-//			countFavorite.put(g.getGymId(), gymLogService.countGymLog(g).getNumberOfFavorite());
-//		}
-//		m.addAttribute("countDel",countDel);
-//		m.addAttribute("countFavorite",countFavorite);
-		
 	}
 	
 	//點編輯按鈕後

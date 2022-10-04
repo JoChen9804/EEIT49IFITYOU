@@ -25,6 +25,7 @@
     <script src="/group5/js/jquery.dataTables.min.js"></script>
     <script src="/group5/js/dataTables.bootstrap4.min.js"></script>
     <script src="/group5/js/datatables-demo.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <script>
     $(function(){
     	countFavorite();
@@ -47,10 +48,16 @@
     								}]
     					};
     			const genderConfig = {
-    						  type: 'pie',
+    						  type: 'bar',
     						  data: genderData,
     						  options: {
-    						    responsive: true
+    						    responsive: true,
+    						    scales: {
+    						        y: {
+    						          beginAtZero: true,
+    						          grace: '5%'
+    						        },
+    						      }
     						  },
     						};
     			
@@ -101,16 +108,6 @@
             </div>
         </div> <!-- col end -->
         <div class="col-lg-6">
-        	<div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">收藏會員性別比</h6>
-                </div>
-                <div class="card-body d-flex">
-                    <div style="width:285px; padding:25px;">
-						<canvas id="genderChart"></canvas>
-					</div>
-                </div>
-            </div><!-- card end -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">曾對${selectedGym.gymName }評分／收藏會員名單</h6>
@@ -151,6 +148,16 @@
                     </div>
                 </div>
             </div> <!-- card end -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">收藏會員性別比</h6>
+                </div>
+                <div class="card-body d-flex">
+                    <div class="w-100">
+						<canvas id="genderChart"></canvas>
+					</div>
+                </div>
+            </div><!-- card end -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">申請${selectedGym.gymName }刪除會員</h6>

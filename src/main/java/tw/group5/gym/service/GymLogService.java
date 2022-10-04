@@ -93,8 +93,8 @@ public class GymLogService {
 	}
 	
 	//count(*) where gymDel=1 and gymNo=?
-	public int countByGymDelAndGym(GymBean gym) {
-		return gymLogRespository.countByGymDelAndGym(1, gym);
+	public List<GymLog> findByGymDelAndGym(GymBean gym) {
+		return gymLogRespository.findByGymDelAndGym(1, gym);
 	}
 	
 }
