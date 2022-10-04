@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>詳細資訊</title>
     <!--   official Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
@@ -19,7 +20,6 @@
     <link rel="stylesheet" href="/group5/css/ratingAndSaved-style.css">
     <link href="/group5/css/dataTables.bootstrap4.min.css" rel="stylesheet">
     <!-- Core plugin JavaScript-->
-    <script src="/group5/js/jquery.min.js"></script>
     <script src="/group5/js/jquery.easing.min.js"></script>
     <!-- Custom scripts for this pages-->
     <script src="/group5/js/jquery.dataTables.min.js"></script>
@@ -27,11 +27,27 @@
     <script src="/group5/js/datatables-demo.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <script>
+ 	var gymBean={"gymId":"${selectedGym.gymId}","gymName":"${selectedGym.gymName }","gymAddress":"${selectedGym.gymAddress }","gymOpenHours":"${selectedGym.gymOpenHours }","rating":"${gymDetail.rating }","gymPicture":"${selectedGym.gymPicture }"};
     $(function(){
     	countFavorite();
+    	
+    	$(".denyDel").on("click",function(){
+    		let delmemberId=$(this).parent().siblings(".delmember").text();
+			console.log(delmemberId);
+    		$.ajax({
+    			type:'post',
+    			url:'/group5/admin/gym/gymDetail/deldata/'+delmemberId,
+    			data:JSON.stringify(gymBean),
+    			contentType:'application/json',
+    			success:function(){
+    				console.log("dsijosa");
+    				location.reload();
+    			}
+    			
+    		});
+    	})
     })
     function countFavorite(){
-    	let gymBean={"gymId":"${selectedGym.gymId}","gymName":"${selectedGym.gymName }","gymAddress":"${selectedGym.gymAddress }","gymOpenHours":"${selectedGym.gymOpenHours }","rating":"${gymDetail.rating }","gymPicture":"${selectedGym.gymPicture }"};
     	$.ajax({
     		type:'post',
     		url:'/group5/gym/countFavorite',
@@ -42,7 +58,7 @@
     			const genderData = {
     					labels: ['男', '女'],
     					datasets: [{
-    								 	label: '收藏性別比',
+    								 	label: '收藏數',
     								    data: [data.numberOfMale,data.numberOfFemale],
     								    backgroundColor: ["#a8baef","#7d98e7"]
     								}]
@@ -100,9 +116,6 @@
                     營業時間：${selectedGym.gymOpenHours}<br>
                     健友評分：${selectedGym.rating}
                     <input type="hidden" value="${selectedGym.gymId}" id="gymIdFromDetail">
-                    <input type="hidden" value="${logStatus.logId }" id="gymLogIdNow">
-                    <input type="hidden" value="${logStatus.favorite }" id="logFavorite">
-                    <input type="hidden" value="${logStatus.rating }" id="logRating">
                     <input type="hidden" value="10003" id="memberIdNow">
                 </div>
             </div>
@@ -169,6 +182,7 @@
                                 <tr>
                                     <th>會員編號</th>
                                     <th>會員帳號</th>
+                                    <th>欲刪除之原因</th>
                                     <th>駁回刪除</th>
                                 </tr>
                             </thead>
@@ -176,15 +190,17 @@
                                 <tr>
                                     <th>會員編號</th>
                                     <th>會員帳號</th>
+                                    <th>欲刪除之原因</th>
                                     <th>駁回刪除</th>
                                 </tr>
                             </tfoot>
                             <tbody>
-                            <c:forEach var="gymlog" items="${memberlist}">
+                            <c:forEach var="dellog" items="${delLogs}">
                                 <tr>
-                                    <td>${gymlog.member.id }</td>
-                                    <td>${gymlog.member.memberAccount }</td>
-                                    <td>115156</td>
+                                    <td class="delmember">${dellog.member.id }</td>
+                                    <td>${dellog.member.memberAccount }</td>
+                                    <td>${dellog.delReason }</td>
+                                    <td><button class="btn btn-outline-danger denyDel">駁回</button></td>
                                 </tr>
                             </c:forEach>
                             </tbody>
@@ -192,7 +208,6 @@
                     </div>
                 </div>
             </div> <!-- card end -->
-
         </div> <!-- col end -->
     </div><!-- row end -->
 	    <div class="row">

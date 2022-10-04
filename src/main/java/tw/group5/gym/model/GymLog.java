@@ -6,20 +6,17 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import tw.group5.admin.model.MemberBean;
 
@@ -52,6 +49,9 @@ public class GymLog implements Serializable{
 	
 	@Column(name="GYMDEL")
 	private Integer gymDel;
+	
+	@Column(name = "DELREASON")
+	private String delReason;
 	
 	@JoinColumn(name = "GYMNO")
 	@ManyToOne
@@ -128,6 +128,14 @@ public class GymLog implements Serializable{
 
 	public void setGymDel(Integer gymDel) {
 		this.gymDel = gymDel;
+	}
+
+	public String getDelReason() {
+		return delReason;
+	}
+
+	public void setDelReason(String delReason) {
+		this.delReason = delReason;
 	}
 	
 	

@@ -50,8 +50,23 @@ $(function(){
 	}
 	
 	$("#preDelete").click(function(){
-		console.log("oneonclick")
-		preDelete();
+		Swal.fire({
+            title: '請輸入刪除原因',
+            input: 'text',
+            inputAttributes: {
+                autocapitalize: 'off'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Look up',
+        }).then((result) => {
+            if (result.isConfirmed) {
+            	let reason=result.value;
+            	preDelete(reason);
+                Swal.fire({
+                    title: '已提出刪除',
+                })
+            }
+        })
 	})
 	if("${logStatus.gymDel}"==1){
 		$("#preDelete").text("已提出刪除申請");
@@ -61,7 +76,7 @@ $(function(){
 let mId = "${loginMember.id }";
 let logId = '${logStatus.logId}';
 let gymBean={"gymId":"${gymDetail.gymId}","gymName":"${gymDetail.gymName }","gymAddress":"${gymDetail.gymAddress }","gymOpenHours":"${gymDetail.gymOpenHours }","rating":"${gymDetail.rating }","gymPicture":"${gymDetail.gymPicture }"};
-function countFavorite(){
+function countFavorite(reason){
 	$.ajax({
 		type:'post',
 		url:'/group5/gym/countFavorite',
@@ -99,42 +114,31 @@ function countFavorite(){
 	})		
 }
 
-function preDelete(){
+function preDelete(reason){
+	let gymlog;
 	if(logId==""){
-		let gymlog={"member": {"id":"${loginMember.id}"}, "gym":{"gymId":"${gymDetail.gymId}"},"gymDel":1};
+		gymlog={"member": {"id":"${loginMember.id}"}, "gym":{"gymId":"${gymDetail.gymId}"},"gymDel":1,"delReason":reason};
 		console.log(gymlog);
-		$.ajax({
-			type:'post',
-			url:'/group5/user/gym/delete/',
-			contentType: 'application/json',
-			data:JSON.stringify(gymlog),
-			success:function(){
-				$("#preDelete").text("已提出刪除申請");
-			},
-			error:function(){
-				Swal.fire(
-						  '刪除失敗',
-						  '請洽管理員諮，或詢稍後再試一次！',
-						  'error'
-						)
-			}
-		});
 	}else{
-		$.ajax({
-			type:'post',
-			url:'/group5/user/gym/delete/'+logId,
-			success:function(){
-				$("#preDelete").text("已提出刪除申請");
-			},
-			error:function(){
-				Swal.fire(
-						  '刪除失敗',
-						  '請洽管理員諮，或詢稍後再試一次！',
-						  'error'
-						)
-			}
-		})
+		gymlog={"logId":logId,"member": {"id":"${loginMember.id}"}, "gym":{"gymId":"${gymDetail.gymId}"},"gymDel":1,"delReason":reason};
+		console.log(gymlog);
 	}
+	$.ajax({
+		type:'post',
+		url:'/group5/user/gym/delete/',
+		contentType: 'application/json',
+		data:JSON.stringify(gymlog),
+		success:function(){
+			$("#preDelete").text("已提出刪除申請");
+		},
+		error:function(){
+			Swal.fire(
+					  '刪除失敗',
+					  '請洽管理員諮，或詢稍後再試一次！',
+					  'error'
+					)
+		}
+	});
 }
 </script>
 <script src="/group5/js/ratingAndSavedFront.js" defer></script>

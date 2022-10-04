@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.lang.Nullable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -101,17 +102,23 @@ public class GymController {
 	public String processDetailPageAction(@PathVariable("gName") String gName, int memberIdNow, Model m) {
 		GymBean gym = gymService.queryName(gName);
 		m.addAttribute("selectedGym", gym);		
-		MemberBean member = adminService.selectOneMember(memberIdNow);		
-		GymLog logStatus = gymLogService.findByMemberAndGym(member, gym);
-		System.out.println(logStatus);
-		if(logStatus!=null) {
-			List<GymLog> memberlist = gymLogService.findByGym(gym);
-			m.addAttribute("memberlist", memberlist);
-			m.addAttribute("logStatus", logStatus);			
-		}
+		List<GymLog> memberlist = gymLogService.findByGym(gym);
+		m.addAttribute("memberlist", memberlist);
+		List<GymLog> delLogs = gymLogService.findByGymDelAndGym(gym);
+		m.addAttribute("delLogs", delLogs);
 		return "/gym/gymDetail";
 	}
 	
+	//駁回刪除
+	@PostMapping("/gymDetail/deldata/{delmember}")
+	@ResponseStatus(HttpStatus.OK)
+	public void processDetailDelAction(@RequestBody GymBean gym,@PathVariable("delmember")Integer memberId ,Model m) {
+		MemberBean delMember = adminService.selectOneMember(memberId);
+		GymLog result = gymLogService.findByMemberAndGym(delMember, gym);
+		result.setGymDel(0);
+		result.setDelReason("");
+		gymLogService.updateGymLog(result);
+	}
 	
 	
 	//直接導到新增頁面
