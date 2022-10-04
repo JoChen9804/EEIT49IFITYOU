@@ -1,7 +1,7 @@
 package tw.group5.shopping.controller;
 
-
 import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,7 +20,7 @@ import tw.group5.shopping.model.ShoppingCartItem;
 import tw.group5.shopping.sevice.ShoppingCartItemService;
 
 @Controller
-@SessionAttributes(names = {"shoppingCartItems","totalWithCoupon"})
+@SessionAttributes(names = {"shoppingCartItems"})
 @RequestMapping(path = "/group5/user")
 public class ShoppingCartController {
 	
@@ -30,7 +30,7 @@ public class ShoppingCartController {
 	private List<ShoppingCartItem> shoppingCartItems;
 	
 	
-	//進購物車
+	//進購物車呈現
 	@RequestMapping(path = "/shopping.cart",method = RequestMethod.GET)
 	public String processMainAction(Model m) {
 		
@@ -42,17 +42,36 @@ public class ShoppingCartController {
 		return "shopping/shopping_cart";
 	}
 	
-	//在購物車內增減數量:update資料庫
+	//在購物車內增減數量:update資料庫內數量及小計
 	@PostMapping(path = "/shopping.cart.changeQuantity")
 	@ResponseBody
-	public void changeQuantity(@RequestBody JSONObject jsonO) {
+	public String changeQuantity(@RequestBody JSONObject jsonO) {
 		Integer updateIdentityNumber = jsonO.getInt("updateIdentityNumber");
 		int newQuantity = jsonO.getInt("newQuantity");
 		int newSubtotal = (sCIService.findByIdentityNumber(updateIdentityNumber).getCommodityPrice())*newQuantity;
 		sCIService.updateQuantityInCart(updateIdentityNumber, newQuantity, newSubtotal);
+		
+		
+		//取出該會員購物車內剩的
+		String account = SecurityContextHolder.getContext().getAuthentication().getName();
+		shoppingCartItems = sCIService.findAllShoppingCartItems(account);
+		
+		//算出總金額
+		int totalShow =0;
+		for (ShoppingCartItem shoppingCartItem : shoppingCartItems) {
+			totalShow += shoppingCartItem.getSubtotal();
+		}
+		
+		//旁邊subtotal及下面總金額做成JSON Object
+		JSONObject returnjsonO = new JSONObject();
+		returnjsonO.put("newSubtotal", newSubtotal);
+		returnjsonO.put("totalShow", totalShow);
+
+		//丟回前台做畫面更新
+		return returnjsonO.toString();
 	}
 	
-	//在購物車內刪除:delete資料庫
+	//在購物車內刪除:delete資料庫內資料
 	@PostMapping(path = "/shopping.cart.delete")
 	@ResponseBody
 	public String deleteByIdentityNumber(@RequestParam("deleteIdentityNumber")Integer deleteIdentityNumber) {
@@ -64,45 +83,22 @@ public class ShoppingCartController {
 		String account = SecurityContextHolder.getContext().getAuthentication().getName();
 		shoppingCartItems = sCIService.findAllShoppingCartItems(account);
 		
-		//算出剩幾個跟總金額
+		//算出剩幾個商品跟總金額
 		int numberShow = shoppingCartItems.size();
-		int total =0;
+		int totalShow =0;
 		for (ShoppingCartItem shoppingCartItem : shoppingCartItems) {
-			total = shoppingCartItem.getSubtotal();
+			totalShow += shoppingCartItem.getSubtotal();
 		}
 		
 		//做成JSON Object
 		JSONObject jsonO = new JSONObject();
 		jsonO.put("numberShow", numberShow);
-		jsonO.put("total", total);
+		jsonO.put("totalShow", totalShow);
 
+		//丟回前台做畫面更新
 		return jsonO.toString();
 	}
 	
-	
-	//接到結帳頁面Step2:選付款及運送方式
-	@PostMapping(path = "/shopping.cart/pay")
-	public String processPayActionStep2(@RequestParam("totalWithCoupon")int totalWithCoupon, Model m) {
-		
-		m.addAttribute("totalWithCoupon", totalWithCoupon);
-		
-		return "shopping/payAndDelivery";
-	}
-	
-	
-	//接到結帳頁面Step3:填資料
-	@PostMapping(path = "/shopping.cart/pay/orderInformation")
-	public String processPayActionStep3(@RequestParam("formPayType")String payType, @RequestParam("finalshippingType")String shippingType,
-										@RequestParam("formTotalWithDeliveryFee")int totalWithDeliveryFee, Model m) {
-			
-		System.out.println(payType);
-		System.out.println(shippingType);
-		System.out.println(totalWithDeliveryFee);
-		
-		
-		return "";
-			
-	}
 		
 		
 

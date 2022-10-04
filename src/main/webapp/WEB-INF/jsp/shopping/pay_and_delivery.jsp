@@ -8,7 +8,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="Content-Language" content="zh-tw">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>確認購物車 - iFit</title>
+    <title>付款與運送方式</title>
 
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 
@@ -28,6 +28,8 @@
 	<%@ include file="../shopping/shoppingFrontStageHead.jsp" %>
 	
 	<div class="center-sub-content" style="margin-top:80px">
+	
+	    <!-- 上方流程條 -->
     	<ns-progress-bar type="$root.headerProgressBarModelType">
         	<div class="header-progress-bar">
             	<ul>
@@ -65,6 +67,8 @@
              </div>
        	</ns-progress-bar>
        	
+       	
+       	<!-- 選擇列 -->
        	<div class="cart-wrapper">
         	<div>
             	<div>
@@ -85,7 +89,7 @@
                                        		<div class="row has-hozl-gutter margin-right-20">
                                             	<div class="credit-card-once">
                                                		<div class="left-content">
-                                                    	<input type="radio" name="payType" value="信用卡一次付清">
+                                                    	<input type="radio" name="payType" value="信用卡一次付清" checked>
                                                         <i class="icon circle icon-circle"></i>
                                                         <span class="flow-li-title pay-type-name">信用卡一次付清</span>
                                                     </div>
@@ -141,7 +145,7 @@
                                         	
                                             			<!-- 配送方式 Radio Button -->
                                             			<div class="left">
-                                                			<input type="radio" name="shippingType" value="SevenElevenPickup">
+                                                			<input type="radio" name="shippingType" value="SevenElevenPickup" checked>
                                                 			<i class="icon circle icon-radio-selected"></i>
                                             			</div>
                                             		
@@ -418,6 +422,7 @@
                                         </div>
                                         <div class="conclusion-li__right fee" id="calculateDeliveryFee"></div>
                                     </div>
+                                    <div class="conclusion-row conclusion-row--thin delivery__fee-text">(再湊 NT$<span id="howmuchfreedelivery"></span>免運)</div>
                                 </div>
                                 
                                 <!--總計-->
@@ -457,8 +462,9 @@
                         <div class="sticky-area__block">
                         
                         	<form action="/group5/user/shopping.cart/pay/orderInformation" method="post">
-                        		<input type="hidden" name="formPayType" value="" id="formPayType">
-                        		<input type="hidden" name="finalshippingType" value="123" id="finalshippingType">
+                        		<input type="hidden" name="formPayType" value="信用卡一次付清" id="formPayType">
+                        		<input type="hidden" name="formShippingType" value="123" id="formShippingType">
+                        		<input type="hidden" name="formShippingFee" value="" id="formShippingFee">
                             	<input type="hidden" name="formTotalWithDeliveryFee" value="" id="formTotalWithDeliveryFee">
                                 <input type="submit" value="下一步" class="next-step-btn cms-primaryBtnTextColor cms-primaryBtnBgColor">
                             </form>
@@ -476,26 +482,6 @@
        	   	
 	</div>
        	
-       	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	<%@ include file="../admin/FrontStageFoot.jsp" %>
@@ -510,14 +496,28 @@
 		<!--滿1500時 -->
 		if( ${totalWithCoupon} >= 1500 ){
 			
-			<!--物流選擇旁顯示的運費 -->
+			<!--差多少免運條隱藏 -->
+			$('.delivery__fee-text').hide();
+			
+			<!--物流選擇旁顯示的運費及物流下方描述條顯示 -->
 			for( var i = 0 ; i < deliveryFees.length ; i++){
 				console.log(i)
 				$(deliveryFees[i]).text("免運");
 				$(deliveryFeeDescribes[i]).text("已滿NT$1,500 免運");
 			}
 			
-			<!--下面結算區運費也跟著變 -->
+			<!--預設為7-11取貨 顯示免運，並且算出下方含運費金額 -->
+			$('#calculateDeliveryFee').text("免運")
+		    $('#formShippingFee').val("免運")
+
+			
+			<!--算出加運費總價 -->
+			$('#totalWithDeliveryFee').text(${totalWithCoupon})
+			$('#DesktopTotalWithDeliveryFee').text(${totalWithCoupon})
+			$('#formTotalWithDeliveryFee').val(${totalWithCoupon})
+			
+			
+			<!--可根據選擇再做變化 -->
 			$('input[name=shippingType]').on('change',function(){
 				var shippingType = $(this).val();
 				
@@ -528,6 +528,7 @@
 					$('#totalWithDeliveryFee').text(${totalWithCoupon}+220)
 					$('#DesktopTotalWithDeliveryFee').text(${totalWithCoupon}+220)
 					$('#formTotalWithDeliveryFee').val(${totalWithCoupon}+220)
+					$('#formShippingFee').val("NT$220")
 					
 				}else {
 					$('#calculateDeliveryFee').text("免運")
@@ -536,6 +537,7 @@
 					$('#totalWithDeliveryFee').text(${totalWithCoupon})
 					$('#DesktopTotalWithDeliveryFee').text(${totalWithCoupon})
 					$('#formTotalWithDeliveryFee').val(${totalWithCoupon})
+				    $('#formShippingFee').val("免運")
 				}
 				
 			})
@@ -543,31 +545,58 @@
 		<!--未滿1500時 -->	
 		}else{
 			
-			<!--物流選擇旁顯示的運費 -->
+			<!--差多少免運條因預設7-11顯示 -->
+			$('#howmuchfreedelivery').text(1500-${totalWithCoupon});
+			
+			<!--物流選擇旁顯示的運費及物流下方描述條顯示 -->
 			for( var i = 0 ; i < deliveryFees.length ; i++){
 				$(deliveryFees[i]).text("NT$80");
 				$(deliveryFeeDescribes[i]).text("未滿NT$1,500 運費$80");
 			}
 			
+			<!--預設為7-11取貨 顯示運費為NT$80，並且算出下方含運費金額 -->
+			$('#calculateDeliveryFee').text("NT$80")
+			$('#formShippingFee').val("NT$80")
+					    
+			<!--算出加運費總價 -->
+			$('#totalWithDeliveryFee').text(${totalWithCoupon}+80)
+			$('#DesktopTotalWithDeliveryFee').text(${totalWithCoupon}+80)
+			$('#formTotalWithDeliveryFee').val(${totalWithCoupon}+80)
+			
+			
+			<!--可根據選擇再做變化 -->
 			$('input[name=shippingType]').on('change',function(){
 				var shippingType = $(this).val();
 				
 				if(shippingType === "islandHome"){
+					
+					<!--選離島差多少免運條隱藏 -->
+					$('.delivery__fee-text').hide();
+					
+					<!--運費顯示 -->
 					$('#calculateDeliveryFee').text("NT$220")
 					
 					<!--算出加運費總價 -->
 					$('#totalWithDeliveryFee').text(${totalWithCoupon}+220)
 					$('#DesktopTotalWithDeliveryFee').text(${totalWithCoupon}+220)
 					$('#formTotalWithDeliveryFee').val(${totalWithCoupon}+220)
+					$('#formShippingFee').val("NT$220")
 
 					
 				}else {
+					
+					<!--不是離島差多少免運條顯示 -->
+					$('.delivery__fee-text').show();
+					$('#howmuchfreedelivery').text(1500-${totalWithCoupon});
+					
+					<!--運費顯示 -->
 					$('#calculateDeliveryFee').text("NT$80")
 					
 					<!--算出加運費總價 -->
 					$('#totalWithDeliveryFee').text(${totalWithCoupon}+80)
 					$('#DesktopTotalWithDeliveryFee').text(${totalWithCoupon}+80)
 					$('#formTotalWithDeliveryFee').val(${totalWithCoupon}+80)
+					$('#formShippingFee').val("NT$80")
 					
 				}
 			})
@@ -578,12 +607,12 @@
 		
 		
 		
-		<!--物流下方解說 先不顯示，判斷選了什麼在show -->
+		<!--物流下方解說 預設顯示信用卡付款，且可判斷選了什麼跟著改變 -->
 		var creditPays = $('li #creditPay').toArray();
 		var noPays = $('li #noPay').toArray();
 		
 		for(var i = 0 ; i < creditPays.length ; i++){
-			$(creditPays[i]).hide();
+			$(creditPays[i]).show();
 			$(noPays[i]).hide();
 		}
 		

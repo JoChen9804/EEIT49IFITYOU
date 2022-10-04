@@ -34,6 +34,8 @@
     <%@ include file="../shopping/shoppingFrontStageHead.jsp" %>
     
     <div class="center-sub-content" style="margin-top:80px">
+    
+        <!-- 上方流程條 -->
     	<ns-progress-bar type="$root.headerProgressBarModelType">
         	<div class="header-progress-bar">
             	<ul>
@@ -69,6 +71,7 @@
                 </ul>
             </div>
             
+        <!-- 購物車內商品呈現 -->
         </ns-progress-bar>
         <div class="cart-wrapper">
             <!---->
@@ -159,7 +162,7 @@
                                             		<div class="fee-prefix-text cms-moneyColor invisible">折扣後</div>
                                                 
                                                 	<!-- 原總價 -->
-                                                	<div class="fee cms-moneyColor">NT$<%=shoppingCartItem.getSubtotal() %></div>
+                                                	<div class="fee cms-moneyColor">NT$<span class="feeSpan"><%=shoppingCartItem.getSubtotal() %></span></div>
                                                 
                                                 	<!-- 顯示省多少 -->
                                                 	<div class="invisible">省 NT$9</div>
@@ -268,7 +271,7 @@
                                 <div class="sticky-area__block">
                                     <label class="next-step-btn__hint ng-hide"></label>
                                     
-                                    <form action="/group5/user/shopping.cart/pay" method="post">
+                                    <form action="/group5/user/shopping.cart/pay_and_delivery" method="post">
                                     <input type="hidden" name="totalWithCoupon" value="<%=total %>" id="totalWithCoupon">
                                     <input type="submit" value="下一步" class="next-step-btn cms-primaryBtnTextColor cms-primaryBtnBgColor">
                                     </form>
@@ -346,7 +349,7 @@
       					alert("商品已從購物車移除!");
       					$(this).parent().parent('.merchandise').remove();
       					
-      		  			<!--顯示共幾個 -->
+      		  			<!--顯示總共幾個商品 -->
       					$('#showNumber').text(data.numberShow);
       					$('#showNumber2').text(data.numberShow);
       					
@@ -357,17 +360,17 @@
       			  		}
       					
       					<!--下面金額 -->
-      					$('#cartTotal').text(data.total);
-      					$('#cartTotal2').text(data.total);
-      					$('#cartTotal3').text(data.total);
-      					$('#totalWithCoupon').val(data.total);
+      					$('#cartTotal').text(data.totalShow);
+      					$('#cartTotal2').text(data.totalShow);
+      					$('#cartTotal3').text(data.totalShow);
+      					$('#totalWithCoupon').val(data.totalShow);
       				}		
       			});	
       		});
 		}
     	
     	
-    	<!--數量增減:就是更新數量!! -->
+    	<!--數量增減:更新資料庫數量跟小計!! -->
     	var increaseBTNs = $('.counter .increase-btn').toArray();
     	
     	for(var i = 0 ; i < increaseBTNs.length ; i++ ){
@@ -385,16 +388,53 @@
     				type:"POST",
       				url:"/group5/user/shopping.cart.changeQuantity",
       				contentType:'application/json',
-      				data:JSON.stringify(params)
+      				data:JSON.stringify(params),
+      				dataType:"json",
+      				context: this,
+      				success:function(data){
+      					$(this).parent().next().children().children('.feeSpan').text(data.newSubtotal);
+      					<!--下面金額 -->
+      					$('#cartTotal').text(data.totalShow);
+      					$('#cartTotal2').text(data.totalShow);
+      					$('#cartTotal3').text(data.totalShow);
+      					$('#totalWithCoupon').val(data.totalShow);
+      				}
     			});
-    			
-    			
-    			
     		});
+    	};
+    	
+    	
+    	
+		var decreaseBTNs = $('.counter .decrease-btn').toArray();
+    	
+    	for(var i = 0 ; i < decreaseBTNs.length ; i++ ){
     		
- 
-        		
-        	
+    		$(decreaseBTNs[i]).on('click',function(){
+    			
+    			let updateIdentityNumber = $(this).val();
+    			
+    			let originalQuantity = $(this).next().text();
+    			let newQuantity = parseInt(originalQuantity) - 1;
+    			$(this).next().text(newQuantity);
+    			
+    			params = {"updateIdentityNumber":updateIdentityNumber,"newQuantity":''+newQuantity};
+    			$.ajax({
+    				type:"POST",
+      				url:"/group5/user/shopping.cart.changeQuantity",
+      				contentType:'application/json',
+      				data:JSON.stringify(params),
+      				dataType:"json",
+      				context: this,
+      				success:function(data){
+      					$(this).parent().next().children().children('.feeSpan').text(data.newSubtotal);
+      					<!--下面金額 -->
+      					$('#cartTotal').text(data.totalShow);
+      					$('#cartTotal2').text(data.totalShow);
+      					$('#cartTotal3').text(data.totalShow);
+      					$('#totalWithCoupon').val(data.totalShow);
+      				}
+    			});
+    		});
     	};
     	
     	
