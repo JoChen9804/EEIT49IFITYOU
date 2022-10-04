@@ -91,4 +91,10 @@ public class GymLogService {
 		return new GymLogCount(result.size(),male,female);
 
 	}
+	
+	//count(*) where gymDel=1 and gymNo=?
+	public int countByGymDelAndGym(GymBean gym) {
+		return gymLogRespository.countByGymDelAndGym(1, gym);
+	}
+	
 }

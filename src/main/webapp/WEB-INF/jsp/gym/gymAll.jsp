@@ -18,63 +18,68 @@
     <link href="/group5/css/dataTables.bootstrap4.min.css" rel="stylesheet">
 	<script src="/group5/js/jquery.min.js"></script>
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-	<script>
-		$(function(){
-			$('.edit').on("click",function(){
-				let name=$(this).parent().siblings(".gymNameOfList").text();
-				console.log(name);
-				editGym(name);
-			});
-			
-			$("#submitUpdate").on("click",function(){
-				let gName=$(".showNameText").text();
-				let gAddress=$(".showAddressText").text();
-				let gTime=$(".showTimesText").html();
-				let gymBean={"gymId": gymid, "gymName":gName, "gymAddress": gAddress, "gymOpenHours": gTime}
-				$.ajax({
-					type: "post",
-					url: "/group5/admin/gym/allUpdateAction",
-					dataType: "json",
-					data: JSON.stringify(gymBean),
-					contentType: "application/json",
-					success: function(data){
-						console.log("success");
-						location.reload();
-					},
-					error: function(){
-						console.log("error");
-					}
-					
-				});
-				
-			});
-			
-			$(".deletegymoflist").click(function(){
-				Swal.fire({
-					  title: '確定刪除此健身房？',
-					  text: "刪除後資料將無法復原！",
-					  icon: 'warning',
-					  showCancelButton: true,
-					  confirmButtonColor: '#3085d6',
-					  cancelButtonColor: '#d33',
-					  confirmButtonText: '刪除'
-					}).then((result) => {
-					  if (result.isConfirmed) {
-						let deleteName = $(this).parent().siblings(".gymNameOfList").text();
-						deleteGym(deleteName);
-					    Swal.fire(
-					      'Deleted!',
-					      '此健身房已刪除！',
-					      'success'
-					    ).then((result) =>{
-					    	if(result.isConfirmed){
-								location.reload();
-					    	}
-					    });
-					  }
-					});
-			});
+<script>
+$(function(){
+	if('${countFavorite}'==''){
+		querydata();
+		console.log("2"+"${countFavorite}")
+	}
+	console.log("15616 ${countDel}")
+	console.log("15616 ${countDel['1024']}")
+		$('.edit').on("click",function(){
+			let name=$(this).parent().siblings(".gymNameOfList").text();
+			console.log(name);
+			editGym(name);
 		});
+			
+		$("#submitUpdate").on("click",function(){
+			let gName=$(".showNameText").text();
+			let gAddress=$(".showAddressText").text();
+			let gTime=$(".showTimesText").html();
+			let gymBean={"gymId": gymid, "gymName":gName, "gymAddress": gAddress, "gymOpenHours": gTime}
+			$.ajax({
+				type: "post",
+				url: "/group5/admin/gym/allUpdateAction",
+				dataType: "json",
+				data: JSON.stringify(gymBean),
+				contentType: "application/json",
+				success: function(data){
+					console.log("success");
+					location.reload();
+				},
+				error: function(){
+					console.log("error");
+				}
+			});
+		}); //submitUpdate end
+			
+		$(".deletegymoflist").click(function(){
+			Swal.fire({
+				title: '確定刪除此健身房？',
+				text: "刪除後資料將無法復原！",
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: '刪除'
+			}).then((result) => {
+				if (result.isConfirmed) {
+				let deleteName = $(this).parent().siblings(".gymNameOfList").text();
+				deleteGym(deleteName);
+					Swal.fire(
+					  'Deleted!',
+					  '此健身房已刪除！',
+					  'success'
+					).then((result) =>{
+					    if(result.isConfirmed){
+							location.reload();
+					    }
+					});
+				}
+			});//sweetalert end
+		});
+		
+});
 		var gymid=""
 		function editGym(name){
 			$.ajax({
@@ -105,6 +110,20 @@
 				}
 			})
 		}
+		
+		function querydata(){
+			console.log('testtttttttttttt');
+			$.ajax({
+				type:"post",
+				url: "/group5/admin/gym/main/data",
+				success:function(){
+					console.log("${countFavorite}544ssss")
+				},
+				error:function(){
+					console.log("errrrrrrrrror")
+				}
+			})
+		}
 	</script>
 
 </head>
@@ -124,8 +143,9 @@
 							<tr>
 								<th>名稱</th>
 								<th>地址</th>
-								<th>營業時間</th>
 								<th>評分</th>
+								<th>申請刪除數</th>
+								<th>收藏數</th>
 								<th>-</th>
 								<th>-</th>
 								<th>-</th>
@@ -135,8 +155,9 @@
 							<tr>
 								<th>名稱</th>
 								<th>地址</th>
-								<th>營業時間</th>
 								<th>評分</th>
+								<th>申請刪除數</th>
+								<th>收藏數</th>
 								<th>-</th>
 								<th>-</th>
 								<th>-</th>
@@ -147,8 +168,9 @@
 							<tr>
 								<td class="gymNameOfList">${gymlist.gymName}</td>
 								<td>${gymlist.gymAddress}</td>
-								<td>${gymlist.gymOpenHours}</td>
 								<td>${gymlist.rating}</td>
+								<td>${countDel[gymlist.gymId]}</td>
+								<td>${countFavorite[gymlist.gymId]}</td>
 								<td><form action="/group5/admin/gym/gymDetail/${gymlist.gymName}" method="post">
 									<input type="hidden" value="10003" name="memberIdNow">
 									<input type="submit" class="btn btn-outline-success gymDetail" value="詳細資訊">

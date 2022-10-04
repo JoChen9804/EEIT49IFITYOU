@@ -1,12 +1,19 @@
 package tw.group5.gym.controller;
 
+import java.security.KeyStore.Entry;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import tw.group5.admin.model.AdminBean;
@@ -48,7 +56,32 @@ public class GymController {
 	public String processAllMainAction(Model m) {
 		List<GymBean> list =gymService.findGyms(new GymBean());
 		m.addAttribute("queryAll",list);
+		Map<Integer, Integer> countDel = new HashMap<Integer, Integer>();
+		Map<Integer, Integer> countFavorite = new HashMap<Integer, Integer>();
+		for(GymBean g: list) {
+			countDel.put(g.getGymId(), gymLogService.countByGymDelAndGym(g));
+			countFavorite.put(g.getGymId(), gymLogService.countGymLog(g).getNumberOfFavorite());
+		}
+		m.addAttribute("countDel",countDel);
+		m.addAttribute("countFavorite",countFavorite);
+		System.out.println(countDel);
 		return "gym/gymAll";
+	}
+	
+	//總表資料
+	@PostMapping("/main/data")
+	@ResponseStatus(HttpStatus.OK)
+	public void processMainDataAction(Model m) {
+
+//		Map<Integer, Integer> countDel = new HashMap<Integer, Integer>();
+//		Map<Integer, Integer> countFavorite = new HashMap<Integer, Integer>();
+//		for(GymBean g: list) {
+//			countDel.put(g.getGymId(), gymLogService.countByGymDelAndGym(g));
+//			countFavorite.put(g.getGymId(), gymLogService.countGymLog(g).getNumberOfFavorite());
+//		}
+//		m.addAttribute("countDel",countDel);
+//		m.addAttribute("countFavorite",countFavorite);
+		
 	}
 	
 	//點編輯按鈕後
