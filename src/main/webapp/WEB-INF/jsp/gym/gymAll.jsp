@@ -18,17 +18,14 @@
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 $(function(){
-		if("${queryAll}"==null){
-			let xh= new XMLhttpRequest();
-			xh.open("get","/group5/admin/gym/allMain",false);
-			xh.send();
-		}
-		$('.edit').on("click",function(){
-			let name=$(this).parent().siblings(".gymNameOfList").text();
-			console.log(name);
+		if("${queryAll}"==""){
+			location.href="/group5/admin/gym/allMain";
+		}		
+		$('#maintbody').on("click",'.edit',function(){
+			let name=$(this).parent('td').siblings(".gymNameOfList").text();
 			editGym(name);
 		});
-			
+		
 		$("#submitUpdate").on("click",function(){
 			let gName=$(".showNameText").text();
 			let gAddress=$(".showAddressText").text();
@@ -47,19 +44,20 @@ $(function(){
 							  '更改完成',
 							  '已更新'+data.gymName+'資訊',
 							  'success'
-							).then(result=>{
+							).then(function(result){
           					if (result.isConfirmed) {
-          					    savePicture();
-          					  }
+	          					savePicture();
+          					}
           				});
 				},
 				error: function(){
 					console.log("error");
 				}
 			});
+			
 		}); //submitUpdate end
 			
-		$(".deletegymoflist").click(function(){
+		$('#maintbody').on("click",".deletegymoflist",function(){
 			Swal.fire({
 				title: '確定刪除此健身房？',
 				text: "刪除後資料將無法復原！",
@@ -86,14 +84,14 @@ $(function(){
 		});
 		
 		//picture
-		$('#ff').on('change', function(e){      
-			let file = this.files[0];
-			let imagePath="/group5/images/"+file.name;
-			$('#imagePathF').val(imagePath);
-			//預覽
-			let objectURL = URL.createObjectURL(file);
-			$('#img1').attr('src', objectURL);
-		});
+		$('#maintbody').on("click",function(){
+			$('#ff').on('change', function(){      
+				let file = this.files[0];
+				//預覽
+				let objectURL = URL.createObjectURL(file);
+				$('#img1').attr('src', objectURL);
+			});
+		})
 		
 		//saving picture with ajax
 		function savePicture(){
@@ -175,7 +173,7 @@ $(function(){
 								<th>-</th>
 							</tr>
 						</tfoot>
-						<tbody>
+						<tbody id="maintbody">
 						<c:forEach var="gymlist" items="${queryAll}">	
 							<tr>
 								<td class="gymNameOfList">${gymlist.gymName}</td>

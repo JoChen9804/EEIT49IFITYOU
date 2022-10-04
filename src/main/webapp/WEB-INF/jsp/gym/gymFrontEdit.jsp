@@ -77,9 +77,6 @@
 	
 		//picture
 		$('#ff').on('change', function(e){      
-			let file = this.files[0];
-			let imagePath="/group5/images/"+file.name;
-			$('#imagePathF').val(imagePath);
 			//預覽
 			let objectURL = URL.createObjectURL(file);
 			$('#img1').attr('src', objectURL);

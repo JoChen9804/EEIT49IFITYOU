@@ -138,6 +138,7 @@ public class GymController {
 		return gymService.add(gym1);
 	}
 	
+	//圖片修改
 	@PostMapping("/editPicture")
 	public String processPictureAction(int gymId, MultipartFile photo, Model m) {
 		GymBean gym1 = gymService.findById(gymId);
@@ -154,5 +155,25 @@ public class GymController {
 			}
 		}
 		return "gym/gymAll";
+	}
+	
+	//圖片上傳處理+寫進資料庫
+	@PostMapping("/addPicture")
+	public String processPictureAction(int gymId, MultipartFile photo) {
+		GymBean gym1 = gymService.findById(gymId);
+		if(photo.isEmpty()) {
+			gym1.setGymPicture("/group5/images/gym-default.png");
+		}else {
+			String imgName;
+			try {
+				imgName = gymService.processImg(gymId, photo);
+				gym1.setGymPicture("/group5/images/"+imgName);
+			} catch (IllegalStateException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		gymService.update(gym1);
+		return "/gym/gymAdd";
 	}
 }

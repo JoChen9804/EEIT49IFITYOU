@@ -210,17 +210,7 @@
             </div> <!-- card end -->
         </div> <!-- col end -->
     </div><!-- row end -->
-	    <div class="row">
-        <div class="col-lg-6">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">讓我想想還有啥</h6>
-                </div>
-                <div class="card-body">
-                </div>
-            </div>
-        </div> <!-- col end -->
-     </div> <!-- row end -->
+
     <script>
         let map;
         // let currentPosition;
