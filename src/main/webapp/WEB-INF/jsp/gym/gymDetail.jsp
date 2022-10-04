@@ -9,23 +9,69 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>詳細資訊</title>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-    <!-- Custom styles for this template -->
+    <!--   official Bootstrap -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+		crossorigin="anonymous"></script>
+		
+    <!-- Custom for this template -->
     <link rel="stylesheet" href="/group5/css/ratingAndSaved-style.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <link href="/group5/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <!-- Core plugin JavaScript-->
+    <script src="/group5/js/jquery.min.js"></script>
+    <script src="/group5/js/jquery.easing.min.js"></script>
+    <!-- Custom scripts for this pages-->
     <script src="/group5/js/jquery.dataTables.min.js"></script>
     <script src="/group5/js/dataTables.bootstrap4.min.js"></script>
-
+    <script src="/group5/js/datatables-demo.js"></script>
+    <script>
+    $(function(){
+    	countFavorite();
+    })
+    function countFavorite(){
+    	let gymBean={"gymId":"${selectedGym.gymId}","gymName":"${selectedGym.gymName }","gymAddress":"${selectedGym.gymAddress }","gymOpenHours":"${selectedGym.gymOpenHours }","rating":"${gymDetail.rating }","gymPicture":"${selectedGym.gymPicture }"};
+    	$.ajax({
+    		type:'post',
+    		url:'/group5/gym/countFavorite',
+    		dataType:'json',
+    		contentType:'application/json',
+    		data:JSON.stringify(gymBean),
+    		success:function(data){
+    			const genderData = {
+    					labels: ['男', '女'],
+    					datasets: [{
+    								 	label: '收藏性別比',
+    								    data: [data.numberOfMale,data.numberOfFemale],
+    								    backgroundColor: ["#a8baef","#7d98e7"]
+    								}]
+    					};
+    			const genderConfig = {
+    						  type: 'pie',
+    						  data: genderData,
+    						  options: {
+    						    responsive: true
+    						  },
+    						};
+    			
+    			const ctx = $('#genderChart')[0].getContext('2d');
+    	        const myChart = new Chart(ctx, genderConfig);
+    			
+    		},
+    		error: function(){
+    			console.log("errorrrrrrrrrrrrrrrrrrrrr");
+    		}
+    		
+    	})		
+    }
+    
+    </script>
 </head>
 <body>
 <%@ include file="../admin/AdminstyleHead.jsp" %>
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">${selectedGym.gymName }</h1>
+        <h1 class="h3 mb-0 text-gray-800">${selectedGym.gymName } <a href="/group5/admin/gym/allMain" class="btn btn-secondary">回上一頁</a></h1> 
     </div>
 
     <div class="row">
@@ -34,12 +80,10 @@
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">Google Map</h6>
                 </div>
-                <div class="card-body">
+                <div class="card-body d-flex">
                     <div id="map" style="margin:20px; width: 500px; height: 500px;"></div>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-6">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">Location Info</h6>
@@ -54,31 +98,19 @@
                     <input type="hidden" value="${logStatus.rating }" id="logRating">
                     <input type="hidden" value="10003" id="memberIdNow">
                 </div>
-                <div class="card-body">
-                    <div class="saved">收藏：
-                        <input type="checkbox" id="saved" name="saved" /><label for="saved"></label>
-                    </div>
-                    <div class="rating-wrap">
-                        <span>評分:</span>
-                        <div class="center">
-                            <div class="rating d-flex" style="padding-top: 15px">
-                                <input type="radio" id="start5" name="rating" value="5" class="star" /><label
-                                    for="start5" class="full order-4"></label>
-                                <input type="radio" id="start4" name="rating" value="4" class="star" /><label
-                                    for="start4" class="full order-3"></label>
-                                <input type="radio" id="start3" name="rating" value="3" class="star" /><label
-                                    for="start3" class="full order-2"></label>
-                                <input type="radio" id="start2" name="rating" value="2" class="star" /><label
-                                    for="start2" class="full order-1"></label>
-                                <input type="radio" id="start1" name="rating" value="1" class="star" /><label
-                                    for="start1" class="full order-0"></label>
-                            </div>
-                        </div>
-                        <div id="rating-value"></div>
-                        <input type="hidden" name="ratingValue" value="評分" id="ratingValue">
-                    </div>
-                </div>
             </div>
+        </div> <!-- col end -->
+        <div class="col-lg-6">
+        	<div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">收藏會員性別比</h6>
+                </div>
+                <div class="card-body d-flex">
+                    <div style="width:285px; padding:25px;">
+						<canvas id="genderChart"></canvas>
+					</div>
+                </div>
+            </div><!-- card end -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">曾對${selectedGym.gymName }評分／收藏會員名單</h6>
@@ -118,13 +150,55 @@
                         </table>
                     </div>
                 </div>
-            </div>
-            <div>
-                <a href="/group5/admin/gym/allMain" class="btn btn-secondary">回上一頁</a>
-            </div>
-        </div>
-    </div>
+            </div> <!-- card end -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">申請${selectedGym.gymName }刪除會員</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered display" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>會員編號</th>
+                                    <th>會員帳號</th>
+                                    <th>駁回刪除</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>會員編號</th>
+                                    <th>會員帳號</th>
+                                    <th>駁回刪除</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                            <c:forEach var="gymlog" items="${memberlist}">
+                                <tr>
+                                    <td>${gymlog.member.id }</td>
+                                    <td>${gymlog.member.memberAccount }</td>
+                                    <td>115156</td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div> <!-- card end -->
 
+        </div> <!-- col end -->
+    </div><!-- row end -->
+	    <div class="row">
+        <div class="col-lg-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">讓我想想還有啥</h6>
+                </div>
+                <div class="card-body">
+                </div>
+            </div>
+        </div> <!-- col end -->
+     </div> <!-- row end -->
     <script>
         let map;
         // let currentPosition;
@@ -167,10 +241,7 @@
     <script async
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQvR9v8XyZl476ki2PsDcJZtLwpo023gs&libraries=places&callback=initMap&region=TW&language=zh-TW"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="/group5/js/jquery.easing.min.js"></script>
-	<script src="/group5/js/ratingAndSaved.js"></script>
-    <!-- Custom scripts for all pages-->
+
 <%@ include file="../admin/AdminstyleFoot.jsp" %>
 </body>
 

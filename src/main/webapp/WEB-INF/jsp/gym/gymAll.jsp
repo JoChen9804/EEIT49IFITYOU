@@ -12,20 +12,12 @@
 		integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
 		crossorigin="anonymous"></script>
 		
-	
-
     <!-- Custom styles for this page -->
     <link href="/group5/css/dataTables.bootstrap4.min.css" rel="stylesheet">
 	<script src="/group5/js/jquery.min.js"></script>
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 $(function(){
-	if('${countFavorite}'==''){
-		querydata();
-		console.log("2"+"${countFavorite}")
-	}
-	console.log("15616 ${countDel}")
-	console.log("15616 ${countDel['1024']}")
 		$('.edit').on("click",function(){
 			let name=$(this).parent().siblings(".gymNameOfList").text();
 			console.log(name);
@@ -111,19 +103,6 @@ $(function(){
 			})
 		}
 		
-		function querydata(){
-			console.log('testtttttttttttt');
-			$.ajax({
-				type:"post",
-				url: "/group5/admin/gym/main/data",
-				success:function(){
-					console.log("${countFavorite}544ssss")
-				},
-				error:function(){
-					console.log("errrrrrrrrror")
-				}
-			})
-		}
 	</script>
 
 </head>
