@@ -36,6 +36,17 @@ public class MemberBean {
 	
 	private String email;
 	
+	 @Column(name = "verification_code")
+	private String verificationCode;
+	
+	public String getVerificationCode() {
+		return verificationCode;
+	}
+
+	public void setVerificationCode(String verificationCode) {
+		this.verificationCode = verificationCode;
+	}
+
 	@OneToOne(cascade= CascadeType.ALL)
 	@JoinColumn(name = "fk_memberDetail_id")
 	private MemberDetail memberDetail;

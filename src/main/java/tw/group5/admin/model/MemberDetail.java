@@ -51,7 +51,11 @@ public class MemberDetail {
     private String pairInfo;
     
     private String recentLoginDate;
+    
+    @Column(name = "create_date", updatable = false)
+    private String createDate;
 	
+    
     @OneToOne(mappedBy = "memberDetail")
 	private MemberBean member;
     
@@ -59,8 +63,6 @@ public class MemberDetail {
 		
 	}
 	
-	
-
 	public MemberDetail(String gender, String nickname, String birthday, String cellphone, String postalCode,
 			String memberAddress, String referralCode, String registerReferralCode, Integer mute,
 			Integer postPermission, Integer pairWilling, String pairContactInfo, String pairRequest, String pairInfo,
@@ -109,7 +111,15 @@ public class MemberDetail {
 		this.recentLoginDate = recentLoginDate;
 	}
 
+	
 
+	public String getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(String createDate) {
+		this.createDate = createDate;
+	}
 
 	public Integer getId() {
 		return id;

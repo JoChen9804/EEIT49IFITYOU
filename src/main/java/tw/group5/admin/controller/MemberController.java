@@ -1,10 +1,15 @@
 package tw.group5.admin.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import net.bytebuddy.utility.RandomString;
 import tw.group5.admin.model.MemberBean;
 import tw.group5.admin.model.MemberDetail;
 import tw.group5.admin.service.AdminService;
@@ -22,7 +28,7 @@ import tw.group5.admin.service.AdminService;
 public class MemberController {
 	@Autowired
 	private AdminService adminService;
-	
+
 	@PostMapping(path = "/user/memberModify.controller") // 修改
 	private String modifyUserAction(String account, String pwd, String modifyimage, String sub, String idNumString,
 			String name, String email, String gender, String nickname, String birthday, String cellphone,
@@ -31,20 +37,16 @@ public class MemberController {
 			@RequestParam("referralCode") String referralCodeModify, String originalRealPassword,
 			@RequestParam("postPermission") String postPermissionModify, String hrefSubmit,
 			@RequestParam("recentLoginDate") String recentLoginDateModify, @RequestParam("filepath") MultipartFile mf,
-			String detailId, Model m) {
+			String detailId, Model m, HttpSession session) {
 
 		String memberPhoto;
 		Integer authority = 0;
 		// 修改
 		String modifyPassword;
-//		System.out.println(originalRealPassword);
-//		System.out.println(pwd);
-//		System.out.println(detailId);
-//		System.out.println(match);
-//		System.out.println(pairContactInfo);
-//		System.out.println(hrefSubmit);
-
 		modifyPassword = originalRealPassword;
+
+		MemberBean nowMember = (MemberBean) session.getAttribute("loginMember");
+		System.out.println(nowMember);
 
 		String referralCode = referralCodeModify;
 		Integer mute = Integer.parseInt(muteModify);
@@ -69,48 +71,82 @@ public class MemberController {
 		System.out.println("會員修改成功");
 		return "admin/UserCenter";
 	}
-	
-	
+
 	@PostMapping(path = "/memberAccountCheck.controller") // 重複帳號確認
-	public ResponseEntity<String> memberAccountCheck(@RequestBody MemberBean mBean){
+	public ResponseEntity<String> memberAccountCheck(@RequestBody MemberBean mBean) {
 
 		boolean status = adminService.findAccount(mBean.getMemberAccount());
-		if(status) {
+		if (status) {
 			return new ResponseEntity<String>("Y", HttpStatus.OK);
 		}
 		return new ResponseEntity<String>("N", HttpStatus.OK);
 	}
-	
+
 	@PostMapping(path = "/memberEmailCheck.controller") // 重複Email確認
-	public ResponseEntity<String> memberEmailCheck(@RequestBody MemberBean mBean){
+	public ResponseEntity<String> memberEmailCheck(@RequestBody MemberBean mBean) {
 
 		boolean status = adminService.findEmail(mBean.getEmail());
-		if(status) {
+		if (status) {
 			return new ResponseEntity<String>("Y", HttpStatus.OK);
 		}
 		return new ResponseEntity<String>("N", HttpStatus.OK);
 	}
-	
+
 	@PostMapping(path = "/memberReferralCheck.controller") // referralCode存在確認
-	public ResponseEntity<String> memberReferralCheck(@RequestBody MemberDetail mDetail){
+	public ResponseEntity<String> memberReferralCheck(@RequestBody MemberDetail mDetail) {
 		System.out.println("推薦碼");
 		System.out.println(mDetail.getReferralCode());
 		boolean status = adminService.findByReferralCode(mDetail.getReferralCode());
-		if(status) {
+		if (status) {
 			return new ResponseEntity<String>("Y", HttpStatus.OK);
 		}
 		return new ResponseEntity<String>("N", HttpStatus.OK);
 	}
-	
 
-//	@PostMapping(path = "/user/memberPassword.controller") // 修改
-//	private ResponseEntity<String> modifyUserPasswordAction() {
-//		Boolean rlt = todoService.updateTodo(id ,todo);
-//        if (!rlt) {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Status 欄位不能為空");
-//        }
-//        return ResponseEntity.status(HttpStatus.OK).body("");
-//    }return null;
-//}
-	
+	@PostMapping(path = "/register.controller")
+	public String registerAction(String account, String pwd, String name, String email, String registerReferralCode,
+			Model m) {
+		System.out.println("開始創建會員");
+		Integer authority = 99;
+		String bcEncode = new BCryptPasswordEncoder().encode(pwd);
+		MemberDetail mDetail = new MemberDetail();
+		mDetail.setRegisterReferralCode(registerReferralCode);
+		mDetail.setCreateDate(adminService.getDate());
+		mDetail.setMute(0);
+		mDetail.setPostPermission(0);
+		mDetail.setPairWilling(0);
+		String randomCode = RandomString.make(64);
+
+		MemberBean mBean = new MemberBean(account, bcEncode, authority, name, email, mDetail);
+		mBean.setVerificationCode(randomCode);
+
+		MemberBean mBean1 = adminService.updateOne(mBean);
+		System.out.println("會員創建成功(尚未驗證)");
+
+		String referralCode = adminService.encode(mBean1.getId());
+		// 生成推薦碼
+		MemberDetail memberDetail = mBean1.getMemberDetail();
+		memberDetail.setReferralCode(referralCode);
+		adminService.updateCodeById(memberDetail);
+		
+		// 寄出驗證信
+		adminService.sendRegisterMail(email, name, randomCode);
+		return "admin/FrontStageMain";
+
+	}
+
+	@GetMapping("/verify")
+	public String verifyUser(@Param("code") String code) {
+		if (adminService.verify(code)) {
+			System.out.println(code);
+			System.out.println("會員驗證成功");
+			return "verify_success";
+
+		} else {
+
+			System.out.println("會員驗證失敗");
+			return "verify_fail";
+		}
+	}
+
 }

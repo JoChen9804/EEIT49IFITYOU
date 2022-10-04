@@ -13,12 +13,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import tw.group5.admin.model.AdminBean;
 import tw.group5.admin.model.MemberBean;
 import tw.group5.admin.service.AdminService;
 
-//@SessionAttributes(names = {"loginMember"})
+@SessionAttributes(names = {"loginMember"})
 @Component
 public class LoginSuccessHandler implements AuthenticationSuccessHandler{
 	
