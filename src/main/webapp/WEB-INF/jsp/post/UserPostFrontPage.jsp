@@ -205,7 +205,7 @@
 
 											<div class="row g-2">
 
-
+                                          
 												<div class="col-md">
 													<div class="form-floating">
 														<input type="text" name="title" class="form-control"
@@ -221,6 +221,8 @@
 															name="inquireId" value="查詢">
 													</div>
 												</div>
+											
+											
 											</div>
 
 

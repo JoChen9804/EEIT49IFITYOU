@@ -10,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,11 +52,10 @@ public class UserPostController {
     public static final String USERPOSTCHANGEPOST = "post/UserPostChangePost";
     
     //會員資料
-    public String memberAccount ;
+    public String memberAccount = "user123" ;
     public String postPermission ;
-    public String postPhoto ;
-    public String replyPhoto ;
-    
+    public String postPhoto ="/upload/ddd1664247497905.jpg";
+    public String replyPhoto ="/upload/ddd1664247497905.jpg" ;
     
     //預設資料
     public String presetPhotos = "postfolder/images/defaultScreen.jpg";
@@ -63,45 +63,64 @@ public class UserPostController {
     public String published = "已發布";
     
     
-    public void adminBean() {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        AdminBean adminBean = amService.findByAccount(username);
-        memberAccount = adminBean.getAdminName();
-        postPhoto = adminBean.getAdminPhoto();
-        replyPhoto = adminBean.getAdminPhoto();
-    }
-    
-    public void memberBean() {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        MemberBean memBer = amService.findByAccountMember(username);
-        memberAccount = memBer.getMemberAccount();
-        postPhoto = memBer.getMemberPhoto();
-        replyPhoto = memBer.getMemberPhoto();
-    }
+//    public void adminBean() {
+//        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+//        AdminBean adminBean = amService.findByAccount(username);
+//        memberAccount = adminBean.getAdminName();
+//        postPhoto = adminBean.getAdminPhoto();
+//        replyPhoto = adminBean.getAdminPhoto();
+//    }
+//    
+//    public void memberBean() {
+//        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+//        MemberBean memBer = amService.findByAccountMember(username);
+//        memberAccount = memBer.getMemberAccount();
+//        postPhoto = memBer.getMemberPhoto();
+//        replyPhoto = memBer.getMemberPhoto();
+//    }
     
     
     //貼文首頁
     @GetMapping("/UserPostAll")
     public ModelAndView postFornt(MainPostBean mpBean) {
         
+        //找到會員帳號先入到Bean
+        mpBean.setAccount(memberAccount);
+        
+        
         ModelAndView mav = new ModelAndView(USERPOSTFRONTPAGE);
         
-        System.out.println(memberAccount);
         
         //查詢標題已發布的
         if (mpBean.getTitle() != null) {
             List<MainPostBean> query = firstImagePath(mpService.userallPosts(mpBean.getTitle(),published));
+            
+            List<MainPostBean> userposts = firstImagePath(mpService.findByAccount(memberAccount));
             if (query.isEmpty()) {
                 mav.addObject("error", "查無資料");
             }else {
                 mav.addObject("query", query);
             }
             
+            if(mpBean.getTitle() != null && mpBean.getAccount() != null){
+                mpService.findByAccountAndTitles(mpBean.getTitle(),mpBean.getAccount());
+                
+                mav.addObject("userposts", userposts);
+            }else if(mpBean.getAccount() ==null){
+                mav.addObject("notYetPublished", "請登入會員或加入會員");
+            }else {
+                mav.addObject("notYetPublished", "尚未發布貼文");
+            }
+            
+            
+            
+            
         } else {
             
+            
+            //使用的發布的
             List<MainPostBean> query = firstImagePath(mpService.findByPostPermission(published));
             mav.addObject("query", query);
-            
             
             List<MainPostBean> userposts = firstImagePath(mpService.findByAccount(memberAccount));
             if(!userposts.isEmpty()) {
@@ -127,7 +146,6 @@ public class UserPostController {
     public String addingPostConfirming(MainPostBean addPost, @RequestParam("file") List<MultipartFile> mfs)
             throws FileNotFoundException {
         addPost.setPostPhoto(postPhoto);
-        addPost.setPostPermission(postPermission);
         addPost.setAccount(memberAccount);
         addPost.setAddtime(mpService.currentDateFormat("date"));
         addPost.setLikeNumber("");
@@ -295,7 +313,8 @@ public class UserPostController {
     }
     
     //貼文點讚
-    @PutMapping("/LikesAJAX") @ResponseBody
+    @ResponseBody
+    @PutMapping("/LikesAJAX") 
     public MainPostBean LikesAJAX(MainPostBean mpBean) {
        
         ModelAndView mav = new ModelAndView();
@@ -342,7 +361,8 @@ public class UserPostController {
     }
     
     //回覆點讚
-    @PutMapping("/ReplyLikesAJAX") @ResponseBody
+    @ResponseBody
+    @PutMapping("/ReplyLikesAJAX") 
     public ReplyPostBean ReplyLikesAJAX(ReplyPostBean rpBean) {
         ReplyPostBean replyPostBean = rpService.selectById(rpBean.getReplyNo());
         String[] oldReplylikes = replyPostBean.getReplyLikeNumber().split(",");
@@ -377,6 +397,19 @@ public class UserPostController {
         }
         return replyPostBean;
     }
+    
+    //檢舉
+    @ResponseBody
+    @PutMapping("/ReplyReportAJAX/{replyNo}/{text}") 
+    public void report(@PathVariable("replyNo") Integer replyNo,
+                            @PathVariable("text") String text) {
+        ReplyPostBean rpBean = rpService.selectById(replyNo);
+        rpBean.setReplyPermission(text);
+        rpService.update(rpBean);
+    }
+    
+    
+    
     
     // 主貼文抓取第一張圖片並重新寫入Bean，找不到給預設圖片
     public List<MainPostBean> firstImagePath(List<MainPostBean> mpBean) {

@@ -22,8 +22,7 @@
       
 <!-- Styles -->
 <!--引用SweetAlert2.js-->
-<script
-    src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js"
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js"
     type="text/javascript"></script>
 <link
     href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700&display=swap&subset=latin-ext" rel="stylesheet">
@@ -32,12 +31,12 @@
 <link href="css/swiper.css" rel="stylesheet">
 <link href="css/magnific-popup.css" rel="stylesheet">
 <link href="css/styles.css" rel="stylesheet">
-<script
-    src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+
+
       
       
-      <TITLE>貼文首頁</TITLE>
-    <style>
+<TITLE>貼文管理</TITLE>
+<style>
      
 fieldset {
     width: 1000px;
@@ -93,38 +92,10 @@ fieldset {
                         <li class="nav-item">
                             <a class="nav-link" id="nav-tab-3" data-toggle="tab" href="#tab-3" role="tab"
                                 aria-controls="tab-3" aria-selected="false"><i
-                                    class="fas fa-envelope-open-text"></i>Campaigns</a>
+                                    class="fas fa-envelope-open-text"></i>檢舉</a>
                     </ul>
                     <!-- end of tabs links -->
-<script>
 
-                        /*Bootstrap 3：在页面刷新时保持选中的选项卡*/
-                        $(document).ready(function () {
-                            if (location.hash) {
-                                $("a[href='" + location.hash + "']").tab("show");
-                            }
-                            $(document.body).on("click", "a[data-toggle='tab']", function (event) {
-                                location.hash = this.getAttribute("href");
-                            });
-                        });
-                        $(window).on("popstate", function () {
-                            var anchor = location.hash || $("a[data-toggle='tab']").first().attr("href");
-                            $("a[href='" + anchor + "']").tab("show");
-                        });
-
-                        $(document).ready(function () {
-                            if (location.hash) {
-                                $("a[href='" + location.hash + "']").tab("show");
-                            }
-                            $(document.body).on("click", "a[data-toggle='tab']", function (event) {
-                                location.hash = this.getAttribute("href");
-                            });
-                        });
-                        $(window).on("popstate", function () {
-                            var anchor = location.hash || $("a[data-toggle='tab']").first().attr("href");
-                            $("a[href='" + anchor + "']").tab("show");
-                        });
-                    </script>
                     <!-- Tabs Content -->
                     <div class="tab-content" id="argoTabsContent">
 
@@ -230,8 +201,6 @@ fieldset {
                                         <!--        <input type="submit" class="btn btn-outline-primary" name="postPermission" value="待審核"> -->
                                         <!--    </form> -->
 
-
-
                                         <div class="table-responsive">
                                             <table class="table table-bordered" id="table_id"
                                                 class="compact hover stripe">
@@ -272,24 +241,13 @@ fieldset {
                                                                 <form action="MainPost.watch" class="btn btn-info btn-icon-split" method="POST">
                                                                
                                                                 <span class="icon text-white-50"><i class="fas fa-info-circle"></i></span>
-<%--                                                                     <span><input type="hidden" name="mainPostNo" value="${allmpbs.mainPostNo}"> --%>
-<!--                                                                     <input type="submit" value="觀看" class="btn btn-info btn-icon-split" -->
-<!--                                                                         style="border: none; background-color: #36b9cc; color: white" ></span> -->
-                                                                        
-<!--                                                                         <span class="icon text-white-50"><i class="fas fa-info-circle"></i></span> -->
                                                                         <input type="hidden" name="mainPostNo" value="${allmpbs.mainPostNo}">
                                                                         <button type="submit" class="btn btn-info btn-icon-split" value="觀看">
                                                                             <span class="text">觀看</span>
                                                                         </button>
                                                                 </form>
 
-                                                                <!--                         <form action="turnDownPost" method="POST"> -->
-                                        
-<!--                                                                 <span class="icon text-white-50"><i class="fas fa-exclamation-triangle"></i></span> -->
-<!--                                                                 <span><input type="hidden" name="xreason" value=""> -->
-<%--                                                                 <input type="hidden" name="mainPostNo" value="${allmpbs.mainPostNo}"> --%>
-<!--                                                                 <input type="submit" class="btn btn-outline-primary turnDown" value="駁回"></span> -->
-                                                                <!--                         </form> -->
+                                 
                                                                 <input type="hidden" name="xreason" value="">
                                                                 <input type="hidden" name="mainPostNo" value="${allmpbs.mainPostNo}">
                                                                 <button type="submit" class="btn btn-warning btn-icon-split turnDown" value="駁回">
@@ -301,15 +259,14 @@ fieldset {
                                                     </c:forEach>
                                                 </tbody>
                                             </table>
+                                  
+                                        
                                         </div>
                                         <script>
                                             $('#table_id').dataTable({});
-                                            
-                                           
-                                            
-                                            
-                                            
-                                        </script>
+                                            </script>
+                             
+
 
 
                                     </div> <!-- end of text-container -->
@@ -317,19 +274,14 @@ fieldset {
                             </div> <!-- end of row -->
                         </div> <!-- end of tab-pane -->
                         <!-- end of tab -->
-
-
+                                        
 
 
                         <!-- Tab -->
                         <div class="tab-pane fade" id="tab-3" role="tabpanel" aria-labelledby="tab-3">
                             <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="image-container">
-                                        <img class="img-fluid" src="images/features-3.png" alt="alternative">
-                                    </div> <!-- end of image-container -->
-                                </div> <!-- end of col -->
-                                <div class="col-lg-6">
+                                
+                                <div class="col-lg-12">
                                     <div class="text-container">
 
 
@@ -589,7 +541,6 @@ fieldset {
 <!--         </fieldset> -->
 
         <script>
-        
         var members = new Set([]);
         $('.delete').on('click', function() {
             let checked = $(this).prop('checked')
@@ -606,6 +557,7 @@ fieldset {
                 $(this).closest('tr').removeClass('active')
             }
         });
+
 
         $("#deleteSubmitCheck").on('click', function(event) {
             console.log(Array.from(members).join(',').length);
@@ -668,57 +620,79 @@ fieldset {
         }
         
         $(".turnDown").on('click', function(event) {
-        	(async () => {
+            (async () => {
 
-        		const { value: text } = await Swal.fire({
-        		  input: 'textarea',
-        		  inputLabel: '駁回原因',
-        		  inputPlaceholder: '請輸入內容',
-        		  inputAttributes: {
-        		    'aria-label': 'Type your message here'
-        		  },
-        		  showCancelButton: true
-        		})
-        		if (text) {
-        			
-//         			console.log(text);
-        			var mainPostNo = $(this).prev().val();
-        			
-        			console.log(mainPostNo);
-        			let xreason=text;  
-        			console.log(xreason);
-        			$.ajax({
+                const { value: text } = await Swal.fire({
+                  input: 'textarea',
+                  inputLabel: '駁回原因',
+                  inputPlaceholder: '請輸入內容',
+                  inputAttributes: {
+                    'aria-label': 'Type your message here'
+                  },
+                  showCancelButton: true
+                })
+                if (text) {
+                    
+                    var mainPostNo = $(this).prev().val();
+                    
+                    console.log(mainPostNo);
+                    let xreason=text;  
+                    console.log(xreason);
+                    $.ajax({
                            type: "POST",
                            url: "/group5/admin/turnDownPost",
                            data : {mainPostNo:mainPostNo,xreason:xreason},
                            dataType : 'json',
                            success: function(){
-                        	   console.log("ok");
-                        	   //document.getElementById("nav-tab-2").click();
+                               console.log("ok");
+                               
                            }
                        })
-        			
-        			Swal.fire("已駁回").then((result)=>{
+                    
+                    Swal.fire("已駁回").then((result)=>{
                         if(result.isConfirmed){
                             location.reload();
-                            
-                            //$(".mainpost").tab("show");
+           
                         }
                     });
-        		}
+                }
 
-        		})()
+                })()
        
         });
         
         
+        /*Bootstrap 3：在页面刷新时保持选中的选项卡*/
+        $(document).ready(function () {
+            if (location.hash) {
+                $("a[href='" + location.hash + "']").tab("show");
+            }
+            $(document.body).on("click", "a[data-toggle='tab']", function (event) {
+                location.hash = this.getAttribute("href");
+            });
+        });
+        $(window).on("popstate", function () {
+            var anchor = location.hash || $("a[data-toggle='tab']").first().attr("href");
+            $("a[href='" + anchor + "']").tab("show");
+        });
+
+        $(document).ready(function () {
+            if (location.hash) {
+                $("a[href='" + location.hash + "']").tab("show");
+            }
+            $(document.body).on("click", "a[data-toggle='tab']", function (event) {
+                location.hash = this.getAttribute("href");
+            });
+        });
+        $(window).on("popstate", function () {
+            var anchor = location.hash || $("a[data-toggle='tab']").first().attr("href");
+            $("a[href='" + anchor + "']").tab("show");
+        });
         
         
-       
+
         
         </script>
-        
-        
        <!-- JQuery  -->
     <script src="/group5/js/jquery.min.js"></script>
     <!-- Custom scripts for all pages-->

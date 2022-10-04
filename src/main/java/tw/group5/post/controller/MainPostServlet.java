@@ -149,12 +149,12 @@ public class MainPostServlet {
         return "redirect:MainPost.all";
     }
     //駁回
-    @PostMapping("/turnDownPost") 
-    public String turnDown(Integer mainPostNo,String xreason) {
+    @PostMapping("/turnDownPost") @ResponseBody
+    public void turnDown(Integer mainPostNo,String xreason) {
         System.out.println(xreason);
         System.out.println(mainPostNo);
         mpService.updatePermission("駁回，"+xreason,mainPostNo);
-        return "redirect:MainPost.all";
+        //return "redirect:MainPost.all";
     }
     
     

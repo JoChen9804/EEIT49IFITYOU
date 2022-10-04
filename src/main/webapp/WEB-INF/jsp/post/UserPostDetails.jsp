@@ -29,6 +29,69 @@ $(function(){
         });
     });
 });
+
+$(function(){
+  $(".replyreport").on("click",function(){
+	  let replyNo = $(this).prev().siblings(".replyNo").val();
+	  //let rBean={"replyNo":replyNo};
+	  //console.log(replyNo);
+	  
+	  
+      (async () => {
+
+          const { value: text } = await Swal.fire({
+            input: 'textarea',
+            inputLabel: '檢舉原因',
+            inputPlaceholder: '請輸入內容',
+            inputAttributes: {
+              'aria-label': 'Type your message here'
+            },
+            showCancelButton: true
+          })
+          if (text) {
+              
+        	  replyreport(replyNo,text)
+  
+              Swal.fire("已檢舉").then((result)=>{
+                  if(result.isConfirmed){
+                      
+                      
+                     
+                  }
+              });
+          }
+
+          })()
+	  
+	  
+	    
+	  
+	  
+	  
+
+  })
+  
+  
+  function replyreport(replyNo,text){
+	  
+      $.ajax({
+          type: "put",
+          url:'/group5/ReplyReportAJAX/'+replyNo+'/'+text,
+          success: function(){
+              console.log("ok");
+          }
+      });
+  }
+  
+  
+  
+  
+  
+});
+
+
+
+
 </script>
 <style>
 .imgpostdetails {
@@ -133,14 +196,21 @@ $(function(){
 									</c:forEach>
 
 									<br> <input type="hidden" id="mainPostNo"
-										name="mainPostNo" value="${queryOne.mainPostNo}"> <input
-										type="hidden" name="replyNo" value="${onereply.replyNo}">
+										name="mainPostNo" value="${queryOne.mainPostNo}"> 
+										<input type="hidden" class="replyNo" name="replyNo" value="${onereply.replyNo}">
 									<button type="submit" name="replylikenumber"
 										id="${onereply.replyNo}" class="btn btn-outline-danger"
 										value="${onereply.replyLikeNumber}">
 										讚${onereply.replyLikeNumber}</button>
+										
+                                    <input type="hidden" class="replyNo" name="replyNo" value="${onereply.replyNo}">
+									<button type="submit" class="btn btn-outline-danger replyreport"
+                                                value="${onereply.replyLikeNumber}">檢舉</button>
+										
 
 							<script type="text/javascript">
+							
+							
     $(function () {
         var onereply = document
             .getElementById("${onereply.replyNo}");
@@ -167,8 +237,10 @@ $(function(){
                 }
             });
         }
-
+                  
     });
+    
+
 </script>
 								</div>
 							</td>
@@ -179,7 +251,7 @@ $(function(){
 						<input type="hidden" name="mainPostNo"
 							value="${queryOne.mainPostNo}">
 							</tr>
-							<td class="column3"><img class="img" src="${postPhoto}"></td>
+							<td class="column3"><img class="imgheadstickers" src="${postPhoto}"></td>
 							<td><div class="content">
 
 									<textarea name="replyContent" id="content1" cols="80" rows="10"
@@ -210,7 +282,6 @@ $(function(){
 								</td>
 								</tr>
 					<script>
-                                      
                                                    
                                                    $(".replycontent").on('click', function(event){
                                                        var rs = false;
