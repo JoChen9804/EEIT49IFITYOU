@@ -15,7 +15,7 @@ import tw.group5.gym.model.PairingLog;
 import tw.group5.gym.service.PairingLogService;
 
 @Controller
-@RequestMapping("/group5/paring")
+@RequestMapping("/group5/user/paring")
 //@SessionAttributes(names = {"uPair"})
 public class PairingFrontController {
 	
@@ -25,32 +25,38 @@ public class PairingFrontController {
 	@Autowired
 	private AdminService adminService;
 	
-	@GetMapping("/pairing")
-	public String showPairingPage(Model m) {
-		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		System.out.println("catcha!"+username);
-		//找到使用者id
-		MemberBean user = adminService.findByAccountMember(username);
-		System.out.println(user.getMemberName());
-//		m.addAttribute("currentUser", user);
-		
-		//找今日配對編號userPairingLog.getPairingNo();
-		PairingLog userPairingLog = pLogService.findByMemberAndToday(user);
-		
-		//確認有沒有真的配到對（配對編號=0時，表示沒有配到對）
-		Integer pairingNo = userPairingLog.getPairingNo();
-		if(pairingNo!=0) {
-			//找到對方
-			PairingLog uPairLog = pLogService.findByPairingNoAndPairingDate(pairingNo,userPairingLog);
-			System.out.println("uuuuuuuuuuur"+uPairLog.getId());
-			MemberBean uPair = uPairLog.getMember();
-			System.out.println(uPair.getMemberName());
-			m.addAttribute("uPair", uPair);
-		}else {
-			m.addAttribute("singleOne", "今日無配對健友");
-		}
-		
-		return "/gym/pairingFront";
+	@GetMapping("/want2pair")
+	public String processPrePair() {
+		return "gym/pairingFront01";
 	}
+	
+	
+//	@GetMapping("/pairing")
+//	public String showPairingPage(Model m) {
+//		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+//		System.out.println("catcha!"+username);
+//		//找到使用者id
+//		MemberBean user = adminService.findByAccountMember(username);
+//		System.out.println(user.getMemberName());
+////		m.addAttribute("currentUser", user);
+//		
+//		//找今日配對編號userPairingLog.getPairingNo();
+//		PairingLog userPairingLog = pLogService.findByMemberAndToday(user);
+//		
+//		//確認有沒有真的配到對（配對編號=0時，表示沒有配到對）
+//		Integer pairingNo = userPairingLog.getPairingNo();
+//		if(pairingNo!=0) {
+//			//找到對方
+//			PairingLog uPairLog = pLogService.findByPairingNoAndPairingDate(pairingNo,userPairingLog);
+//			System.out.println("uuuuuuuuuuur"+uPairLog.getId());
+//			MemberBean uPair = uPairLog.getMember();
+//			System.out.println(uPair.getMemberName());
+//			m.addAttribute("uPair", uPair);
+//		}else {
+//			m.addAttribute("singleOne", "今日無配對健友");
+//		}
+//		
+//		return "/gym/pairingFront";
+//	}
 	
 }
