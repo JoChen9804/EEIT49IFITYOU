@@ -42,5 +42,9 @@ public class ReplyPostService {
         return rpResp.allReplys(mainPostNo);
     }
     
+    public List<ReplyPostBean> findByReplyPermissionNotNull(){
+        return rpResp.findByReplyPermissionNotNull();
+    }
+    
     
 }

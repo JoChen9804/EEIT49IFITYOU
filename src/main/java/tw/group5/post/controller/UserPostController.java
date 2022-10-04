@@ -403,6 +403,7 @@ public class UserPostController {
     @PutMapping("/ReplyReportAJAX/{replyNo}/{text}") 
     public void report(@PathVariable("replyNo") Integer replyNo,
                             @PathVariable("text") String text) {
+        System.out.println("324123h4kjh123k4jh");
         ReplyPostBean rpBean = rpService.selectById(replyNo);
         rpBean.setReplyPermission(text);
         rpService.update(rpBean);

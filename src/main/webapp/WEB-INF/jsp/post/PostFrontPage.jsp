@@ -6,19 +6,19 @@
    <HEAD>
       <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8"/>
         
-      <link rel="stylesheet" href="styles/Topic.css">
+<link rel="stylesheet" href="styles/Topic.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
       
-      <script src="/group5/js/jquery.min.js"></script>
-      <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.2/js/jquery.dataTables.js"></script>
-      <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+<script src="/group5/js/jquery.min.js"></script>
+<script src="/group5/js/jquery.dataTables.min.js"></script>     
       
 
-<!--引用css sweet alert-->
+<!--css sweet alert-->
 <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" />
-<!--引用SweetAlert2.js-->
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-      
+
+<!--SweetAlert2.js-->
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
       
 <!-- Styles -->
 <!--引用SweetAlert2.js-->
@@ -47,12 +47,12 @@ fieldset {
     background: #f7f4dd;
 }   
    
-    .imgfront {
+.imgfront {
         width: 150px;
         height: 120px;
         padding: 2px 2px 2px 2px;
         margin: 2px;
-    }   
+}   
    
    
     </style>
@@ -262,12 +262,11 @@ fieldset {
                                   
                                         
                                         </div>
+                                       
                                         <script>
-                                            $('#table_id').dataTable({});
+                                            $('#table_id').dataTable({})
                                             </script>
                              
-
-
 
                                     </div> <!-- end of text-container -->
                                 </div> <!-- end of col -->
@@ -283,10 +282,52 @@ fieldset {
                                 
                                 <div class="col-lg-12">
                                     <div class="text-container">
+                                             <table class="table table-bordered" id="table_id"
+                                                class="compact hover stripe">
+                                                <thead>
+                                                    <tr>
+                                                        <th>選取<br>全選<input class="delete" type="checkbox"
+                                                                onclick="checkAll()"></th>
+                                                        <th>回覆編號</th>
+                                                        <th>標題</th>
+                                                        <th>會員<br>回覆時間</th>
+                                                        <th>狀態</th>
+                                                        <th>操作</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <c:forEach var="report" items="${reportBean}">
 
+                                                        <tr class="content">
+                                                            <td class="align-middle"><input class="delete"
+                                                                    type="checkbox"></td>
+                                                            <td class="align-middle">${report.replyNo}</td>
+                                                            <td class="align-middle">${report.replyContent}</td>
+                                                            <td class="align-middle">
+                                                                ${report.replyAccount}<br />${report.replyTime}</td>
+                                                            <td class="align-middle">${report.replyPermission}</td>
+                                                            <td class="align-middle">
+                                                                <form action="MainPost.watch" class="btn btn-info btn-icon-split" method="POST">
+                                                               
+                                                                <span class="icon text-white-50"><i class="fas fa-info-circle"></i></span>
+                                                                        <input type="hidden" name="mainPostNo" value="${report.replyNo}">
+                                                                        <button type="submit" class="btn btn-info btn-icon-split" value="觀看">
+                                                                            <span class="text">觀看</span>
+                                                                        </button>
+                                                                </form>
 
+                                 
+                                                                <input type="hidden" name="xreason" value="">
+                                                                <input type="hidden" name="mainPostNo" value="${allmpbs.mainPostNo}">
+                                                                <button type="submit" class="btn btn-warning btn-icon-split turnDown" value="刪除">
+                                                                <span class="icon text-white-50"><i class="fas fa-exclamation-triangle"></i></span>
+                                                                <span class="text">刪除</span></button>
+                                                            </td>
 
-                                        <h1>維修中~~~~~~~~~~~~~~</h1>
+                                                        </tr>
+                                                    </c:forEach>
+                                                </tbody>
+                                            </table>
 
 
 
@@ -525,12 +566,7 @@ fieldset {
 <%--      </c:forEach> --%>
 <!--             <tbody> -->
 <%--             <tr><td colspan="9">${error}</td></tr></tbody> --%>
-<!--             </table>  -->
-           
-      
-         
-           
-            
+<!--             </table>  -->          
 <!--              </div>  -->
 <!--                 <div class="sub"> -->
 <!--                 <form name="addForm" action="MainPosting.add" method="POST">  -->
@@ -693,14 +729,15 @@ fieldset {
 
         
         </script>
+        
+        
+<%@ include file="../admin/AdminstyleFoot.jsp"%>
        <!-- JQuery  -->
     <script src="/group5/js/jquery.min.js"></script>
     <!-- Custom scripts for all pages-->
     <!-- DataTable 連結 -->
-    <script type="text/javascript" charset="utf8"
-        src="https://cdn.datatables.net/1.11.2/js/jquery.dataTables.js"></script>      
+   
   <!-- Bootstrap core JavaScript-->
-  <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <!-- Core plugin JavaScript-->
   <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
@@ -727,7 +764,7 @@ fieldset {
 
 
 
-        <%@ include file="../admin/AdminstyleFoot.jsp"%>
+        
         
     </body>
 </html>

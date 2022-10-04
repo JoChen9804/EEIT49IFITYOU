@@ -93,7 +93,7 @@ public class MainPostServlet {
       
         } else if (mpBean.getPostPermission() != null) {
             System.out.println(mpBean.getPostPermission());
-            List<MainPostBean> query = firstImagePath(mpService.findByPostPermission(mpBean.getPostPermission() ));
+            List<MainPostBean> query = firstImagePath(mpService.findByPostPermission(mpBean.getPostPermission()));
             
             
             if (query.isEmpty()) {
@@ -109,6 +109,8 @@ public class MainPostServlet {
          
             List<MainPostBean> query = firstImagePath(mpService.allPosts());
             
+            List<ReplyPostBean> reportBean = rpService.findByReplyPermissionNotNull();
+            mav.addObject("reportBean", reportBean);
             mav.addObject("query", query);
 
             
