@@ -1,5 +1,6 @@
 package tw.group5.activity.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Set;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,11 +20,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
 
 import tw.group5.activity.model.ActivityActivity;
 import tw.group5.activity.model.ActivitySignUp;
 import tw.group5.activity.model.ActivityVoucher;
+import tw.group5.activity.model.UploadImages;
 import tw.group5.activity.service.ActivityActivityService;
 import tw.group5.activity.service.ActivitySignUpService;
 import tw.group5.activity.service.ActivityVoucherService;
@@ -33,8 +37,23 @@ import tw.group5.admin.model.MemberBean;
 public class ActivityFunctionController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	//外部service
-	
+	/*
+	 * CKEditor上傳圖片
+	 */
+	@PostMapping("/admin/uploadimages")
+	@ResponseBody
+	public UploadImages processUploadImages(MultipartFile upload) throws IllegalStateException, IOException {
+		String fileName = upload.getName()+System.currentTimeMillis()+".jpg";
+		String saveFileDir = "C:/images/admin";
+		String saveFileDir1 = "/Path/"+fileName;
+		File saveFilePath = new File(saveFileDir, fileName);
+		upload.transferTo(saveFilePath);
+		UploadImages result = new UploadImages();
+		result.setUploaded("true");
+		result.setUrl(saveFileDir1);
+		return result;
+	}
+		
 	/*
 	 * voucher
 	 */
@@ -178,10 +197,11 @@ public class ActivityFunctionController extends HttpServlet {
 	@ResponseBody
 	public Set<ActivitySignUp> activityQueryAjax(@PathVariable int id, Model m) {
 		ActivityActivity aa = avtivityService.selectById(id);
-		m.addAttribute("query_activity", aa);
+//		m.addAttribute("query_activity", aa);
 		Set<ActivitySignUp> signUp = signUpService.queryByActivity(aa);
-		m.addAttribute("signUp_queryAll", signUp);
-		m.addAttribute("query", true);
+//		m.addAttribute("signUp_queryAll", signUp);
+//		m.addAttribute("query", true);
+		
 		return signUp;
 	}
 	
@@ -225,7 +245,7 @@ public class ActivityFunctionController extends HttpServlet {
 	
 	//刪除
 	@PostMapping("/admin/signupdelete.controller")
-	@ResponseBody
+	@ResponseStatus(HttpStatus.OK)
 	public void signDelete(@RequestBody int id) {
 		
 		System.out.println("抓刪除ID="+id);

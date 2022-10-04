@@ -27,7 +27,6 @@
                     <div class="p-heading">
                     	${query_activity.activityContent}
                     </div>
-                    <p>123456</p>
                    	<form action="/group5/user/toactivitysignup" method="post" style="display:inline">
                    		<input type="hidden" name="userId" value=""/>
                    		<input type="hidden" name="activityId" value="${query_activity.activityId}"/>

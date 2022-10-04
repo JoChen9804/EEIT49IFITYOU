@@ -44,7 +44,7 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
             <div class="row">
                 <div class="col-lg-6">
                     <div class="text-container">
-                        <form action="/group5/user/signupadd.controller" method="post">
+                        <form action="/group5/user/signupadd.controller" method="post" >
                         <ul class="list-unstyled li-space-lg">
                             <li class="media">
                                 <i class="fas fa-square"></i>
@@ -147,7 +147,23 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
     <hr>
     <h1 style="text-align: left">報名名單</h1>
     <br>
-    <div id= "tableVal"></div>
+    <div id= "tableVal">
+
+			<table class="table table-bordered" id="table_id" class="compact hover stripe">
+				<thead>
+					<tr>
+						<th>報名序號</th>
+						<th>報名帳號</th>
+						<th>報名姓名</th>
+						<th style="width: 250px">email</th>
+						<th>連絡電話</th>
+						<th style="width: 250px">報名時間</th>
+						<th style="width: 70px">操作</th>
+					</tr>
+				</thead>
+				<tbody id="dt"></tbody>
+			</table>
+		</div>
 	</div>
 
 	<form action="activitymain.controller" method="get">
@@ -161,17 +177,13 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 			
 			reloadTable("${query_activity.activityId}");
 			
-			$('#table_id').dataTable({
-				'bAutoWidth' : false
-			});
-			
 			$('#forColor').attr('style', 'background-color:white' );
 			
 			if("${notShowSignUp}"){
 				$('#showSignUp').attr('style', 'display:none' );
 			};
 			
-			$('.del').on('click', function(){
+			$(document).on('click','.del', function(){
 				
 				console.log("抓刪除健");
 				
@@ -190,13 +202,15 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 					  cancelButtonText: '取消'
 					}).then((result) => {
 					  if (result.isConfirmed) {
+						  
 						  $.ajax({
 								type: "post",
 								url: "/group5/admin/signupdelete.controller",
 								data: id,
 								contentType: "application/json",
-								success: function(data){
+								success: function(){
 									console.log("delete signUp success");
+									$('#table_id').DataTable().destroy();
 									reloadTable(activityId);
 									Swal.fire({
 										      title:'刪除成功!',
@@ -222,28 +236,28 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 					  }
 					});
 			});
-			
 		});
 		
 		function reloadTable(id) {
-			console.log("抓reload ID=" + id);
-			let table = '<table class="table table-bordered" id="table_id" class="compact hover stripe"><thead><tr><th>報名帳號</th><th>報名姓名</th><th style="width: 250px">email</th><th>連絡電話</th><th style="width: 250px">報名時間</th><th style="width: 70px">操作</th></tr></thead>';
+			$("#dt").empty();
+			var table ='';
+			console.log("測試有沒有進來");
 			$.ajax({
 				type: "post",
 				url: "/group5/admin/queryactivityajax.controller/"+id,
-				data:{},
+				data:[],
 				contentType: "application/json",
 				success: function(data){
 					console.log(data);
-					data.forEach(element => table+='<tr><td>'+element.memberId+'</td><td>'+element.memberName+'</td><td>'+element.email+'</td><td>'+element.phone+'</td><td>'+element.signUpTime+'</td><td><input type="hidden" name="dataId" value="'+element.signUpId+'" id="dd" /><input type="button" id="delete" name="delete" value="刪除" class="del btn btn-outline-danger " /></td></tr>');
-					table+='</table>';
-					$('#tableVal').html(table);
+					data.forEach(element => table+='<tr><td>'+element.signUpId+'</td><td>'+element.memberId+'</td><td>'+element.memberName+'</td><td>'+element.email+'</td><td>'+element.phone+'</td><td>'+element.signUpTime+'</td><td><input type="hidden" name="dataId" value="'+element.signUpId+'" id="dd" /><input type="button" name="delete" value="刪除" class="del btn btn-outline-danger " /></td></tr>');
+					$('#dt').html(table);
+					$('#table_id').DataTable({'bAutoWidth' : false});
 				},
 				error: function(){
 					console.log("reload showSignUp error");
 					Swal.fire(
 						      'reload!',
-						      '請在試一次',
+						      '請再試一次',
 						      'error'
 						    );
 				}

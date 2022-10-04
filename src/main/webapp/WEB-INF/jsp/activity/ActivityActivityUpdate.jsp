@@ -58,6 +58,11 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 					<form:input type="text" id="location" path="location" value="${update_activity.location}" class="need"/>＊
 				</label>
 			</div>
+			
+			<div class="st1">
+				<label class="t1">報名截止日:</label> 
+				<form:input type="date" id="signUpDeadline" path="signUpDeadline" value="${update_activity.signUpDeadline}" class="need"/>＊
+			</div>
 
 			<div class="st1">
 				<label class="t1">活動開始日:</label> 
@@ -136,7 +141,7 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
     				})
     		   		return;
     		    }
-    			if($('#startTime').val() >= $('#endTime').val()){
+    			if($('#startTime').val() > $('#endTime').val()){
     				Swal.fire({
     					title:'日期錯誤',
     					text:'開始日期大於結束日期',

@@ -28,7 +28,6 @@ input {
 }
 </style>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.2/css/jquery.dataTables.css">
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <link rel="stylesheet" href="/group5/css/voucherStyle.css">
 </head>
 <body>
