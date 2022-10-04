@@ -1,5 +1,6 @@
 package tw.group5.gym.controller;
 
+import java.io.IOException;
 import java.security.KeyStore.Entry;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import tw.group5.admin.model.AdminBean;
 import tw.group5.admin.model.MemberBean;
@@ -72,8 +74,9 @@ public class GymController {
 	//點編輯按鈕後
 	@PostMapping("/allUpdate/{gname}")
 	@ResponseBody
-	public GymBean processQueryUpdate(@PathVariable("gname") String gymName) {
-		GymBean result = gymService.queryName(gymName);		
+	public GymBean processQueryUpdate(@PathVariable("gname") String gymName,Model m) {
+		GymBean result = gymService.queryName(gymName);
+		m.addAttribute("update",result);
 		return result;
 	}
 	
@@ -81,6 +84,7 @@ public class GymController {
 	@PostMapping("/allUpdateAction")
 	@ResponseBody
 	public GymBean processAllUpdateAction(@RequestBody GymBean gym1) {
+		System.out.println(gym1.getGymOpenHours());
 		  return gymService.update(gym1);
 	}
 	
@@ -132,5 +136,23 @@ public class GymController {
 	@ResponseBody
 	public GymBean processAddAction(@RequestBody GymBean gym1) {
 		return gymService.add(gym1);
+	}
+	
+	@PostMapping("/editPicture")
+	public String processPictureAction(int gymId, MultipartFile photo, Model m) {
+		GymBean gym1 = gymService.findById(gymId);
+		if(!photo.isEmpty()) {
+			String imgName;
+			try {
+				imgName = gymService.processImg(gymId, photo);
+				System.out.println(imgName);
+				gym1.setGymPicture("/group5/images/"+imgName);
+				gymService.update(gym1);
+			} catch (IllegalStateException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return "gym/gymAll";
 	}
 }

@@ -28,7 +28,7 @@
 <script src="https://kit.fontawesome.com/a3daa825b8.js"
 	crossorigin="anonymous"></script>
 <script>
-	let addressNow="${update.gymAddress }"
+	let addressNow="${update.gymAddress }";
     let cityNow=addressNow.substring(0,3);
     let districtNow=addressNow.substring(3,6);
     let weekdaysChoose="${update.gymOpenHours }";

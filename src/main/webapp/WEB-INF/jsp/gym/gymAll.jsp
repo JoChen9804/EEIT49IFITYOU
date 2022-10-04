@@ -18,6 +18,11 @@
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 $(function(){
+		if("${queryAll}"==null){
+			let xh= new XMLhttpRequest();
+			xh.open("get","/group5/admin/gym/allMain",false);
+			xh.send();
+		}
 		$('.edit').on("click",function(){
 			let name=$(this).parent().siblings(".gymNameOfList").text();
 			console.log(name);
@@ -28,7 +33,8 @@ $(function(){
 			let gName=$(".showNameText").text();
 			let gAddress=$(".showAddressText").text();
 			let gTime=$(".showTimesText").html();
-			let gymBean={"gymId": gymid, "gymName":gName, "gymAddress": gAddress, "gymOpenHours": gTime}
+			let gPicture=$("#imagePathF").val();
+			let gymBean={"gymId": updateGym.gymId, "gymName":gName, "gymAddress": gAddress, "gymOpenHours": gTime,"gymPicture":gPicture,"rating":updateGym.rating}
 			$.ajax({
 				type: "post",
 				url: "/group5/admin/gym/allUpdateAction",
@@ -37,7 +43,15 @@ $(function(){
 				contentType: "application/json",
 				success: function(data){
 					console.log("success");
-					location.reload();
+					Swal.fire(
+							  '更改完成',
+							  '已更新'+data.gymName+'資訊',
+							  'success'
+							).then(result=>{
+          					if (result.isConfirmed) {
+          					    savePicture();
+          					  }
+          				});
 				},
 				error: function(){
 					console.log("error");
@@ -71,21 +85,40 @@ $(function(){
 			});//sweetalert end
 		});
 		
+		//picture
+		$('#ff').on('change', function(e){      
+			let file = this.files[0];
+			let imagePath="/group5/images/"+file.name;
+			$('#imagePathF').val(imagePath);
+			//預覽
+			let objectURL = URL.createObjectURL(file);
+			$('#img1').attr('src', objectURL);
+		});
+		
+		//saving picture with ajax
+		function savePicture(){
+			$("#picture").submit();
+		}
+		
 });
 		var gymid=""
+		let updateGym;
 		function editGym(name){
 			$.ajax({
 				type: "post",
 				url: "/group5/admin/gym/allUpdate/"+name,
 				dataType: "json",
 				success: function(data){
-					console.log(data);
-					gymid=data.gymId;
+					updateGym=data;
+					console.log(updateGym);
 					$("#updateTitle").text(data.gymName);
 					$("#gymName").val(data.gymName);
 					$(".showNameText").text(data.gymName);
 					$(".showAddressText").text(data.gymAddress);
 					$(".showTimesText").html(data.gymOpenHours);
+					$("#imagePathF").val(data.gymPicture);
+					$("#gymId").val(data.gymId);
+					$("#img1").attr("src",data.gymPicture);
 				},
 				error: function(){
 					console.log("error");
@@ -179,70 +212,88 @@ $(function(){
 				</div>
 				<div class="modal-body">
 					<div class="container-fluid ">
-					<div class="input-group mb-3">
-						<div id="updateDataTable" >
-							<div style="padding-bottom: 16px;">
-									<p id="showOldName">準備更改的名稱：</p>
-									<p class="showNameText"></p>
-									<p class="showAddressText"></p>
-									<p class="showTimesText"></p>
-							</div>
-							<div class="input-group mb-3">
-								<label class="input-group-text" for="gymName">新更改名稱：</label>
-								<input type="text" name="gymName" placeholder="請輸入健身房名稱" id="gymName" class="form-control">
-							</div>
-								<div class="input-group mb-4">
-									<label class="input-group-text">地址：</label>
-										<select class="form-select" name="city" id="city" onchange="districtC()">
-											<option value="">請選擇縣市</option>
-										</select> 
-										<select class="form-select" name="district" id="district">
-											<option value="">請選擇鄉鎮區</option>
-										</select>
-										<input class="form-control" type="text" name="gymAddress" id="gymAddressDetail" placeholder="請輸入健身房地址" maxlength="150">
+						<div class="row">
+							<div class="col-lg-12">
+								<div style="padding-bottom: 16px;">
+									<p class="showNameText">${update.gymName}</p>
+									<p class="showAddressText">${update.gymAddress}</p>
+									<p class="showTimesText">${update.gymOpenHours }</p>
+									<input type="hidden" id="imagePathF">
 								</div>
-								<div class="mb-3" style="border: 1px solid lightgray; padding: 16px; border-radius: 15px;">
-									<label class="form-label row" style="padding-left: 10px; padding-bottom: 5px;">營業時間：</label>
+								<div class="input-group mb-3">
+									<label class="input-group-text" for="gymName">名稱：</label> <input
+										type="text" name="gymName" value="${update.gymName }" id="gymName"
+										class="form-control">
+								</div>
+								<div class="input-group mb-4">
+									<label class="input-group-text">地址：</label> <select
+										class="form-select" name="city" id="city" onchange="districtC()">
+										<option value="">請選擇縣市</option>
+									</select> <select class="form-select" name="district" id="district">
+										<option value="">請選擇鄉鎮區</option>
+									</select> <input class="form-control" type="text" name="gymAddress"
+										id="gymAddressDetail" placeholder="請輸入健身房地址" required
+										maxlength="150">
+								</div>
+								<div class="mb-3"
+									style="border: 1px solid lightgray; padding: 16px; border-radius: 15px;">
+									<label class="form-label row"
+										style="padding-left: 10px; padding-bottom: 5px;">營業時間：</label>
 									<div class="row" style="padding-bottom: 16px;">
-										<div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-											<input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off" value="1" name="weekdays">
-											<label class="btn btn-outline-primary" for="btncheck1">星期一</label>
-											<input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off" value="2" name="weekdays">
-											<label class="btn btn-outline-primary" for="btncheck2">星期二</label>
-											<input type="checkbox" class="btn-check" id="btncheck3" autocomplete="off" value="3" name="weekdays">
-											<label class="btn btn-outline-primary" for="btncheck3">星期三</label>
-											<input type="checkbox" class="btn-check" id="btncheck4" autocomplete="off" value="4" name="weekdays">
-											<label class="btn btn-outline-primary" for="btncheck4">星期四</label>
-											<input type="checkbox" class="btn-check" id="btncheck5" autocomplete="off" value="5" name="weekdays">
-											<label class="btn btn-outline-primary" for="btncheck5">星期五</label>
-											<input type="checkbox" class="btn-check" id="btncheck6" autocomplete="off" value="6" name="weekdays">
-											<label class="btn btn-outline-primary" for="btncheck6">星期六</label>
-											<input type="checkbox" class="btn-check" id="btncheck7" autocomplete="off" value="7" name="weekdays">
-											<label class="btn btn-outline-primary" for="btncheck7">星期日</label>
+										<div class="btn-group" role="group"
+											aria-label="Basic checkbox toggle button group">
+											<input type="checkbox" class="btn-check" id="btncheck1"
+												autocomplete="off" value="1" name="weekdays"> <label
+												class="btn btn-outline-primary" for="btncheck1">星期一</label> <input
+												type="checkbox" class="btn-check" id="btncheck2"
+												autocomplete="off" value="2" name="weekdays"> <label
+												class="btn btn-outline-primary" for="btncheck2">星期二</label> <input
+												type="checkbox" class="btn-check" id="btncheck3"
+												autocomplete="off" value="3" name="weekdays"> <label
+												class="btn btn-outline-primary" for="btncheck3">星期三</label> <input
+												type="checkbox" class="btn-check" id="btncheck4"
+												autocomplete="off" value="4" name="weekdays"> <label
+												class="btn btn-outline-primary" for="btncheck4">星期四</label> <input
+												type="checkbox" class="btn-check" id="btncheck5"
+												autocomplete="off" value="5" name="weekdays"> <label
+												class="btn btn-outline-primary" for="btncheck5">星期五</label> <input
+												type="checkbox" class="btn-check" id="btncheck6"
+												autocomplete="off" value="6" name="weekdays"> <label
+												class="btn btn-outline-primary" for="btncheck6">星期六</label> <input
+												type="checkbox" class="btn-check" id="btncheck7"
+												autocomplete="off" value="7" name="weekdays"> <label
+												class="btn btn-outline-primary" for="btncheck7">星期日</label>
 										</div>
 									</div>
 									<div class="input-group" style="padding-bottom: 16px;">
-										<span class="input-group-text">開始營業時間：</span>
-										<input class="form-control openTime" type="time" name="openTime">
-										<span class="input-group-text">結束營業時間：</span>
-										<input class="form-control closeTime" type="time" name="closeTime">
+										<span class="input-group-text">開始營業時間：</span> <input
+											class="form-control openTime" type="time" name="openTime">
+										<span class="input-group-text">結束營業時間：</span> <input
+											class="form-control closeTime" type="time" name="closeTime">
 									</div>
-									<div class="col-10" id="morePeriodsDiv" style="padding-bottom: 12px;">
-										<button class="btn btn-success" id="morePeriods">多段營業時間</button>
-										<button class="btn btn-success" id="finishedAddPeriods" disabled>營業時間更新完成</button>
+									<div class="col-lg-12 d-flex justify-content-start" id="morePeriodsDiv" style="padding:0px;">
+										<button class="btn btn-success" id="finishedAddPeriods">新增營業時間</button>
 									</div>
-									<p id="hiddenP"></p>
-									<div id="hiddenDiv"></div>
+									<input type="hidden" id="hiddenP">
+									<input type="hidden" id="hiddenDiv">
 								</div>
+								<div class="md-3 d-flex justify-content-start" style="border: 1px solid lightgray; padding: 16px; border-radius: 15px;">
+									<form class="st1" id="picture" action="/group5/admin/gym/editPicture" method="post" enctype="multipart/form-data">
+										<label>新增照片:</label>
+										<input type="file" id="ff" name="photo"/>
+										<input type="hidden" name="gymId" id="gymId">
+										<img id="img1" width="230" />
+									</form>
+								</div>
+							</div>
 						</div>
 					</div>
-				</div>
+				</div><!-- MODAL-BODY END -->
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 					<button type="button" class="btn btn-primary" id="submitUpdate">確定修改</button>
 				</div>
-			</div>
-			</div>
+			</div> <!-- MODAL-CONTENT END -->
 		</div>
 	</div>
 	
