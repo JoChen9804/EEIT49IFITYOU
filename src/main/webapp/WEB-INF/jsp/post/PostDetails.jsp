@@ -190,14 +190,10 @@ $(function(){
                 <td><div class="content">
                 
                                                 
-            <textarea name="replyContent" id="content1" cols="90" rows="10" 
+            <textarea name="replyContent" id="content1" cols="85" rows="10" 
             required oninvalid="setCustomValidity('請輸入內容')" oninput="setCustomValidity('')"></textarea>
             
   
-            
-            
-            
-            
            
             </div>
        請選擇圖片(最多五張):<input id="file1" type="file" class="btn btn-outline-primary" name="replyfile" multiple="multiple" 
