@@ -338,29 +338,22 @@ fieldset {
                                                             <td class="align-middle"><input class="delete"
                                                                     type="checkbox"></td>
                                                             <td class="align-middle">${report.replyNo}</td>
-                                                            <td class="align-middle">${report.replyContent}</td>
-                                                            <td class="align-middle">
+                                                            <td class="align-middle replyContent">${report.replyContent}</td>
+                                                            <td class="align-middle replyAccount">
                                                                 ${report.replyAccount}<br />${report.replyTime}</td>
                                                             <td class="align-middle">${report.replyPermission}</td>
                                                             <td class="align-middle">
                                                                 
                                                                 
-                                                                <a class="btn btn-info btn-icon-split popup-with-move-anim" href="#details-lightbox-3">
+                                                                <a class="btn btn-info btn-icon-split popup-with-move-anim viewreplies" href="#details-lightbox-3">
                                                                 <span class="icon text-white-50"><i class="fas fa-info-circle"></i></span>
                                                                 <span class="text">觀看</span></a>
                                                                 
-                                                                
-<!--                                                                 <form action="MainPost.watch" class="btn btn-info btn-icon-split" method="POST"> -->
-<!--                                                                 <span class="icon text-white-50"><i class="fas fa-info-circle"></i></span> -->
-<%--                                                                         <input type="hidden" value="${report.replyNo}"> --%>
-<!--                                                                         <button type="submit" class="btn btn-info btn-icon-split" value="觀看"> -->
-<!--                                                                             <span class="text">觀看</span> -->
-<!--                                                                         </button> -->
-<!--                                                                 </form> -->
+                                                           
 
-                                                                <input type="hidden" name="xreason" value="">
+                                                                <input type="hidden" value="${report.r_image}">
                                                                 <input type="hidden" value="${report.replyNo}">
-                                                                <button type="submit" class="btn btn-warning btn-icon-split turnDown" value="刪除">
+                                                                <button type="submit" class="btn btn-warning btn-icon-split" value="刪除">
                                                                 <span class="icon text-white-50"><i class="fas fa-exclamation-triangle"></i></span>
                                                                 <span class="text">刪除</span></button>
                                                             </td>
@@ -370,7 +363,21 @@ fieldset {
                                                 </tbody>
                                             </table>
 
-
+                                                        <script>
+                                                        
+                                                        $(".viewreplies").on('click', function(event){
+                                                        	let replyContent = $(this).parent().siblings(".replyContent").text();
+                                                        	let replyAccount = $(this).parent().siblings(".replyAccount").text();
+                                                        	$(".Lightbox3content").text(replyContent);
+                                                        	$(".Lightbox3account").text(replyAccount);
+                                                        	
+                                                        	
+                                                        	console.log(replyAccount);
+                                                        	
+                                                        	
+                                                        });
+                                                        
+                                                        </script>
 
 
                                     </div> <!-- end of text-container -->
@@ -461,15 +468,15 @@ fieldset {
                     
 			  <table class="table-bordered table1">
 			    <tr>
-			        <td class="column3">
+			        <td class="column3 Lightbox3account">
 			            帳號:${queryOne.account}<br>
-			            <img class="imgheadstickers"
+			            <img class="imgheadstickers Lightbox3postPhoto"
 			                src="${queryOne.postPhoto}">
 			        </td>
 			        <td>
 			            <div class="content">
-			                <P>回覆時間:${queryOne.addtime}</P>
-			                <p class="content">${queryOne.content}</p>
+			                <P class="Lightbox3addtime">回覆時間:${queryOne.addtime}</P>
+			                <p class="content Lightbox3content">${queryOne.content}</p>
 			
 			                <c:forEach var="image"
 			                    items="${allImages}">
@@ -477,14 +484,7 @@ fieldset {
 			                        src="${image}">
 			                </c:forEach>
 			
-			                <br> <input type="hidden"
-			                    id="mainPostNo"
-			                    name="mainPostNo"
-			                    value="${queryOne.mainPostNo}">
-			                <button type="submit"
-			                    name="likenumber"
-			                    id="likemainpost"
-			                    class="btn btn-outline-danger">讚${queryOne.likeNumber}</button>
+			               
 			
 			            </div>
 			        </td>
@@ -493,7 +493,14 @@ fieldset {
 			</table>
                     
                     
-                    
+                     <br> <input type="hidden"
+                                id="mainPostNo"
+                                name="mainPostNo"
+                                value="${queryOne.mainPostNo}">
+                            <button type="submit"
+                                name="likenumber"
+                                id="likemainpost"
+                                class="btn btn-outline-danger">讚${queryOne.likeNumber}</button>
                     
                     
 
@@ -767,6 +774,11 @@ fieldset {
                 })()
        
         });
+        
+
+             
+        
+        
         
         
         /*Bootstrap 3：在页面刷新时保持选中的选项卡*/
