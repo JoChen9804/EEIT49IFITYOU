@@ -49,6 +49,6 @@ public class EmailController {
 		String html = templateService.render("AdminMailtemplete", params);
 		mailService.mimeMail(fromEmail, toEmail, subject, html);
 
-		return "mail";
+		return "email";
 	}
 }
