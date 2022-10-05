@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -122,13 +123,16 @@ public class ActivityFunctionController extends HttpServlet {
 	
 	//新增
 	@PostMapping("/admin/addactivity.controller")
-	public String voucherAdd(@ModelAttribute(name = "activity") ActivityActivity activity, String add, MultipartFile photo, Model m)
+	public String voucherAdd(@ModelAttribute(name = "activity") ActivityActivity activity, String add, MultipartFile photo,String activityContent, Model m)
 			throws IllegalStateException, IOException {
 		if (add.equals("新增")) {
 			ActivityActivity aAdd = new ActivityActivity();
 			m.addAttribute(aAdd);
 			return "activity/ActivityActivityAdd";
 		} else {
+			
+			System.out.println("抓CK="+ activityContent);
+			
 			if(!photo.isEmpty()) {
 				String imgName = avtivityService.processImg(activity.getActivityTitle(), photo);
 				activity.setPhotoData(imgName);
@@ -136,7 +140,6 @@ public class ActivityFunctionController extends HttpServlet {
 			activity.setReviseTime(avtivityService.getTime());
 			if (avtivityService.insert(activity)!=null) {
 				m.addAttribute("add_activity", avtivityService.selectById(activity.getActivityId()));
-				m.addAttribute("page", "activity");
 				return "activity/ActivityConfirm";
 			}
 			return "redirect:activitymain.controller";

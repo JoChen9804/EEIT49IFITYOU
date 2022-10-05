@@ -175,13 +175,13 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 	<script type="text/javascript">
 		$(function() {
 			
-			reloadTable("${query_activity.activityId}");
-			
 			$('#forColor').attr('style', 'background-color:white' );
 			
-			if("${notShowSignUp}"){
-				$('#showSignUp').attr('style', 'display:none' );
-			};
+			reloadTable("${query_activity.activityId}");
+			
+			//if("${notShowSignUp}"){
+			//	$('#showSignUp').attr('style', 'display:none' );
+			//};
 			
 			$(document).on('click','.del', function(){
 				
