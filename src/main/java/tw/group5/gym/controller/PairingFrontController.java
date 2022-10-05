@@ -5,18 +5,22 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import tw.group5.admin.model.MemberBean;
 import tw.group5.admin.model.MemberRepository;
 import tw.group5.admin.service.AdminService;
+import tw.group5.gym.model.PairData;
 import tw.group5.gym.model.PairingLog;
+import tw.group5.gym.service.PairDataService;
 import tw.group5.gym.service.PairingLogService;
 
 @Controller
-@RequestMapping("/group5/user/paring")
-//@SessionAttributes(names = {"uPair"})
+@RequestMapping("/group5/user/pairing")
 public class PairingFrontController {
 	
 	@Autowired
@@ -25,10 +29,36 @@ public class PairingFrontController {
 	@Autowired
 	private AdminService adminService;
 	
+	@Autowired
+	private PairDataService pDataService;
+	
+	
 	@GetMapping("/want2pair")
 	public String processPrePair() {
 		return "gym/pairingFront01";
 	}
+	
+	@PostMapping("/save")
+	@ResponseBody
+	public PairData processFitFilter(@RequestBody PairData pData) {
+		System.out.println(pData.getMemberId());
+		MemberBean member = adminService.selectOneMember(pData.getMemberId());
+		member.getMemberDetail().setPairContactInfo(pData.getConnection());
+		member.getMemberDetail().setPairInfo(pData.getToPartner());
+		MemberBean insert = adminService.insert(member);
+		pData.setMember(insert);
+		return pDataService.savePairData(pData);
+	}
+	
+	@GetMapping("/whofitme")
+	public String processFitFilter() {
+		return "gym/pairingFront02";
+	}
+	
+	
+	
+	
+	
 	
 	
 //	@GetMapping("/pairing")
