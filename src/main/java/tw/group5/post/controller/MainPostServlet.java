@@ -160,7 +160,26 @@ public class MainPostServlet {
     }
     
     
+    // 刪除貼文
+    @DeleteMapping("/MainPostingServlet")
+    public String deleteDainPost(Integer deletepost) {
+        mpService.deleteById(deletepost);
+        return "redirect:MainPost.all";
+    }
+    
+    // 刪除回覆
+    @DeleteMapping("/ReplyPost") @ResponseBody
+    public void deleteReplyPostAJAX(ReplyPostBean rpBean) {
+        rpService.deleteById(rpBean.getReplyNo());
+    }
 
+    // 撤銷檢舉
+    @PutMapping("/RevokeReport") @ResponseBody
+    public void revokeReplyPostAJAX(ReplyPostBean rpBean) {
+        ReplyPostBean selectById = rpService.selectById(rpBean.getReplyNo());
+        selectById.setReplyPermission(null);
+        rpService.update(selectById);
+    }
     
     ////////////////////////////////////下面已搬到前台/////////////////////////
     
@@ -241,12 +260,6 @@ public class MainPostServlet {
 
 
 
-    // 刪除 ok
-    @DeleteMapping("/MainPostingServlet")
-    public String deleteDainPost(Integer deletepost) {
-        mpService.deleteById(deletepost);
-        return "redirect:MainPost.all";
-    }
 
     // 跳到修改頁面ok
     @PostMapping("/MainPostingServlet")

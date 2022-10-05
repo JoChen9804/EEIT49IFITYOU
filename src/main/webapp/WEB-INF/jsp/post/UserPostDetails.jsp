@@ -23,7 +23,7 @@ $(function(){
            
             success: function(data){
                   console.log(data);
-                  $("#likemainpost").text("讚"+data.likeNumber);
+                  $("#likemainpost").text(data.likeNumber);
                  //location.reload();
             }
         });
@@ -177,7 +177,7 @@ $(function(){
 								<br> <input type="hidden" id="mainPostNo" name="mainPostNo"
 									value="${queryOne.mainPostNo}">
 								<button type="submit" name="likenumber" id="likemainpost"
-									class="btn btn-outline-danger">讚${queryOne.likeNumber}</button>
+									class="btn btn-link fa-regular fa-thumbs-up fa-1x">${queryOne.likeNumber}</button>
 
 							</div>
 						</td>
@@ -199,15 +199,14 @@ $(function(){
 										name="mainPostNo" value="${queryOne.mainPostNo}"> 
 										<input type="hidden" class="replyNo" name="replyNo" value="${onereply.replyNo}">
 									<button type="submit" name="replylikenumber"
-										id="${onereply.replyNo}" class="btn btn-outline-danger"
-										value="${onereply.replyLikeNumber}">
-										讚${onereply.replyLikeNumber}</button>
+										id="${onereply.replyNo}" class="btn btn-link fa-regular fa-thumbs-up fa-1x"
+										value="${onereply.replyLikeNumber}">${onereply.replyLikeNumber}</button>
 										
                                     <input type="hidden" class="replyNo" name="replyNo" value="${onereply.replyNo}">
-									<button type="submit" class="btn btn-outline-danger replyreport"
+									<button type="submit" style="border:none" class="btn btn-outline-danger replyreport fa-solid fa-shield-halved fa-1x"
                                                 value="${onereply.replyLikeNumber}">檢舉</button>
 										
-
+                                <i class="fa-solid fa-shield-exclamation"></i>
 							<script type="text/javascript">
 							
 							
@@ -232,8 +231,7 @@ $(function(){
                     console
                         .log(data);
                     document
-                        .getElementById("${onereply.replyNo}").innerText = "讚"
-                        + data.replyLikeNumber
+                        .getElementById("${onereply.replyNo}").innerText = data.replyLikeNumber
                 }
             });
         }
@@ -275,6 +273,7 @@ $(function(){
                                             <div class="col-md">
                                                 <div class="form-floating">
                                                 <a class="btn-solid-reg " href="/group5/UserPostAll">返回</a>
+                                                
                                                 </div>
                                             </div>
                                         </div>
@@ -324,7 +323,7 @@ $(function(){
 <!-- 	</form> -->
     
 
-    
+    <script src="https://kit.fontawesome.com/f795d981d8.js" crossorigin="anonymous"></script>
  
 
 	<%@ include file="../admin/FrontStageFoot.jsp"%>

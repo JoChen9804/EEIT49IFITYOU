@@ -22,7 +22,7 @@ $(function(){
            
             success: function(data){
                   console.log(data);
-                  $("#likemainpost").text("讚"+data.likeNumber);
+                  $("#likemainpost").text(data.likeNumber);
                  //location.reload();
             }
         });
@@ -123,7 +123,7 @@ $(function(){
 						 <br>
 							<input type="hidden" id="mainPostNo" name="mainPostNo"
 								value="${queryOne.mainPostNo}">
-							<button type="submit" name="likenumber" id="likemainpost" class="btn btn-outline-danger">讚${queryOne.likeNumber}</button>
+							<button type="submit" name="likenumber" id="likemainpost" class="btn btn-link fa-regular fa-thumbs-up fa-1x">${queryOne.likeNumber}</button>
 
 					</div>
 				</td>
@@ -149,7 +149,7 @@ $(function(){
 			                 <br>
 						   <input type="hidden" id="mainPostNo" name="mainPostNo" value="${queryOne.mainPostNo}">
                             <input type="hidden"  name="replyNo" value="${onereply.replyNo}">
-                            <button type="submit" name="replylikenumber" id="${onereply.replyNo}" class="btn btn-outline-danger" value="${onereply.replyLikeNumber}"> 讚${onereply.replyLikeNumber}</button>
+                            <button type="submit" name="replylikenumber" id="${onereply.replyNo}" class="btn btn-link fa-regular fa-thumbs-up fa-1x" value="${onereply.replyLikeNumber}">${onereply.replyLikeNumber}</button>
 
 						<script type="text/javascript">
                         $(function(){
@@ -166,7 +166,7 @@ $(function(){
                                     dataType:'json',
                                     success: function(data){
                                         console.log(data);
-                                        document.getElementById("${onereply.replyNo}").innerText ="讚"+data.replyLikeNumber
+                                        document.getElementById("${onereply.replyNo}").innerText =data.replyLikeNumber
                                     }
                                 });
                             }
@@ -218,6 +218,7 @@ $(function(){
 			<div class="sub"><input type="submit" name="returns" class="btn btn-outline-primary" value="返回首頁" margin="auto"></div>
 		</form>
 		
+		<script src="https://kit.fontawesome.com/f795d981d8.js" crossorigin="anonymous"></script>
 		<%@ include file="../admin/AdminstyleFoot.jsp"%>
 		
 </body>

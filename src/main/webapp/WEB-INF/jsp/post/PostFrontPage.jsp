@@ -44,22 +44,35 @@ fieldset {
     border-radius: 15px;
     opacity: 0.85;
     margin: auto;
-    background: #f7f4dd;
-}   
+/*     background: #f7f4dd; */
+} 
+
+.imgpostdetails {
+    width: 300px;
+    padding: 5px 5px 5px 5px;
+    margin: 10px;
+}  
    
 .imgfront {
         width: 150px;
         height: 120px;
         padding: 2px 2px 2px 2px;
         margin: 2px;
-}   
+}
+
+.imgheadstickers {
+        width: 150px;
+        height: 120px;
+        padding: 2px 2px 2px 2px;
+        margin: 2px;
+}
  
 .table1 {
     width: 800px;
     table-layout: fixed;
     margin-left: auto;
     margin-right: auto;
-    background-color: #f7f4dd;
+/*     background-color: #f7f4dd; */
     top: -100px;
     left: 100px;
 }
@@ -68,29 +81,36 @@ fieldset {
     width: 200px;
     text-align: center;
     vertical-align: bottom;
-    background-color: #f7f4dd;
+/*     background-color: #f7f4dd; */
 }
 
 .column2 {
     width: 600px;
     text-align: left;
     vertical-align: bottom;
-    background-color: #f7f4dd;
+/*     background-color: #f7f4dd; */
 }
 
 .column3 {
     width: 200px;
     text-align: center;
     vertical-align: top;
-    background-color: #f7f4dd;
+/*     background-color: #f7f4dd; */
 }
 
 .column4 {
     width: 700px;
     text-align: center;
-    background-color: #f7f4dd;
-}  
-   
+/*     background-color: #f7f4dd; */
+}
+.content {
+/*     background-color: #f7f4dd; */
+    word-wrap: break-word;
+}
+.center {
+    text-align: center;
+}
+ 
     </style>
       
    </HEAD>
@@ -325,7 +345,7 @@ fieldset {
                                                         <th>選取<br>全選<input class="delete" type="checkbox"
                                                                 onclick="checkAll()"></th>
                                                         <th>回覆編號</th>
-                                                        <th>標題</th>
+                                                        <th>內容</th>
                                                         <th>會員<br>回覆時間</th>
                                                         <th>檢舉原因</th>
                                                         <th>操作</th>
@@ -335,10 +355,10 @@ fieldset {
                                                     <c:forEach var="report" items="${reportBean}">
 
                                                         <tr class="content">
-                                                            <td class="align-middle"><input class="delete"
-                                                                    type="checkbox"></td>
+                                                            <td class="align-middle"><input class="delete" type="checkbox"></td>
                                                             <td class="align-middle">${report.replyNo}</td>
-                                                            <td class="align-middle replyContent">${report.replyContent}</td>
+                                                            
+                                                            <td class="align-middle card-text">${report.replyContent}</td>
                                                             <td class="align-middle replyAccount">
                                                                 ${report.replyAccount}<br />${report.replyTime}</td>
                                                             <td class="align-middle">${report.replyPermission}</td>
@@ -349,36 +369,26 @@ fieldset {
                                                                 <span class="icon text-white-50"><i class="fas fa-info-circle"></i></span>
                                                                 <span class="text">觀看</span></a>
                                                                 
-                                                           
-
-                                                                <input type="hidden" value="${report.r_image}">
-                                                                <input type="hidden" value="${report.replyNo}">
-                                                                <button type="submit" class="btn btn-warning btn-icon-split" value="刪除">
+                                                                <input type="hidden" class="replyPhoto" value="${report.replyPhoto}">
+                                                                <input type="hidden" class="replyContent" value="${report.replyContent}">
+                                                                <input type="hidden" class="replyTime" value="${report.replyTime}">
+                                                                <input type="hidden" class="replyaccount" value="${report.replyAccount}">
+                                                                <input type="hidden" class="reportimage" value="${report.r_image}">
+                                                                <input type="hidden" class="reportreplyNo" value="${report.replyNo}">
+                                                                
+                                                                <button type="submit" class="btn btn-warning btn-icon-split deletereply" value="刪除">
                                                                 <span class="icon text-white-50"><i class="fas fa-exclamation-triangle"></i></span>
                                                                 <span class="text">刪除</span></button>
+                                                                
+                                                                <button type="submit" class="btn btn-secondary btn-icon-split revoke" value="撤銷">
+                                                                <span class="icon text-white-50"><i class="fas fa-arrow-right"></i></span>
+                                                                <span class="text">撤銷</span></button>
                                                             </td>
 
                                                         </tr>
                                                     </c:forEach>
                                                 </tbody>
                                             </table>
-
-                                                        <script>
-                                                        
-                                                        $(".viewreplies").on('click', function(event){
-                                                        	let replyContent = $(this).parent().siblings(".replyContent").text();
-                                                        	let replyAccount = $(this).parent().siblings(".replyAccount").text();
-                                                        	$(".Lightbox3content").text(replyContent);
-                                                        	$(".Lightbox3account").text(replyAccount);
-                                                        	
-                                                        	
-                                                        	console.log(replyAccount);
-                                                        	
-                                                        	
-                                                        });
-                                                        
-                                                        </script>
-
 
                                     </div> <!-- end of text-container -->
                                 </div> <!-- end of col -->
@@ -463,51 +473,36 @@ fieldset {
                 <button title="Close (Esc)" type="button" class="mfp-close x-button">×</button>
             
                 <div class="col-lg-12">
-
-                    <h1>回覆觀看</h1>
                     
 			  <table class="table-bordered table1">
 			    <tr>
-			        <td class="column3 Lightbox3account">
-			            帳號:${queryOne.account}<br>
-			            <img class="imgheadstickers Lightbox3postPhoto"
-			                src="${queryOne.postPhoto}">
+			        <td class="column3"><div class="Lightbox3account"></div>
+			            <br>
+			            <img class="imgheadstickers Lightbox3postPhoto">
 			        </td>
 			        <td>
 			            <div class="content">
-			                <P class="Lightbox3addtime">回覆時間:${queryOne.addtime}</P>
-			                <p class="content Lightbox3content">${queryOne.content}</p>
+			                <P class="Lightbox3addtime"></P>
+			                <p class="content Lightbox3content"></p>
 			
+			                 
+			                 <div class="imgs"></div>
+			                 
 			                <c:forEach var="image"
 			                    items="${allImages}">
 			                    <img class="imgpostdetails"
 			                        src="${image}">
 			                </c:forEach>
-			
-			               
-			
+			                
+			                
 			            </div>
 			        </td>
 			    </tr>
 			
 			</table>
-                    
-                    
-                     <br> <input type="hidden"
-                                id="mainPostNo"
-                                name="mainPostNo"
-                                value="${queryOne.mainPostNo}">
-                            <button type="submit"
-                                name="likenumber"
-                                id="likemainpost"
-                                class="btn btn-outline-danger">讚${queryOne.likeNumber}</button>
-                    
-                    
-
-
-
-                    <a class="btn-solid-reg mfp-close" href="sign-up.html">SIGN UP</a> <a
-                        class="btn-outline-reg mfp-close as-button" href="#screenshots">BACK</a>
+                        <div class="center">
+                     <a class="btn-outline-reg mfp-close as-button"  href="#screenshots">關閉</a>
+                     </div>
                 </div> <!-- end of col -->
             </div> <!-- end of row -->
         </div> <!-- end of container -->
@@ -775,9 +770,106 @@ fieldset {
        
         });
         
-
+                    
+        $(function () {
+            var len = 20; // 超過20個字以"..."取代
+            $(".card-text").each(function (i) {
+                if ($(this).text().length > len) {
+                    $(this).attr("title", $(this).text());
+                    var text = $(this).text().substring(0, len - 1) + "...";
+                    $(this).text(text);
+                }
+            });
+        });
              
+        $(".viewreplies").on('click', function(event){
+            //let replyContent = $(this).parent().siblings(".replyContent").text();
+            let replyPhoto = $(this).siblings(".replyPhoto").val();
+            let replyContent = $(this).siblings(".replyContent").val();
+            let replyaccount = $(this).siblings(".replyaccount").val();
+            let replyTime = $(this).siblings(".replyTime").val();
+            let replyimage = $(this).siblings(".reportimage").val().split(",");
+            $(".Lightbox3postPhoto").attr("src",replyPhoto);
+            $(".Lightbox3content").text(replyContent);
+            $(".Lightbox3account").text(replyaccount);
+            $(".Lightbox3addtime").text("回覆時間:"+replyTime);
+            
+            for(i=0 ; i < replyimage.length -1; i++){
+            	var img = $("<img class='imgpostdetails'>").attr('src', replyimage[i]);
+                $(".imgs").append(img);
+            }
+            
+            
+            console.log();
+        });
         
+        $(".deletereply").on('click', function (event) {
+            let replyNo = $(this).siblings(".reportreplyNo").val();
+
+            Swal.fire({
+                title: '確定刪除回覆?',
+                text: '',
+                icon: 'warning',
+                cancelButtonText: '取消',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '刪除'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "Delete",
+                        url: "/group5/admin/ReplyPost",
+                        data: { replyNo: replyNo },
+                        dataType: 'json',
+                        success: function () {
+                            console.log("ok");
+                        }
+                    })
+                    Swal.fire({
+                        title: '刪除成功',
+                        icon: 'success'
+                    }).then((result) => {
+                        location.reload();
+                    });
+                }
+            });
+        });
+        
+        
+        
+        $(".revoke").on('click', function (event) {
+            let replyNo = $(this).siblings(".reportreplyNo").val();
+            console.log(replyNo);
+            Swal.fire({
+                title: '確定撤銷檢舉?',
+                text: '',
+                icon: 'warning',
+                cancelButtonText: '取消',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '撤銷'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "Put",
+                        url: "/group5/admin/RevokeReport",
+                        data: { replyNo: replyNo },
+                        dataType: 'json',
+                        success: function () {
+                            console.log("ok");
+                        }
+                    })
+                    Swal.fire({
+                        title: '撤銷成功',
+                        icon: 'success'
+                    }).then((result) => {
+                        location.reload();
+                    });
+                }
+            });
+        });
         
         
         
