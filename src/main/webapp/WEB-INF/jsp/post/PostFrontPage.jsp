@@ -53,7 +53,43 @@ fieldset {
         padding: 2px 2px 2px 2px;
         margin: 2px;
 }   
-   
+ 
+.table1 {
+    width: 800px;
+    table-layout: fixed;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #f7f4dd;
+    top: -100px;
+    left: 100px;
+}
+
+.column1 {
+    width: 200px;
+    text-align: center;
+    vertical-align: bottom;
+    background-color: #f7f4dd;
+}
+
+.column2 {
+    width: 600px;
+    text-align: left;
+    vertical-align: bottom;
+    background-color: #f7f4dd;
+}
+
+.column3 {
+    width: 200px;
+    text-align: center;
+    vertical-align: top;
+    background-color: #f7f4dd;
+}
+
+.column4 {
+    width: 700px;
+    text-align: center;
+    background-color: #f7f4dd;
+}  
    
     </style>
       
@@ -291,7 +327,7 @@ fieldset {
                                                         <th>回覆編號</th>
                                                         <th>標題</th>
                                                         <th>會員<br>回覆時間</th>
-                                                        <th>狀態</th>
+                                                        <th>檢舉原因</th>
                                                         <th>操作</th>
                                                     </tr>
                                                 </thead>
@@ -307,18 +343,23 @@ fieldset {
                                                                 ${report.replyAccount}<br />${report.replyTime}</td>
                                                             <td class="align-middle">${report.replyPermission}</td>
                                                             <td class="align-middle">
-                                                                <form action="MainPost.watch" class="btn btn-info btn-icon-split" method="POST">
-                                                               
+                                                                
+                                                                
+                                                                <a class="btn btn-info btn-icon-split popup-with-move-anim" href="#details-lightbox-3">
                                                                 <span class="icon text-white-50"><i class="fas fa-info-circle"></i></span>
-                                                                        <input type="hidden" name="mainPostNo" value="${report.replyNo}">
-                                                                        <button type="submit" class="btn btn-info btn-icon-split" value="觀看">
-                                                                            <span class="text">觀看</span>
-                                                                        </button>
-                                                                </form>
+                                                                <span class="text">觀看</span></a>
+                                                                
+                                                                
+<!--                                                                 <form action="MainPost.watch" class="btn btn-info btn-icon-split" method="POST"> -->
+<!--                                                                 <span class="icon text-white-50"><i class="fas fa-info-circle"></i></span> -->
+<%--                                                                         <input type="hidden" value="${report.replyNo}"> --%>
+<!--                                                                         <button type="submit" class="btn btn-info btn-icon-split" value="觀看"> -->
+<!--                                                                             <span class="text">觀看</span> -->
+<!--                                                                         </button> -->
+<!--                                                                 </form> -->
 
-                                 
                                                                 <input type="hidden" name="xreason" value="">
-                                                                <input type="hidden" name="mainPostNo" value="${allmpbs.mainPostNo}">
+                                                                <input type="hidden" value="${report.replyNo}">
                                                                 <button type="submit" class="btn btn-warning btn-icon-split turnDown" value="刪除">
                                                                 <span class="icon text-white-50"><i class="fas fa-exclamation-triangle"></i></span>
                                                                 <span class="text">刪除</span></button>
@@ -413,18 +454,48 @@ fieldset {
         <div class="container">
             <div class="row">
                 <button title="Close (Esc)" type="button" class="mfp-close x-button">×</button>
-                <div class="col-lg-8">
-                    <div class="image-container">
-                        <img class="img-fluid" src="images/details-lightbox.png" alt="alternative">
-                    </div> <!-- end of image-container -->
-                </div> <!-- end of col -->
-                <div class="col-lg-4">
+            
+                <div class="col-lg-12">
 
-
-
-
-
-                    <h1>維修中~~~~~~~~~~~~~~</h1>
+                    <h1>回覆觀看</h1>
+                    
+			  <table class="table-bordered table1">
+			    <tr>
+			        <td class="column3">
+			            帳號:${queryOne.account}<br>
+			            <img class="imgheadstickers"
+			                src="${queryOne.postPhoto}">
+			        </td>
+			        <td>
+			            <div class="content">
+			                <P>回覆時間:${queryOne.addtime}</P>
+			                <p class="content">${queryOne.content}</p>
+			
+			                <c:forEach var="image"
+			                    items="${allImages}">
+			                    <img class="imgpostdetails"
+			                        src="${image}">
+			                </c:forEach>
+			
+			                <br> <input type="hidden"
+			                    id="mainPostNo"
+			                    name="mainPostNo"
+			                    value="${queryOne.mainPostNo}">
+			                <button type="submit"
+			                    name="likenumber"
+			                    id="likemainpost"
+			                    class="btn btn-outline-danger">讚${queryOne.likeNumber}</button>
+			
+			            </div>
+			        </td>
+			    </tr>
+			
+			</table>
+                    
+                    
+                    
+                    
+                    
 
 
 
