@@ -10,18 +10,14 @@
 <script>
 $(function(){
     $("#subMePair").on("click",function(){
-    	let pairdataBean={"pdId":"${pdid}","pairGender":$('input[name="gender"]:checked').val(),"pairRelationship":$('#relationship').val()};
-    	console.log(pairdataBean);
-    	$.ajax({
-    		type:'post',
-    		url:'/group5/user/pairing/save2',
-    		contentType:'application/json',
-    		data:JSON.stringify(pairdataBean),
-    		dataType:'json',
-    		success:function(data){
-    			console.log(data.pdId+"success");
-    		}
-    	});
+    	let pairdataBean={"pdId":,"pairGender":,"pairRelationship":};
+    		$.ajax({
+    			type:'post',
+    			url:'/group5/user/pairing/save2',
+    			contentType:'application/json',
+    			data:JSON.stringify(pairdataBean),
+    			dataType:'html'
+    		});
     })
 });
 
@@ -42,19 +38,19 @@ $(function(){
                         </h2>
                         
                         <!-- Newsletter Form -->
-                        <div id="newsletterForm" data-toggle="validator" data-focus="false">
+                        <form id="newsletterForm" data-toggle="validator" data-focus="false">
                             <div class="form-group" style="font-size:0.8em">
                             	<span >尋找性別：</span>
                             	<div class="form-check form-check-inline">
-		                            <input class="form-check-input" type="radio" name="gender" id="gender2" value="2">
+		                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="gender2" value="2">
 									<label class="form-check-label" for="gender2">不拘</label>
 	                            </div>
 	                            <div class="form-check form-check-inline">
-	                            	<input class="form-check-input" type="radio" name="gender" id="gender1" value="1">
+	                            	<input class="form-check-input" type="radio" name="flexRadioDefault" id="gender1" value="1">
 									<label class="form-check-label" for="gender1">男性</label>
 	                            </div>
 	                            <div class="form-check form-check-inline">
-	                            	<input class="form-check-input" type="radio" name="gender" id="gender3" value="3">
+	                            	<input class="form-check-input" type="radio" name="flexRadioDefault" id="gender3" value="3">
 									<label class="form-check-label" for="gender3">女性</label>
                                 </div>
                                 <div class="help-block with-errors"></div>
@@ -72,11 +68,11 @@ $(function(){
                                 <div class="h3 text-center hidden" id="vforAll"></div>
                             </div>
                             <div class="form-group">
-                                <button type="button" class="form-control-submit-button" id="subMePair">送出條件</button>
+                                <button type="button" class="form-control-submit-button">送出條件</button>
                             </div>
-                        </div>
+                        </form>
                         <!-- end of newsletter form -->
-						<form></form>
+
                     </div> <!-- end of text-container -->
                 </div> <!-- end of col -->
             </div> <!-- end of row -->

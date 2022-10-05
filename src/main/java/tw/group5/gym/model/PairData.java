@@ -53,7 +53,15 @@ public class PairData {
 	
 	@Transient
 	private String toPartner;
-
+	
+	@Column(name = "PAIRGENDER")
+	private Integer pairGender;
+	
+	@Column(name = "PAIRRELATIONSHIP")
+	private Integer pairRelationship;
+	
+	
+	
 	public int getPdId() {
 		return pdId;
 	}
@@ -133,6 +141,22 @@ public class PairData {
 
 	public void setMemberId(Integer memberId) {
 		this.memberId = memberId;
+	}
+
+	public Integer getPairGender() {
+		return pairGender;
+	}
+
+	public void setPairGender(Integer pairGender) {
+		this.pairGender = pairGender;
+	}
+
+	public Integer getPairRelationship() {
+		return pairRelationship;
+	}
+
+	public void setPairRelationship(Integer pairRelationship) {
+		this.pairRelationship = pairRelationship;
 	}
 	
 	

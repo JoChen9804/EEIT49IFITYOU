@@ -41,12 +41,13 @@ function submitPairData(){
 			"currentLocation":$("#showLocText").text(),"connection":$("#connection").val(),"toPartner":$("#toPartner").val()};
 	$.ajax({
 		type:'post',
-		url:'/group5/user/pairing/save',
+		url:'/group5/user/pairing/save1',
 		contentType:'application/json',
 		data:JSON.stringify(pairdataBean),
 		dataType:'json',
-		success:function(){
-			location.href="/group5/user/pairing/whofitme";
+		success:function(data){
+			$("#subid").val(data.pdId);
+			$("#submit01").submit();
 		}
 	});
 }
@@ -63,7 +64,7 @@ function submitPairData(){
                         <div class="above-heading">ABOUT ME</div>
                         <h2>配對資料－關於我</h2>
                         <!-- Newsletter Form -->
-                        <form id="newsletterForm" data-toggle="validator" data-focus="false">
+                        <div id="newsletterForm" data-toggle="validator" data-focus="false">
                             <div class="form-group">
                             	<input class="form-control-input" list="datalistOptions" id="clocate" required>
                                 <label class="label-control" for="clocate">出沒地區</label>
@@ -162,9 +163,9 @@ function submitPairData(){
                             <div class="form-group">
                                 <button type="button" class="form-control-submit-button" id="subMePair">申請配對</button>
                             </div>
-                        </form>
+                        </div>
                         <!-- end of newsletter form -->
-
+                        <form action="/group5/user/pairing/whofitme" method="post" id="submit01"><input type="hidden" name="pdid" id="subid"></form>
                     </div> <!-- end of text-container -->
                 </div> <!-- end of col -->
             </div> <!-- end of row -->

@@ -38,7 +38,7 @@ public class PairingFrontController {
 		return "gym/pairingFront01";
 	}
 	
-	@PostMapping("/save")
+	@PostMapping("/save1")
 	@ResponseBody
 	public PairData processFitFilter(@RequestBody PairData pData) {
 		System.out.println(pData.getMemberId());
@@ -50,13 +50,26 @@ public class PairingFrontController {
 		return pDataService.savePairData(pData);
 	}
 	
-	@GetMapping("/whofitme")
-	public String processFitFilter() {
+	@PostMapping("/whofitme")
+	public String processFitFilter(int pdid,Model m) {
+		m.addAttribute("pdid", pdid);
 		return "gym/pairingFront02";
 	}
 	
+	@PostMapping("/save2")
+	@ResponseBody
+	public PairData processFitFilter2(@RequestBody PairData pData) {
+		int pdId = pData.getPdId();
+		PairData result = pDataService.findById(pdId);
+		result.setPairGender(pData.getPairGender());
+		result.setPairRelationship(pData.getPairRelationship());
+		return pDataService.savePairData(result);
+	}
 	
-	
+	public String processMatching(int pid) {
+		
+		return "";
+	}
 	
 	
 	
