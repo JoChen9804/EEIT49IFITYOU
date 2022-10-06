@@ -23,8 +23,10 @@ import org.springframework.web.servlet.ModelAndView;
 import tw.group5.admin.model.AdminBean;
 import tw.group5.admin.model.MemberBean;
 import tw.group5.admin.service.AdminService;
+import tw.group5.post.model.FavoritePostBean;
 import tw.group5.post.model.MainPostBean;
 import tw.group5.post.model.ReplyPostBean;
+import tw.group5.post.service.FavoritePostService;
 import tw.group5.post.service.MainPostService;
 import tw.group5.post.service.ReplyPostService;
 
@@ -40,6 +42,11 @@ public class UserPostController {
     //回復
     @Autowired
     private ReplyPostService rpService;
+    
+    //收藏
+    @Autowired
+    private FavoritePostService fpService;
+    
     
     //管理員與會員
     @Autowired
@@ -236,7 +243,6 @@ public class UserPostController {
         return null;
     }
     
-    
     //發表回復
     @PostMapping("/ReplyPost")
     public ModelAndView addingPostConfirming(ReplyPostBean rpBean,MainPostBean mpBean,
@@ -404,13 +410,47 @@ public class UserPostController {
     @PutMapping("/ReplyReportAJAX/{replyNo}/{text}") 
     public void report(@PathVariable("replyNo") Integer replyNo,
                             @PathVariable("text") String text) {
-        System.out.println("324123h4kjh123k4jh");
         ReplyPostBean rpBean = rpService.selectById(replyNo);
         rpBean.setReplyPermission(text);
         rpService.update(rpBean);
     }
     
+    //收藏貼文
+    @ResponseBody
+    @PostMapping("/FavoritePostAJAX") 
+    public String favoritePost(MainPostBean mpBean) {
+        List<FavoritePostBean> fpBean = fpService.findAccountFavorite(memberAccount, mpBean.getMainPostNo());
+        
+        if(memberAccount != null) {
+            if(!fpBean.isEmpty()) {
+                System.out.println("已經加入過收藏");
+                return "已經加入過收藏";
+            }
+            FavoritePostBean newfpBean = new FavoritePostBean();
+            newfpBean.setMainPostBean(mpBean);
+            newfpBean.setAccount(memberAccount);
+            fpService.insert(newfpBean);
+            return "已加入收藏";
+        }
+        return "請登入會員或加入會員";
+    }
     
+    //使用者收藏紀錄
+    @ResponseBody
+    @GetMapping("/FavoritePostAJAX")
+    public List<FavoritePostBean> userFavortes(){
+        if(memberAccount != null) {
+            List<FavoritePostBean> fpBean = fpService.allFavoriteUser(memberAccount);
+            if(!fpBean.isEmpty()) {
+                System.out.println("有收藏資料");
+                return fpBean;
+            }else {
+                new ModelAndView().addObject("noRecord", "查無收藏紀錄");
+            }
+            
+        }
+        return null;
+    }
     
     
     // 主貼文抓取第一張圖片並重新寫入Bean，找不到給預設圖片

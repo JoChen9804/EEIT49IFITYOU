@@ -169,7 +169,6 @@ $(function(){
 								<P>發布時間:${queryOne.addtime}</P>
 								<p class="content">${queryOne.content}</p>
 
-
 								<c:forEach var="image" items="${allImages}">
 									<img class="imgpostdetails" src="${image}">
 								</c:forEach>
@@ -178,7 +177,38 @@ $(function(){
 									value="${queryOne.mainPostNo}">
 								<button type="submit" name="likenumber" id="likemainpost"
 									class="btn btn-link fa-regular fa-thumbs-up fa-1x">${queryOne.likeNumber}</button>
-
+                                <button type="submit" class="btn btn-link fa-solid fa-bookmark fa-1x favorite"></button>
+                                <script>
+                                $(function(){
+									    $(".favorite").on("click",function(){
+									        var mainPostNo = $("#mainPostNo").val();
+									        $.ajax({
+									            type: "POST",
+									            url:'/group5/FavoritePostAJAX',
+									            data: {"mainPostNo":mainPostNo},
+									            dataType:'text',
+									           
+									            success: function(data){
+									            	console.log(data);
+									            	var icon = '', title = '';
+									            	
+									            	switch(data){
+									            	  case "已加入收藏" : { icon ='success'; title = data; break;}
+									            	  case "已經加入過收藏" :{ icon = 'error'; title = data; break;}
+									            	  default:{ icon = 'error'; title = data; break;}
+									            	}
+									            	
+									            	  Swal.fire({
+                                                          icon: icon,
+                                                          title: title,
+                                                          showConfirmButton: false,
+                                                          timer: 1000
+                                                        })
+									            }
+									        });
+									    });
+									});
+                                </script>
 							</div>
 						</td>
 					</tr>
@@ -206,7 +236,7 @@ $(function(){
 									<button type="submit" style="border:none" class="btn btn-outline-danger replyreport fa-solid fa-shield-halved fa-1x"
                                                 value="${onereply.replyLikeNumber}">檢舉</button>
 										
-                                <i class="fa-solid fa-shield-exclamation"></i>
+                                    
 							<script type="text/javascript">
 							
 							
@@ -280,7 +310,7 @@ $(function(){
 								
 								</td>
 								</tr>
-					<script>
+					           <script>
                                                    
                                                    $(".replycontent").on('click', function(event){
                                                        var rs = false;
