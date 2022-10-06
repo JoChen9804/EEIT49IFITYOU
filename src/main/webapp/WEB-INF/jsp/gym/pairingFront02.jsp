@@ -20,6 +20,8 @@ $(function(){
     		dataType:'json',
     		success:function(data){
     			console.log(data.pdId+"success");
+    			$("#mainPid").val(data.pdId);
+    			$("#start2pair").submit();
     		}
     	});
     })
@@ -72,11 +74,11 @@ $(function(){
                                 <div class="h3 text-center hidden" id="vforAll"></div>
                             </div>
                             <div class="form-group">
-                                <button type="button" class="form-control-submit-button" id="subMePair">送出條件</button>
+                                <button type="button" class="form-control-submit-button" id="subMePair">開始配對</button>
                             </div>
                         </div>
                         <!-- end of newsletter form -->
-						<form></form>
+						<form action="/group5/user/pairing/start2pair" method="post" id="start2pair"><input type="hidden" name="mainPid" id="mainPid"></form>
                     </div> <!-- end of text-container -->
                 </div> <!-- end of col -->
             </div> <!-- end of row -->

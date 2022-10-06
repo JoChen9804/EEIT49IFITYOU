@@ -36,11 +36,15 @@ public class PairDataService {
 		 return opt.get();
 	}
 	
-	//回傳mainData配到的三個人
-	public List<PairData> matching(PairData mainData){
+	//回傳mainData配到的三個人x 一個人o
+	public PairData matching(PairData mainData){
 		List<PairData> allpd = pdRespository.findAll();
+		System.out.println(mainData.getMember().getId());
 		for(PairData pd:allpd) {
-			if(pd.getMember().getId()==mainData.getMember().getId()) {
+			System.out.println(pd.getMember().getId());
+			if(pd.getMember().getId().equals(mainData.getMember().getId())) {
+				System.out.println("同一位抓");
+				pd.setMatchingScore(35);
 				continue;
 			}
 			int gender=0;
@@ -55,19 +59,20 @@ public class PairDataService {
 				gender=2;
 				break;
 			}
-			//m=3*(|Rx-Ry|)+2*(|Tx-Ty|)+|Fx-Fy|+|Kx-Ky|
-			int m = 3*(Math.abs(mainData.getPairRelationship()-pd.getRelationship()))
+			//m=3*(|Gx-Gy|)+3*(|Rx-Ry|)+2*(|Tx-Ty|)+|Fx-Fy|+|Kx-Ky|+A
+			int m = 3*(Math.abs(mainData.getPairGender()-gender))
+					+3*(Math.abs(mainData.getPairRelationship()-pd.getRelationship()))
 					+2*(Math.abs(mainData.getWorkoutTime()-pd.getWorkoutTime()))
 					+Math.abs(mainData.getWorkoutFrequency()-pd.getWorkoutFrequency())
-					+Math.abs(mainData.getWorkoutType()-pd.getWorkoutType());
+					+Math.abs(mainData.getWorkoutType()-pd.getWorkoutType())
+					+countlocation(mainData.getCurrentLocation(), pd.getCurrentLocation());
 			pd.setMatchingScore(m);
 		}
 		
 		//按分數排序
 		Collections.sort(allpd, new Comparator<PairData>() {
-			@Override
+			@Override //由小到大
 			public int compare(PairData o1, PairData o2) {
-				// 1是前者大於後者，-1是前者小於後者，0是維持
 				if(o1.getMatchingScore()>o2.getMatchingScore()) {
 					return 1;
 				}else if(o1.getMatchingScore()<o2.getMatchingScore()) {
@@ -77,6 +82,11 @@ public class PairDataService {
 					
 			}
 		});
+		
+		for(PairData pd2: allpd) {
+			System.out.println("sort:"+pd2.getPdId()+"/"+pd2.getMember().getMemberAccount()+"/"+pd2.getMatchingScore());
+		}
+		
 		//選三個出來加進list
 		List<PairData> newlist = new ArrayList<PairData>();
 		int i=1;
@@ -91,7 +101,7 @@ public class PairDataService {
 				break;
 			}
 		}
-		return newlist;
+		return allpd.get(0);
 	}
 	
 	public int countlocation(String mainLocation, String pdLocation) {

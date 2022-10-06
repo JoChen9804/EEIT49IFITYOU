@@ -8,4 +8,6 @@ public interface MemberDetailRepository extends JpaRepository<MemberDetail, Inte
 	
 	public List<MemberDetail> findByPairWilling(Integer pairWilling);
 	
+	
+	
 }
