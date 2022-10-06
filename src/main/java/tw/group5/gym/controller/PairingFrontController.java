@@ -72,6 +72,7 @@ public class PairingFrontController {
 	public String processMatching(int mainPid,Model m) {
 		PairData mainPD = pDataService.findById(mainPid);
 		PairData matching = pDataService.matching(mainPD);
+		
 		m.addAttribute("matching", matching);
 		m.addAttribute("mainPD", mainPD);
 		return "gym/pairingFront03";

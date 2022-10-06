@@ -12,6 +12,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import tw.group5.gym.model.DailyPairLog;
+import tw.group5.gym.model.DailyPairLogRespository;
 import tw.group5.gym.model.PairData;
 import tw.group5.gym.model.PairDataRespository;
 
@@ -22,7 +24,10 @@ public class PairDataService {
 	@Autowired
 	private PairDataRespository pdRespository;
 	
-	//新增或修改
+	@Autowired
+	private DailyPairLogRespository dailyplRespository;
+	
+	//pairData新增或修改
 	public PairData savePairData(PairData pairData) {
 		return pdRespository.save(pairData);
 	}
@@ -36,10 +41,16 @@ public class PairDataService {
 		 return opt.get();
 	}
 	
-	//回傳mainData配到的三個人x 一個人o
+	//回傳mainData配到的人
 	public PairData matching(PairData mainData){
+		//找到全部的人
 		List<PairData> allpd = pdRespository.findAll();
-		System.out.println(mainData.getMember().getId());
+		//檢查有沒有已經被分配到的
+		DailyPairLog checkRepart = dailyplRespository.findByPair(mainData);
+		if(checkRepart!=null) { //之前有人被分配到main
+			dailyplRespository.save(new DailyPairLog())
+			return 
+		}
 		for(PairData pd:allpd) {
 			System.out.println(pd.getMember().getId());
 			if(pd.getMember().getId().equals(mainData.getMember().getId())) {
@@ -83,25 +94,14 @@ public class PairDataService {
 			}
 		});
 		
+		//把
 		for(PairData pd2: allpd) {
 			System.out.println("sort:"+pd2.getPdId()+"/"+pd2.getMember().getMemberAccount()+"/"+pd2.getMatchingScore());
 		}
-		
-		//選三個出來加進list
-		List<PairData> newlist = new ArrayList<PairData>();
-		int i=1;
-		while(true) {
-			int index = (int)Math.random()*10;
-			if(allpd.get(index)!=null) {
-				System.out.println("抓取次數"+i);
-				newlist.add(allpd.get(index));
-				i++;
-			}
-			if(i==4) {
-				break;
-			}
-		}
-		return allpd.get(0);
+		//交出去前把配對指數轉成百分比
+		PairData result = allpd.get(0);
+		result.setMatchingScore((int) (1-(result.getMatchingScore()/34))*100);
+		return result;
 	}
 	
 	public int countlocation(String mainLocation, String pdLocation) {
@@ -115,5 +115,6 @@ public class PairDataService {
 		System.out.println(i+"符合地點數");
 		return i;
 	}
+	
 	
 }
