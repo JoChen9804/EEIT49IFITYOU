@@ -44,6 +44,9 @@ public class ActivityFunctionController extends HttpServlet {
 	@PostMapping("/admin/uploadimages")
 	@ResponseBody
 	public UploadImages processUploadImages(MultipartFile upload) throws IllegalStateException, IOException {
+		
+		System.out.println("上傳圖片中");
+		
 		String fileName = upload.getName()+System.currentTimeMillis()+".jpg";
 		String saveFileDir = "C:/images/admin";
 		String saveFileDir1 = "/Path/"+fileName;
