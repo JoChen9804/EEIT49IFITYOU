@@ -141,12 +141,16 @@ public class MainPostServlet {
     //審核
     @PostMapping("/auditPost") 
     public String audit(String auditNo) {
-        System.out.println(auditNo);
-        String[] mpNoList = auditNo.split(",");
-        System.out.println(mpNoList.length);
-        for(String mpNoLists : mpNoList) {
-            System.out.println(mpNoLists);
-            mpService.updatePermission("已發布",Integer.parseInt(mpNoLists));
+        System.out.println("審核審核審核審核審核審核審核審核"+auditNo);
+        
+        if( !"貼文編號".equals(auditNo)) {
+            System.out.println(auditNo);
+            String[] mpNoList = auditNo.split(",");
+            System.out.println(mpNoList.length);
+            for(String mpNoLists : mpNoList) {
+                System.out.println(mpNoLists);
+                mpService.updatePermission("已發布",Integer.parseInt(mpNoLists));
+            }
         }
         return "redirect:MainPost.all";
     }

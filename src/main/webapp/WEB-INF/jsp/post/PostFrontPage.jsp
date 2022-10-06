@@ -263,7 +263,7 @@ fieldset {
                                                 <thead>
                                                     <tr>
                                                         <th>選取<br>全選<input class="delete" type="checkbox"
-                                                                onclick="checkAll()"></th>
+                                                                onclick="checkAll()" id="checkAll"></th>
                                                         <th>貼文編號</th>
                                                         <th>圖片</th>
                                                         <th>類型</th>
@@ -342,8 +342,8 @@ fieldset {
                                                 class="compact hover stripe">
                                                 <thead>
                                                     <tr>
-                                                        <th>選取<br>全選<input class="delete" type="checkbox"
-                                                                onclick="checkAll()"></th>
+                                                        <th>選取<br>全選<input class="delete1" type="checkbox"
+                                                                onclick="checkAlls()"></th>
                                                         <th>回覆編號</th>
                                                         <th>內容</th>
                                                         <th>會員<br>回覆時間</th>
@@ -355,7 +355,7 @@ fieldset {
                                                     <c:forEach var="report" items="${reportBean}">
 
                                                         <tr class="content">
-                                                            <td class="align-middle"><input class="delete" type="checkbox"></td>
+                                                            <td class="align-middle"><input class="delete1" name="delete1" type="checkbox"></td>
                                                             <td class="align-middle">${report.replyNo}</td>
                                                             
                                                             <td class="align-middle card-text">${report.replyContent}</td>
@@ -655,7 +655,11 @@ fieldset {
             let checked = $(this).prop('checked')
             
             console.log(members);
-           
+           // let checkAll = $("#checkAll").prop('checked',"false");
+            //let checkAlls = $("#checkAll").parent().next().text()
+            //console.log(checkAlls);
+            
+            
             if (checked) {
                 $(this).closest('tr').addClass('active')
                 var deleteObject = $(this).parent().next().text()
@@ -666,10 +670,26 @@ fieldset {
                 $(this).closest('tr').removeClass('active')
             }
         });
+        
+        
+        
+        $("#checkAll").on('click',function(){
+        	let checkedAll = $(this).prop('checked');
+        	var hobbys   = $(".delete").parent().next().text();
+            //console.log(hobbys);
+        	if (checkedAll) {
+        	
+        	//for(var i  =0;i<hobby.length;i++)
+        		
+        	}
+        });
+        
+        
 
 
         $("#deleteSubmitCheck").on('click', function(event) {
             console.log(Array.from(members).join(',').length);
+            console.log(members);
             if (Array.from(members).join(',').length != 0) {
                 $('#del').val(Array.from(members).join(','));
                 Swal.fire({
@@ -703,16 +723,25 @@ fieldset {
         
         function checkAll(){
             var hobby  = document.getElementsByClassName("delete");
+            var checkAll = document.getElementById("checkAll");
+           // console.log(checkAll);
            
-            var members = new Set([]);
+            //var members = new Set([]);
             for(var i  =0;i<hobby.length;i++){
                 var h = hobby[i];
-                console.log(h);
-                if(h.checked != true){
-	                h.checked = true;               
-               }else if(h.checked == true){
-                	 h.checked = false;
-               }
+                //console.log(h);
+                h.checked = checkAll.checked;
+                
+                console.log(hobby);
+                
+                
+//                 if(h.checked != true){
+//                 	h.checked = checkAll.checked;
+//                 	//h.checked = true;               
+                	  
+//                 }else if(h.checked == true){
+//                 	 h.checked = false;
+//                }
                 
                 //全選 無效
 //                if(h.checked = true){
