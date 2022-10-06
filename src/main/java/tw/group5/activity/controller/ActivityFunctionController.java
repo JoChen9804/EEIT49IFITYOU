@@ -160,6 +160,7 @@ public class ActivityFunctionController extends HttpServlet {
 		} else {
 			
 			System.out.println("更新資料ID : " + activity.getActivityId());
+			System.out.println("更新內容 : " + activity.getActivityContent());
 			
 			activity.setReviseTime(avtivityService.getTime());
 			if (photo.isEmpty()) {

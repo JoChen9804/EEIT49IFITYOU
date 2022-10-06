@@ -38,7 +38,7 @@
                         	</div>
                         	<div class="card-body">
                             	<h4 class="card-title">${aqa.activityTitle}</h4>
-                            	<p>活動日期<br>${aqa.startTime}~${aqa.endTime}</p>
+                            	<p>${aqa.startTime}~${aqa.endTime}</p>
                         	</div>
                     	</a>
                     	<!-- end of card -->

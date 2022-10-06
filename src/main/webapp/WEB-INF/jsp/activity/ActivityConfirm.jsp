@@ -20,6 +20,9 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 <link href="/group5/css/styles.css" rel="stylesheet">
 
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script type="text/javascript">
+$('#forColor').attr('style', 'background-color:white' );
+</script>
 
 </head>
 <body>
@@ -28,6 +31,9 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 
 	<!-- JQuery  連結-->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	
+	<!-- official Bootstrap-->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
 	
 	<!-- DataTable 連結 -->
 	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.2/js/jquery.dataTables.js"></script>
@@ -44,7 +50,6 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
             <div class="row">
                 <div class="col-lg-6">
                     <div class="text-container">
-                        <form action="/group5/user/signupadd.controller" method="post" >
                         <ul class="list-unstyled li-space-lg">
                             <li class="media">
                                 <i class="fas fa-square"></i>
@@ -112,20 +117,19 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 									</c:choose>
 								</div>
 							</li>
-							<li class="media">
-                                <i class="fas fa-square"></i>
-                                <div class="media-body">
-									活動內容:
-									<br>
+							<button data-bs-toggle="modal" data-bs-target="#activityContent" class="btn-solid-reg page-scroll" style="float:left;">活動內容</button>
+							&emsp;
+							<form ACTION="updateactivity.controller" method="post" enctype="multipart/form-data" style="float:left; margin-left:3px;">
+								<input type="hidden" name="dataId" value="
 									<c:choose>
-										<c:when test="${upd}">${update_activity.activityContent}</c:when>
-										<c:when test="${query}">${query_activity.activityContent}</c:when>
-										<c:otherwise>${add_activity.activityContent}</c:otherwise>
+										<c:when test="${upd}">${update_activity.activityId}</c:when>
+										<c:when test="${query}">${query_activity.activityId}</c:when>
+										<c:otherwise>${add_activity.activityId}</c:otherwise>
 									</c:choose>
-								</div>
-							</li>
+								" />
+								<input type="submit" name="update" value="修改" class="btn-solid-reg page-scroll" />
+							</form>
                         </ul>
-                        </form>
                        
                     </div> <!-- end of text-container -->
                 </div> <!-- end of col -->
@@ -165,6 +169,27 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 			</table>
 		</div>
 	</div>
+	
+	<!-- Modal -->
+	<div class="modal fade" id="activityContent" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-lg">
+    		<div class="modal-content">
+      			<div class="modal-body">
+      				<div>
+      					<c:choose>
+							<c:when test="${upd}">${update_activity.activityContent}</c:when>
+							<c:when test="${query}">${query_activity.activityContent}</c:when>
+							<c:otherwise>${add_activity.activityContent}</c:otherwise>
+						</c:choose>
+      				</div>
+      			</div>
+	   			<div class="modal-footer">
+	       			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">返回</button>
+	   			</div>
+	   		</div>
+		</div>
+	</div>
+	<!-- end of Modal -->
 
 	<form action="activitymain.controller" method="get">
 		<div class="sub">
@@ -173,9 +198,8 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 	</form>
 	
 	<script type="text/javascript">
+		
 		$(function() {
-			
-			$('#forColor').attr('style', 'background-color:white' );
 			
 			reloadTable("${query_activity.activityId}");
 			
@@ -236,6 +260,7 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 					  }
 					});
 			});
+			
 		});
 		
 		function reloadTable(id) {
