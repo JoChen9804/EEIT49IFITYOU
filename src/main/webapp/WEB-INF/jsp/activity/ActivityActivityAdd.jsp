@@ -28,7 +28,8 @@ response.setCharacterEncoding("UTF-8");
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <!-- ckeditor5 -->
-<script src="https://cdn.ckeditor.com/ckeditor5/35.1.0/classic/ckeditor.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/35.2.0/classic/ckeditor.js"></script>
+
 
 <style type="text/css">
 .ck-editor__editable {
@@ -146,7 +147,6 @@ response.setCharacterEncoding("UTF-8");
     	ckfinder:{
 			uploadUrl: "/group5/admin/uploadimages"
 		},
-        // https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html#extended-toolbar-configuration-format
         toolbar: {
             items: [
                 'exportPDF','exportWord', '|',
@@ -166,8 +166,6 @@ response.setCharacterEncoding("UTF-8");
             ],
             shouldNotGroupWhenFull: true
         },
-        // Changing the language of the interface requires loading the language file using the <script> tag.
-        // language: 'es',
         list: {
             properties: {
                 styles: true,
@@ -175,7 +173,6 @@ response.setCharacterEncoding("UTF-8");
                 reversed: true
             }
         },
-        // https://ckeditor.com/docs/ckeditor5/latest/features/headings.html#configuration
         heading: {
             options: [
                 { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
@@ -187,9 +184,7 @@ response.setCharacterEncoding("UTF-8");
                 { model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
             ]
         },
-        // https://ckeditor.com/docs/ckeditor5/latest/features/editor-placeholder.html#using-the-editor-configuration
         placeholder: 'Welcome to CKEditor 5!',
-        // https://ckeditor.com/docs/ckeditor5/latest/features/font.html#configuring-the-font-family-feature
         fontFamily: {
             options: [
                 'default',
@@ -204,13 +199,10 @@ response.setCharacterEncoding("UTF-8");
             ],
             supportAllValues: true
         },
-        // https://ckeditor.com/docs/ckeditor5/latest/features/font.html#configuring-the-font-size-feature
         fontSize: {
             options: [ 10, 12, 14, 'default', 18, 20, 22 ],
             supportAllValues: true
         },
-        // Be careful with the setting below. It instructs CKEditor to accept ALL HTML markup.
-        // https://ckeditor.com/docs/ckeditor5/latest/features/general-html-support.html#enabling-all-html-features
         htmlSupport: {
             allow: [
                 {
@@ -221,12 +213,9 @@ response.setCharacterEncoding("UTF-8");
                 }
             ]
         },
-        // Be careful with enabling previews
-        // https://ckeditor.com/docs/ckeditor5/latest/features/html-embed.html#content-previews
         htmlEmbed: {
             showPreviews: true
         },
-        // https://ckeditor.com/docs/ckeditor5/latest/features/link.html#custom-link-attributes-decorators
         link: {
             decorators: {
                 addTargetToExternalLinks: true,
@@ -240,7 +229,6 @@ response.setCharacterEncoding("UTF-8");
                 }
             }
         },
-        // https://ckeditor.com/docs/ckeditor5/latest/features/mentions.html#configuration
         mention: {
             feeds: [
                 {
@@ -255,21 +243,10 @@ response.setCharacterEncoding("UTF-8");
                 }
             ]
         },
-        // The "super-build" contains more premium features that require additional configuration, disable them below.
-        // Do not turn them on unless you read the documentation and know how to configure them and setup the editor.
         removePlugins: [
-            // These two are commercial, but you can try them out without registering to a trial.
-            // 'ExportPdf',
-            // 'ExportWord',
             'CKBox',
             'CKFinder',
             'EasyImage',
-            // This sample uses the Base64UploadAdapter to handle image uploads as it requires no configuration.
-            // https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/base64-upload-adapter.html
-            // Storing images as Base64 is usually a very bad idea.
-            // Replace it on production website with other solutions:
-            // https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/image-upload.html
-            // 'Base64UploadAdapter',
             'RealTimeCollaborativeComments',
             'RealTimeCollaborativeTrackChanges',
             'RealTimeCollaborativeRevisionHistory',
