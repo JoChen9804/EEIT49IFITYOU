@@ -30,8 +30,13 @@ public class WebAppConfig implements WebMvcConfigurer{
 		registry.addResourceHandler("/group5/admin/**").addResourceLocations("/WEB-INF/resources/");
 		registry.addResourceHandler("/group5/user/**").addResourceLocations("/WEB-INF/resources/");
 		
-		//商品圖片的
+		//商品管理圖片
 		registry.addResourceHandler("/group5/commodityImages/**").addResourceLocations("/WEB-INF/resources/commodityImages/");
+		
+		//購物圖片
+		registry.addResourceHandler("/group5/shoppingBanners/**").addResourceLocations("/WEB-INF/resources/shoppingBanners/");
+		//購物Css
+		registry.addResourceHandler("/shoppingCss/**").addResourceLocations("/WEB-INF/resources/css/shopping/");
 
 	}
 

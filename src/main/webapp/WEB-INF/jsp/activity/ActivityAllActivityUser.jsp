@@ -5,12 +5,19 @@
 <head>
 <meta charset="UTF-8">
 <title>I FIT YOU</title>
+
 </head>
 <body>
 <%@ include file="../admin/FrontStageHead.jsp"%>
 
-		<br><br>
+	<!-- JQuery -->
+ 	<script src="/jquery-3.6.0.js"></script>
+ 	
+ 	<!-- fontawesome -->
+    <script src="https://kit.fontawesome.com/5b36a12f3a.js" crossorigin="anonymous"></script>
 
+		<br><br>
+		
 	  <div class="cards-1">
         <div class="container">
             <div class="row">
@@ -31,7 +38,7 @@
                         	</div>
                         	<div class="card-body">
                             	<h4 class="card-title">${aqa.activityTitle}</h4>
-                            	<p>活動日期<br>${aqa.startTime}~${aqa.endTime}</p>
+                            	<p>${aqa.startTime}~${aqa.endTime}</p>
                         	</div>
                     	</a>
                     	<!-- end of card -->
@@ -55,7 +62,7 @@
         </div> <!-- end of container -->
     </div> <!-- end of cards-1 -->
     <!-- end of description -->
-
+    
 <%@ include file="../admin/FrontStageFoot.jsp"%>
 </body>
 </html>

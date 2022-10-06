@@ -6,13 +6,17 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import tw.group5.activity.model.ActivityVoucher;
+import tw.group5.activity.model.ActivityVoucherRepository;
 import tw.group5.admin.model.AdminBean;
 import tw.group5.admin.model.AdminRepository;
 import tw.group5.admin.model.MemberBean;
@@ -31,7 +35,16 @@ public class AdminService {
 
 	@Autowired
 	private MemberDetailRepository memberDetailRepo;
+	
+	@Autowired
+	private TemplateServices templateService;
 
+	@Autowired
+	private MailService mailService;
+	
+	@Autowired
+	private ActivityVoucherRepository voucherRepo;
+	
 	public AdminBean findByAccount(String loginUser) {
 		Optional<AdminBean> op = adminRepo.findByAccount(loginUser);
 		System.out.println(loginUser);
@@ -40,7 +53,7 @@ public class AdminService {
 		}
 		return op.get();
 	}
-	
+
 	public MemberBean findByAccountMember(String loginUser) {
 		Optional<MemberBean> op = memberRepo.findByAccount(loginUser);
 
@@ -50,7 +63,6 @@ public class AdminService {
 		}
 		return op.get();
 	}
-
 
 	public List<AdminBean> selectAll() {
 		return adminRepo.findAll();
@@ -173,6 +185,79 @@ public class AdminService {
 		String s = sdf.format(nowdate);
 
 		return s;
+	}
+
+	// ------------前台---------------------
+	public boolean findAccount(String newUser) {
+		Optional<MemberBean> op = memberRepo.findByAccount(newUser);
+		if (op.isEmpty()) {
+			return false;
+		}
+		return true;
+	}
+
+	public boolean findEmail(String newEmail) {
+		Optional<MemberBean> op = memberRepo.findByEmail(newEmail);
+		if (op.isEmpty()) {
+			return false;
+		}
+		return true;
+	}
+	
+	public MemberBean findMemberByEmail(String newEmail) {
+		Optional<MemberBean> op = memberRepo.findByEmail(newEmail);
+		if (op.isEmpty()) {
+			return null;			
+		}
+		return op.get();
+	}
+
+	public boolean findByReferralCode(String referralCode) {
+		Optional<MemberDetail> op = memberDetailRepo.findByReferralCode(referralCode);
+		if (op.isEmpty()) {
+			return false;
+		}
+		return true;
+	}
+	public String sendRegisterMail(String toEmailAddress, String name, 
+			String verificationCode) {
+		String fromEmail = "eeit49group5@gmail.com";
+		List<String> toEmail = new ArrayList<>();
+		toEmail.add(toEmailAddress); //
+		String subject = "I FIT YOU 新會員註冊開通信";
+		//取得優惠券
+		Optional<ActivityVoucher> op = voucherRepo.findByVoucherTitle(85);
+		String coupon = op.get().getVoucherNo();
+		
+		String verifyURL = "http://localhost:8080/group5" + "/verify?code=" + verificationCode;
+		System.out.println(verifyURL);
+		Map<String, String> params = new HashMap<>();
+		params.put("name", name);
+		params.put("verifyURL", verifyURL);
+		params.put("coupon", coupon);
+		
+		String html = templateService.render("AdminMailtemplete", params);
+		
+		mailService.registerMimeMail(fromEmail, toEmail, subject, html);
+		
+		return "email";
+	}
+	public boolean verify(String verificationCode) {
+	    Optional<MemberBean> op = memberRepo.findByVerificationCode(verificationCode);
+	    MemberBean mBean = op.get();
+	    if ( mBean == null ) {
+	        return false;
+	        
+	    } else {
+	    	
+	        mBean.setVerificationCode(null);
+	        mBean.setAuthority(0);
+	        
+	        memberRepo.save(mBean);
+	         
+	        return true;
+	    }
+	     
 	}
 
 }

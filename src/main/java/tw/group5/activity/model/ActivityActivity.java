@@ -1,13 +1,21 @@
 package tw.group5.activity.model;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "activity")
@@ -31,6 +39,9 @@ public class ActivityActivity {
 	@Column(name = "activitycontent")
 	private String activityContent;
 	
+	@Column(name = "signupdeadline")
+	private String signUpDeadline;
+	
 	@Column(name = "starttime")
 	private String startTime;
 	
@@ -45,6 +56,10 @@ public class ActivityActivity {
 	
 	@Column(name = "photodata")
 	private String photoData;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "activity", cascade = CascadeType.ALL)
+	@JsonIgnore
+	private Set<ActivitySignUp> signUp = new LinkedHashSet<ActivitySignUp>();
 
 	public int getActivityId() {
 		return activityId;
@@ -84,6 +99,14 @@ public class ActivityActivity {
 
 	public void setActivityContent(String activityContent) {
 		this.activityContent = activityContent;
+	}
+
+	public String getSignUpDeadline() {
+		return signUpDeadline;
+	}
+
+	public void setSignUpDeadline(String signUpDeadline) {
+		this.signUpDeadline = signUpDeadline;
 	}
 
 	public String getStartTime() {
@@ -133,8 +156,14 @@ public class ActivityActivity {
 	public void setPhotoData(String photoData) {
 		this.photoData = photoData;
 	}
-	
-	
-	
+
+	public Set<ActivitySignUp> getSignUp() {
+		return signUp;
+	}
+
+	public void setSignUp(Set<ActivitySignUp> signUp) {
+		this.signUp = signUp;
+	}
+
 	
 }

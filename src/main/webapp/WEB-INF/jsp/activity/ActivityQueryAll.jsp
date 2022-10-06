@@ -28,7 +28,6 @@ input {
 }
 </style>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.2/css/jquery.dataTables.css">
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <link rel="stylesheet" href="/group5/css/voucherStyle.css">
 </head>
 <body>
@@ -40,21 +39,18 @@ input {
 	
 	<!-- official Bootstrap-->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
-		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
 	
 	<!-- DataTable 連結 -->
 	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.2/js/jquery.dataTables.js"></script>
 
-	<!-- sweetalert2   連結-->
-	<script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
+	<!-- sweet alert2 -->
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	
 	<!-- fontawesome 連結 -->
 	<script src="https://kit.fontawesome.com/5b36a12f3a.js" crossorigin="anonymous"></script>
 
 	<div id="show"></div>
-	
 	
 	<script>
 	$(function() {
@@ -109,7 +105,7 @@ input {
 			      				<div style="display: inline">
 									<label for="voucherTitle">優惠券折數:</label>
 									<select name="voucherTitle" id="voucherTitle" >
-										<option disabled selected value style="display:none">請選擇</option>
+										<option disabled selected style="display:none">請選擇</option>
 			                			<option value="95">95折</option>
 			               	 			<option value="90">9折</option>
 			               	 			<option value="85">85折</option>
@@ -137,6 +133,7 @@ input {
 			    		</div>
 			  		</div>
 				</div>
+				<!-- end of Modal -->
 			`);
 			
 		}else if(page=="activity"){
@@ -144,9 +141,8 @@ input {
 			$('#show').append(`
 				<H2 style="display: inline">活動總覽</H2>
 				&emsp;&emsp;&emsp;
-				<form id="add" action="addactivity.controller" enctype="multipart/form-data" method="post" class="btn btn-info btn-icon-split">
-					<span class="icon text-white-50"> <i class="fas fa-flag"></i></span>
-					<input type="submit" name="add" value="新增" class="text" style="border: none; background-color: #36b9cc; color: white"/>
+				<form id="add" action="addactivity.controller" enctype="multipart/form-data" method="post" style="display: inline">
+					<input type="submit" name="add" value="新增" class=" btn btn-info btn-icon-split" style="border: none; background-color: #36b9cc; color: white"/>
 				</form>
 				<table class="table table-bordered" id="table_id" class="compact hover stripe">
 					<thead>
@@ -157,7 +153,7 @@ input {
 							<th>主辦方</th>
 							<th>負責管理員</th>
 							<th>最後修改時間</th>
-							<th style="width: 170px">操作</th>
+							<th style="width: 110px">操作</th>
 						</tr>
 					</thead>
 					<c:forEach var="aqa" items="${activity_queryAll}">
@@ -172,10 +168,6 @@ input {
 								<form ACTION="queryactivity.controller" method="post" style="float: left; margin-left: 3px" >
 									<input type="hidden" name="dataId" value="${aqa.activityId}" />
 									<input type="submit" name="query" value="查看" class="btn btn-outline-info " />
-								</form> 
-								<form ACTION="updateactivity.controller" method="post" enctype="multipart/form-data" style="float: left; margin-left: 3px">
-									<input type="hidden" name="dataId" value="${aqa.activityId}" />
-									<input type="submit" name="update" value="修改" class="btn btn-outline-secondary " />
 								</form> 
 								<form ACTION="deleteactivity.controller" name="ddeell" method="post" style="float: left; margin-left: 3px">
 									<input type="hidden" name="dataId" value="${aqa.activityId}" id="dd" />
@@ -202,6 +194,7 @@ input {
 			event.preventDefault();
 			var id = $(this).prev().val();
 			console.log("抓取刪除:" + id);
+			
 			Swal.fire({
 				  title:'確定要刪除'+id+'?',
 				  text: '如刪除後不可復原...',

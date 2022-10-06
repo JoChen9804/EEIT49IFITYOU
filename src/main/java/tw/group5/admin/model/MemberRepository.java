@@ -12,6 +12,8 @@ public interface MemberRepository extends JpaRepository<MemberBean, Integer> {
 	@Transactional
 //	@Query("delete from Admin where Admin.id in (?1)")
 	void deleteByIdIn(List<Integer> memberListInteger);
-	public Optional<MemberBean> findByAccount(String adminName);
-
+	public Optional<MemberBean> findByAccount(String memberName);
+	public Optional<MemberBean> findByEmail(String memberEmail);
+	public Optional<MemberBean> findByVerificationCode(String verificationCode);
+	
 }

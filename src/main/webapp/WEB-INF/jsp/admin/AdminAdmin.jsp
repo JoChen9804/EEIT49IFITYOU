@@ -28,8 +28,7 @@ tr.active {
 <body>
 	<%@ include file="AdminstyleHead.jsp" %>
 	<!-- JQuery  連結-->
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
 	<!-- Custom scripts for all pages-->
 	<!-- DataTable 連結 -->
 	<script type="text/javascript" charset="utf8"

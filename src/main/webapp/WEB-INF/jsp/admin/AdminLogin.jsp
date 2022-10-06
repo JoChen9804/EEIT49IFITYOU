@@ -13,6 +13,9 @@
 <link
 	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
 	rel="stylesheet">
+<script src="https://apis.google.com/js/platform.js"></script>
+<meta name="google-signin-client_id"
+	content="586404491668-rdn4074gsm078d7unu31ap8k5q3g6hfm.apps.googleusercontent.com">
 <style>
 /* CSS */
 
@@ -112,7 +115,7 @@
 	<%@ include file="FrontStageHead.jsp"%>
 	<!-- Header -->
 	<header id="header" class="header">
-		<div class="header-content">
+		<div class="header-content" style="padding-top: 4rem;">
 			<!-- Bootstrap core JavaScript-->
 			<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
@@ -148,17 +151,18 @@
 											</div>
 											<form class="user" ACTION="login" method="post">
 												<div class="form-group">
-													<br> <br><input type="text"
-														class="form-control form-control-user" id="uname"
-														aria-describedby="emailHelp" placeholder="請輸入帳號..."
-														name="name" required> <input type="hidden"
+													<br> <br>
+													<input type="text" class="form-control form-control-user"
+														id="uname" aria-describedby="emailHelp"
+														placeholder="請輸入帳號..." name="name" required
+														style="font-size: 1.2rem"> <input type="hidden"
 														name="username" id="username">
 												</div>
 												<div class="form-group">
 													<input type="password"
 														class="form-control form-control-user"
 														id="exampleInputPassword" placeholder="請輸入密碼..."
-														name="password" required>
+														name="password" required style="font-size: 1.2rem">
 												</div>
 												<div class="form-group">
 													<div class="custom-control custom-checkbox small">
@@ -172,16 +176,12 @@
 												<INPUT type="submit" value="login"
 													class="btn btn-primary btn-user btn-block" id="loginbutton">
 												<hr>
-												<a href="index.html"
-													class="btn btn-google btn-user btn-block"
-													style="color: #fff; background-color: #ea4335; border-color: #fff; text-decoration: none;">
-													<i class="fab fa-google fa-fw"></i> Login with Google
-												</a> <a href="index.html"
-													class="btn btn-facebook btn-user btn-block"
-													style="color: #fff; background-color: #3b5998; border-color: #fff; text-decoration: none;">
-													<i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
-												</a>
 											</form>
+											<a href="/oauth2/authorization/google"
+												class="btn btn-google btn-user btn-block btn-primary"
+												style="border-radius: 10rem;padding: 0.75rem 1rem;color: #fff; background-color: #ea4335; border-color: #fff; text-decoration: none; font-size: 1.2rem;">
+												<i class="fab fa-google fa-fw"></i> Login with Google
+											</a> 
 											<hr>
 											<div class="text-center">
 												<a class="small" href="/group5/ForgetPassword">忘記密碼?</a>
@@ -207,11 +207,14 @@
 	</header>
 	<!-- end of header -->
 	<script>
-		$(document).ready(function() {
-			$('#loginbutton').attr("style", "background-color:#4e73df")
-			$('#cktoggle_id2').val("on")
-			$('#group5control').attr('style', 'background-color: #53618b')
-		});
+		$(document).ready(
+				function() {
+					$('#loginbutton').attr("style",
+							"background-color:#4e73df;font-size:1.2rem;")
+					$('#cktoggle_id2').val("on")
+					$('#group5control').attr('style',
+							'background-color: #53618b;font-size:1.2rem;')
+				});
 
 		var unameValue = $('#uname').val();
 		$('#uname').on('focus', function() {
@@ -219,22 +222,26 @@
 		});
 		$('#username').val(unameValue + ",on");
 		console.log($('#username').val());
-		$('#cktoggle_id2').on('change', function() {
-			if ($('#cktoggle_id2').val() == "on") {
-				$('#loginbutton').attr("style", "background-color:#53618b");
-				$('#cktoggle_id2').val("off");
-				var unameValue = $('#uname').val();
-				$('#username').val(unameValue + ",off");
-			} else {
-				$('#loginbutton').attr("style", "background-color:#4e73df");
-				$('#cktoggle_id2').val("on");
-				var unameValue = $('#uname').val();
-				$('#username').val(unameValue + ",on");
+		$('#cktoggle_id2').on(
+				'change',
+				function() {
+					if ($('#cktoggle_id2').val() == "on") {
+						$('#loginbutton').attr("style",
+								"background-color:#53618b;font-size:1.2rem;");
+						$('#cktoggle_id2').val("off");
+						var unameValue = $('#uname').val();
+						$('#username').val(unameValue + ",off");
+					} else {
+						$('#loginbutton').attr("style",
+								"background-color:#4e73df;font-size:1.2rem;");
+						$('#cktoggle_id2').val("on");
+						var unameValue = $('#uname').val();
+						$('#username').val(unameValue + ",on");
 
-			}
-			console.log($('#username').val());
+					}
+					console.log($('#username').val());
 
-		});
+				});
 		$("#loginbutton").click(function() {
 			var id2 = $('#cktoggle_id2').val();
 			var unameValue = $('#uname').val();

@@ -53,7 +53,7 @@
 			value="${loginMember.memberDetail.id}" type="hidden"> <input
 			name="hrefSubmit" type="hidden" id="hrefSubmit"><input
 			style="margin-bottom: 0.5em;" type="hidden" name="pwd" maxlength="16"
-			required onblur="validate()" value="******">
+			required value="******">
 
 		<!-- Features -->
 		<div id="features" class="tabs">
@@ -111,7 +111,7 @@
 											<label for="pwd1" class="t1">密碼：</label> <input
 												style="margin-bottom: 0.5em;" id="pwd1" type="password"
 												maxlength="16" required onblur="testPassword()"
-												value="******" disabled> <input type="button"
+												value="******" disabled size=15> <input type="button"
 												value="修改密碼" class="btn-solid-reg" id="passwordChange"><br />
 											<div style="display: none" id="passwordAgain">
 												<label for="pwd2" class="t1">再次輸入密碼：</label><input id="pwd2"
@@ -121,10 +121,10 @@
 													<ul>
 														<li class="media"><i class="fas fa-times"
 															style="color: red" id="iconSame"></i>
-															<div class="media-body">兩次輸入密碼須相同</div></li>
+															<div class="media-body" style="font-size:1.2rem">&ensp;兩次輸入密碼須相同</div></li>
 														<li class="media"><i class="fas fa-times"
 															style="color: red" id="iconValid"></i>
-															<div class="media-body">密碼須為8~16為英數字組合</div></li>
+															<div class="media-body" style="font-size:1.2rem">&ensp;密碼須為8~16為英數字組合</div></li>
 													</ul>
 													<label for="inputOrginal">請輸入原密碼：</label><input
 														id="inputOrginal" type="password" name="inputOrginal"
@@ -170,7 +170,7 @@
 											</div>
 											<div class="st2">
 												<label for="address" class="t1">詳細地址：</label> <input
-													type="text" id="address" name="address" size="32" value=""
+													type="text" id="address" name="address" size="26" value=""
 													style="margin-bottom: 1em;">
 											</div>
 											<input type="button" value="修改" id="sub1"
@@ -332,6 +332,10 @@
 					$('#pwd1').attr('disabled', false);
 					$('#pwd1').val('');
 					$('#pwd2').val('');
+					$('#iconValid').attr('class', 'fas fa-times');
+					$('#iconValid').attr('style', 'color:red');
+					$('#iconSame').attr('class', 'fas fa-times');
+					$('#iconSame').attr('style', 'color:red');
 					
 				}else{
 					$('#passwordAgain').attr('style','display:none');
@@ -340,6 +344,10 @@
 					$('#pwd1').attr('disabled', true);
 					$('#pwd1').val('******');
 					$('#pwd2').val('******');
+					$('#iconValid').attr('class', 'fas fa-times');
+					$('#iconValid').attr('style', 'color:red');
+					$('#iconSame').attr('class', 'fas fa-times');
+					$('#iconSame').attr('style', 'color:red');
 				}
 			})
 			//正則表達式專區
@@ -364,29 +372,15 @@
 				$('#iconSame').attr('style', 'color:red');
 			}
 			if(blnTest && $('#pwd1').val() === $('#pwd2').val()){
-				$('passwordConfirm').attr('disabled', true);
+				$('#passwordConfirm').attr('disabled', true);
 				
 				
 			}else{
-				$('passwordConfirm').attr('disabled', false);
+				$('#passwordConfirm').attr('disabled', false);
 			}
 			
 			}
 
-			
-			//兩次密碼輸入相同驗證
-			function validate() {
-				var pwd1 = document.getElementById("pwd1").value;
-				var pwd2 = document.getElementById("pwd2").value;
-
-				if (pwd1 == pwd2) {
-					document.getElementById("tishi").innerHTML = "<font color='green'兩次密碼相同</font>";
-					document.getElementById("sub1").disabled = false;
-				} else {
-					document.getElementById("tishi").innerHTML = "<font color='red'>兩次密碼不相同</font>";
-					document.getElementById("sub1").disabled = true;
-				}
-			}
 			$(document).ready(function() {
 			//是否參加健有配對之表單動態實現
 			$('input:radio[name="match"]').change(
@@ -431,7 +425,7 @@
 							});
 
 			});
-			$(".passwordConfirm").on('click', function(event){
+			$("#passwordConfirm").on('click', function(event){
 				$('submitNewPassword').val($('#pwd1').val());
 				$('submitOrginPassword').val($('#inputOrginal').val());
 				
