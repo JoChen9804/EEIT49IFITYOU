@@ -209,10 +209,10 @@ fieldset {
                                                             </div>
                                                             <div class="mt-4 text-center small">
                                                                 <span class="mr-2">
-                                                                    <i class="fas fa-circle text-primary"></i>公告
-                                                                    ${announcement}
-                                                                    <input type="hidden" class="announcement"
-                                                                        value="${announcement}">
+                                                                    <i class="fas fa-circle text-primary"></i>飲食
+                                                                    ${diet}
+                                                                    <input type="hidden" class="diet"
+                                                                        value="${diet}">
                                                                 </span>
                                                                 <span class="mr-2">
                                                                     <i class="fas fa-circle text-success"></i>分享
@@ -484,22 +484,13 @@ fieldset {
 			            <div class="content">
 			                <P class="Lightbox3addtime"></P>
 			                <p class="content Lightbox3content"></p>
-			
 			                 
 			                 <div class="imgs"></div>
 			                 
-			                <c:forEach var="image"
-			                    items="${allImages}">
-			                    <img class="imgpostdetails"
-			                        src="${image}">
-			                </c:forEach>
-			                
-			                
 			            </div>
 			        </td>
 			    </tr>
-			
-			</table>
+			   </table>
                         <div class="center">
                      <a class="btn-outline-reg mfp-close as-button"  href="#screenshots">關閉</a>
                      </div>
@@ -511,37 +502,7 @@ fieldset {
     <!-- end of details lightboxes -->
 
 
-    <!-- Details -->
-    <div id="details" class="basic-1">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="text-container">
 
-
-
-
-                        <h1>維修中~~~~~~~~~~~~~~</h1>
-
-
-
-                        <a class="btn-solid-reg page-scroll" href="sign-up.html">SIGN UP</a>
-                    </div> <!-- end of text-container -->
-                </div> <!-- end of col -->
-                <div class="col-lg-6">
-                    <div class="image-container">
-                        <img class="img-fluid" src="images/details.png" alt="alternative">
-                    </div> <!-- end of image-container -->
-                </div> <!-- end of col -->
-            </div> <!-- end of row -->
-        </div> <!-- end of container -->
-    </div> <!-- end of basic-1 -->
-    <!-- end of details -->
-     
-     
-       
-       
-       
 <!--    <fieldset> -->
 <!--     <h1 ALIGN=CENTER>貼文首頁</h1> -->
     
@@ -672,18 +633,7 @@ fieldset {
         });
         
         
-        
-        $("#checkAll").on('click',function(){
-        	let checkedAll = $(this).prop('checked');
-        	var hobbys   = $(".delete").parent().next().text();
-            //console.log(hobbys);
-        	if (checkedAll) {
-        	
-        	//for(var i  =0;i<hobby.length;i++)
-        		
-        	}
-        });
-        
+
         
 
 
@@ -725,37 +675,28 @@ fieldset {
             var hobby  = document.getElementsByClassName("delete");
             var checkAll = document.getElementById("checkAll");
            // console.log(checkAll);
-           
+         console.log(hobby);
             //var members = new Set([]);
             for(var i  =0;i<hobby.length;i++){
                 var h = hobby[i];
-                //console.log(h);
+                
+                console.log(h);
                 h.checked = checkAll.checked;
-                
-                console.log(hobby);
-                
-                
-//                 if(h.checked != true){
-//                 	h.checked = checkAll.checked;
-//                 	//h.checked = true;               
-                	  
-//                 }else if(h.checked == true){
-//                 	 h.checked = false;
-//                }
-                
-                //全選 無效
-//                if(h.checked = true){
-//                    $(this).closest('tr').addClass('active')
-//                    var deleteObject = $(this).parent().next().text()
-//                    members.add(deleteObject);
-//                } else {
-//                    var deleteObject = $(this).parent().next().text()
-//                    members.delete(deleteObject);
-//                    $(this).closest('tr').removeClass('active')
-//                }
-            
             }
         }
+        
+        
+//         $("#checkAll").on('click',function(){
+//             let checkedAll = $(this).prop('checked');
+//             var hobbys   = $(".delete").parent().next().text();
+//             console.log();
+//         });
+        
+        
+        
+        
+        
+        
         
         $(".turnDown").on('click', function(event) {
             (async () => {
@@ -823,10 +764,13 @@ fieldset {
             $(".Lightbox3account").text(replyaccount);
             $(".Lightbox3addtime").text("回覆時間:"+replyTime);
             
+            $(".imgs").html("");
+            
             for(i=0 ; i < replyimage.length -1; i++){
             	var img = $("<img class='imgpostdetails'>").attr('src', replyimage[i]);
                 $(".imgs").append(img);
             }
+            
             
             
             console.log();

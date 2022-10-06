@@ -57,17 +57,12 @@ public class MainPostBean {
     @Column(name = "replyaccount")
     private String replyAccount;         //最後回覆會員
     
-    
-    
-    //照片寫入 之後用不到了
-//    @OneToMany(fetch = FetchType.LAZY,mappedBy = "mainPostBean",cascade = CascadeType.ALL)
-//    private Set<PostImageBean> mainPostImages = new LinkedHashSet<PostImageBean>();
-    
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "mainPostBean",cascade = CascadeType.ALL)
+    private Set<ReplyPostBean> replyPostBean = new LinkedHashSet<ReplyPostBean>();
     
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "mainPostBean",cascade = CascadeType.ALL)
-    private Set<ReplyPostBean> ReplyPostBean = new LinkedHashSet<ReplyPostBean>();
+    private Set<FavoritePostBean> favoritePostBean = new LinkedHashSet<FavoritePostBean>();
     
-
     public MainPostBean() {
     }
 

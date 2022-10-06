@@ -246,6 +246,7 @@ public class UserPostController {
             rpBean.setReplyAccount(memberAccount);
             rpBean.setR_image("");
             rpBean.setReplyPhoto(replyPhoto);
+            
             rpBean.setMainPostBean(mpBean);
            
             MainPostBean queryOne = mpService.selectById(mpBean.getMainPostNo());

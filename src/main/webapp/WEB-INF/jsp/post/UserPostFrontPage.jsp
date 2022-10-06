@@ -490,9 +490,9 @@
 							<thead>
 								<tr>
 									<th><label> <input type="radio"
-											name="postTypeName" value="公告" id="" required
+											name="postTypeName" value="飲食" id="" required
 											oninvalid="setCustomValidity('請輸入帳號')"
-											oninput="setCustomValidity('')">公告
+											oninput="setCustomValidity('')">飲食
 									</label> <label> <input type="radio" name="postTypeName"
 											value="分享" id="" checked>分享
 									</label> <label> <input type="radio" name="postTypeName"
