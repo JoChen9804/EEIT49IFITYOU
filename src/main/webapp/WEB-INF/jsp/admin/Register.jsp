@@ -35,9 +35,14 @@ hr {
 	margin-bottom: 0.5rem;
 }
 </style>
+<!--引用css sweet alert-->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
 </head>
 <body>
 	<%@ include file="FrontStageHead.jsp"%>
+	<!--引用SweetAlert2.js-->
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<!-- Header -->
@@ -51,7 +56,7 @@ hr {
 
 			<!-- Custom scripts for all pages-->
 			<script src="js/sb-admin-2.min.js"></script>
-
+	
 			<div class="container">
 				<div class="card o-hidden border-0 shadow-lg my-5">
 					<div class="card-body p-0">
@@ -63,12 +68,13 @@ hr {
 									<div class="text-center">
 										<h2 class="h2 text-gray-900 mb-3">建立帳號</h2>
 									</div>
-									<form class="user">
+									<form class="user" action="/group5/register.controller"
+										method="post" id="registerForm">
 										<div class="form-group row">
 											<div class="col-sm-6 mb-3 mb-sm-0">
 												<input type="text" class="form-control form-control-user"
 													id="exampleFirstName" placeholder="帳號" required
-													onchange="checkAccount()"> <label
+													onchange="checkAccount()" name="account"> <label
 													style="font-size: 1rem; margin-bottom: 0rem;">&ensp;&ensp;<i
 													class="fas fa-times" style="color: gray"
 													id="iconAccountValid"></i>&ensp;此帳號沒有重複
@@ -79,18 +85,17 @@ hr {
 											</div>
 											<div class="col-sm-6">
 												<input type="text" class="form-control form-control-user"
-													id="exampleLastName" placeholder="姓名" required onchange="testName()">
-													 <label
+													name="name" id="exampleLastName" placeholder="姓名" required
+													onchange="testName()"> <label
 													style="font-size: 1rem; margin-bottom: 0rem;">&ensp;&ensp;<i
-													class="fas fa-times" style="color: gray"
-													id="iconName"></i>&ensp;姓名為必填欄位
-												</label> 
+													class="fas fa-times" style="color: gray" id="iconName"></i>&ensp;姓名為必填欄位
+												</label>
 											</div>
 										</div>
 										<div class="form-group">
 											<input type="email" class="form-control form-control-user"
 												id="exampleInputEmail" placeholder="Email" required
-												onchange="checkEmail()"> <label
+												onchange="checkEmail()" name="email"> <label
 												style="font-size: 1rem">&ensp;&ensp;<i
 												class="fas fa-times" style="color: gray" id="iconEmailValid"></i>&ensp;此Email沒有重複
 											</label> <label style="font-size: 1rem">&ensp;&ensp;&ensp;&ensp;&ensp;<i
@@ -103,7 +108,7 @@ hr {
 												<input type="password"
 													class="form-control form-control-user"
 													onchange="testPassword()" id="exampleInputPassword"
-													placeholder="密碼" required>
+													placeholder="密碼" required name="pwd">
 											</div>
 											<div class="col-sm-6">
 												<input type="password"
@@ -120,28 +125,24 @@ hr {
 											<div class="col-sm-6">
 												<input type="text" class="form-control form-control-user"
 													id="referral" placeholder="推薦碼（選填）"
-													onchange="checkReferral()"> <label
-													style="font-size: 1rem;display:none;" id="referralLabel" >&ensp;&ensp;<i
+													onchange="checkReferral()" name="registerReferralCode">
+												<label style="font-size: 1rem; display: none;"
+													id="referralLabel">&ensp;&ensp;<i
 													class="fas fa-times" style="color: gray"
 													id="iconReferralValid"></i>&ensp;推薦碼請輸入正確
 												</label>
 											</div>
 											<div class="col-sm-6"
-												style="align-items: center; display: flex;">
-												<input type="button" id="registerAccount"
-													class="btn btn-primary btn-user btn-block"
-													style="text-decoration: none;" value="Register Account">
-											</div>
+												style="align-items: center; display: flex;"></div>
 										</div>
 										<hr style="margin-bottom: 0.5rem; margin-top: 0.5rem">
-										<a href="index.html" class="btn btn-google btn-user btn-block"
-											style="color: #fff; background-color: #ea4335; border-color: #fff; text-decoration: none;">
-											<i class="fab fa-google fa-fw"></i> Register with Google
-										</a>
-
-
+										<input type="button" id="registerAccount"
+											class="btn btn-primary btn-user btn-block"
+											style="text-decoration: none;" value="Register Account">
 									</form>
-									<hr style="margin-bottom: 0.5rem; margin-top: 0.5rem">
+
+
+									<hr style="margin-bottom: 0.5rem; margin-top: 0.5rem;border-radius: 10rem;">
 									<div class="text-center">
 										<a class="small" href="/group5/ForgetPassword">忘記密碼?</a>
 									</div>
@@ -161,6 +162,7 @@ hr {
 
 	<%@ include file="FrontStageFoot.jsp"%>
 	<script>
+	
 	var nameTrue = false;
 	var passwordTrueOne = false;
 	var passwordTrueTwo = false;
@@ -377,6 +379,17 @@ hr {
 			$('#registerAccount').attr('disabled', true);
 		}			
 		}
+		//註冊成功之提示
+			$("#registerAccount").on('click', function(event){
+						  Swal.fire({
+							  title:'會員創建成功!',
+							  text:  $('#exampleLastName').val() + '會員您好，請至您的email點選驗證信中之連結。',
+							  icon:'success'
+						  }).then((result) => {
+				$('#registerForm').submit();
+							});
+
+			});
 		
 	</script>
 </body>

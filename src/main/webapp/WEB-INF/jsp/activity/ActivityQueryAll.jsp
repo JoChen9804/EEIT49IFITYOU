@@ -153,7 +153,7 @@ input {
 							<th>主辦方</th>
 							<th>負責管理員</th>
 							<th>最後修改時間</th>
-							<th style="width: 170px">操作</th>
+							<th style="width: 110px">操作</th>
 						</tr>
 					</thead>
 					<c:forEach var="aqa" items="${activity_queryAll}">
@@ -168,10 +168,6 @@ input {
 								<form ACTION="queryactivity.controller" method="post" style="float: left; margin-left: 3px" >
 									<input type="hidden" name="dataId" value="${aqa.activityId}" />
 									<input type="submit" name="query" value="查看" class="btn btn-outline-info " />
-								</form> 
-								<form ACTION="updateactivity.controller" method="post" enctype="multipart/form-data" style="float: left; margin-left: 3px">
-									<input type="hidden" name="dataId" value="${aqa.activityId}" />
-									<input type="submit" name="update" value="修改" class="btn btn-outline-secondary " />
 								</form> 
 								<form ACTION="deleteactivity.controller" name="ddeell" method="post" style="float: left; margin-left: 3px">
 									<input type="hidden" name="dataId" value="${aqa.activityId}" id="dd" />

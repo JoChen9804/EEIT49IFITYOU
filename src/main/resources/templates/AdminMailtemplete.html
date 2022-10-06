@@ -63,10 +63,10 @@ h2 {
 		<p>
 			親愛的用戶 <span th:text="${name}"> </span> 您好，
 		</p>
-		<p>歡迎加入 I FIT YOU 的行列，點選下列連結以開通您的帳號:</p>
-		<p></p>
+		<p>歡迎加入 I FIT YOU 的行列，
+		<p><a th:href ="@{${verifyURL}}">請點選此連結以開通您的帳號</a></p>
 		<p>
-			註冊成功贈送85折推薦碼: <span th:text="${code}"> </span>
+			註冊成功贈送85折推薦碼: <span th:text="${coupon}"> </span>
 		</p>
 		<p>祝您購物順心、交得益友、健身愉快~~</p>
 		<p>I FIT YOU 團隊敬上~~</p>

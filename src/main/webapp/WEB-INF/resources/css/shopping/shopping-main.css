@@ -1052,7 +1052,7 @@
     font-size: 12px;
     min-width: 300px;
     max-width: 600px;
-    background: ;
+    background: 00;
     border: solid 1px #c7bcaf;
     color: #000;
     -moz-border-radius: 3px;
@@ -1093,10 +1093,6 @@
     border-radius: 3px;
     font-family: Verdana, 微軟正黑體, Geneva, sans-serif;
     padding: 2px
-}
-
-#popup_content input[type="text"]:focus {
-    boder-color: #000
 }
 
 #popup_content.alert,
@@ -1851,7 +1847,7 @@ legend {
     font-size: 12px;
     font-family: "Verdana", "Microsoft JhengHei", "微軟正黑體", Geneva, Tahoma, sans-serif;
     color: #706e6c;
-    margin: 45px auto;
+    margin: 85px 135px;
     padding: 0
 }
 
@@ -2307,7 +2303,7 @@ x:default {
     color: #555;
     font-family: "Microsoft JhengHei", "微軟正黑體";
     font-weight: bolder;
-    font-size: 13px;
+    font-size: 20px;
     background: transparent url('data:image/gif;base64,R0lGODlhAwADAIAAAE1JSgAAACH5BAAAAAAALAAAAAADAAMAAAIDhH8FADs=') no-repeat 0 10px
 }
 
@@ -2522,7 +2518,7 @@ div .exhibitin .display {
 .list_display,
 .list_display_5 {
     margin: 0 0 0 0;
-    padding: 10px 0 35px 0;
+    padding: 0px 0 35px 0;
     overflow: hidden
 }
 
@@ -2578,12 +2574,12 @@ div .exhibitin .display {
 }
 
 ul.list_outfit li {
-    height: 389px;
-    min-height: 389px
+    height: 320px;
+    min-height: 320px
 }
 
 ul.list_outfit .imgd {
-    height: 321px;
+    height: 250px;
     display: table-cell;
     vertical-align: middle;
     padding-bottom: 5px
@@ -5778,13 +5774,7 @@ h1.grid_9 {
 .question h3,
 .shop h3,
 .delivery h3,
-.giveback h3 {
-    margin: 50px 0 0 40px;
-    background: transparent url('../images/shophelp_h21.gif')no-repeat right top;
-    text-indent: -9000px;
-    width: 200px;
-    height: 30px
-}
+
 
 .shop h3 {
     background-image: url('../images/shophelp_h22.gif')

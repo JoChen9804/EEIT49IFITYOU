@@ -3,6 +3,8 @@ package tw.group5.admin.model;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,9 +38,17 @@ public class MemberBean {
 	
 	private String email;
 	
+	@Column(name = "verification_code")
+	private String verificationCode;
+	
 	@OneToOne(cascade= CascadeType.ALL)
 	@JoinColumn(name = "fk_memberDetail_id")
 	private MemberDetail memberDetail;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name = "auth_provider")
+	private AuthenticationProvider authProvider;
+	
 
 	public MemberBean() {
 		super();
@@ -131,5 +141,22 @@ public class MemberBean {
 	public void setMemberDetail(MemberDetail memberDetail) {
 		this.memberDetail = memberDetail;
 	}
+	
+	public String getVerificationCode() {
+		return verificationCode;
+	}
+
+	public void setVerificationCode(String verificationCode) {
+		this.verificationCode = verificationCode;
+	}
+
+	public AuthenticationProvider getAuthProvider() {
+		return authProvider;
+	}
+
+	public void setAuthProvider(AuthenticationProvider authProvider) {
+		this.authProvider = authProvider;
+	}
    
+	
 }

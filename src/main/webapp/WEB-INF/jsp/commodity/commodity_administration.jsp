@@ -28,7 +28,7 @@
     <style type="text/css">
     
     .img_show{
-    	width:100px;
+    	width:110px;
         height:120px;
     }
     
@@ -180,7 +180,7 @@
                                 <tr class="row100 head">
                                     <th class="cell100 column01"></th>
                                     <th class="cell100 column02"></th>
-                                    <th class="cell100 column1">商品編號</th>
+                                    <th class="cell100 column1 ranking1">商品編號</th>
                                     <th class="cell100 column2">商品類別</th>
                                     <th class="cell100 column3">商品圖片</th>
                                     <th class="cell100 column4">商品名稱</th>
@@ -264,7 +264,7 @@
         integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
         crossorigin="anonymous"></script>
 
-    <script src="js/commodity-scrollbar.min.js"></script>
+    <script src="js/commodity/commodity-scrollbar.min.js"></script>
     <script>
         $('.js-pscroll').each(function () {
             var ps = new PerfectScrollbar(this);
@@ -274,7 +274,7 @@
             })
         });
     </script>
-    
+     
     <script>
     
     <%

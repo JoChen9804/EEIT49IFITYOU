@@ -22,7 +22,8 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js"
 	type="text/javascript"></script>
 <link
-	href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700&display=swap&subset=latin-ext" rel="stylesheet">
+	href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700&display=swap&subset=latin-ext"
+	rel="stylesheet">
 <link href="/group5/css/bootstrap.css" rel="stylesheet">
 <link href="/group5/css/fontawesome-all.css" rel="stylesheet">
 <link href="/group5/css/swiper.css" rel="stylesheet">
@@ -65,7 +66,9 @@
 				<div class="sidebar-brand-icon rotate-n-15">
 					<img src="/group5/img/i_ift_you.jpg" class="img-profile rounded-circle"
 						height=50 width=50 />
-				</div> <a class="nav-link page-scroll" href="/group5/FrontStageMain" style="font-size: 2rem; color: white; text-decoration: none;">I FIT YOU </a>
+				</div> <a class="nav-link page-scroll" href="/group5/FrontStageMain"
+				style="font-size: 20px; color: white; text-decoration: none;">I
+					FIT YOU </a>
 			</a>
 
 			<!-- Mobile Menu Toggle Button -->

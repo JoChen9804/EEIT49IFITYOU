@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.sound.midi.Soundbank;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -55,10 +56,9 @@ public class MainPostServlet {
 
     // 改成會員帳號 與會員權限
     public String memberAccount = "";
-    public String postPermission = "一般會員";
+    public String postPermission ;
     public String postPhoto ="";
     public String replyPhoto ="";
-    
     
     public AdminBean adminBean() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -67,18 +67,113 @@ public class MainPostServlet {
     }
     
     
+    @GetMapping("/MainPost.all")
+    public ModelAndView allPostStatus(MainPostBean mpBean) {
+        AdminBean adminBean = adminBean();
+        memberAccount = adminBean.getAdminName();
+        postPhoto = adminBean.getAdminPhoto();
+        replyPhoto = adminBean.getAdminPhoto();
+        System.out.println(memberAccount);
+        
+        
+        ModelAndView mav = new ModelAndView(postFrontPage);
+        if (mpBean.getMainPostNo() != null) {
+            List<MainPostBean> query = firstImagePath(mpService.query(mpBean.getMainPostNo()));
+            if (query == null) {
+                mav.addObject("error", "查無資料");
+            }
+            mav.addObject("query", query);
+        } else if (mpBean.getTitle() != null) {
+            System.out.println("所有貼文");
+            List<MainPostBean> query = firstImagePath(mpService.allPosts(mpBean.getTitle()));
+            if (query.isEmpty()) {
+                mav.addObject("error", "查無資料");
+            }
+            mav.addObject("query", query);
+      
+        } else if (mpBean.getPostPermission() != null) {
+            System.out.println(mpBean.getPostPermission());
+            List<MainPostBean> query = firstImagePath(mpService.findByPostPermission(mpBean.getPostPermission()));
+            
+            
+            if (query.isEmpty()) {
+                mav.addObject("error", "查無資料");
+            }else {
+                System.out.println(query.get(0).getPostPermission());
+                mav.addObject("query", query);
+            }
+                
+
+        }  else if (mpBean != null ) {
+            System.out.println("所有貼文");
+         
+            List<MainPostBean> query = firstImagePath(mpService.allPosts());
+            
+            List<ReplyPostBean> reportBean = rpService.findByReplyPermissionNotNull();
+            mav.addObject("reportBean", reportBean);
+            mav.addObject("query", query);
+
+            
+            ModelAndView statistics = statistics(query,mav);
+            
+            return statistics;
+        }
+        
+        
+        return mav;
+    }
+    
+    // 觀看ok
+    @PostMapping("/MainPost.watch")
+    public ModelAndView watchPost(MainPostBean mpBean) {
+        MainPostBean queryOne = mpService.selectById(mpBean.getMainPostNo());
+        ModelAndView mavMpost = takeOutmpBean(queryOne,postDetails);
+        mavMpost.addObject("postPhoto", postPhoto);
+        // -----------上面是主貼文------------
+        List<ReplyPostBean> allReply = rpService.allReply(mpBean.getMainPostNo());
+        if(!allReply.isEmpty()) {
+            ModelAndView mav = takeOutrpBean(allReply,mavMpost);
+            return mav;
+        }
+        return mavMpost;
+    }
+    
+    //審核
+    @PostMapping("/auditPost") 
+    public String audit(String auditNo) {
+        System.out.println(auditNo);
+        String[] mpNoList = auditNo.split(",");
+        System.out.println(mpNoList.length);
+        for(String mpNoLists : mpNoList) {
+            System.out.println(mpNoLists);
+            mpService.updatePermission("已發布",Integer.parseInt(mpNoLists));
+        }
+        return "redirect:MainPost.all";
+    }
+    //駁回
+    @PostMapping("/turnDownPost") @ResponseBody
+    public void turnDown(Integer mainPostNo,String xreason) {
+        System.out.println(xreason);
+        System.out.println(mainPostNo);
+        mpService.updatePermission("駁回，"+xreason,mainPostNo);
+        //return "redirect:MainPost.all";
+    }
+    
+    
+
+    
+    ////////////////////////////////////下面已搬到前台/////////////////////////
+    
     
     // 首頁進入
     // 推薦使用四種方式最終都是封裝成ModelAndView
-    @GetMapping("/MainPost.all")
+    //@GetMapping("/MainPost.all")
     public ModelAndView postHomepage2(MainPostBean mpBean,HttpServletRequest request) {
         ModelAndView mav = new ModelAndView(postFrontPage);
         AdminBean adminBean = adminBean();
         memberAccount = adminBean.getAdminName();
         postPhoto = adminBean.getAdminPhoto();
         replyPhoto = adminBean.getAdminPhoto();
-        
- 
         
         if (mpBean.getMainPostNo() != null) {
             List<MainPostBean> query = firstImagePath(mpService.query(mpBean.getMainPostNo()));
@@ -115,7 +210,6 @@ public class MainPostServlet {
     public ModelAndView postPage(String addpost) {
         ModelAndView mav = new ModelAndView(postMainPosting);
         mav.addObject("memberAccount", memberAccount);
-
         return mav;
     }
 
@@ -145,25 +239,7 @@ public class MainPostServlet {
         return "redirect:MainPost.all";
     }
 
-    // 觀看ok
-    @PostMapping("/MainPost.watch")
-    public ModelAndView watchPost(Integer watch) {
-        
-        
-        
-        MainPostBean queryOne = mpService.selectById(watch);
-        ModelAndView mavMpost = takeOutmpBean(queryOne,postDetails);
-        mavMpost.addObject("postPhoto", postPhoto);
-        
-        // -----------上面是主貼文------------
 
-        List<ReplyPostBean> allReply = rpService.allReply(watch);
-        if(!allReply.isEmpty()) {
-            ModelAndView mav = takeOutrpBean(allReply,mavMpost);
-            return mav;
-        }
-        return mavMpost;
-    }
 
     // 刪除 ok
     @DeleteMapping("/MainPostingServlet")
@@ -304,7 +380,7 @@ public class MainPostServlet {
     
     @PutMapping("/LikesAJAX") @ResponseBody
     public MainPostBean LikesAJAX(MainPostBean mpBean) {
-        
+        System.out.println(mpBean.getAccount());
        
         ModelAndView mav = new ModelAndView();
         System.out.println("有找到嗎?");
@@ -336,14 +412,19 @@ public class MainPostServlet {
             queryOne.setLikeNumber(newLike);
             mpService.update(queryOne);
         }
-        
+        //bug在這辣
         if (!"".equals(queryOne.getLikeNumber())) {
-            queryOne.setLikeNumber(String.valueOf(oldlikes.length));
+            String[] newlikes = queryOne.getLikeNumber().split(",");
+            
+            queryOne.setLikeNumber(String.valueOf(newlikes.length));
             mav.addObject("likes", queryOne.getLikeNumber().split(",").length);
         }
         else {
             queryOne.setLikeNumber("0");
         }
+        
+        System.out.println(memberAccount);
+        System.out.println("多少喇:"+oldlikes.length);
         return queryOne;
     }
     
@@ -375,7 +456,8 @@ public class MainPostServlet {
             rpService.update(replyPostBean);
         }
         if (!"".equals(replyPostBean.getReplyLikeNumber())) {
-            replyPostBean.setReplyLikeNumber(String.valueOf(oldReplylikes.length));
+            String[] newReplylikes = replyPostBean.getReplyLikeNumber().split(",");
+            replyPostBean.setReplyLikeNumber(String.valueOf(newReplylikes.length));
         }
         else {
             replyPostBean.setReplyLikeNumber("0");
@@ -384,7 +466,80 @@ public class MainPostServlet {
     }
     
     
-    
+    public ModelAndView statistics(List<MainPostBean> listmpBean,ModelAndView mav) {
+        //貼文類型
+        int share = 0 ,announcement = 0 , question = 0;
+        
+        //貼文每月比數
+        int jan = 0, feb =0, mar=0, apr=0, may=0, jun=0, jul=0, aug=0, sep=0, oct=0, nov=0, dec=0;
+        
+  
+        
+        
+        
+        for(MainPostBean oneBean : listmpBean) {
+            if("分享".equals(oneBean.getPostTypeName())) {
+                share++;
+            }
+            if("公告".equals(oneBean.getPostTypeName())) {
+                announcement++;
+            }
+            if("問題".equals(oneBean.getPostTypeName())) {
+                question++;
+            }
+            
+            
+            switch (oneBean.getAddtime().substring(5, oneBean.getAddtime().indexOf("-",oneBean.getAddtime().indexOf("-")+1))) {
+            case  "1": jan ++; break;
+            case  "2": feb ++; break;
+            case  "3": mar ++; break;
+            case  "4": apr ++; break;  
+            case  "5": may ++; break; 
+            case  "6": jun ++; break; 
+            case  "7": jul ++; break; 
+            case  "8": aug ++; break; 
+            case  "9": sep ++; break;
+            case "10": oct ++; break;
+            case "11": nov ++; break;
+            case "12": dec ++; break;
+            default: break;
+            }
+            
+
+        
+            if ("10".equals(oneBean.getAddtime().substring(5, oneBean.getAddtime().indexOf("-",oneBean.getAddtime().indexOf("-")+1))) ) {
+                
+                System.out.println("===" + oneBean.getAddtime().substring(5, oneBean.getAddtime().indexOf("-",oneBean.getAddtime().indexOf("-")+1)));
+//                oneBean.setP_image(oneBean.getP_image().substring(0, (oneBean.getP_image().indexOf(","))));
+            }
+            
+            
+            
+            
+            
+            System.out.println(oct);
+        
+        }
+        //貼文類型
+        mav.addObject("share",share);
+        mav.addObject("announcement",announcement);
+        mav.addObject("question",question);
+        
+        mav.addObject("jan",jan);
+        mav.addObject("feb",feb);
+        mav.addObject("mar",mar);
+        mav.addObject("apr",apr);
+        mav.addObject("may",may);
+        mav.addObject("jun",jun);
+        mav.addObject("jul",jul);
+        mav.addObject("aug",aug);
+        mav.addObject("sep",sep);
+        mav.addObject("oct",oct);
+        mav.addObject("nov",nov);
+        mav.addObject("dec",dec);
+        
+        return mav;   
+    }
     
     
     

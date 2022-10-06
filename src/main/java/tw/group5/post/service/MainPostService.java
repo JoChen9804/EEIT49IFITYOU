@@ -31,7 +31,11 @@ public class MainPostService {
     public MainPostBean update(MainPostBean javaBean) {
         return mpResp.save(javaBean);
     }
-
+    
+    public void updatePermission(String permerission,Integer mainPostNoList) {
+         mpResp.updatePermission(permerission,mainPostNoList);
+    }
+    
     public void deleteById(Integer id) {
         mpResp.deleteById(id);
     }
@@ -44,6 +48,19 @@ public class MainPostService {
         return null;
     }
 
+    public List<MainPostBean> findByAccount(String account) {
+        return mpResp.findByAccount(account);
+    }
+    
+    public List<MainPostBean> findByAccountAndTitles(String titles,String account) {
+        return mpResp.findByAccountAndTitles(titles,account);
+    }
+    
+    public List<MainPostBean> findByPostPermission(String postPermission){
+        return mpResp.findByPostPermission(postPermission);
+    }
+    
+    
     public List<MainPostBean> allPosts(Object titles) {
         return mpResp.allPostss(titles);
     }
@@ -52,6 +69,11 @@ public class MainPostService {
         return mpResp.allPosts();
     }
 
+    public List<MainPostBean> userallPosts(Object titles,String permission){
+        return mpResp.userallPosts(titles,permission);
+    }
+    
+    
     public List<MainPostBean> query(Integer id) {
         Optional<MainPostBean> optional = mpResp.findById(id);
         if (optional.isPresent()) {

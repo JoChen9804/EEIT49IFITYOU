@@ -31,7 +31,10 @@ public class AuthUserDetailService implements UserDetailsService {
 				MemberBean mBean = adminService.findByAccountMember(userName);
 //			System.out.println("username: " + username + "password" + mBean.getMemberPassword());
 				if (mBean.getAuthority() == 0) {
-					authority = "user,normal,ROLE_USER";
+					authority = "user,verified,ROLE_USER";
+				}
+				if (mBean.getAuthority() == 99) {
+					authority = "user,unverified,ROLE_VISITOR";
 				}
 				return new User(mBean.getMemberAccount(),mBean.getMemberPassword(), AuthorityUtils.commaSeparatedStringToAuthorityList(authority));
 				//"off" 管理員登入，權限設定
@@ -44,6 +47,7 @@ public class AuthUserDetailService implements UserDetailsService {
 				}
 				System.out.println("username: " + username + "password" + aBean.getAdminPwd());
 				return new User(aBean.getAdminName(), aBean.getAdminPwd(),  AuthorityUtils.commaSeparatedStringToAuthorityList(authority));
+
 			}	
 		}catch(Exception e){
 			e.printStackTrace();
