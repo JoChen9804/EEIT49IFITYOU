@@ -60,7 +60,8 @@ public class PairData {
 	@Column(name = "PAIRRELATIONSHIP")
 	private Integer pairRelationship;
 	
-	
+	@Transient
+	private Integer matchingScore;
 	
 	public int getPdId() {
 		return pdId;
@@ -157,6 +158,14 @@ public class PairData {
 
 	public void setPairRelationship(Integer pairRelationship) {
 		this.pairRelationship = pairRelationship;
+	}
+
+	public Integer getMatchingScore() {
+		return matchingScore;
+	}
+
+	public void setMatchingScore(Integer matchingScore) {
+		this.matchingScore = matchingScore;
 	}
 	
 	

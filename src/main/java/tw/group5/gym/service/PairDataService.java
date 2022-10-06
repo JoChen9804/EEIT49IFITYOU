@@ -1,5 +1,9 @@
 package tw.group5.gym.service;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,7 +36,7 @@ public class PairDataService {
 		 return opt.get();
 	}
 	
-	
+	//回傳mainData配到的三個人
 	public List<PairData> matching(PairData mainData){
 		List<PairData> allpd = pdRespository.findAll();
 		for(PairData pd:allpd) {
@@ -51,15 +55,43 @@ public class PairDataService {
 				gender=2;
 				break;
 			}
-			//m=3*(|Gx-Gy|)+3*(|Rx-Ry|)+2*(|Tx-Ty|)+|Fx-Fy|+|Kx-Ky|+A
-			int m = 3*(Math.abs(mainData.getPairGender()-gender))
-					+3*(Math.abs(mainData.getPairRelationship()-pd.getRelationship()))
+			//m=3*(|Rx-Ry|)+2*(|Tx-Ty|)+|Fx-Fy|+|Kx-Ky|
+			int m = 3*(Math.abs(mainData.getPairRelationship()-pd.getRelationship()))
 					+2*(Math.abs(mainData.getWorkoutTime()-pd.getWorkoutTime()))
 					+Math.abs(mainData.getWorkoutFrequency()-pd.getWorkoutFrequency())
-					+Math.abs(mainData.getWorkoutType()-pd.getWorkoutType())
-					+countlocation(mainData.getCurrentLocation(), pd.getCurrentLocation());
-			
+					+Math.abs(mainData.getWorkoutType()-pd.getWorkoutType());
+			pd.setMatchingScore(m);
 		}
+		
+		//按分數排序
+		Collections.sort(allpd, new Comparator<PairData>() {
+			@Override
+			public int compare(PairData o1, PairData o2) {
+				// 1是前者大於後者，-1是前者小於後者，0是維持
+				if(o1.getMatchingScore()>o2.getMatchingScore()) {
+					return 1;
+				}else if(o1.getMatchingScore()<o2.getMatchingScore()) {
+					return -1;
+				}
+					return 0;
+					
+			}
+		});
+		//選三個出來加進list
+		List<PairData> newlist = new ArrayList<PairData>();
+		int i=1;
+		while(true) {
+			int index = (int)Math.random()*10;
+			if(allpd.get(index)!=null) {
+				System.out.println("抓取次數"+i);
+				newlist.add(allpd.get(index));
+				i++;
+			}
+			if(i==4) {
+				break;
+			}
+		}
+		return newlist;
 	}
 	
 	public int countlocation(String mainLocation, String pdLocation) {
