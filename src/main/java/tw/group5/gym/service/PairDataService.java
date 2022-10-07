@@ -41,15 +41,21 @@ public class PairDataService {
 		 return opt.get();
 	}
 	
-	//回傳mainData配到的人
+	//回傳mainData配到的人+寫入dailypairlog
 	public PairData matching(PairData mainData){
 		//找到全部的人
 		List<PairData> allpd = pdRespository.findAll();
 		//檢查有沒有已經被分配到的
 		DailyPairLog checkRepart = dailyplRespository.findByPair(mainData);
 		if(checkRepart!=null) { //之前有人被分配到main
-			dailyplRespository.save(new DailyPairLog())
-			return 
+			//新增一筆紀錄
+			dailyplRespository.save(new DailyPairLog(checkRepart.getPair(),checkRepart.getMainData()));
+			//回傳之前配到main的那位
+			return checkRepart.getMainData();
+		}
+		List<PairData> pairTimes = dailyplRespository.findByMainData(mainData);
+		if(pairTimes.size()==3) {
+			return null;
 		}
 		for(PairData pd:allpd) {
 			System.out.println(pd.getMember().getId());
@@ -58,6 +64,7 @@ public class PairDataService {
 				pd.setMatchingScore(35);
 				continue;
 			}
+			System.out.println("給");
 			int gender=0;
 			switch (pd.getMember().getMemberDetail().getGender()) {
 			case "男":
@@ -79,12 +86,19 @@ public class PairDataService {
 					+countlocation(mainData.getCurrentLocation(), pd.getCurrentLocation());
 			pd.setMatchingScore(m);
 		}
-		
+		if(pairTimes!=null) {
+			for(PairData checktimes:pairTimes) {
+				System.out.println("配過了");
+				checktimes.setMatchingScore(35);
+			}
+		}
 		//按分數排序
 		Collections.sort(allpd, new Comparator<PairData>() {
 			@Override //由小到大
 			public int compare(PairData o1, PairData o2) {
-				if(o1.getMatchingScore()>o2.getMatchingScore()) {
+				if(o2.getMatchingScore()==null ||o1.getMatchingScore()==null) {
+					return 0;
+				}else if(o1.getMatchingScore()>o2.getMatchingScore()) {
 					return 1;
 				}else if(o1.getMatchingScore()<o2.getMatchingScore()) {
 					return -1;
@@ -94,13 +108,19 @@ public class PairDataService {
 			}
 		});
 		
-		//把
+		//檢查順序
 		for(PairData pd2: allpd) {
 			System.out.println("sort:"+pd2.getPdId()+"/"+pd2.getMember().getMemberAccount()+"/"+pd2.getMatchingScore());
 		}
+		//寫入dailylog
+		dailyplRespository.save(new DailyPairLog(mainData,allpd.get(0)));
 		//交出去前把配對指數轉成百分比
 		PairData result = allpd.get(0);
-		result.setMatchingScore((int) (1-(result.getMatchingScore()/34))*100);
+		float percent=result.getMatchingScore()/34;
+		System.out.println(percent+"percent");
+		int count=(int)(1-(percent))*100;
+		System.out.println("百分比分數"+count);
+		result.setMatchingScore(count);
 		return result;
 	}
 	
@@ -116,5 +136,15 @@ public class PairDataService {
 		return i;
 	}
 	
+	//dailyPairLog where maindata=? and pairdata=?
+	public DailyPairLog findByMainDataAndPair(int mainId, int partnerId) {
+		PairData maindata = this.findById(mainId);
+		PairData partner = this.findById(partnerId);
+		return dailyplRespository.findByMainDataAndPair(maindata, partner);
+	}
 	
+	//dailyPairLog update/save
+	public DailyPairLog updateDailyPairLog(DailyPairLog dpl) {
+		return dailyplRespository.save(dpl);
+	}
 }

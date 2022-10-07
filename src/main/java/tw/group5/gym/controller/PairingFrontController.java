@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import tw.group5.admin.model.MemberBean;
 import tw.group5.admin.model.MemberRepository;
 import tw.group5.admin.service.AdminService;
+import tw.group5.gym.model.DailyPairLog;
 import tw.group5.gym.model.PairData;
 import tw.group5.gym.model.PairingLog;
 import tw.group5.gym.service.PairDataService;
@@ -72,13 +73,46 @@ public class PairingFrontController {
 	public String processMatching(int mainPid,Model m) {
 		PairData mainPD = pDataService.findById(mainPid);
 		PairData matching = pDataService.matching(mainPD);
-		
+		if(matching==null) {
+			return "gym/pairingFront04";
+		}
 		m.addAttribute("matching", matching);
 		m.addAttribute("mainPD", mainPD);
 		return "gym/pairingFront03";
 	}
 	
+	@PostMapping("/pairmove")
+	@ResponseBody
+	public String processPairMoveAction(int main,int partner,String ans2pair) {
+		DailyPairLog result = pDataService.findByMainDataAndPair(main, partner);
+		if(ans2pair.equals("yes")) {
+			result.setResult(1);
+			pDataService.updateDailyPairLog(result);
+			//確認對方有沒有先同意了
+			DailyPairLog result2 = pDataService.findByMainDataAndPair(partner, main);
+			if(result2!=null) {
+				return "show";
+			}
+			return "wait";
+		}
+		result.setResult(0);
+		pDataService.updateDailyPairLog(result);
+		return "next";
+	}
 	
+	@PostMapping("/pairnext")
+	public String processMatching2(int main,Model m) {
+		System.out.println("next!");
+		PairData mainPD = pDataService.findById(main);
+		PairData matching = pDataService.matching(mainPD);
+		if(matching==null) {
+			System.out.println("null");
+			return "gym/pairingFront04";
+		}
+		m.addAttribute("matching", matching);
+		m.addAttribute("mainPD", mainPD);
+		return "gym/pairingFront03";
+	}
 	
 	
 //	@GetMapping("/pairing")

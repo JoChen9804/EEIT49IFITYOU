@@ -30,6 +30,20 @@ public class DailyPairLog {
 	
 	@Column(name = "RESULT")
 	private Integer result;
+	
+	public DailyPairLog() {
+	}
+
+	public DailyPairLog(int dplogId, PairData mainData, PairData pair) {
+		this.dplogId = dplogId;
+		this.mainData = mainData;
+		this.pair = pair;
+	}
+
+	public DailyPairLog(PairData mainData, PairData pair) {
+		this.mainData = mainData;
+		this.pair = pair;
+	}
 
 	public int getDplogId() {
 		return dplogId;
