@@ -2,6 +2,7 @@ package tw.group5.activity.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -9,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -96,16 +96,13 @@ public class ActivityFunctionController extends HttpServlet {
 	@GetMapping("/activityuser")
 	public String UserCenter(Model m) {
 		List<ActivityActivity> activity = avtivityService.findAll();
+		HashMap<Integer, Integer> countMember = new HashMap<Integer, Integer>();
+		for (ActivityActivity activity1 : activity) {
+			countMember.put(activity1.getActivityId(), signUpService.countSignUpMember(activity1.getActivityId()));
+		}
+		m.addAttribute("activity_countMember", countMember);
 		m.addAttribute("activity_queryAll", activity);
 		return "activity/ActivityAllActivityUser"; 
-	}
-	
-	@PostMapping("/user/toactivitysignup")
-	public String toActivitySignUp(int activityId, HttpSession session ,Model m) {
-		ActivityActivity aa = avtivityService.selectById(activityId);
-		m.addAttribute("loginM", (MemberBean) session.getAttribute("loginMember"));
-		m.addAttribute("signUpActivity", aa);
-		return "activity/ActivitySignUp"; 
 	}
 	
 	//查詢
@@ -217,6 +214,14 @@ public class ActivityFunctionController extends HttpServlet {
 	 */
 	@Autowired
 	private ActivitySignUpService signUpService;
+	
+	@PostMapping("/user/toactivitysignup")
+	public String toActivitySignUp(int activityId, HttpSession session ,Model m) {
+		ActivityActivity aa = avtivityService.selectById(activityId);
+		m.addAttribute("loginM", (MemberBean) session.getAttribute("loginMember"));
+		m.addAttribute("signUpActivity", aa);
+		return "activity/ActivitySignUp"; 
+	}
 	
 	//新增
 	@PostMapping("/user/signupadd.controller")

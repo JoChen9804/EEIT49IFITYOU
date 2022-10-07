@@ -122,7 +122,6 @@ response.setCharacterEncoding("UTF-8");
 		</div>
 	</form:form>
 	
-<<<<<<< HEAD
 	<!-- ckeditor5 -->
 	<script>
 	/*
@@ -148,19 +147,6 @@ response.setCharacterEncoding("UTF-8");
 				uploadUrl: "/group5/admin/uploadimages"
 			},
 	        // https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html#extended-toolbar-configuration-format
-=======
-	<script type="text/javascript">
-	
-	/**
-	 * ckeditor5 
-	 */
-	 
-	 CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
-	    	
-	    	ckfinder:{
-				uploadUrl: "/group5/admin/uploadimages"
-			},
->>>>>>> merge1005
 	        toolbar: {
 	            items: [
 	                'exportPDF','exportWord', '|',
@@ -180,11 +166,6 @@ response.setCharacterEncoding("UTF-8");
 	            ],
 	            shouldNotGroupWhenFull: true
 	        },
-<<<<<<< HEAD
-	        // Changing the language of the interface requires loading the language file using the <script> tag.
-	        // language: 'es',
-=======
->>>>>>> merge1005
 	        list: {
 	            properties: {
 	                styles: true,
@@ -192,10 +173,6 @@ response.setCharacterEncoding("UTF-8");
 	                reversed: true
 	            }
 	        },
-<<<<<<< HEAD
-	        // https://ckeditor.com/docs/ckeditor5/latest/features/headings.html#configuration
-=======
->>>>>>> merge1005
 	        heading: {
 	            options: [
 	                { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
@@ -207,13 +184,7 @@ response.setCharacterEncoding("UTF-8");
 	                { model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
 	            ]
 	        },
-<<<<<<< HEAD
-	        // https://ckeditor.com/docs/ckeditor5/latest/features/editor-placeholder.html#using-the-editor-configuration
-	        placeholder: '請編輯活動內容',
-	        // https://ckeditor.com/docs/ckeditor5/latest/features/font.html#configuring-the-font-family-feature
-=======
 	        placeholder: '請編輯輸入活動內容...',
->>>>>>> merge1005
 	        fontFamily: {
 	            options: [
 	                'default',
@@ -228,19 +199,10 @@ response.setCharacterEncoding("UTF-8");
 	            ],
 	            supportAllValues: true
 	        },
-<<<<<<< HEAD
-	        // https://ckeditor.com/docs/ckeditor5/latest/features/font.html#configuring-the-font-size-feature
-=======
->>>>>>> merge1005
 	        fontSize: {
 	            options: [ 10, 12, 14, 'default', 18, 20, 22 ],
 	            supportAllValues: true
 	        },
-<<<<<<< HEAD
-	        // Be careful with the setting below. It instructs CKEditor to accept ALL HTML markup.
-	        // https://ckeditor.com/docs/ckeditor5/latest/features/general-html-support.html#enabling-all-html-features
-=======
->>>>>>> merge1005
 	        htmlSupport: {
 	            allow: [
 	                {
@@ -251,18 +213,6 @@ response.setCharacterEncoding("UTF-8");
 	                }
 	            ]
 	        },
-<<<<<<< HEAD
-	        // Be careful with enabling previews
-	        // https://ckeditor.com/docs/ckeditor5/latest/features/html-embed.html#content-previews
-	        htmlEmbed: {
-	            showPreviews: true
-	        },
-	        // https://ckeditor.com/docs/ckeditor5/latest/features/link.html#custom-link-attributes-decorators
-	        link: {
-	            decorators: {
-	                addTargetToExternalLinks: true,
-	                defaultProtocol: 'https://localhost:8080/group5',
-=======
 	        htmlEmbed: {
 	            showPreviews: true
 	        },
@@ -270,7 +220,6 @@ response.setCharacterEncoding("UTF-8");
 	            decorators: {
 	                addTargetToExternalLinks: true,
 	                defaultProtocol: 'https://',
->>>>>>> merge1005
 	                toggleDownloadable: {
 	                    mode: 'manual',
 	                    label: 'Downloadable',
@@ -280,10 +229,6 @@ response.setCharacterEncoding("UTF-8");
 	                }
 	            }
 	        },
-<<<<<<< HEAD
-	        // https://ckeditor.com/docs/ckeditor5/latest/features/mentions.html#configuration
-=======
->>>>>>> merge1005
 	        mention: {
 	            feeds: [
 	                {
@@ -298,28 +243,10 @@ response.setCharacterEncoding("UTF-8");
 	                }
 	            ]
 	        },
-<<<<<<< HEAD
-	        // The "super-build" contains more premium features that require additional configuration, disable them below.
-	        // Do not turn them on unless you read the documentation and know how to configure them and setup the editor.
-	        removePlugins: [
-	            // These two are commercial, but you can try them out without registering to a trial.
-	            // 'ExportPdf',
-	            // 'ExportWord',
-	            'CKBox',
-	            'CKFinder',
-	            'EasyImage',
-	            // This sample uses the Base64UploadAdapter to handle image uploads as it requires no configuration.
-	            // https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/base64-upload-adapter.html
-	            // Storing images as Base64 is usually a very bad idea.
-	            // Replace it on production website with other solutions:
-	            // https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/image-upload.html
-	            // 'Base64UploadAdapter',
-=======
 	        removePlugins: [
 	            'CKBox',
 	            'CKFinder',
 	            'EasyImage',
->>>>>>> merge1005
 	            'RealTimeCollaborativeComments',
 	            'RealTimeCollaborativeTrackChanges',
 	            'RealTimeCollaborativeRevisionHistory',

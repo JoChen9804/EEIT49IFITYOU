@@ -11,7 +11,7 @@
 <%@ include file="../admin/FrontStageHead.jsp"%>
 
 	<!-- JQuery -->
- 	<script src="/jquery-3.6.0.js"></script>
+ 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
  	
  	<!-- fontawesome -->
     <script src="https://kit.fontawesome.com/5b36a12f3a.js" crossorigin="anonymous"></script>
@@ -39,6 +39,7 @@
                         	<div class="card-body">
                             	<h4 class="card-title">${aqa.activityTitle}</h4>
                             	<p>${aqa.startTime}~${aqa.endTime}</p>
+                            	<p id="count">已報名人數: ${activity_countMember[aqa.activityId]}</p>
                         	</div>
                     	</a>
                     	<!-- end of card -->

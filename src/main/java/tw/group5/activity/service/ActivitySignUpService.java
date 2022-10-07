@@ -61,4 +61,8 @@ public class ActivitySignUpService {
 		return signUpRepository.findByActivity(activity);
 	}
 	
+	public Integer countSignUpMember(Integer activityId) {
+		return signUpRepository.countSignUpMember(activityId);
+	}
+	
 }
