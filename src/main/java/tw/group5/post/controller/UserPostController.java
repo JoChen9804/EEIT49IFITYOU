@@ -438,17 +438,25 @@ public class UserPostController {
     //使用者收藏紀錄
     @ResponseBody
     @GetMapping("/FavoritePostAJAX")
-    public List<FavoritePostBean> userFavortes(){
+    public List<MainPostBean>  userFavortes(){
         if(memberAccount != null) {
             List<FavoritePostBean> fpBean = fpService.allFavoriteUser(memberAccount);
             if(!fpBean.isEmpty()) {
+                List<MainPostBean> mpBeans = new ArrayList<MainPostBean>();
+               for(FavoritePostBean fpBeans : fpBean) {
+                   MainPostBean mpBean = mpService.selectById(fpBeans.getMainPostBean().getMainPostNo());
+                   mpBeans.add(mpBean);
+               }
                 System.out.println("有收藏資料");
-                return fpBean;
+                System.out.println(mpBeans.get(0).getTitle());
+                //ModelAndView mav = new ModelAndView().addObject("userfavorite", mpBeans);
+                
+                return mpBeans;
             }else {
                 new ModelAndView().addObject("noRecord", "查無收藏紀錄");
+                return null;
             }
-            
-        }
+        }else
         return null;
     }
     

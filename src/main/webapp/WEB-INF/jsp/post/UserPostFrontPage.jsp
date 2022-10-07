@@ -110,13 +110,15 @@
 					<!-- end of tabs links -->
                     <script>
                     $(".mycollection").click(function(){
+                    	
                     	$.ajax({
                             type: "GET",
                             url: "/group5/FavoritePostAJAX",
                             dataType : 'json',
                             success: function(data){
+                                console.log("123123");
                             	$('#favoriteShow').empty(""); //先清空
-                                console.log(data);
+                            	
                                 if(data==null){
                                     $('table').prepend(`<tr><td colspan="2">No data</td></tr>`);
                                 }else{
@@ -130,8 +132,8 @@
 			                                       </tr>`);
                                     $.each(data, function(i,n){         
                                         var tr = "<tr align='center'>" + 
-                                                 "<td><a href='/order/poiteminfo.controller?pid=" + n.account+ "'>" + n.account + "</a></td>" +
-                                                 "<td>" + n.pname + "</td>" + "<td>" + n.price + "</td>" + "<td>" + n.quantity + "</td>" +
+                                                 "<td><a href='/order/poiteminfo.controller?pid=" + n.postTypeName+ "'>" + n.postTypeName + "</a></td>" +
+                                                 "<td>" + n.title + "</td>" + "<td>" + n.content + "</td>" + "<td>" + n.quantity + "</td>" +
                                                  "<td>" + n.pdate + "</td>" + "<td>" + n.note + "</td>" +
                                                  "</tr>";
                                         table.append(tr);
@@ -139,70 +141,64 @@
                                     
                                 
                                 }
-                            
                             	
                             	
-                                $('#favoriteShow').html(`                               
-                                        <div class="col-lg-12">
-                                        <div class="text-container">
-                                            <h3>Analytics Control Panel</h3>
-                                            <table class="table table-bordered">
+//                                 $('#favoriteShow').html(`                               
+//                                         <div class="col-lg-12">
+//                                         <div class="text-container">
+//                                             <h3>Analytics Control Panel</h3>
+//                                             <table class="table table-bordered">
                                             
-                                                <thead>
-                                                    <tr>
-                                                        <th>類型</th>
-                                                        <th>標題</th>
-                                                        <th>內容</th>
-                                                        <th>會員<br>發布時間</th>
-                                                        <th>操作</th>
-                                                    </tr>
-                                                </thead>
+//                                                 <thead>
+//                                                     <tr>
+//                                                         <th>類型</th>
+//                                                         <th>標題</th>
+//                                                         <th>內容</th>
+//                                                         <th>會員<br>發布時間</th>
+//                                                         <th>操作</th>
+//                                                     </tr>
+//                                                 </thead>
                                                 
-                                                <tbody>
-                                                    <c:forEach var="report" items="${data}">
-                                                        <tr class="content">
-                                                            <td class="align-middle"><input class="delete1" name="delete1" type="checkbox"></td>
-                                                            <td class="align-middle">${report.replyNo}</td>
-                                                            
-                                                            <td class="align-middle card-text">${report.replyContent}</td>
-                                                            <td class="align-middle replyAccount">
-                                                                ${report.replyAccount}<br />${report.replyTime}</td>
-                                                            <td class="align-middle">${report.replyPermission}</td>
-                                                            <td class="align-middle">
+//                                                 <tbody>
+//                                                     <c:forEach var="favorite" items="${userfavorite}">
+//                                                         <tr class="content">
+//                                                             <td class="align-middle">${favorite.postTypeName}</td>
+//                                                             <td class="align-middle">${favorite.title}</td>
+//                                                             <td class="align-middle card-text">${favorite.content}</td>
+//                                                             <td class="align-middle">${favorite.replyAccount}<br />${favorite.replyTime}</td></td>
+//                                                             <td class="align-middle">
+//                                                                 <a class="btn btn-info btn-icon-split popup-with-move-anim viewreplies" href="#details-lightbox-3">
+//                                                                 <span class="icon text-white-50"><i class="fas fa-info-circle"></i></span>
+//                                                                 <span class="text">觀看</span></a>
                                                                 
+//                                                                 <input type="hidden" class="replyPhoto" value="${report.replyPhoto}">
+//                                                                 <input type="hidden" class="replyContent" value="${report.replyContent}">
+//                                                                 <input type="hidden" class="replyTime" value="${report.replyTime}">
+//                                                                 <input type="hidden" class="replyaccount" value="${report.replyAccount}">
+//                                                                 <input type="hidden" class="reportimage" value="${report.r_image}">
+//                                                                 <input type="hidden" class="reportreplyNo" value="${report.replyNo}">
                                                                 
-                                                                <a class="btn btn-info btn-icon-split popup-with-move-anim viewreplies" href="#details-lightbox-3">
-                                                                <span class="icon text-white-50"><i class="fas fa-info-circle"></i></span>
-                                                                <span class="text">觀看</span></a>
+//                                                                 <button type="submit" class="btn btn-warning btn-icon-split deletereply" value="刪除">
+//                                                                 <span class="icon text-white-50"><i class="fas fa-exclamation-triangle"></i></span>
+//                                                                 <span class="text">刪除</span></button>
                                                                 
-                                                                <input type="hidden" class="replyPhoto" value="${report.replyPhoto}">
-                                                                <input type="hidden" class="replyContent" value="${report.replyContent}">
-                                                                <input type="hidden" class="replyTime" value="${report.replyTime}">
-                                                                <input type="hidden" class="replyaccount" value="${report.replyAccount}">
-                                                                <input type="hidden" class="reportimage" value="${report.r_image}">
-                                                                <input type="hidden" class="reportreplyNo" value="${report.replyNo}">
-                                                                
-                                                                <button type="submit" class="btn btn-warning btn-icon-split deletereply" value="刪除">
-                                                                <span class="icon text-white-50"><i class="fas fa-exclamation-triangle"></i></span>
-                                                                <span class="text">刪除</span></button>
-                                                                
-                                                                <button type="submit" class="btn btn-secondary btn-icon-split revoke" value="撤銷">
-                                                                <span class="icon text-white-50"><i class="fas fa-arrow-right"></i></span>
-                                                                <span class="text">撤銷</span></button>
-                                                            </td>
+//                                                                 <button type="submit" class="btn btn-secondary btn-icon-split revoke" value="撤銷">
+//                                                                 <span class="icon text-white-50"><i class="fas fa-arrow-right"></i></span>
+//                                                                 <span class="text">撤銷</span></button>
+//                                                             </td>
 
-                                                        </tr>
-                                                    </c:forEach>
-                                                </tbody>
-                                            </table>
+//                                                         </tr>
+//                                                     </c:forEach>
+//                                                 </tbody>
+//                                             </table>
                                             
                                             
                                         
-                                            <a class="btn-solid-reg popup-with-move-anim"
-                                                href="#details-lightbox-3">LIGHTBOX</a>
-                                        </div>
+//                                             <a class="btn-solid-reg popup-with-move-anim"
+//                                                 href="#details-lightbox-3">LIGHTBOX</a>
+//                                         </div>
                                         
-                                    </div>`);
+//                                     </div>`);
                                 
                                
                                 
@@ -553,8 +549,8 @@
 							aria-labelledby="tab-3">
 							<div class="row">
 							
-<!-- 							<div id ="favoriteShow"></div> -->
-							<table id="favoriteShow" border="1"></table>
+							<div id ="favoriteShow"></div>
+<!-- 							<table id="favoriteShow" border="1"></table> -->
 
 								<!-- end of col -->
 							</div>
