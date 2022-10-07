@@ -17,7 +17,6 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
-
 <title>論壇貼文</title>
 
 <style>
@@ -109,102 +108,72 @@
 					</ul>
 					<!-- end of tabs links -->
                     <script>
-                    $(".mycollection").click(function(){
-                    	
-                    	$.ajax({
+  
+                    
+                    
+                    $(function(){
+                        $.ajax({
                             type: "GET",
                             url: "/group5/FavoritePostAJAX",
                             dataType : 'json',
                             success: function(data){
-                                console.log("123123");
-                            	$('#favoriteShow').empty(""); //先清空
-                            	
+                                //console.log(data);
+                                $('#favoriteShow').empty(""); //先清空
+                                
                                 if(data==null){
                                     $('table').prepend(`<tr><td colspan="2">No data</td></tr>`);
                                 }else{
                                     var table = $("#favoriteShow");
                                     table.append(` <tr>
-			                                          <th>類型</th>
-			                                          <th>標題</th>
-			                                          <th>內容</th>
-			                                          <th>會員<br>發布時間</th>
-			                                          <th>操作</th>
-			                                       </tr>`);
-                                    $.each(data, function(i,n){         
-                                        var tr = "<tr align='center'>" + 
-                                                 "<td><a href='/order/poiteminfo.controller?pid=" + n.postTypeName+ "'>" + n.postTypeName + "</a></td>" +
-                                                 "<td>" + n.title + "</td>" + "<td>" + n.content + "</td>" + "<td>" + n.quantity + "</td>" +
-                                                 "<td>" + n.pdate + "</td>" + "<td>" + n.note + "</td>" +
+                                                      <th>類型</th>
+                                                      <th>標題</th>
+                                                      <th>內容</th>
+                                                      <th>會員<br>發布時間</th>
+                                                      <th>操作</th>
+                                                   </tr>`);
+                                    $.each(data, function(i,n){    
+                                        var title = n.title;
+                                        var tr = "<tr class='content'>" + 
+                                                 "<td class='align-middle'>" + n.postTypeName + "</td>" +
+                                                 "<td class='align-middle'>" + n.title + "</td>" + 
+                                                 "<td class='align-middle'>" + n.content + "</td>" + 
+                                                 "<td class='align-middle'>" + n.account + "<br/>"+ n.addtime +"</td>" +
+                                                 "<td class='align-middle'>" +
+                                                 "<input type='hidden' class='deletefasss' name='mainPostNo' value='"+ n.mainPostNo +"'>" +
+                                                 "<button type='submit' style='border:none' class='deletefas btn btn-outline-danger fa-regular fa-trash-can fa-1x'>"+"刪除"+"</button>" +
+                                                 "<form action='PostWtch' method='GET'>" +
+                                                     "<input type='hidden' name='mainPostNo' value='"+ n.mainPostNo +"'>" +
+                                                     "<button type='submit' style='border:none'  class='btn btn-outline-success btn-icon-split fa-solid fa-magnifying-glass fa-1x'>"+"觀看"+"</button>" +
+                                                 "</form>"+   
+                                                 "</td>" + 
                                                  "</tr>";
                                         table.append(tr);
                                     });
-                                    
-                                
                                 }
-                            	
-                            	
-//                                 $('#favoriteShow').html(`                               
-//                                         <div class="col-lg-12">
-//                                         <div class="text-container">
-//                                             <h3>Analytics Control Panel</h3>
-//                                             <table class="table table-bordered">
-                                            
-//                                                 <thead>
-//                                                     <tr>
-//                                                         <th>類型</th>
-//                                                         <th>標題</th>
-//                                                         <th>內容</th>
-//                                                         <th>會員<br>發布時間</th>
-//                                                         <th>操作</th>
-//                                                     </tr>
-//                                                 </thead>
-                                                
-//                                                 <tbody>
-//                                                     <c:forEach var="favorite" items="${userfavorite}">
-//                                                         <tr class="content">
-//                                                             <td class="align-middle">${favorite.postTypeName}</td>
-//                                                             <td class="align-middle">${favorite.title}</td>
-//                                                             <td class="align-middle card-text">${favorite.content}</td>
-//                                                             <td class="align-middle">${favorite.replyAccount}<br />${favorite.replyTime}</td></td>
-//                                                             <td class="align-middle">
-//                                                                 <a class="btn btn-info btn-icon-split popup-with-move-anim viewreplies" href="#details-lightbox-3">
-//                                                                 <span class="icon text-white-50"><i class="fas fa-info-circle"></i></span>
-//                                                                 <span class="text">觀看</span></a>
-                                                                
-//                                                                 <input type="hidden" class="replyPhoto" value="${report.replyPhoto}">
-//                                                                 <input type="hidden" class="replyContent" value="${report.replyContent}">
-//                                                                 <input type="hidden" class="replyTime" value="${report.replyTime}">
-//                                                                 <input type="hidden" class="replyaccount" value="${report.replyAccount}">
-//                                                                 <input type="hidden" class="reportimage" value="${report.r_image}">
-//                                                                 <input type="hidden" class="reportreplyNo" value="${report.replyNo}">
-                                                                
-//                                                                 <button type="submit" class="btn btn-warning btn-icon-split deletereply" value="刪除">
-//                                                                 <span class="icon text-white-50"><i class="fas fa-exclamation-triangle"></i></span>
-//                                                                 <span class="text">刪除</span></button>
-                                                                
-//                                                                 <button type="submit" class="btn btn-secondary btn-icon-split revoke" value="撤銷">
-//                                                                 <span class="icon text-white-50"><i class="fas fa-arrow-right"></i></span>
-//                                                                 <span class="text">撤銷</span></button>
-//                                                             </td>
-
-//                                                         </tr>
-//                                                     </c:forEach>
-//                                                 </tbody>
-//                                             </table>
-                                            
-                                            
-                                        
-//                                             <a class="btn-solid-reg popup-with-move-anim"
-//                                                 href="#details-lightbox-3">LIGHTBOX</a>
-//                                         </div>
-                                        
-//                                     </div>`);
-                                
-                               
-                                
                             }
-                        })
+                        });
                     });
+                    
+//                     function deletes(){
+//                     	 let deletepost =$(this).prev().siblings(".deletefas").val();
+//                          console.log(deletepost);
+
+//                     }
+                    
+//                     $(function() {
+//                         $(".deletefas").click(function(){
+                           
+//                            let deletepost = $(this).prev().val();
+//                            console.log(deletepost);
+                           
+//                         });
+//                    });
+                
+                    $(document).on('click',".deletefas",function(){
+                    	let replyNo = $(this).prev().siblings(".deletefasss").val();
+                    	console.log(replyNo);
+                    });
+                    
                     
                     
                     </script>
@@ -545,14 +514,19 @@
 
 
 						<!-- Tab -->
+						
 						<div class="tab-pane fade" id="tab-3" role="tabpanel"
 							aria-labelledby="tab-3">
 							<div class="row">
+							 <div class="col-lg-12">
+                                         <div class="text-container">
 							
-							<div id ="favoriteShow"></div>
-<!-- 							<table id="favoriteShow" border="1"></table> -->
+<!-- 							<div id ="favoriteShow"></div> -->
+							<table id="favoriteShow" class="table table-sm"></table>
 
 								<!-- end of col -->
+							</div>
+							</div>
 							</div>
 							<!-- end of row -->
 						</div>
@@ -572,8 +546,6 @@
 	</div>
 	<!-- end of tabs -->
 	<!-- end of features -->
-
-
 
 
 
@@ -801,6 +773,13 @@
     <script src="js/images.js"></script>
                         <script>
 
+                        
+                        
+                        
+                        
+                        
+                        
+
                         /*Bootstrap 3：在页面刷新时保持选中的选项卡*/
                         $(document).ready(function () {
                             if (location.hash) {
@@ -827,6 +806,10 @@
                             var anchor = location.hash || $("a[data-toggle='tab']").first().attr("href");
                             $("a[href='" + anchor + "']").tab("show");
                         });
+                        
+                        
+                        
+                        
                     </script>
     
     
@@ -834,7 +817,7 @@
     
     
 
-
-	<%@ include file="../admin/FrontStageFoot.jsp"%>
+<script src="https://kit.fontawesome.com/f795d981d8.js" crossorigin="anonymous"></script>
+<%@ include file="../admin/FrontStageFoot.jsp"%>
 </body>
 </html>
