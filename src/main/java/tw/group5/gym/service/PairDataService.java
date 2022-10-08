@@ -53,7 +53,7 @@ public class PairDataService {
 			//回傳之前配到main的那位
 			return checkRepart.getMainData();
 		}
-		List<PairData> pairTimes = dailyplRespository.findByMainData(mainData);
+		List<DailyPairLog> pairTimes = dailyplRespository.findByMainData(mainData);
 		if(pairTimes.size()==3) {
 			return null;
 		}
@@ -63,6 +63,15 @@ public class PairDataService {
 				System.out.println("同一位抓");
 				pd.setMatchingScore(35);
 				continue;
+			}
+			if(pairTimes!=null) {
+				for(DailyPairLog checktimes:pairTimes) {
+					System.out.println("配過了");
+					PairData pair = checktimes.getPair();
+					if(pair.getMember().getId().equals(pd.getMember().getId())) {
+						pd.setMatchingScore(35);
+					}
+				}
 			}
 			System.out.println("給");
 			int gender=0;
@@ -85,12 +94,6 @@ public class PairDataService {
 					+Math.abs(mainData.getWorkoutType()-pd.getWorkoutType())
 					+countlocation(mainData.getCurrentLocation(), pd.getCurrentLocation());
 			pd.setMatchingScore(m);
-		}
-		if(pairTimes!=null) {
-			for(PairData checktimes:pairTimes) {
-				System.out.println("配過了");
-				checktimes.setMatchingScore(35);
-			}
 		}
 		//按分數排序
 		Collections.sort(allpd, new Comparator<PairData>() {
@@ -116,9 +119,10 @@ public class PairDataService {
 		dailyplRespository.save(new DailyPairLog(mainData,allpd.get(0)));
 		//交出去前把配對指數轉成百分比
 		PairData result = allpd.get(0);
-		float percent=result.getMatchingScore()/34;
+		double percent=(double)result.getMatchingScore()/(double)34;
 		System.out.println(percent+"percent");
-		int count=(int)(1-(percent))*100;
+		double a =1.0-percent;
+		int count=(int) (a*100);
 		System.out.println("百分比分數"+count);
 		result.setMatchingScore(count);
 		return result;

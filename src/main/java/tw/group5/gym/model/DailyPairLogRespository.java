@@ -8,7 +8,7 @@ public interface DailyPairLogRespository extends JpaRepository<DailyPairLog, Int
 	
 	public DailyPairLog findByPair(PairData partner);
 
-	public List<PairData> findByMainData(PairData main);
+	public List<DailyPairLog> findByMainData(PairData main);
 	
 	public DailyPairLog findByMainDataAndPair(PairData maindata, PairData partner);
 	

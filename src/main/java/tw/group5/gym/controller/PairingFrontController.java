@@ -90,57 +90,18 @@ public class PairingFrontController {
 			pDataService.updateDailyPairLog(result);
 			//確認對方有沒有先同意了
 			DailyPairLog result2 = pDataService.findByMainDataAndPair(partner, main);
-			if(result2!=null) {
-				return "show";
+			if(result2==null) {
+				return "wait"; //對方還沒回應
+			}else if(result2.getResult()==1) {
+				return "show"; //對方同意
+			}else{
+				return "end"; //對方不要
 			}
-			return "wait";
 		}
-		result.setResult(0);
+		result.setResult(0); //我說不要
 		pDataService.updateDailyPairLog(result);
-		return "next";
+		return "end";
 	}
 	
-	@PostMapping("/pairnext")
-	public String processMatching2(int main,Model m) {
-		System.out.println("next!");
-		PairData mainPD = pDataService.findById(main);
-		PairData matching = pDataService.matching(mainPD);
-		if(matching==null) {
-			System.out.println("null");
-			return "gym/pairingFront04";
-		}
-		m.addAttribute("matching", matching);
-		m.addAttribute("mainPD", mainPD);
-		return "gym/pairingFront03";
-	}
-	
-	
-//	@GetMapping("/pairing")
-//	public String showPairingPage(Model m) {
-//		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-//		System.out.println("catcha!"+username);
-//		//找到使用者id
-//		MemberBean user = adminService.findByAccountMember(username);
-//		System.out.println(user.getMemberName());
-////		m.addAttribute("currentUser", user);
-//		
-//		//找今日配對編號userPairingLog.getPairingNo();
-//		PairingLog userPairingLog = pLogService.findByMemberAndToday(user);
-//		
-//		//確認有沒有真的配到對（配對編號=0時，表示沒有配到對）
-//		Integer pairingNo = userPairingLog.getPairingNo();
-//		if(pairingNo!=0) {
-//			//找到對方
-//			PairingLog uPairLog = pLogService.findByPairingNoAndPairingDate(pairingNo,userPairingLog);
-//			System.out.println("uuuuuuuuuuur"+uPairLog.getId());
-//			MemberBean uPair = uPairLog.getMember();
-//			System.out.println(uPair.getMemberName());
-//			m.addAttribute("uPair", uPair);
-//		}else {
-//			m.addAttribute("singleOne", "今日無配對健友");
-//		}
-//		
-//		return "/gym/pairingFront";
-//	}
 	
 }
