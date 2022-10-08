@@ -103,5 +103,9 @@ public class PairingFrontController {
 		return "end";
 	}
 	
+	@GetMapping("/pairedit")
+	public String processEditPairData() {
+		return "gym/pairingFrontEdit";
+	}
 	
 }
