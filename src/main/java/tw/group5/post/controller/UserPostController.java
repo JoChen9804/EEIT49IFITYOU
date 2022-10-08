@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import tw.group5.admin.model.AdminBean;
 import tw.group5.admin.model.MemberBean;
+import tw.group5.admin.model.MemberDetail;
 import tw.group5.admin.service.AdminService;
 import tw.group5.post.model.FavoritePostBean;
 import tw.group5.post.model.MainPostBean;
@@ -32,7 +35,7 @@ import tw.group5.post.service.ReplyPostService;
 
 @Controller
 @RequestMapping("/group5")
-@SessionAttributes(names= {"useradmin"})
+@SessionAttributes(names= {"user"})
 public class UserPostController {
     
     //主貼文
@@ -59,7 +62,7 @@ public class UserPostController {
     public static final String USERPOSTCHANGEPOST = "post/UserPostChangePost";
     
     //會員資料
-    public String memberAccount = "user123" ;
+    public String memberAccount  ;
     public String postPermission ;
     public String postPhoto ="/upload/ddd1664247497905.jpg";
     public String replyPhoto ="/upload/ddd1664247497905.jpg" ;
@@ -78,25 +81,33 @@ public class UserPostController {
 //        replyPhoto = adminBean.getAdminPhoto();
 //    }
 //    
-//    public void memberBean() {
-//        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-//        MemberBean memBer = amService.findByAccountMember(username);
-//        memberAccount = memBer.getMemberAccount();
-//        postPhoto = memBer.getMemberPhoto();
-//        replyPhoto = memBer.getMemberPhoto();
-//    }
+    public void memberBean(MemberBean mbBean) {
+        //String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        //MemberBean memBer = amService.findByAccountMember(username);
+        memberAccount = mbBean.getMemberAccount();
+        postPhoto = mbBean.getMemberPhoto();
+        replyPhoto = mbBean.getMemberPhoto();
+    }
     
     
     //貼文首頁
     @GetMapping("/UserPostAll")
-    public ModelAndView postFornt(MainPostBean mpBean) {
-        
+    public ModelAndView postFornt(MainPostBean mpBean,HttpSession session) {
+        MemberBean user = (MemberBean)session.getAttribute("loginMember");
+        if(user != null) {
+            memberBean((MemberBean) user);
+            MemberDetail memberDetail = user.getMemberDetail();
+            
+            System.out.println("找會員id"+memberDetail.getId());
+            System.out.println("找會員id"+memberDetail.getMute());
+            
+            
+        }
+        System.out.println("目前使用者:"+memberAccount);
         //找到會員帳號先入到Bean
-        mpBean.setAccount(memberAccount);
-        
-        
+        //mpBean.setAccount(memberAccount);
         ModelAndView mav = new ModelAndView(USERPOSTFRONTPAGE);
-        
+        mav.addObject("user",user);
         
         //查詢標題已發布的
         if (mpBean.getTitle() != null) {
@@ -160,6 +171,7 @@ public class UserPostController {
         addPost.setReplyAccount(memberAccount);
         addPost.setLastReplyTime(mpService.currentDateFormat("date"));
         addPost.setPostPermission(state);
+        addPost.setCtr(0);
 
         // 測試用路徑串接
         if (!mfs.get(0).isEmpty()) {
@@ -173,12 +185,16 @@ public class UserPostController {
     
     // 觀看ok
     @GetMapping("/PostWtch")
-    public ModelAndView watchPost(Integer mainPostNo) {
+    public ModelAndView watchPost(Integer mainPostNo,HttpSession session) {
         MainPostBean queryOne = mpService.selectById(mainPostNo);
-        
+        //已發布的 點閱率+1
+        if("已發布".equals(queryOne.getPostPermission())){
+            queryOne.setCtr(queryOne.getCtr()+1);
+            mpService.update(queryOne);
+        }
         ModelAndView mavMpost = takeOutmpBean(queryOne,USERPOSTDETAILS);
         mavMpost.addObject("postPhoto", postPhoto);
-        
+        //mavMpost.addObject("user",user);
         // -----------上面是主貼文------------
 
         List<ReplyPostBean> allReply = rpService.allReply(mainPostNo);
@@ -190,12 +206,13 @@ public class UserPostController {
     }
     
     // 刪除 ok
+    @ResponseBody
     @DeleteMapping("/UserPost")
-    public String deleteDainPost(Integer deletepost) {
+    public void deleteDainPost(Integer deletepost) {
         mpService.deleteById(deletepost);
-        return "redirect:/group5/UserPostAll";
+        //return "redirect:/group5/UserPostAll";
     }
-    
+
     
     // 跳到修改頁面ok
     @PostMapping("/UserPostChange")
@@ -450,14 +467,26 @@ public class UserPostController {
                 System.out.println("有收藏資料");
                 System.out.println(mpBeans.get(0).getTitle());
                 //ModelAndView mav = new ModelAndView().addObject("userfavorite", mpBeans);
-                
                 return mpBeans;
             }else {
+                System.out.println("查無收藏紀錄");
+                List<MainPostBean> mpBeans = new ArrayList<MainPostBean>();
+                MainPostBean mpBean = new MainPostBean();
+                mpBean.setMainPostNo(0);
+                mpBeans.add(mpBean);
                 new ModelAndView().addObject("noRecord", "查無收藏紀錄");
-                return null;
+                return mpBeans;
             }
         }else
         return null;
+    }
+    
+    @ResponseBody
+    @DeleteMapping("/FavoritePostAJAX/{mainPostNo}")
+    public void  deleteFavorte(@PathVariable("mainPostNo") MainPostBean mpBean){
+        FavoritePostBean fpBean = fpService.findByMainPostBean(mpBean);
+        System.out.println(mpBean.getMainPostNo());
+        fpService.deleteById(fpBean.getFavoriteNo());
     }
     
     

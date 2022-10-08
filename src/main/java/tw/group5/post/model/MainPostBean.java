@@ -37,7 +37,7 @@ public class MainPostBean {
     private String postPermission;      //論壇會員權限
     
     @Column(name = "postphoto")
-    private String postPhoto;           //會員照片        如何使用什麼型態???   
+    private String postPhoto;           //會員照片           
    
     @Column(name = "addtime")
     private String addtime;               //新增時間
@@ -56,6 +56,9 @@ public class MainPostBean {
     
     @Column(name = "replyaccount")
     private String replyAccount;         //最後回覆會員
+    
+    @Column(name = "ctr")
+    private Integer ctr;         //最後回覆會員
     
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "mainPostBean",cascade = CascadeType.ALL)
     private Set<ReplyPostBean> replyPostBean = new LinkedHashSet<ReplyPostBean>();
@@ -152,5 +155,22 @@ public class MainPostBean {
     public void setP_image(String p_image) {
         this.p_image = p_image;
     }
-    
+    public Integer getCtr() {
+        return ctr;
+    }
+    public void setCtr(Integer ctr) {
+        this.ctr = ctr;
+    }
+    public Set<ReplyPostBean> getReplyPostBean() {
+        return replyPostBean;
+    }
+    public void setReplyPostBean(Set<ReplyPostBean> replyPostBean) {
+        this.replyPostBean = replyPostBean;
+    }
+    public Set<FavoritePostBean> getFavoritePostBean() {
+        return favoritePostBean;
+    }
+    public void setFavoritePostBean(Set<FavoritePostBean> favoritePostBean) {
+        this.favoritePostBean = favoritePostBean;
+    }
 }

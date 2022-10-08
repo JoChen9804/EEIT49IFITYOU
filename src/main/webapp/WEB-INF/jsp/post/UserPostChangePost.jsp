@@ -42,9 +42,9 @@
 								<thead>
 									<tr>
 										<th><label> <input type="radio"
-												class="revisepostType" name="postTypeName" value="公告"
+												class="revisepostType" name="postTypeName" value="飲食"
 												required oninvalid="setCustomValidity('請輸入帳號')"
-												oninput="setCustomValidity('')">公告
+												oninput="setCustomValidity('')">飲食
 										</label> <label> <input type="radio" class="revisepostType"
 												name="postTypeName" value="分享" checked>分享
 										</label> <label> <input type="radio" class="revisepostType"

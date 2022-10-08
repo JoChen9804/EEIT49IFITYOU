@@ -28,6 +28,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import tw.group5.admin.model.AdminBean;
+import tw.group5.admin.model.MemberBean;
+import tw.group5.admin.model.MemberDetail;
 import tw.group5.admin.service.AdminService;
 import tw.group5.post.model.MainPostBean;
 import tw.group5.post.model.ReplyPostBean;
@@ -162,6 +164,20 @@ public class MainPostServlet {
         mpService.updatePermission("駁回，"+xreason,mainPostNo);
         //return "redirect:MainPost.all";
     }
+    
+    //禁止發言
+    @ResponseBody
+    @PostMapping("/UserPostMute/{replyaccount}")
+    public void userMute(@PathVariable("replyaccount")String replyaccount) {
+        MemberBean resultMember = amService.findByAccountMember(replyaccount);
+        MemberDetail memberDetail = resultMember.getMemberDetail();
+        memberDetail.setMute(1);
+        resultMember.setMemberDetail(memberDetail);
+        amService.updateOne(resultMember);
+        System.out.println("fffffffffff"+memberDetail.getMute());
+    }
+    
+    
     
     
     // 刪除貼文

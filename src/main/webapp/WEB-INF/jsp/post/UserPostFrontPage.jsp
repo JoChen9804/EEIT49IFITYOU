@@ -69,6 +69,15 @@
 .center {
     text-align: center;
 }
+
+.card-body {
+/*      width:350px; */
+     height: 250px;
+}
+
+.p1 {
+    margin: 0;
+}
 </style>
 <!-- Favicon  -->
 </head>
@@ -92,7 +101,7 @@
 			<!-- end of row -->
 			<div class="row">
 				<div class="col-lg-12">
-
+                    
 					<!-- Tabs Links -->
 					<ul class="nav nav-tabs" id="argoTabs" role="tablist">
 						<li class="nav-item"><a class="nav-link active"
@@ -106,23 +115,26 @@
 							data-toggle="tab" href="#tab-3" role="tab" aria-controls="tab-3"
 							aria-selected="false"><i class="fas fa-chart-bar"></i>收藏貼文</a></li>
 					</ul>
+<!-- 					找會員帳號  與是否禁止發言-->
+					<input type="hidden" class="useraccount" value="${user.memberAccount}"> 
+					 
+					<input type="hidden" class="usermute" value="${user.memberDetail.mute}"> 
 					<!-- end of tabs links -->
                     <script>
-  
+                    
                     
                     
                     $(function(){
+                    	console.log($(".useraccount").val());
+                    	//console.log(usermute);
+                    	
                         $.ajax({
                             type: "GET",
                             url: "/group5/FavoritePostAJAX",
                             dataType : 'json',
                             success: function(data){
-                                //console.log(data);
+                                console.log(2);
                                 $('#favoriteShow').empty(""); //先清空
-                                
-                                if(data==null){
-                                    $('table').prepend(`<tr><td colspan="2">No data</td></tr>`);
-                                }else{
                                     var table = $("#favoriteShow");
                                     table.append(` <tr>
                                                       <th>類型</th>
@@ -131,7 +143,12 @@
                                                       <th>會員<br>發布時間</th>
                                                       <th>操作</th>
                                                    </tr>`);
-                                    $.each(data, function(i,n){    
+                                    $.each(data, function(i,n){
+                                    	if(n.mainPostNo == 0){
+                                    		$('#favoriteShow').empty("");
+                                    		$('#favoriteShow').append(`<p class='center'>查無收藏紀錄<p>`);
+                                    	}else{
+                                    	
                                         var title = n.title;
                                         var tr = "<tr class='content'>" + 
                                                  "<td class='align-middle'>" + n.postTypeName + "</td>" +
@@ -148,39 +165,66 @@
                                                  "</td>" + 
                                                  "</tr>";
                                         table.append(tr);
+                                        
+                                    	}
                                     });
-                                }
                             }
                         });
                     });
                     
-//                     function deletes(){
-//                     	 let deletepost =$(this).prev().siblings(".deletefas").val();
-//                          console.log(deletepost);
-
-//                     }
-                    
-//                     $(function() {
-//                         $(".deletefas").click(function(){
-                           
-//                            let deletepost = $(this).prev().val();
-//                            console.log(deletepost);
-                           
-//                         });
-//                    });
-                
                     $(document).on('click',".deletefas",function(){
-                    	let replyNo = $(this).prev().siblings(".deletefasss").val();
-                    	console.log(replyNo);
+                    	let mainPostNo = $(this).siblings(".deletefasss").val();
+                    	//let tr = $(this).siblings(".deletefasss").parent();
+                    	//console.log(tr);
+                    	Swal.fire({
+								    title: '確定刪除收藏？',
+								    text: "",
+								    icon: 'warning',
+								    showCancelButton: true,
+								    confirmButtonColor: '#3085d6',
+								    cancelButtonColor: '#d33',
+								    confirmButtonText: '刪除',
+								    cancelButtonText: '取消',
+								    reverseButtons: true
+								
+								}).then((result) => {
+								    if (result.isConfirmed) {
+								    	$(this).siblings().parent().parent().remove();
+								    	deletefavorite(mainPostNo);
+								        Swal.fire(
+								            '已刪除貼文!'
+								        ).then((result) => {
+								            if (result.isConfirmed) {
+								            }
+								        });
+								
+								    }
+								});
+                    	
+                    	
                     });
                     
-                    
+                    function deletefavorite(mainPostNo){
+                        $.ajax({
+                            type: "Delete",
+                            url: "/group5/FavoritePostAJAX/"+ mainPostNo,
+                            success: function(){
+                                Swal.fire(
+                                        '已刪除收藏!'
+                                ).then((result)=>{
+                                    if(result.isConfirmed){
+                                    }
+                                });
+                                
+                            }
+                        });
+                    }
                     
                     </script>
                     
 
 
-<!-- ////////////////////// 全部貼文///////////////////////////// -->
+                    <!-- ////////////////////// 全部貼文///////////////////////////// -->
 					<!-- Tabs Content -->
 					<div class="tab-content" id="argoTabsContent">
 
@@ -190,27 +234,27 @@
 							<div class="row">
 								
 								
-								<div class="col-lg-12">
+								<div class="col-lg-9">
 									<div class="text-container">
 
 										<form action="UserPostAll" method="GET">
 
 
-											<div class="row g-3">
+											<div class="row g-2">
 												<div class="col-md">
-													<div class="form-floating">
-														<input type="text" name="title" class="form-control entertitle"
-															placeholder="請輸入標題" required
-															oninvalid="setCustomValidity('請輸入標題')"
-															oninput="setCustomValidity('')"><label style="color:#FF0000"
-															for="floatingInputGrid"></label>
-													</div>
+<!-- 													<div class="form-floating"> -->
+<!-- 														<input type="text" name="title" class="form-control entertitle" -->
+<!-- 															placeholder="請輸入標題" required -->
+<!-- 															oninvalid="setCustomValidity('請輸入標題')" -->
+<!-- 															oninput="setCustomValidity('')"><label style="color:#FF0000" -->
+<!-- 															for="floatingInputGrid"></label> -->
+<!-- 													</div> -->
 												</div>  
-												<div class="col-md">
-													<div class="form-floating">
-														<input type="submit" class="btn-solid-reg inquiretitle" value="查詢">
-													</div>
-												</div>
+<!-- 												<div class="col-md"> -->
+<!-- 													<div class="form-floating"> -->
+<!-- 														<input type="submit" class="btn-solid-reg inquiretitle" value="查詢"> -->
+<!-- 													</div> -->
+<!-- 												</div> -->
 												
 												<script>
                                                    $(".inquiretitle").on('click', function(event){
@@ -250,45 +294,176 @@
 										</form>
 
 
-										<table class="table table-sm">
-											<thead>
-												<tr>
-													<th>圖片</th>
-													<th>類型</th>
-													<th>標題</th>
-													<th>發布日期</th>
-													<th>最後回覆</th>
-													<th>觀看</th>
-												</tr>
-											</thead>
-											<c:forEach var="allmpbs" items="${query}">
-												<tbody>
-													<tr>
-														<!--<a href="/group5/PostWtch/${allmpbs.mainPostNo}"></a>-->
-														<td class="align-middle"><img class="imgfront"
-															src="${allmpbs.p_image}"></td>
-														<td class="align-middle">[${allmpbs.postTypeName}]</td>
-														<td class="align-middle">${allmpbs.title}</td>
-														<td class="align-middle">${allmpbs.account}<br />${allmpbs.addtime}</td>
-														<td class="align-middle">${allmpbs.replyAccount}<br />${allmpbs.lastReplyTime}
-														</td>
-														<td class="align-middle">
-															<form action="PostWtch" method="GET">
-																<input type="hidden" name="mainPostNo"
-																	value="${allmpbs.mainPostNo}"> <input
-																	type="submit" class="btn btn-outline-success"
-																	value="觀看">
-															</form>
-														</td>
-													</tr>
-												</tbody>
-											</c:forEach>
-										</table>
+<!-- 										<table class="table table-sm"> -->
+<!-- 											<thead> -->
+<!-- 												<tr> -->
+<!-- 													<th>圖片</th> -->
+<!-- 													<th>類型</th> -->
+<!-- 													<th>標題</th> -->
+<!-- 													<th>發布日期</th> -->
+<!-- 													<th>最後回覆</th> -->
+<!-- 													<th>觀看</th> -->
+<!-- 												</tr> -->
+<!-- 											</thead> -->
+<%-- 											<c:forEach var="allmpbs" items="${query}"> --%>
+<!-- 												<tbody> -->
+<!-- 													<tr> -->
+<!-- 														<a href="/group5/PostWtch/${allmpbs.mainPostNo}"></a> -->
+<!-- 														<td class="align-middle"><img class="imgfront" -->
+<%-- 															src="${allmpbs.p_image}"></td> --%>
+<%-- 														<td class="align-middle">[${allmpbs.postTypeName}]</td> --%>
+<%-- 														<td class="align-middle">${allmpbs.title}</td> --%>
+<%-- 														<td class="align-middle">${allmpbs.account}<br />${allmpbs.addtime}</td> --%>
+<%-- 														<td class="align-middle">${allmpbs.replyAccount}<br />${allmpbs.lastReplyTime} --%>
+<!-- 														</td> -->
+<!-- 														<td class="align-middle"> -->
+<!-- 															<form action="PostWtch" method="GET"> -->
+<!-- 																<input type="hidden" name="mainPostNo" -->
+<%-- 																	value="${allmpbs.mainPostNo}"> <input --%>
+<!-- 																	type="submit" class="btn btn-outline-success" -->
+<!-- 																	value="觀看"> -->
+<!-- 															</form> -->
+<!-- 														</td> -->
+<!-- 													</tr> -->
+<!-- 												</tbody> -->
+<%-- 											</c:forEach> --%>
+<!-- 										</table> -->
 										<h3>${error}</h3>
+										<c:forEach var="allmpbs" items="${query}">
+										      <div class="card mb-3" style="max-width: 900px;">
+                                        <div class="row g-0">
+                                            <div class="col-md-5 col-lg-5">
+                                                <img src="${allmpbs.p_image}" width="450px"
+                                                    height="250px" class="w-100">
+                                            </div>
 
+                                            <div class="col-md-7 col-lg-7">
+                                                <div class="card-body">
+                                                    <h3 class="card-title">${allmpbs.title}&emsp;[${allmpbs.postTypeName}]</h3>
+                                                    <p class="card-text">${allmpbs.content}</p>
+                                                    <p class="p1"><small class="text-muted">發布會員:${allmpbs.account}</small></p>
+                                                    <p class="p1"><small class="text-muted">發布時間:${allmpbs.addtime}</small></p>
+                                                    <form action="PostWtch" method="GET">
+                                                      <input type="hidden" name="mainPostNo"value="${allmpbs.mainPostNo}"> 
+                                                      <input type="submit" class="btn btn-outline-success" value="觀看">
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+										</c:forEach>
+										
 									</div>
+									
+									
+									
 									<!-- end of text-container -->
 								</div>
+								
+								
+								<div id="sidebar-primary" class="col-xs-12 col-md-12 col-lg-3 col-xl-3 sidebar-primary widget-area"
+                                            role="complementary">
+                                <aside id="search-2">
+                                
+                                
+<!--                         <form role="search" method="get" class="search-form" -->
+<!--                             action="https://ld-wp.template-help.com/wordpress_52382/"> -->
+                           
+                            <form action="UserPostAll" method="GET">
+                            <input type="text" name="title" class="form-control entertitle"
+                                                            placeholder="請輸入標題" required
+                                                            oninvalid="setCustomValidity('請輸入標題')"
+                                                            oninput="setCustomValidity('')"><label style="color:#FF0000"
+                                                            for="floatingInputGrid"></label>
+                            
+                            <input type="submit" class="btn-solid-reg inquiretitle" value="查詢">
+<!--                             查詢:<input type="text" placeholder="Search" value="" /> -->
+<!--                             <button type="submit" class="search-form__submit btn btn-primary"><i -->
+<!--                                     class="material-icons">search</i></button> -->
+
+                         </form>
+                    </aside>
+                    <aside id="widget-custom-posts-2" class="widget widget-custom-posts custom-posts">
+                        <h5 class="widget-title">Recent Posts</h5>
+                        <div class="custom-posts__holder row">
+                            <div class="custom-posts__item post col-xs-6 col-sm-6 col-md-12 col-lg-12 col-xl-12">
+                                <div class="post-inner">
+                                    <div class="entry-header">
+                                        <div class="post-thumbnail"><a
+                                                href="https://ld-wp.template-help.com/wordpress_52382/2016/07/26/how-long-before-the-exit-you-must-be-planning-it/"
+                                                class="post-thumbnail__link"><img class="post-thumbnail__img"
+                                                    src="https://ld-wp.template-help.com/wordpress_52382/wp-content/uploads/2016/07/image41-130x136.jpg"
+                                                    alt="How long before the exit you must be planning it?" width="130"
+                                                    height="136"></a></div>
+                                        <h4><a href="https://ld-wp.template-help.com/wordpress_52382/2016/07/26/how-long-before-the-exit-you-must-be-planning-it/"
+                                                title="How long before the exit you must be planning it?">How long
+                                                before the exit you must be planning it?</a></h4> <span
+                                            class="post__date"><a
+                                                href="https://ld-wp.template-help.com/wordpress_52382/2016/07/26/"
+                                                class="post__date-link"><time
+                                                    datetime="2016-07-26T13:40:57+00:00">26.07.2016</time></a></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="custom-posts__item post col-xs-6 col-sm-6 col-md-12 col-lg-12 col-xl-12">
+                                <div class="post-inner">
+                                    <div class="entry-header">
+                                        <div class="post-thumbnail"><a
+                                                href="https://ld-wp.template-help.com/wordpress_52382/2016/05/17/gallery-format/"
+                                                class="post-thumbnail__link"><img class="post-thumbnail__img"
+                                                    src="http://fakeimg.pl/130x136/000/fff/?text=130x136"
+                                                    alt="Gallery Format" width="130" height="136"></a></div>
+                                        <h4><a href="https://ld-wp.template-help.com/wordpress_52382/2016/05/17/gallery-format/"
+                                                title="Gallery Format">Gallery Format</a></h4> <span
+                                            class="post__date"><a
+                                                href="https://ld-wp.template-help.com/wordpress_52382/2016/05/17/"
+                                                class="post__date-link"><time
+                                                    datetime="2016-05-17T14:37:10+00:00">17.05.2016</time></a></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+
+                    <aside id="categories-2" class="widget widget_categories">
+                        <h5 class="widget-title">Categories</h5>
+                        <ul>
+                            <li class="cat-item cat-item-1"><a
+                                    href="https://ld-wp.template-help.com/wordpress_52382/category/business-plan-consulting/">Business
+                                    plan consulting</a>
+                            </li>
+                            <li class="cat-item cat-item-27"><a
+                                    href="https://ld-wp.template-help.com/wordpress_52382/category/conflict-management/">Conflict
+                                    management</a>
+                            </li>
+
+                        </ul>
+                    </aside>
+                    <aside id="recent-comments-2" class="widget widget_recent_comments">
+                        <h5 class="widget-title">Recent Comments</h5>
+                        <ul id="recentcomments">
+                            <li class="recentcomments"><span class="comment-author-link">admin</span> on <a
+                                    href="https://ld-wp.template-help.com/wordpress_52382/2016/05/17/image-format/#comment-9">Image
+                                    Format</a></li>
+                            <li class="recentcomments"><span class="comment-author-link">admin</span> on <a
+                                    href="https://ld-wp.template-help.com/wordpress_52382/2016/05/17/bringing-a-new-cfo-at-the-time-of-crisis/#comment-8">Bringing
+                                    a new CFO at the time of crisis?</a></li>
+
+                        </ul>
+                    </aside>
+
+                </div>
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
 								<!-- end of col -->
 							</div>
 							<!-- end of row -->
@@ -296,7 +471,9 @@
 						<!-- end of tab-pane -->
 						<!-- end of tab -->
 						<!-- ////////////////////// 全部貼文///////////////////////////// -->
-
+                        <script>
+                           $(".card-body").css("padding", "0");
+                        </script>
 
 
 
@@ -408,12 +585,13 @@
                                                                       }).then((result) => {
                                                                           if (result.isConfirmed) {
                                                                               let deleteid = $(this).prev().val();
+                                                                              $(this).siblings().parent().parent().remove();
                                                                               deletePost(deleteid);
                                                                               Swal.fire(
                                                                             		  '已刪除貼文!'
                                                                               ).then((result)=>{
                                                                             	  if(result.isConfirmed){
-                                                                                      location.reload();
+                                                                                      //location.reload();
                                                                                   }
                                                                               });
                                                                     
@@ -523,7 +701,7 @@
 							
 <!-- 							<div id ="favoriteShow"></div> -->
 							<table id="favoriteShow" class="table table-sm"></table>
-
+                                
 								<!-- end of col -->
 							</div>
 							</div>
@@ -773,7 +951,16 @@
     <script src="js/images.js"></script>
                         <script>
 
-                        
+                        $(function () {
+                            var len = 50; // 超過50個字以"..."取代
+                            $(".card-text").each(function (i) {
+                                if ($(this).text().length > len) {
+                                    $(this).attr("title", $(this).text());
+                                    var text = $(this).text().substring(0, len - 1) + "...";
+                                    $(this).text(text);
+                                }
+                            });
+                        });
                         
                         
                         

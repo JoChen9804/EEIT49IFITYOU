@@ -17,4 +17,6 @@ public interface FavoritePostRepository extends JpaRepository<FavoritePostBean, 
     @Modifying(clearAutomatically = true)
     @Query(value = "from FavoritePostBean where account = :account and mainPostNo = :mpNo")
     public List<FavoritePostBean> findAccountFavorite(@Param("account")String account,@Param("mpNo")Integer mainPostNo);
+
+    public FavoritePostBean findByMainPostBean(MainPostBean mpBean);
 }

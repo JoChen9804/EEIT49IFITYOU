@@ -147,6 +147,9 @@ $(function(){
 </head>
 <body>
 	<%@ include file="../admin/FrontStageHead.jsp"%>
+<!--                    找會員帳號  與是否禁止發言-->
+	<input type="hidden" class="usermute" value="${loginMember.memberDetail.mute}">
+	<input type="hidden" class="useraccount" value="${loginMember.memberAccount}">
 	<br>
 	<br>
 	<br>
@@ -180,6 +183,7 @@ $(function(){
                                 <button type="submit" class="btn btn-link fa-solid fa-bookmark fa-1x favorite"></button>
                                 <script>
                                 $(function(){
+                                	console.log($(".usermute").val());
 									    $(".favorite").on("click",function(){
 									        var mainPostNo = $("#mainPostNo").val();
 									        $.ajax({
@@ -310,20 +314,47 @@ $(function(){
 								
 								</td>
 								</tr>
-					           <script>
+					                           <script>
+					                           $(function(){
+					                        	   var usermute = $(".usermute").val();
+                                                   var useraccount= $(".useraccount").val();
+                                                   console.log(usermute);
+                                                   if(useraccount){
+                                                	   if(usermute != 0){
+                                                		   console.log("禁止發言");
+                                                		   $(".replycontent").attr('disabled',true);
+                                                           $(".replycontent").next().text('禁止發言，請聯絡管理員');
+                                                           $("#content1").prop("readonly",true)
+                                                	   }
+                                             
+                                                   }else{
+                                                       console.log("未登入");
+                                                       $(".replycontent").attr('disabled',true);
+                                                       $(".replycontent").next().text('請登入或加入會員');
+                                                       $("#content1").prop("readonly",true)
+                                                   }
+					                           
+					                           });
+					           
+					           
+					           
+					           
                                                    
                                                    $(".replycontent").on('click', function(event){
+                                                	   
+                                                	
+                                                	 
+                                                	   
                                                        var rs = false;
                                                        $("#content1").each(function(){
                                                            if($(this).val()==""){
                                                                console.log('請輸入內容');
-                                                               
                                                                Swal.fire({
                                                                    title:'請輸入內容',
                                                                    icon:'warning'
                                                                });
                                                                
-                                                               $(".replycontent").next().text('請輸入內容');
+                                                               $("#.replycontent").next().text('請輸入內容');
                                                                rs = true;
                                                            }
                                                        });

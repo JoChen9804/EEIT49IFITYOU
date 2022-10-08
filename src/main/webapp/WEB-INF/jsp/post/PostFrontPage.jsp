@@ -778,7 +778,10 @@ fieldset {
         
         $(".deletereply").on('click', function (event) {
             let replyNo = $(this).siblings(".reportreplyNo").val();
-
+            let replyaccount = $(this).siblings(".replyaccount").val();
+            console.log(replyaccount);
+            //userMute(replyaccount);
+            
             Swal.fire({
                 title: '確定刪除回覆?',
                 text: '',
@@ -790,25 +793,58 @@ fieldset {
                 confirmButtonText: '刪除'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    $.ajax({
-                        type: "Delete",
-                        url: "/group5/admin/ReplyPost",
-                        data: { replyNo: replyNo },
-                        dataType: 'json',
-                        success: function () {
-                            console.log("ok");
-                        }
-                    })
-                    Swal.fire({
-                        title: '刪除成功',
-                        icon: 'success'
-                    }).then((result) => {
-                        location.reload();
-                    });
+                	//呼叫刪除
+                	deletereply(replyNo);
+                     Swal.fire({
+		                title: '刪除成功，需要對會員'+replyaccount+'禁止發言嗎?',
+		                text: '',
+		                icon: 'warning',
+		                cancelButtonText: '取消',
+		                showCancelButton: true,
+		                confirmButtonColor: '#3085d6',
+		                cancelButtonColor: '#d33',
+		                confirmButtonText: '禁言'
+		            }).then((result) => {
+		            	if (result.isConfirmed) {
+		            		//呼叫禁言
+		            		userMute(replyaccount);
+		            	}
+                     });
                 }
             });
+            
         });
         
+        //刪除回覆
+       function deletereply(replyNo){
+           $.ajax({
+               type: "Delete",
+               url: "/group5/admin/ReplyPost",
+               data: { replyNo: replyNo },
+               dataType: 'json',
+               success: function () {
+                   console.log("ok");
+               }
+           })
+       };
+        
+        //禁止發言
+        function userMute(replyaccount){
+            $.ajax({
+                type: "Post",
+                url: "/group5/admin/UserPostMute/"+ replyaccount,
+                success: function(){
+                    var text ='已對'+ replyaccount + '禁止發言!';
+                	Swal.fire(
+                			text
+                    ).then((result)=>{
+                        if(result.isConfirmed){
+                        }
+                    });
+                    
+                }
+            });
+        };
         
         
         $(".revoke").on('click', function (event) {

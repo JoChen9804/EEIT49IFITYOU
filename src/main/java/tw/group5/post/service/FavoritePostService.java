@@ -1,6 +1,7 @@
 package tw.group5.post.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import tw.group5.post.model.FavoritePostBean;
 import tw.group5.post.model.FavoritePostRepository;
+import tw.group5.post.model.MainPostBean;
 import tw.group5.post.model.ReplyPostBean;
 
 @Service
@@ -32,5 +34,9 @@ public class FavoritePostService {
     
     public void deleteById(Integer id) {
         fpResp.deleteById(id);
+    }
+    
+    public FavoritePostBean findByMainPostBean(MainPostBean mpBean) {
+        return fpResp.findByMainPostBean(mpBean);
     }
 }
