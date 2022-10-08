@@ -8,8 +8,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -106,6 +108,36 @@ public class PairingFrontController {
 	@GetMapping("/pairedit")
 	public String processEditPairData() {
 		return "gym/pairingFrontEdit";
+	}
+	
+	
+	@PostMapping("/querydata")
+	@ResponseBody
+	public PairData processQueryData(@RequestParam("memberid") Integer memberId) {
+		System.out.println(memberId);
+		MemberBean member = adminService.selectOneMember(memberId);
+		return pDataService.findByMember(member);
+	}
+	
+	@PostMapping("/update1")
+	@ResponseBody
+	public PairData processPairDataUpdate(@RequestBody PairData pData) {
+		MemberBean member = adminService.selectOneMember(pData.getMemberId());
+		member.getMemberDetail().setPairContactInfo(pData.getConnection());
+		member.getMemberDetail().setPairInfo(pData.getToPartner());
+		MemberBean update = adminService.updateOne(member);
+		pData.setMember(update);
+		return pDataService.savePairData(pData);
+	}
+	
+	@PostMapping("/update2")
+	@ResponseBody
+	public PairData processPairDataUpdate2(@RequestBody PairData pData) {
+		int pdId = pData.getPdId();
+		PairData result = pDataService.findById(pdId);
+		result.setPairGender(pData.getPairGender());
+		result.setPairRelationship(pData.getPairRelationship());
+		return pDataService.savePairData(result);
 	}
 	
 }

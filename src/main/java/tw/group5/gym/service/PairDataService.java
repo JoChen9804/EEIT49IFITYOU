@@ -12,6 +12,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import tw.group5.admin.model.MemberBean;
 import tw.group5.gym.model.DailyPairLog;
 import tw.group5.gym.model.DailyPairLogRespository;
 import tw.group5.gym.model.PairData;
@@ -40,6 +41,12 @@ public class PairDataService {
 		 }
 		 return opt.get();
 	}
+	
+	//where memberid=?
+	public PairData findByMember(MemberBean member) {
+		return pdRespository.findByMember(member);
+	}
+	
 	
 	//回傳mainData配到的人+寫入dailypairlog
 	public PairData matching(PairData mainData){

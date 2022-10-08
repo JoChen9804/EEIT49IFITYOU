@@ -120,7 +120,7 @@
 							<a class="dropdown-item" href="/group5/user/UserCenter"><span
 								class="item-text" style="font-size: 1.2rem">會員中心</span></a>
 							<div class="dropdown-items-divide-hr"></div>
-							<a class="dropdown-item" href="terms-conditions.html"><span
+							<a class="dropdown-item" href="/group5/user/pairing/pairedit"><span
 								class="item-text" style="font-size: 1.2rem">健友配對</span></a>
 							<div class="dropdown-items-divide-hr"></div>
 							<a class="dropdown-item" href="/logout" data-toggle="modal"
