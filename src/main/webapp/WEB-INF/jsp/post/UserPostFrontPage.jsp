@@ -118,7 +118,7 @@
 <!-- 					找會員帳號  與是否禁止發言-->
 					<input type="hidden" class="useraccount" value="${user.memberAccount}"> 
 					 
-					<input type="hidden" class="usermute" value="${user.memberDetail.mute}"> 
+<%-- 					<input type="hidden" class="usermute" value="${user.memberDetail.mute}">  --%>
 					<!-- end of tabs links -->
                     <script>
                     
@@ -133,7 +133,7 @@
                             url: "/group5/FavoritePostAJAX",
                             dataType : 'json',
                             success: function(data){
-                                console.log(2);
+                                console.log();
                                 $('#favoriteShow').empty(""); //先清空
                                     var table = $("#favoriteShow");
                                     table.append(` <tr>

@@ -316,17 +316,11 @@ $(function(){
 								</tr>
 					                           <script>
 					                           $(function(){
-					                        	   var usermute = $(".usermute").val();
+					                        	   //var usermute = $(".usermute").val();
                                                    var useraccount= $(".useraccount").val();
-                                                   console.log(usermute);
+                                                   console.log(useraccount);
                                                    if(useraccount){
-                                                	   if(usermute != 0){
-                                                		   console.log("禁止發言");
-                                                		   $(".replycontent").attr('disabled',true);
-                                                           $(".replycontent").next().text('禁止發言，請聯絡管理員');
-                                                           $("#content1").prop("readonly",true)
-                                                	   }
-                                             
+					                        	   whetherToMute(useraccount)
                                                    }else{
                                                        console.log("未登入");
                                                        $(".replycontent").attr('disabled',true);
@@ -336,14 +330,31 @@ $(function(){
 					                           
 					                           });
 					           
+					                           function whetherToMute(useraccount){
+					                               $.ajax({
+					                                   type: "Post",
+					                                   url: "/group5/WhetherToMute/"+ useraccount,
+					                                   dataType : 'text',
+					                                   success: function(data){
+					                                	   console.log(data);
+					                                	   if(data == 1){
+	                                                           console.log("禁止發言");
+	                                                           $(".replycontent").attr('disabled',true);
+	                                                           $(".replycontent").next().text('禁止發言，請聯絡管理員');
+	                                                           $("#content1").prop("readonly",true)
+	                                                       }
+					                                	   
+					                                       
+					                                   }
+					                               });
+					                           }
 					           
-					           
+					                           
+					                           
+					                           
 					           
                                                    
                                                    $(".replycontent").on('click', function(event){
-                                                	   
-                                                	
-                                                	 
                                                 	   
                                                        var rs = false;
                                                        $("#content1").each(function(){

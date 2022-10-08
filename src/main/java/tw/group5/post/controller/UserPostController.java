@@ -64,8 +64,8 @@ public class UserPostController {
     //會員資料
     public String memberAccount  ;
     public String postPermission ;
-    public String postPhoto ="/upload/ddd1664247497905.jpg";
-    public String replyPhoto ="/upload/ddd1664247497905.jpg" ;
+    public String postPhoto ;
+    public String replyPhoto  ;
     
     //預設資料
     public String presetPhotos = "postfolder/images/defaultScreen.jpg";
@@ -88,6 +88,17 @@ public class UserPostController {
         postPhoto = mbBean.getMemberPhoto();
         replyPhoto = mbBean.getMemberPhoto();
     }
+    
+    @ResponseBody
+    @PostMapping("/WhetherToMute/{useraccount}")
+    public Integer whetherToMute(@PathVariable("useraccount")String useraccount) {
+        MemberBean mbBean = amService.findByAccountMember(useraccount);
+        MemberDetail memberDetail = mbBean.getMemberDetail();
+        System.out.println("禁言嗎:"+memberDetail.getMute());
+        return memberDetail.getMute();
+    }
+    
+    
     
     
     //貼文首頁
