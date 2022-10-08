@@ -218,7 +218,7 @@ $('#forColor').attr('style', 'background-color:white' );
 			$(document).on('click','.del', function(){
 				
 				console.log("抓刪除健");
-				
+				var this1 = $(this);
 				var id = $(this).prev().val();
 				var activityId = ${query_activity.activityId};
 				console.log("抓取刪除:" + id);
@@ -234,7 +234,6 @@ $('#forColor').attr('style', 'background-color:white' );
 					  cancelButtonText: '取消'
 					}).then((result) => {
 					  if (result.isConfirmed) {
-						  
 						  $.ajax({
 								type: "post",
 								url: "/group5/admin/signupdelete.controller",
@@ -242,8 +241,9 @@ $('#forColor').attr('style', 'background-color:white' );
 								contentType: "application/json",
 								success: function(){
 									console.log("delete signUp success");
-									$('#table_id').DataTable().destroy();
-									reloadTable(activityId);
+									//$('#table_id').DataTable().destroy();
+									//reloadTable(activityId);
+									this1.closest('tr').remove();
 									Swal.fire({
 										      title:'刪除成功!',
 										      text:'已刪除',
@@ -260,10 +260,12 @@ $('#forColor').attr('style', 'background-color:white' );
 										      '請在試一次',
 										      'error'
 										    ).then((result) => {
-										    	reloadTable(id);
+										    	//reloadTable(id);
 										    });
 								}
 							});
+							
+							
 					  }
 					});
 			});
