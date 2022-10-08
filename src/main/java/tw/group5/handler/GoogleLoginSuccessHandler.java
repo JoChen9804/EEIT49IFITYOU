@@ -37,6 +37,13 @@ public class GoogleLoginSuccessHandler implements AuthenticationSuccessHandler{
 		
 		if (mBean != null) {
 			System.out.println("有找到使用者");
+	        MemberDetail mDetail = mBean.getMemberDetail();
+	        mDetail.setRecentLoginDate(adminService.getDate());
+	        
+	        adminService.encode(mBean.getId());
+	        mBean.setMemberDetail(mDetail);
+	        
+	        adminService.updateOne(mBean);
 			session.setAttribute("loginMember", mBean);
 			response.sendRedirect("/group5/FrontStageMain");
 			
@@ -56,8 +63,19 @@ public class GoogleLoginSuccessHandler implements AuthenticationSuccessHandler{
 			mDetail.setPairWilling(0);
 			mDetail.setRegisterReferralCode(null);
 			newMember.setMemberDetail(mDetail);
-			adminService.insert(newMember);
+			MemberBean addNewMember = adminService.insert(newMember);
+			String referralCode = adminService.encode(addNewMember.getId());
+			// 生成推薦碼
+			MemberDetail memberDetail = addNewMember.getMemberDetail();
+			memberDetail.setReferralCode(referralCode);
+			adminService.updateCodeById(memberDetail);
+			String randomCode = "000";
 			session.setAttribute("loginMember", newMember);
+			
+			// 寄出第三方登入註冊信
+			adminService.sendRegisterMail(email, oauthUser.getName(), randomCode, "AdminGoogleLogin", "I FIT YOU 新會員goole登入創建帳號成功信");
+			
+			// 有填推薦人，寄推薦碼給推薦人
 			response.sendRedirect("/group5/FrontStageMain");
 		}
 	}

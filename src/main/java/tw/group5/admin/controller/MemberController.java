@@ -130,7 +130,15 @@ public class MemberController {
 		adminService.updateCodeById(memberDetail);
 		
 		// 寄出驗證信
-		adminService.sendRegisterMail(email, name, randomCode);
+		adminService.sendRegisterMail(email, name, randomCode, "AdminMailtemplete", "I FIT YOU 新會員註冊開通信");
+		
+		// 有填推薦人，寄推薦碼給推薦人
+		if (registerReferralCode != null && !registerReferralCode.isEmpty()) {
+			MemberBean mBeanReff = adminService.findMemberByReferralCode(mDetail.getRegisterReferralCode());
+			adminService.sendRegisterMail(mBeanReff.getEmail(), name, randomCode, "AdminReferralCode", "I FIT YOU 推薦人優惠碼發送");
+		}
+		
+		
 		return "admin/FrontStageMain";
 
 	}
@@ -138,15 +146,15 @@ public class MemberController {
 	@GetMapping("/verify")
 	public String verifyUser(@Param("code") String code) {
 		if (adminService.verify(code)) {
-			System.out.println(code);
 			System.out.println("會員驗證成功");
-			return "verify_success";
+			return "admin/VerifySuccess";
 
 		} else {
 
 			System.out.println("會員驗證失敗");
-			return "verify_fail";
+			return "admin/VerifyFail";
 		}
+
 	}
 
 }

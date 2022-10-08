@@ -13,6 +13,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import tw.group5.activity.model.ActivityVoucher;
@@ -25,6 +26,7 @@ import tw.group5.admin.model.MemberDetailRepository;
 import tw.group5.admin.model.MemberRepository;
 
 @Service(value = "adminService")
+@Transactional
 public class AdminService {
 
 	@Autowired
@@ -195,7 +197,7 @@ public class AdminService {
 		}
 		return true;
 	}
-
+	//找email(存在確認)
 	public boolean findEmail(String newEmail) {
 		Optional<MemberBean> op = memberRepo.findByEmail(newEmail);
 		if (op.isEmpty()) {
@@ -204,6 +206,7 @@ public class AdminService {
 		return true;
 	}
 	
+	//找email(回傳人)
 	public MemberBean findMemberByEmail(String newEmail) {
 		Optional<MemberBean> op = memberRepo.findByEmail(newEmail);
 		if (op.isEmpty()) {
@@ -211,7 +214,8 @@ public class AdminService {
 		}
 		return op.get();
 	}
-
+	
+	//找推薦碼(存在確認)
 	public boolean findByReferralCode(String referralCode) {
 		Optional<MemberDetail> op = memberDetailRepo.findByReferralCode(referralCode);
 		if (op.isEmpty()) {
@@ -219,12 +223,22 @@ public class AdminService {
 		}
 		return true;
 	}
+	//找推薦碼(回傳人)
+	public MemberBean findMemberByReferralCode(String referralCode) {
+		Optional<MemberDetail> op = memberDetailRepo.findByReferralCode(referralCode);
+		if (op.isEmpty()) {
+			return null;			
+		}
+		return op.get().getMember();
+	}
+	
+	
+	//寄註冊信
 	public String sendRegisterMail(String toEmailAddress, String name, 
-			String verificationCode) {
+			String verificationCode, String templete, String subject) {
 		String fromEmail = "eeit49group5@gmail.com";
 		List<String> toEmail = new ArrayList<>();
 		toEmail.add(toEmailAddress); //
-		String subject = "I FIT YOU 新會員註冊開通信";
 		//取得優惠券
 		Optional<ActivityVoucher> op = voucherRepo.findByVoucherTitle(85);
 		String coupon = op.get().getVoucherNo();
@@ -236,7 +250,7 @@ public class AdminService {
 		params.put("verifyURL", verifyURL);
 		params.put("coupon", coupon);
 		
-		String html = templateService.render("AdminMailtemplete", params);
+		String html = templateService.render(templete, params);
 		
 		mailService.registerMimeMail(fromEmail, toEmail, subject, html);
 		
@@ -252,9 +266,7 @@ public class AdminService {
 	    	
 	        mBean.setVerificationCode(null);
 	        mBean.setAuthority(0);
-	        
 	        memberRepo.save(mBean);
-	         
 	        return true;
 	    }
 	     

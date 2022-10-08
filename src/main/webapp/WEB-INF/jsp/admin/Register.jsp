@@ -45,6 +45,8 @@ hr {
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<!-- recaptcha -->
+	<script src="http://www.google.com/recaptcha/api.js" async defer></script>
 	<!-- Header -->
 	<header id="header" class="header">
 		<div class="header-content" style="padding-top: 4rem;">
@@ -56,7 +58,7 @@ hr {
 
 			<!-- Custom scripts for all pages-->
 			<script src="js/sb-admin-2.min.js"></script>
-	
+
 			<div class="container">
 				<div class="card o-hidden border-0 shadow-lg my-5">
 					<div class="card-body p-0">
@@ -76,10 +78,10 @@ hr {
 													id="exampleFirstName" placeholder="帳號" required
 													onchange="checkAccount()" name="account"> <label
 													style="font-size: 1rem; margin-bottom: 0rem;">&ensp;&ensp;<i
-													class="fas fa-times" style="color: gray"
+													class="fas fa-times" style="color: red"
 													id="iconAccountValid"></i>&ensp;此帳號沒有重複
 												</label> <label style="font-size: 1rem">&ensp;&ensp;<i
-													class="fas fa-times" style="color: gray"
+													class="fas fa-times" style="color: red"
 													id="iconAccountLength"></i>&ensp;帳號須為4~16字並以字母開頭
 												</label>
 											</div>
@@ -88,7 +90,7 @@ hr {
 													name="name" id="exampleLastName" placeholder="姓名" required
 													onchange="testName()"> <label
 													style="font-size: 1rem; margin-bottom: 0rem;">&ensp;&ensp;<i
-													class="fas fa-times" style="color: gray" id="iconName"></i>&ensp;姓名為必填欄位
+													class="fas fa-times" style="color: red" id="iconName"></i>&ensp;姓名為必填欄位
 												</label>
 											</div>
 										</div>
@@ -97,9 +99,9 @@ hr {
 												id="exampleInputEmail" placeholder="Email" required
 												onchange="checkEmail()" name="email"> <label
 												style="font-size: 1rem">&ensp;&ensp;<i
-												class="fas fa-times" style="color: gray" id="iconEmailValid"></i>&ensp;此Email沒有重複
+												class="fas fa-times" style="color: red" id="iconEmailValid"></i>&ensp;此Email沒有重複
 											</label> <label style="font-size: 1rem">&ensp;&ensp;&ensp;&ensp;&ensp;<i
-												class="fas fa-times" style="color: gray"
+												class="fas fa-times" style="color: red"
 												id="iconEmailFormat"></i>&ensp;Email格式正確
 											</label>
 										</div>
@@ -117,9 +119,9 @@ hr {
 													placeholder="再次輸入密碼" required>
 											</div>
 											<label class="col-sm-5.9" style="font-size: 1rem">&ensp;&ensp;&ensp;&ensp;<i
-												class="fas fa-times" style="color: gray" id="iconSame"></i>&ensp;兩次輸入密碼須相同&ensp;&ensp;&ensp;
+												class="fas fa-times" style="color: red" id="iconSame"></i>&ensp;兩次輸入密碼須相同&ensp;&ensp;&ensp;
 											</label> <label class="col-sm-6.1" style="font-size: 1rem"><i
-												class="fas fa-times" style="color: gray" id="iconValid"></i>&ensp;密碼須為8~16字英數字組合</label>
+												class="fas fa-times" style="color: red" id="iconValid"></i>&ensp;密碼須為8~16字英數字組合</label>
 										</div>
 										<div class="form-group row">
 											<div class="col-sm-6">
@@ -128,11 +130,12 @@ hr {
 													onchange="checkReferral()" name="registerReferralCode">
 												<label style="font-size: 1rem; display: none;"
 													id="referralLabel">&ensp;&ensp;<i
-													class="fas fa-times" style="color: gray"
+													class="fas fa-times" style="color: red"
 													id="iconReferralValid"></i>&ensp;推薦碼請輸入正確
 												</label>
 											</div>
-											<div class="col-sm-6"
+											<div class="col-sm-6 g-recaptcha"
+												data-sitekey="6Le5aFsiAAAAAK-1RkjDL21gFKWLFrM86XRu0Ab_"
 												style="align-items: center; display: flex;"></div>
 										</div>
 										<hr style="margin-bottom: 0.5rem; margin-top: 0.5rem">
@@ -142,7 +145,8 @@ hr {
 									</form>
 
 
-									<hr style="margin-bottom: 0.5rem; margin-top: 0.5rem;border-radius: 10rem;">
+									<hr
+										style="margin-bottom: 0.5rem; margin-top: 0.5rem; border-radius: 10rem;">
 									<div class="text-center">
 										<a class="small" href="/group5/ForgetPassword">忘記密碼?</a>
 									</div>
@@ -381,6 +385,7 @@ hr {
 		}
 		//註冊成功之提示
 			$("#registerAccount").on('click', function(event){
+				if(grecaptcha.getResponse()){
 						  Swal.fire({
 							  title:'會員創建成功!',
 							  text:  $('#exampleLastName').val() + '會員您好，請至您的email點選驗證信中之連結。',
@@ -388,6 +393,16 @@ hr {
 						  }).then((result) => {
 				$('#registerForm').submit();
 							});
+					
+				}else{
+					 Swal.fire({
+						  title:'請記得勾選我不是機器人',
+						  text:  '請先勾選我不是機器人，讓本網站可以確認您是真人喔。',
+						  icon:'error'
+					  }).then((result) => {
+						});
+					
+				}
 
 			});
 		

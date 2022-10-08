@@ -62,8 +62,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		  .antMatchers(HttpMethod.POST, "/group5/user/**").hasRole("USER")
 		  .antMatchers(HttpMethod.POST).permitAll() //post表單
 		  .anyRequest().authenticated()
-		  .and()                            //有效時間40分鐘
-		  .rememberMe().tokenValiditySeconds(2400).key("rememberMe-key")
+		  .and()                            //有效時間一天
+		  .rememberMe().tokenValiditySeconds(86400).key("rememberMe-key")
 		  .and()
 		  .csrf().disable()
 		  .formLogin()

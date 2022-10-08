@@ -113,6 +113,7 @@
 </head>
 <body class="bg-gradient-primary">
 	<%@ include file="FrontStageHead.jsp"%>
+	
 	<!-- Header -->
 	<header id="header" class="header">
 		<div class="header-content" style="padding-top: 4rem;">
@@ -173,6 +174,8 @@
 													</div>
 												</div>
 												<p id="errorMsg">${errorMsgMap.LoginError}</p>
+												
+												
 												<INPUT type="submit" value="login"
 													class="btn btn-primary btn-user btn-block" id="loginbutton">
 												<hr>

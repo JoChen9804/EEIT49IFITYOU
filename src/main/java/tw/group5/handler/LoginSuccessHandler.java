@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import tw.group5.admin.model.AdminBean;
 import tw.group5.admin.model.MemberBean;
+import tw.group5.admin.model.MemberDetail;
 import tw.group5.admin.service.AdminService;
 
 @SessionAttributes(names = {"loginMember"})
@@ -25,7 +26,6 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler{
 	
 	@Autowired 
 	private AdminService adminService;
-//	AdminService adminService = SpringContextHolder.getBean(AdminService.class);
 
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
@@ -38,10 +38,15 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler{
         	AdminBean aBean = adminService.findByAccount(name);
         	session.setAttribute("loginMember", aBean);
             response.sendRedirect("admin/backstage");
+            return;
 
         }
         System.out.println("抓到了"+name);
         MemberBean mBean = adminService.findByAccountMember(name);
+        MemberDetail mDetail = mBean.getMemberDetail();
+        mDetail.setRecentLoginDate(adminService.getDate());
+        mBean.setMemberDetail(mDetail);
+        adminService.updateOne(mBean);
         session.setAttribute("loginMember", mBean);		
         response.sendRedirect("FrontStageMain");
 	}
