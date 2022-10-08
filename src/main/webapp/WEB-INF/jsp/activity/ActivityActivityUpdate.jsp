@@ -29,11 +29,21 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 	<script src="https://cdn.ckeditor.com/ckeditor5/35.2.0/super-build/ckeditor.js"></script>
 
 
-<style type="text/css">
-.ck-editor__editable {
-                min-height: 300px;
+<style>
+            #container {
+                width: 1100px;
+                margin: 20px auto;
             }
-</style>
+            .ck-editor__editable[role="textbox"] {
+                /* editing area */
+                min-height: 750px;
+            }
+            .ck-content .image {
+                /* block images */
+                max-width: 80%;
+                margin: 20px auto;
+            }
+        </style>
 </head>
 
 <body>
@@ -44,19 +54,16 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 
 		<form ACTION="queryactivity.controller" method="post" style="float: right; margin-left: 3px" >
 			<input type="hidden" name="dataId" value="${update_activity.activityId}" />
-			<input type="submit" name="query" value="返回" class="btn btn-outline-info " />
 		</form>
 
 	<form:form action="updateactivity.controller" method="post" enctype="multipart/form-data" modelAttribute="activity">
 		<form:input type="hidden" path="activityId" id="testgetID" value="${update_activity.activityId}"/>
 		<form:input type="hidden" path="a_account" value="${loginMember.adminName }"/>
 		<input type="hidden" name="dataId" value="123"/>
-		<h2>修改活動</h2>
+		<h2 style="text-align: center;">修改活動</h2>
 
-			<legend>活動資料</legend>
-			
-		
 				<!-- Details -->
+				<div class="card shadow mb-4" style="margin: 2rem 4.7rem;">
     <div id="details" class="basic-1" style="padding-top: 2.5rem; padding-bottom: 2.5rem;">
         <div class="container">
             <div class="row">
@@ -109,38 +116,49 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
                     </div> <!-- end of text-container -->
                 </div> <!-- end of col -->
                 <div class="col-lg-6" style="align-items: center; display: flex;">
-                    <div class="image-container">
-                    	封面: 
-                    	
-                    	<div class="st1">
-							<img width="230" src="/Path/${update_activity.photoData}"/>
-						</div>
-			
-						<input type="hidden" name="oldimg" value="${update_activity.photoData}"/>
-			
-						<div class="st1">
-						<label style="float: left; margin: 3px;">修改圖片:</label>
-							<input type="file" id="ff" name="photo"/>
-							<img id="img1" width="230" />
-						</div>
-                    	
-					</div> <!-- end of image-container -->
+                
+                	<div class="text-container">
+                       <ul class="list-unstyled li-space-lg">
+                       		<li class="media">
+                                <i class="fas fa-square"></i>
+                                <div class="media-body">
+                                	封面: <br>
+                                	<img width="230" src="/Path/${update_activity.photoData}"/>
+                                	<input type="hidden" name="oldimg" value="${update_activity.photoData}"/>
+								</div>
+							</li>
+							<br>
+							<li class="media">
+                                <i class="fas fa-square"></i>
+                                <div class="media-body">
+                                	修改圖片: <input type="file" id="ff" name="photo"/>
+                                	<br>
+									<img id="img1" width="230" />
+								</div>
+							</li>
+						</ul>
+					</div>
+					
+					<br>
+                
                 </div> <!-- end of col -->
             </div> <!-- end of row -->
         </div> <!-- end of container -->
     </div> <!-- end of basic-1 -->
     <!-- end of details -->
+    </div>
 		
 		
 		<!-- ckeditor5 -->
+		<div id="container" class="card shadow mb-4" style="margin: 2rem 4.7rem 4.7rem 4.7rem;">
 		<div id="t1"></div>
 		<form:input type="hidden" id="activityContent" path="activityContent" class="need"/>
+		</div>
 				
-		<div class="sub">
-			<input type="button" class="upd" value="送出">
+		<div style="text-align: center; margin-top: 1.5rem;">
+			<input type="button" class="upd btn-solid-reg page-scroll" value="送出">
 			<input type="hidden" name="update" value="送出">
-			<a href="activitymain.controller"><input type="button" value="返回"></a>
-			
+			<a href="activitymain.controller"><input type="button" class="btn-solid-reg page-scroll" value="返回"></a>
 		</div>
 	</form:form>
 	
@@ -296,7 +314,6 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
     		$(".upd").on('click', function(event){
     			
     			$('#activityContent').val(myEditor.getData());
-    			console.log('東西勒'+$('#activityContent').val());
     			
     			var rs = false;
         		$(".need").each(function(){

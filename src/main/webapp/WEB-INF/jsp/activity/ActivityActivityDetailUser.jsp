@@ -29,7 +29,7 @@
 <%@ include file="../admin/FrontStageHead.jsp"%>
 
 	<!-- Video -->
-    <div id="video" class="basic-2" style="background-color: white">
+    <div id="video" class="basic-2" style="background-color: white; margin-bottom: -6rem;">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -52,18 +52,20 @@
     
     <div class="divtest">
     
-    	 <h1>${query_activity.activityTitle}</h1>
+    	 <h1 style="text-align: center;">${query_activity.activityTitle}</h1>
                     
                     <div >
                     	${query_activity.activityContent}
                     </div>
-                   	<form action="/group5/user/toactivitysignup" method="post" style="display:inline">
-                   		<input type="hidden" name="userId" value=""/>
-                   		<input type="hidden" name="activityId" value="${query_activity.activityId}"/>
-                    	<input type="submit" id="wantToSignUp" class="btn-solid-reg page-scroll" value="我想報名"/>
-                   	</form>
-                   	&emsp;
-                    <a class="btn-solid-reg page-scroll" href="../activityuser">返回</a>
+                    <div style="text-align: center; margin-bottom: 3rem;">
+                   		<form action="/group5/user/toactivitysignup" method="post" style="display:inline">
+          	         		<input type="hidden" name="userId" value=""/>
+          	         		<input type="hidden" name="activityId" value="${query_activity.activityId}"/>
+          		          	<input type="submit" id="wantToSignUp" class="btn-solid-reg page-scroll" value="我想報名"/>
+              	     	</form>
+            		   	&emsp;
+                   		<a class="btn-solid-reg page-scroll" href="../activityuser">返回</a>
+                    </div>
     
     </div>
     

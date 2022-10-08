@@ -164,8 +164,10 @@ public class ActivityFunctionController extends HttpServlet {
 			
 			activity.setReviseTime(avtivityService.getTime());
 			if (photo.isEmpty()) {
+				System.out.println("抓舊圖片=" + oldimg);
 				activity.setPhotoData(oldimg);
 			} else {
+				System.out.println("抓新圖片");
 				String imgName = avtivityService.processImg(activity.getActivityTitle(), photo);
 				activity.setPhotoData(imgName);
 			}

@@ -38,25 +38,18 @@
                         	</div>
                         	<div class="card-body">
                             	<h4 class="card-title">${aqa.activityTitle}</h4>
-                            	<p>${aqa.startTime}~${aqa.endTime}</p>
-                            	<p id="count">已報名人數: ${activity_countMember[aqa.activityId]}</p>
+                            	<p id="eventData"><i class="fa-regular fa-calendar"></i> 
+                            		<c:choose>
+										<c:when test="${aqa.startTime == aqa.endTime}">${aqa.startTime}</c:when>
+										<c:otherwise>${aqa.startTime}~${aqa.endTime}</c:otherwise>
+									</c:choose>
+                            	</p>
+                            	<p id="count"><i class="fa-solid fa-user"></i> 已報名人數: ${activity_countMember[aqa.activityId]}</p>
                         	</div>
                     	</a>
                     	<!-- end of card -->
                     	
 					</c:forEach>
-
-                    <!-- Card -->
-                    <div class="card">
-                        <div class="card-image">
-                            <img class="img-fluid" src="images/description-1.png" alt="alternative">
-                        </div>
-                        <div class="card-body">
-                            <h4 class="card-title">Lists Builder</h4>
-                            <p>It's very easy to start creating email lists for your marketing actions. Just create your Tivo account</p>
-                        </div>
-                    </div>
-                    <!-- end of card -->
 
                 </div> <!-- end of col -->
             </div> <!-- end of row -->

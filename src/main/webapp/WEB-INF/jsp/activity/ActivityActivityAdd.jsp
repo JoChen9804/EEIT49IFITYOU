@@ -30,11 +30,21 @@ response.setCharacterEncoding("UTF-8");
 <!-- ckeditor5 -->
 <script src="https://cdn.ckeditor.com/ckeditor5/35.2.0/super-build/ckeditor.js"></script>
 
-<style type="text/css">
-.ck-editor__editable {
-                min-height: 300px;
+ <style>
+            #container {
+                width: 1100px;
+                margin: 20px auto;
             }
-</style>
+            .ck-editor__editable[role="textbox"] {
+                /* editing area */
+                min-height: 750px;
+            }
+            .ck-content .image {
+                /* block images */
+                max-width: 80%;
+                margin: 20px auto;
+            }
+        </style>
 </head>
 <body>
 
@@ -44,81 +54,93 @@ response.setCharacterEncoding("UTF-8");
 
 		<form:input type="hidden" path="a_account" value="${loginMember.adminName }"/>
 
-			<H2>活動資料</H2>
+			<H2 style="text-align: center;">活動資料</H2>
 			
 			
 			<!-- Details -->
-    <div id="details" class="basic-1" style="padding-top: 2.5rem; padding-bottom: 2.5rem;">
+			<div class="card shadow mb-4" style="margin: 2rem 4.7rem;">
+    <div id="details" class="basic-1" style="padding-top: 0; padding-bottom: 2.5rem;">
         <div class="container">
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-6" style="margin-bottom: -3rem;">
+	           <!-- <div class="card shadow mb-4" > left shadow card -->
                     <div class="text-container">
                         <ul class="list-unstyled li-space-lg">
                             <li class="media">
                                 <i class="fas fa-square"></i>
                                 <div class="media-body">
-									活動名稱: <form:input type="text" path="activityTitle" placeholder="activityTitle" class="need"/>＊請勿超過20個字
+									活動名稱: <form:input type="text" id="activityTitle" path="activityTitle" placeholder="activityTitle" class="need"/>＊請勿超過20個字
 								</div>
-							</li>
                             <li class="media">
                                 <i class="fas fa-square"></i>
                                 <div class="media-body">
-                               		活動類型: <form:input type="text" path="typeContent" placeholder="typeContent" class="need"/>＊
+                               		活動類型: <form:input type="text" id="typeContent" path="typeContent" placeholder="typeContent" class="need"/>＊
 								</div>
                             </li>
                             <li class="media">
                                	<i class="fas fa-square"></i>
                                	<div class="media-body">
-									主辦方: <form:input type="text" path="holder" placeholder="holder" class="need"/>＊
+									主辦方: <form:input type="text" id="holder" path="holder" placeholder="holder" class="need"/>＊
 								</div>
                             </li>
                             <li class="media">
                                 <i class="fas fa-square"></i>
                                 <div class="media-body">
-									活動地點: <form:input type="text" path="location" placeholder="location" class="need"/>＊
+									活動地點: <form:input type="text" id="location" path="location" placeholder="location" class="need"/>＊
 								</div>
                             </li>
                             <li class="media">
-                                <i class="fas fa-square"></i>
-                                <div class="media-body">
-									報名截止日: <form:input type="date" path="signUpDeadline" id="deadline" class="need"/>＊
-								</div>
-                            </li>
-                            <li class="media">
-                                <i class="fas fa-square"></i>
-                                <div class="media-body">
+	                            <i class="fas fa-square"></i>
+	                            <div class="media-body">
 									活動開始日: <form:input type="date" path="startTime" id="startTime" class="need"/>＊
 								</div>
-                            </li>
-                            <li class="media">
-                                <i class="fas fa-square"></i>
-                                <div class="media-body">
+	                        </li>
+	                        <li class="media">
+	                            <i class="fas fa-square"></i>
+	                            <div class="media-body">
 									活動結束日: <form:input type="date" path="endTime" id="endTime" class="need"/>＊
 								</div>
 							</li>
                         </ul>
                     </div> <!-- end of text-container -->
+               <!--	</div> end of left shadow car -->
                 </div> <!-- end of col -->
                 <div class="col-lg-6" style="align-items: center; display: flex;">
-                    <div class="image-container">
-                    	封面: <input type="file" id="ff" name="photo"/>
-                    	<img  id="img1" width="200">
-					</div> <!-- end of image-container -->
+               <!--	<div class="card shadow mb-4">right shadow card -->
+					<ul class="list-unstyled li-space-lg">
+						<li class="media">
+                        	<i class="fas fa-square"></i>
+                            <div class="media-body">
+								報名截止日: <form:input type="date" path="signUpDeadline" id="deadline" class="need"/>＊
+							</div>
+                        </li>	
+						<li class="image-container" style="margin:0px">
+							<i class="fas fa-square"></i>
+	                    	封面: <input type="file" id="ff" name="photo"/>
+	                    	<img  id="img1" width="200">
+						</li> <!-- end of image-container -->
+                    </ul>
+               <!-- </div> end of right shadow car -->
                 </div> <!-- end of col -->
             </div> <!-- end of row -->
         </div> <!-- end of container -->
     </div> <!-- end of basic-1 -->
+    </div>
     <!-- end of details -->
 
 			<!-- <form:textarea path="activityContent" id="activityContent" cols="70" rows="15" class="need"></form:textarea> -->
-			<div id="editor"></div>
+			<div id="container" class="card shadow mb-4" style="margin-top: 3rem;">
+				<div id="editor"></div>
+			</div>
 			<input type="hidden" id="activityContent" name="activityContent" >
 			
 		
 		<div class="sub">
-			<input type="button" id="add" value="送出">
+			<input type="button" id="add" class="btn-solid-reg page-scroll" value="送出">
 			<input type="hidden" name="add" value="送出">
-			<a href="activitymain.controller"><input type="button" value="返回"></a>
+			<a href="activitymain.controller"><input type="button" class="btn-solid-reg page-scroll" value="返回"></a>
+			&emsp;&emsp;
+			<input type="button" class="btn-solid-reg page-scroll" id="lazyinput" value="一鍵輸入">
 		</div>
 	</form:form>
 	
@@ -271,7 +293,7 @@ response.setCharacterEncoding("UTF-8");
 	
 	</script>
 	
-	<script type="text/javascript"> 
+	<script> 
 	
 	$(function(){
 		$('#forColor').attr('style', 'background-color:white' );
@@ -326,6 +348,19 @@ response.setCharacterEncoding("UTF-8");
 	    }
 		$(this).parent().parent().submit();
    	});
+    
+    //一鍵輸入
+    $('#lazyinput').on('click', function(){
+    	$('#activityTitle').val('測試活動');
+    	$('#typeContent').val('測試');
+    	$('#holder').val('EEIT49_Group5');
+    	$('#location').val('聖德基督學院');
+    	$('#deadline').val('2022-11-01');
+    	$('#startTime').val('2022-12-15');
+    	$('#endTime').val('2022-12-30');
+    	myEditor.setData('<p style="text-align:center;"><span style="font-size:22px;">測試標題</span></p><p style="text-align:center;"><strong>台北市建築世代會為專業建築開發之新世代領導者組成，擁有共同理念。</strong><br><s>將『家』的溫度、『城市的文明』一磚一瓦建造成型，取之於社會用之於社會。</s><br>常年以行動散播愛分享愛，舉辦慈善耶誕路跑<br>今年即將邁入10週年，讓我們一同藉由運動一同響應公益，為愛而跑，讓更多孩童獲得實質的支持與幫助。<br>路跑報名費所得將全數捐贈。</p><p><img class="image_resized" style="width:27.55%;" src="/Path/upload1665202075808.jpg"></p><p style="text-align:center;">這次一隻可愛的鳥</p>');
+    })
+    
 	</script>
 
 	<%@ include file="../admin/AdminstyleFoot.jsp"%>

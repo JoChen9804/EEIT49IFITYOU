@@ -134,13 +134,21 @@ $('#forColor').attr('style', 'background-color:white' );
                     </div> <!-- end of text-container -->
                 </div> <!-- end of col -->
                 <div class="col-lg-6" style="align-items: center; display: flex;">
-                    <div class="image-container">
-                    <img width="600" src='/Path/<c:choose>
-										<c:when test="${upd}">${update_activity.photoData}</c:when>
-										<c:when test="${query}">${query_activity.photoData}</c:when>
-										<c:otherwise>${add_activity.photoData}</c:otherwise>
-									</c:choose>' />
-					</div> <!-- end of image-container -->
+                	<div class="text-container">
+                       <ul class="list-unstyled li-space-lg">
+                       		<li class="media">
+                                <i class="fas fa-square"></i>
+                                <div class="media-body">
+                                	封面: <br>
+                                	<img width="350" src='/Path/<c:choose>
+											<c:when test="${upd}">${update_activity.photoData}</c:when>
+											<c:when test="${query}">${query_activity.photoData}</c:when>
+											<c:otherwise>${add_activity.photoData}</c:otherwise>
+										</c:choose>' />
+								</div>
+							</li>
+						</ul>
+					</div>
                 </div> <!-- end of col -->
             </div> <!-- end of row -->
         </div> <!-- end of container -->
@@ -255,7 +263,6 @@ $('#forColor').attr('style', 'background-color:white' );
 										    	reloadTable(id);
 										    });
 								}
-							
 							});
 					  }
 					});
@@ -264,6 +271,7 @@ $('#forColor').attr('style', 'background-color:white' );
 		});
 		
 		function reloadTable(id) {
+			$('#forColor').attr('style', 'background-color: white');
 			$("#dt").empty();
 			var table ='';
 			console.log("測試有沒有進來");
@@ -286,9 +294,7 @@ $('#forColor').attr('style', 'background-color:white' );
 						      'error'
 						    );
 				}
-				
 			});
-			
 		}
 		
 	</script>
