@@ -67,7 +67,6 @@ $('#forColor').attr('style', 'background-color:white' );
                                 <div class="media-body">
                                		活動類型:
 										<c:choose>
-											<c:when test="${upd}">${update_activity.typeContent}</c:when>
 											<c:when test="${query}">${query_activity.typeContent}</c:when>
 											<c:otherwise>${add_activity.typeContent}</c:otherwise>
 										</c:choose>
@@ -78,7 +77,6 @@ $('#forColor').attr('style', 'background-color:white' );
                                 <div class="media-body">
 										主辦方:
 										<c:choose>
-											<c:when test="${upd}">${update_activity.holder}</c:when>
 											<c:when test="${query}">${query_activity.holder}</c:when>
 											<c:otherwise>${add_activity.holder}</c:otherwise>
 										</c:choose>
@@ -89,7 +87,6 @@ $('#forColor').attr('style', 'background-color:white' );
                                 <div class="media-body">
 										活動地點:
 										<c:choose>
-											<c:when test="${upd}">${update_activity.location}</c:when>
 											<c:when test="${query}">${query_activity.location}</c:when>
 											<c:otherwise>${add_activity.location}</c:otherwise>
 										</c:choose>
@@ -100,7 +97,6 @@ $('#forColor').attr('style', 'background-color:white' );
                                 <div class="media-body">
 										活動開始日:
 										<c:choose>
-											<c:when test="${upd}">${update_activity.startTime}</c:when>
 											<c:when test="${query}">${query_activity.startTime}</c:when>
 											<c:otherwise>${add_activity.startTime}</c:otherwise>
 										</c:choose>
@@ -111,7 +107,6 @@ $('#forColor').attr('style', 'background-color:white' );
                                 <div class="media-body">
 									活動結束日:
 									<c:choose>
-										<c:when test="${upd}">${update_activity.endTime}</c:when>
 										<c:when test="${query}">${query_activity.endTime}</c:when>
 										<c:otherwise>${add_activity.endTime}</c:otherwise>
 									</c:choose>
@@ -122,7 +117,6 @@ $('#forColor').attr('style', 'background-color:white' );
 							<form ACTION="updateactivity.controller" method="post" enctype="multipart/form-data" style="float:left; margin-left:3px;">
 								<input type="hidden" name="dataId" value="
 									<c:choose>
-										<c:when test="${upd}">${update_activity.activityId}</c:when>
 										<c:when test="${query}">${query_activity.activityId}</c:when>
 										<c:otherwise>${add_activity.activityId}</c:otherwise>
 									</c:choose>
@@ -140,8 +134,7 @@ $('#forColor').attr('style', 'background-color:white' );
                                 <i class="fas fa-square"></i>
                                 <div class="media-body">
                                 	封面: <br>
-                                	<img width="350" src='/Path/<c:choose>
-											<c:when test="${upd}">${update_activity.photoData}</c:when>
+                                	<img width="450" src='/Path/<c:choose>
 											<c:when test="${query}">${query_activity.photoData}</c:when>
 											<c:otherwise>${add_activity.photoData}</c:otherwise>
 										</c:choose>' />
@@ -185,7 +178,6 @@ $('#forColor').attr('style', 'background-color:white' );
       			<div class="modal-body">
       				<div>
       					<c:choose>
-							<c:when test="${upd}">${update_activity.activityContent}</c:when>
 							<c:when test="${query}">${query_activity.activityContent}</c:when>
 							<c:otherwise>${add_activity.activityContent}</c:otherwise>
 						</c:choose>

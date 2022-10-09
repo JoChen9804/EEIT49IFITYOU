@@ -174,10 +174,8 @@ public class ActivityFunctionController extends HttpServlet {
 				activity.setPhotoData(imgName);
 			}
 			if (avtivityService.update(activity) != null) {
-				m.addAttribute("update_activity", activity);
-				m.addAttribute("page", "activity");
-				m.addAttribute("upd", true);
-				m.addAttribute("notShowSignUp", true);
+				m.addAttribute("query_activity", activity);
+				m.addAttribute("query", true);
 				return "activity/ActivityConfirm";
 			}
 			return "redirect:activitymain.controller";

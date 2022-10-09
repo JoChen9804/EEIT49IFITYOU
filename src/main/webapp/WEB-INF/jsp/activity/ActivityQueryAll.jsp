@@ -148,6 +148,7 @@ input {
 					<thead>
 						<tr>
 							<th>活動名稱</th>
+							<th>活動封面</th>
 							<th style="width:80px">活動類型</th>
 							<th>活動時間</th>
 							<th>主辦方</th>
@@ -159,6 +160,7 @@ input {
 					<c:forEach var="aqa" items="${activity_queryAll}">
 						<tr>
 							<td>${aqa.activityTitle}</td>
+							<td style="text-align:center;"><img src="/Path/${aqa.photoData}" style="width:120px; height:80px;" alt="alternative"></td>
 							<td>${aqa.typeContent}</td>
 							<td>${aqa.startTime}<br>~${aqa.endTime}</td>
 							<td>${aqa.holder}</td>

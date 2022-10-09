@@ -50,7 +50,6 @@
                 <div class="col-lg-12">
                 
                 	<c:forEach var="aqa" items="${activity_queryAll}">
-                	
 						<!-- Card -->
                    		<a class="card " href="/group5/toactivity/${aqa.activityId}"  style="text-decoration:none;">
                        		<div class="card-image">
@@ -69,7 +68,6 @@
                         	</div>
                     	</a>
                     	<!-- end of card -->
-                    	
 					</c:forEach>
 
                 </div> <!-- end of col -->
