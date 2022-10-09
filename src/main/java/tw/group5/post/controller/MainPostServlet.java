@@ -120,8 +120,6 @@ public class MainPostServlet {
             
             return statistics;
         }
-        
-        
         return mav;
     }
     

@@ -38,7 +38,11 @@ public interface MainPostRepository extends JpaRepository<MainPostBean, Integer>
     @Query(value = "update MainPostBean set postPermission = :permerission where mainPostNo = :mpNo")
     public void updatePermission(@Param("permerission")String permerission,@Param("mpNo")Integer mainPostNo);
     
-    
+    //找觀看前三名
+    @Query(value = "select * from mainPost m\r\n"
+            + "where(select count(*) from mainPost where m.ctr <ctr) <3\r\n"
+            + "order by m.ctr desc;",nativeQuery = true)
+    public List<MainPostBean> topThreePosts();
     
     
     //審核狀態

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import tw.group5.admin.model.AdminBean;
 import tw.group5.admin.model.MemberBean;
 import tw.group5.admin.model.MemberDetail;
@@ -36,8 +40,8 @@ import tw.group5.post.service.ReplyPostService;
 @Controller
 @RequestMapping("/group5")
 @SessionAttributes(names= {"user"})
-public class UserPostController {
-    
+public class UserPostController extends HttpServlet {
+    private static final long serialVersionUID = 1L;
     //主貼文
     @Autowired  
     private MainPostService mpService;
@@ -89,6 +93,7 @@ public class UserPostController {
         replyPhoto = mbBean.getMemberPhoto();
     }
     
+    //判斷使用者禁言
     @ResponseBody
     @PostMapping("/WhetherToMute/{useraccount}")
     public Integer whetherToMute(@PathVariable("useraccount")String useraccount) {
@@ -124,25 +129,22 @@ public class UserPostController {
         if (mpBean.getTitle() != null) {
             List<MainPostBean> query = firstImagePath(mpService.userallPosts(mpBean.getTitle(),published));
             
-            List<MainPostBean> userposts = firstImagePath(mpService.findByAccount(memberAccount));
+//            List<MainPostBean> userposts = firstImagePath(mpService.findByAccount(memberAccount));
             if (query.isEmpty()) {
                 mav.addObject("error", "查無資料");
             }else {
                 mav.addObject("query", query);
             }
             
-            if(mpBean.getTitle() != null && mpBean.getAccount() != null){
-                mpService.findByAccountAndTitles(mpBean.getTitle(),mpBean.getAccount());
-                
-                mav.addObject("userposts", userposts);
-            }else if(mpBean.getAccount() ==null){
-                mav.addObject("notYetPublished", "請登入會員或加入會員");
-            }else {
-                mav.addObject("notYetPublished", "尚未發布貼文");
-            }
-            
-            
-            
+//            if(mpBean.getTitle() != null && mpBean.getAccount() != null){
+//                mpService.findByAccountAndTitles(mpBean.getTitle(),mpBean.getAccount());
+//                
+//                mav.addObject("userposts", userposts);
+//            }else if(mpBean.getAccount() ==null){
+//                mav.addObject("notYetPublished", "請登入會員或加入會員");
+//            }else {
+//                mav.addObject("notYetPublished", "尚未發布貼文");
+//            }
             
         } else {
             
@@ -150,25 +152,38 @@ public class UserPostController {
             //使用的發布的
             List<MainPostBean> query = firstImagePath(mpService.findByPostPermission(published));
             mav.addObject("query", query);
-            
-            List<MainPostBean> userposts = firstImagePath(mpService.findByAccount(memberAccount));
-            if(!userposts.isEmpty()) {
-                mav.addObject("userposts", userposts);
-                
-            }else if(mpBean.getTitle() != null && mpBean.getAccount() != null){
-                mpService.findByAccountAndTitles(mpBean.getTitle(),mpBean.getAccount());
-                
-                mav.addObject("userposts", userposts);
-            }else if(mpBean.getAccount() ==null){
-                mav.addObject("notYetPublished", "請登入會員或加入會員");
-            }else {
-                mav.addObject("notYetPublished", "尚未發布貼文");
-            }
-            
         } 
-        
         return mav;
     }
+    
+    //點閱率前三名貼文
+    @ResponseBody 
+    @PostMapping("/TopThreePostsAJAX") 
+    public List<MainPostBean> topThreePosts() {
+        List<MainPostBean> topThreePosts = mpService.topThreePosts();
+        System.out.println("次數:"+topThreePosts.get(2).getCtr());
+        
+        return topThreePosts;
+    }
+    
+    
+    //找user發布的貼文
+    @ResponseBody 
+    @PostMapping("/UserPostsAJAX/{account}") 
+    public List<MainPostBean> userPostsAJAX(@PathVariable("account") String account){
+        System.out.println("有使用者的貼文嗎?");
+        List<MainPostBean> userposts = firstImagePath(mpService.findByAccount(memberAccount));
+        if(!userposts.isEmpty()) {
+            return userposts;
+        }else {
+            MainPostBean mpBean = new MainPostBean();
+            mpBean.setMainPostNo(0);
+            userposts.add(mpBean);
+            return userposts;
+        }
+    }
+    
+    
     
     // 發布貼文
     @PostMapping("/Posting")
@@ -444,7 +459,7 @@ public class UserPostController {
     }
     
     //收藏貼文
-    @ResponseBody
+    @ResponseBody 
     @PostMapping("/FavoritePostAJAX") 
     public String favoritePost(MainPostBean mpBean) {
         List<FavoritePostBean> fpBean = fpService.findAccountFavorite(memberAccount, mpBean.getMainPostNo());
@@ -464,7 +479,7 @@ public class UserPostController {
     }
     
     //使用者收藏紀錄
-    @ResponseBody
+    @ResponseBody 
     @GetMapping("/FavoritePostAJAX")
     public List<MainPostBean>  userFavortes(){
         if(memberAccount != null) {
@@ -477,7 +492,6 @@ public class UserPostController {
                }
                 System.out.println("有收藏資料");
                 System.out.println(mpBeans.get(0).getTitle());
-                //ModelAndView mav = new ModelAndView().addObject("userfavorite", mpBeans);
                 return mpBeans;
             }else {
                 System.out.println("查無收藏紀錄");
@@ -485,7 +499,6 @@ public class UserPostController {
                 MainPostBean mpBean = new MainPostBean();
                 mpBean.setMainPostNo(0);
                 mpBeans.add(mpBean);
-                new ModelAndView().addObject("noRecord", "查無收藏紀錄");
                 return mpBeans;
             }
         }else

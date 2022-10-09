@@ -118,58 +118,31 @@
 <!-- 					找會員帳號  與是否禁止發言-->
 					<input type="hidden" class="useraccount" value="${user.memberAccount}"> 
 					 
-<%-- 					<input type="hidden" class="usermute" value="${user.memberDetail.mute}">  --%>
+					<input type="hidden" class="usermute" value="${user.memberDetail.mute}"> 
 					<!-- end of tabs links -->
                     <script>
-                    
-                    
                     
                     $(function(){
                     	console.log($(".useraccount").val());
                     	//console.log(usermute);
-                    	
-                        $.ajax({
-                            type: "GET",
-                            url: "/group5/FavoritePostAJAX",
-                            dataType : 'json',
-                            success: function(data){
-                                console.log();
-                                $('#favoriteShow').empty(""); //先清空
-                                    var table = $("#favoriteShow");
-                                    table.append(` <tr>
-                                                      <th>類型</th>
-                                                      <th>標題</th>
-                                                      <th>內容</th>
-                                                      <th>會員<br>發布時間</th>
-                                                      <th>操作</th>
-                                                   </tr>`);
-                                    $.each(data, function(i,n){
-                                    	if(n.mainPostNo == 0){
-                                    		$('#favoriteShow').empty("");
-                                    		$('#favoriteShow').append(`<p class='center'>查無收藏紀錄<p>`);
-                                    	}else{
-                                    	
-                                        var title = n.title;
-                                        var tr = "<tr class='content'>" + 
-                                                 "<td class='align-middle'>" + n.postTypeName + "</td>" +
-                                                 "<td class='align-middle'>" + n.title + "</td>" + 
-                                                 "<td class='align-middle'>" + n.content + "</td>" + 
-                                                 "<td class='align-middle'>" + n.account + "<br/>"+ n.addtime +"</td>" +
-                                                 "<td class='align-middle'>" +
-                                                 "<input type='hidden' class='deletefasss' name='mainPostNo' value='"+ n.mainPostNo +"'>" +
-                                                 "<button type='submit' style='border:none' class='deletefas btn btn-outline-danger fa-regular fa-trash-can fa-1x'>"+"刪除"+"</button>" +
-                                                 "<form action='PostWtch' method='GET'>" +
-                                                     "<input type='hidden' name='mainPostNo' value='"+ n.mainPostNo +"'>" +
-                                                     "<button type='submit' style='border:none'  class='btn btn-outline-success btn-icon-split fa-solid fa-magnifying-glass fa-1x'>"+"觀看"+"</button>" +
-                                                 "</form>"+   
-                                                 "</td>" + 
-                                                 "</tr>";
-                                        table.append(tr);
-                                        
-                                    	}
-                                    });
-                            }
-                        });
+                    	var account =  $(".useraccount").val();
+                    	if($(".useraccount").val()){
+                    		console.log("有登入");
+                    		
+                    		favoritePostAJAX()
+                    		
+                    		userPostsAJAX(account)
+                    		
+                    		topThreePosts()
+                    		
+                    	}else{
+                    		console.log("空值");
+                    		topThreePosts()                    		
+                    		
+                    		 $('#favoriteShow').append(`<h3 class='center'>請登入或加入會員</h3>`);
+                    		 $('#userPosts').append(`<h3 class='center'>請登入或加入會員</h3>`);
+                    	}
+                    
                     });
                     
                     $(document).on('click',".deletefas",function(){
@@ -204,6 +177,54 @@
                     	
                     });
                     
+                    //找使用者收藏
+                    function favoritePostAJAX(){
+                        $.ajax({
+                            type: "GET",
+                            url: "/group5/FavoritePostAJAX",
+                            dataType : 'json',
+                            success: function(data){
+                                console.log();
+                                $('#favoriteShow').empty(""); //先清空
+                                    var table = $("#favoriteShow");
+                                    table.append(` <tr>
+                                                      <th>類型</th>
+                                                      <th>標題</th>
+                                                      <th>內容</th>
+                                                      <th>會員<br>發布時間</th>
+                                                      <th>操作</th>
+                                                   </tr>`);
+                                    $.each(data, function(i,n){
+                                        if(n.mainPostNo == 0){
+                                            $('#favoriteShow').empty("");
+                                            $('#favoriteShow').append(`<h3 class='center'>查無收藏紀錄</h3>`);
+                                        }else{
+                                        
+                                        var title = n.title;
+                                        var tr = "<tr class='content'>" + 
+                                                 "<td class='align-middle'>" + n.postTypeName + "</td>" +
+                                                 "<td class='align-middle'>" + n.title + "</td>" + 
+                                                 "<td class='align-middle'>" + n.content + "</td>" + 
+                                                 "<td class='align-middle'>" + n.account + "<br/>"+ n.addtime +"</td>" +
+                                                 "<td class='align-middle'>" +
+                                                 "<input type='hidden' class='deletefasss' name='mainPostNo' value='"+ n.mainPostNo +"'>" +
+                                                 "<button type='submit' style='border:none' class='deletefas btn btn-outline-danger fa-regular fa-trash-can fa-1x'>"+"刪除"+"</button>" +
+                                                 "<form action='PostWtch' method='GET'>" +
+                                                     "<input type='hidden' name='mainPostNo' value='"+ n.mainPostNo +"'>" +
+                                                     "<button type='submit' style='border:none'  class='btn btn-outline-success btn-icon-split fa-solid fa-magnifying-glass fa-1x'>"+"觀看"+"</button>" +
+                                                 "</form>"+   
+                                                 "</td>" + 
+                                                 "</tr>";
+                                        table.append(tr);
+                                        
+                                        }
+                                    });
+                            }
+                        });
+                    	
+                    	
+                    }
+                    
                     function deletefavorite(mainPostNo){
                         $.ajax({
                             type: "Delete",
@@ -219,6 +240,128 @@
                             }
                         });
                     }
+                    
+                    //找user發布的貼文
+                    function userPostsAJAX(account){
+                        $.ajax({
+                            type: "Post",
+                            url: "/group5/UserPostsAJAX/"+account,
+                            dataType : 'json',
+                            success: function(data){
+                                console.log();
+                                $('#userPosts').empty(""); //先清空
+                                    var table = $("#userPosts");
+                                    table.append(`<thead>
+                                            <tr>
+                                            <th>圖片</th>
+                                            <th>類型</th>
+                                            <th>標題</th>
+                                            <th>發布日期</th>
+                                            <th>最後回覆</th>
+                                            <th>狀態</th>
+                                            <th>編輯</th>
+                                        </tr></thead>`);
+                                    $.each(data, function(i,n){
+                                        if(n.mainPostNo == 0){
+                                            $('#userPosts').empty("");
+                                            $('#userPosts').append(`<h3 class='center'>查無發布紀錄</h3>`);
+                                        }else{
+                                        
+                                        var title = n.title;
+                                        var tr ="<tbody><tr>" +
+                                        "<td class='align-middle'><img class='imgfront' src='" + n.p_image + "'></td>" +
+                                        "<td class='align-middle'>" + [n.postTypeName] + "</td>" +
+                                        "<td class='align-middle'>" + n.title + "</td>" +
+                                        "<td class='align-middle'>" + n.account +"<br />" +n.addtime +"</td>" +
+                                        "<td class='align-middle'>" + n.replyAccount +"<br />" + n.lastReplyTime + "</td>" +
+                                        "<td class='align-middle'>" + n.postPermission+ "</td>" +
+                                        "<td class='align-middle'><input type='hidden' name='deletepost' class='postid' value='"+ n.mainPostNo + "'>" +
+                                        
+                                        "<button type='submit' style='border:none' class='deletepost btn btn-outline-danger fa-regular fa-trash-can fa-1x'>"+"刪除"+"</button>" +
+                                            "<form action='UserPostChange' method='POST'>"+
+                                                "<input type='hidden' name='updatepost' value='" +n.mainPostNo +"'>" + 
+                                                "<button type='submit' style='border:none' class='btn btn-outline-warning fa-regular fa-pen-to-square fa-1x'>"+"修改"+"</button>" +
+                                                "</form>" + 
+                                             "<form action='PostWtch' method='GET'>" +  
+                                                "<input type='hidden' name='mainPostNo' value='"+ n.mainPostNo + "'>" +
+                                                "<button type='submit' style='border:none'  class='btn btn-outline-success btn-icon-split fa-solid fa-magnifying-glass fa-1x'>"+"觀看"+"</button></form>" +
+                                        "</td>" +
+                                        "</tr>" +
+                                        "</tbody>";
+                                        table.append(tr);
+                                        
+                                        }
+                                    });
+                            }
+                        });
+                    }
+                    
+                    //user刪除貼文
+                    $(document).on('click',".deletepost",function(){
+                        let deletepost = $(this).siblings(".postid").val();
+                        console.log(deletepost);
+                        
+                        Swal.fire({
+                            title: '確定刪除貼文？',
+                            text: "",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: '刪除',
+                            cancelButtonText: '取消',
+                            reverseButtons: true
+                            
+                          }).then((result) => {
+                              if (result.isConfirmed) {
+                                  let deleteid = $(this).prev().val();
+                                  $(this).siblings().parent().parent().remove();
+                                  deletePost(deleteid);
+                                  Swal.fire(
+                                          '已刪除貼文!'
+                                  ).then((result)=>{
+                                      if(result.isConfirmed){
+                                          //location.reload();
+                                      }
+                                  });
+                        
+                                }
+                              });
+                    	
+                    });
+                    
+                    //刪除貼文
+                    function deletePost(deletepost){
+                        console.log(deletepost)
+                        let mpBean = {
+                                "deletepost" : deletepost
+                            };
+                        $.ajax({
+                            type: "Delete",
+                            url: "/group5/UserPost",
+                            data : mpBean,
+                            dataType : 'json',
+                            success: function(){
+                                location.reload();
+                                console.log("deleted!!")
+                            }
+                        })
+                    }
+                    
+                    //觀看前三名貼文
+                    function topThreePosts(){
+                        console.log()
+                        $.ajax({
+                            type: "Post",
+                            url: "/group5/TopThreePostsAJAX",
+                            dataType : 'json',
+                            success: function(data){
+                                //location.reload();
+                                console.log(data)
+                            }
+                        })
+                    }
+                    
                     
                     </script>
                     
@@ -347,6 +490,7 @@
                                                       <input type="hidden" name="mainPostNo"value="${allmpbs.mainPostNo}"> 
                                                       <input type="submit" class="btn btn-outline-success" value="觀看">
                                                     </form>
+                                                    <i class="fa-solid fa-eye fa-1x">${allmpbs.ctr}</i>
                                                 </div>
                                             </div>
                                         </div>
@@ -385,27 +529,26 @@
                          </form>
                     </aside>
                     <aside id="widget-custom-posts-2" class="widget widget-custom-posts custom-posts">
-                        <h5 class="widget-title">Recent Posts</h5>
+                        <h3 class="widget-title">熱門貼文</h3>
+                        
                         <div class="custom-posts__holder row">
                             <div class="custom-posts__item post col-xs-6 col-sm-6 col-md-12 col-lg-12 col-xl-12">
                                 <div class="post-inner">
                                     <div class="entry-header">
-                                        <div class="post-thumbnail"><a
-                                                href="https://ld-wp.template-help.com/wordpress_52382/2016/07/26/how-long-before-the-exit-you-must-be-planning-it/"
-                                                class="post-thumbnail__link"><img class="post-thumbnail__img"
-                                                    src="https://ld-wp.template-help.com/wordpress_52382/wp-content/uploads/2016/07/image41-130x136.jpg"
-                                                    alt="How long before the exit you must be planning it?" width="130"
-                                                    height="136"></a></div>
-                                        <h4><a href="https://ld-wp.template-help.com/wordpress_52382/2016/07/26/how-long-before-the-exit-you-must-be-planning-it/"
-                                                title="How long before the exit you must be planning it?">How long
-                                                before the exit you must be planning it?</a></h4> <span
-                                            class="post__date"><a
-                                                href="https://ld-wp.template-help.com/wordpress_52382/2016/07/26/"
-                                                class="post__date-link"><time
-                                                    datetime="2016-07-26T13:40:57+00:00">26.07.2016</time></a></span>
+                                        <div class="post-thumbnail">
+                                            <img class="post-thumbnail__img" width="130" height="100"
+                                            src="https://ld-wp.template-help.com/wordpress_52382/wp-content/uploads/2016/07/image41-130x136.jpg">
+                                                    
+                                       </div>
+                                        <h4>標題</h4> 
+                                        <span class="post__date">使用者</span>
+                                        
                                     </div>
                                 </div>
                             </div>
+                            
+                            
+                            
                             <div class="custom-posts__item post col-xs-6 col-sm-6 col-md-12 col-lg-12 col-xl-12">
                                 <div class="post-inner">
                                     <div class="entry-header">
@@ -486,119 +629,45 @@
 
 								<div class="col-lg-12">
 									<div class="text-container">
-										<form action="UserPostAll" method="GET">
+									   <table id="userPosts" class="table table-sm"></table>
 
-
-											<div class="row g-2">
-
-                                          
-												<div class="col-md">
-													<div class="form-floating">
-														<input type="text" name="title" class="form-control"
-															id="floatingInputGrid" placeholder="請輸入標題"
-															oninvalid="setCustomValidity('請輸入標題')"
-															oninput="setCustomValidity('')"> <label
-															for="floatingInputGrid">{error}</label>
-													</div>
-												</div>
-												<div class="col-md">
-													<div class="form-floating">
-														<input type="submit" class="btn-solid-reg"
-															name="inquireId" value="查詢">
-													</div>
-												</div>
-											
-											
-											</div>
-
-
-
-										</form>
-										<table class="table table-sm">
-											<thead>
-												<tr>
-													<th>圖片</th>
-													<th>類型</th>
-													<th>標題</th>
-													<th>發布日期</th>
-													<th>最後回覆</th>
-													<th>狀態</th>
-													<th>編輯</th>
-												</tr>
-											</thead>
-											<c:forEach var="allmpbs" items="${userposts}">
-												<tbody>
-													<tr>
-														<!--<a href="/group5/PostWtch/${allmpbs.mainPostNo}"></a>-->
-														<td class="align-middle"><img class="imgfront"
-															src="${allmpbs.p_image}"></td>
-														<td class="align-middle">[${allmpbs.postTypeName}]</td>
-														<td class="align-middle">${allmpbs.title}</td>
-														<td class="align-middle">${allmpbs.account}<br />${allmpbs.addtime}</td>
-														<td class="align-middle">${allmpbs.replyAccount}<br />${allmpbs.lastReplyTime}
-														</td>
-														<td class="align-middle">${allmpbs.postPermission}</td>
-														<td class="align-middle">
-															<!--  <form action="UserPost" method="POST">-->
-																<input type="hidden" name="_method" value="DELETE">
-																<input type="hidden" name="deletepost" class="postid" 
-																	value="${allmpbs.mainPostNo}"> <input
-																	type="submit" class="btn btn-outline-success deletepost" 
-																	value="刪除">
-															<!--</form>-->
-															<form action="UserPostChange" method="POST">
-																<input type="hidden" name="updatepost"
-																	value="${allmpbs.mainPostNo}"> <input
-																	type="submit" class="btn btn-outline-success"
-																	value="修改" >
-															</form> 
-															 <form action="PostWtch" method="GET">
-                                                                <input type="hidden" name="mainPostNo"
-                                                                    value="${allmpbs.mainPostNo}"> <input
-                                                                    type="submit" class="btn btn-outline-success"
-                                                                    value="觀看">
-                                                            </form>
-															
-															
-															<!--<a id="${allmpbs.mainPostNo}" class="btn-solid-reg popup-with-move-anim"
-															href="#details-lightbox-2">修改</a>-->
 															
 															<script type="text/javascript">
 															
-															$(function() {
-															     $(".deletepost").click(function(){
+// 															$(function() {
+// 															     $(".deletepost").click(function(){
                                                                     
-                                                                    let deletepost = $(this).prev().val();
-                                                                    console.log(deletepost);
+//                                                                     let deletepost = $(this).prev().val();
+//                                                                     console.log(deletepost);
                                                                     
-                                                                    Swal.fire({
-                                                                        title: '確定刪除貼文？',
-                                                                        text: "",
-                                                                        icon: 'warning',
-                                                                        showCancelButton: true,
-                                                                        confirmButtonColor: '#3085d6',
-                                                                        cancelButtonColor: '#d33',
-                                                                        confirmButtonText: '刪除',
-                                                                        cancelButtonText: '取消',
-                                                                        reverseButtons: true
+//                                                                     Swal.fire({
+//                                                                         title: '確定刪除貼文？',
+//                                                                         text: "",
+//                                                                         icon: 'warning',
+//                                                                         showCancelButton: true,
+//                                                                         confirmButtonColor: '#3085d6',
+//                                                                         cancelButtonColor: '#d33',
+//                                                                         confirmButtonText: '刪除',
+//                                                                         cancelButtonText: '取消',
+//                                                                         reverseButtons: true
                                                                         
-                                                                      }).then((result) => {
-                                                                          if (result.isConfirmed) {
-                                                                              let deleteid = $(this).prev().val();
-                                                                              $(this).siblings().parent().parent().remove();
-                                                                              deletePost(deleteid);
-                                                                              Swal.fire(
-                                                                            		  '已刪除貼文!'
-                                                                              ).then((result)=>{
-                                                                            	  if(result.isConfirmed){
-                                                                                      //location.reload();
-                                                                                  }
-                                                                              });
+//                                                                       }).then((result) => {
+//                                                                           if (result.isConfirmed) {
+//                                                                               let deleteid = $(this).prev().val();
+//                                                                               $(this).siblings().parent().parent().remove();
+//                                                                               deletePost(deleteid);
+//                                                                               Swal.fire(
+//                                                                             		  '已刪除貼文!'
+//                                                                               ).then((result)=>{
+//                                                                             	  if(result.isConfirmed){
+//                                                                                       //location.reload();
+//                                                                                   }
+//                                                                               });
                                                                     
-                                                                            }
-                                                                          });
+//                                                                             }
+//                                                                           });
                                                                     
-                                                                 });
+//                                                                  });
 															     
 // 					                                            var onereply = document.getElementById("${allmpbs.mainPostNo}");
 // 					                                            onereply.onclick = function(event) {
@@ -642,42 +711,14 @@
 					                                            
 															
 															
-															});
-															
-															function deletePost(deletepost){
-																console.log(deletepost)
-																let mpBean = {
-                                                                        "deletepost" : deletepost
-                                                                    };
-																
-													            $.ajax({
-													                type: "Delete",
-													                url: "/group5/UserPost",
-													                data : mpBean,
-													                dataType : 'json',
-													                success: function(){
-													                	location.reload();
-													                    console.log("deleted!!")
-													                }
-													            })
-													        }
+// 															});
 															
 															
 															
-													</script>
+															
+													</script>  
 															
 															
-														</td>
-													</tr>
-												</tbody>
-											</c:forEach>
-										</table>
-										<h3>${notYetPublished}</h3>
-
-
-
-
-
 
 
 									</div>

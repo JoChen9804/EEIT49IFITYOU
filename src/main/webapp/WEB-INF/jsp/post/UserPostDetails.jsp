@@ -180,7 +180,7 @@ $(function(){
 									value="${queryOne.mainPostNo}">
 								<button type="submit" name="likenumber" id="likemainpost"
 									class="btn btn-link fa-regular fa-thumbs-up fa-1x">${queryOne.likeNumber}</button>
-                                <button type="submit" class="btn btn-link fa-solid fa-bookmark fa-1x favorite"></button>
+                                <button type="submit" class="btn btn-link fa-solid fa-bookmark fa-1x favorite">收藏</button>
                                 <script>
                                 $(function(){
                                 	console.log($(".usermute").val());

@@ -15,9 +15,12 @@ import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 
 @Entity @Table(name = "mainpost")
 @Component
+@JsonIgnoreProperties(value = {"replyPostBean", "favoritePostBean"}) //不存在轉Json進行忽略
 public class MainPostBean {
     
     @Id @Column(name = "mainpostno")
@@ -59,6 +62,7 @@ public class MainPostBean {
     
     @Column(name = "ctr")
     private Integer ctr;         //最後回覆會員
+    
     
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "mainPostBean",cascade = CascadeType.ALL)
     private Set<ReplyPostBean> replyPostBean = new LinkedHashSet<ReplyPostBean>();
@@ -161,6 +165,7 @@ public class MainPostBean {
     public void setCtr(Integer ctr) {
         this.ctr = ctr;
     }
+    
     public Set<ReplyPostBean> getReplyPostBean() {
         return replyPostBean;
     }

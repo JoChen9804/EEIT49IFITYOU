@@ -69,10 +69,13 @@ public class MainPostService {
         return mpResp.allPosts();
     }
 
-    public List<MainPostBean> userallPosts(Object titles,String permission){
+    public List<MainPostBean> userallPosts(Object titles,String permission) {
         return mpResp.userallPosts(titles,permission);
     }
     
+    public List<MainPostBean> topThreePosts() {
+        return mpResp.topThreePosts();
+    }
     
     public List<MainPostBean> query(Integer id) {
         Optional<MainPostBean> optional = mpResp.findById(id);
@@ -104,8 +107,6 @@ public class MainPostService {
         return sqlImage;
     }
 
-
-
     // 當前系統日期與毫秒數
     public String currentDateFormat(String format) {
         String returnString = "";
@@ -121,38 +122,5 @@ public class MainPostService {
         }
         return returnString;
     }
-    
-      
-    // 照片位置與貼文id寫到Set<PostImageBean>
-//    public Set<PostImageBean> addPostImages(List<MultipartFile> mfs, MainPostBean mainPostBean) {
-//        Set<PostImageBean> imgsrcs = new LinkedHashSet<PostImageBean>();
-//        for (MultipartFile ms : mfs) {
-//
-//            String submittedFileName = ms.getOriginalFilename();
-//            if (submittedFileName != null && submittedFileName != "") {
-//                // 檔名
-//                String imageName = currentDateFormat("millisecond") + "_" + submittedFileName;
-//
-//                String sqlImage = "";
-//                String imgsrc = "C:/images/posts/";
-//
-//                try {
-//
-//                    File file = new File(imgsrc, imageName);
-//                    ms.transferTo(file);
-//
-//                    sqlImage = "/images" + "/" + imageName;
-//                    PostImageBean img = new PostImageBean();
-//                    img.setP_image(sqlImage); // 寫入照片位置
-//                    img.setMainPostBean(mainPostBean);// 寫入貼文的編號
-//                    imgsrcs.add(img);
-//                    System.out.println("檔名已更新");
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
-//        return imgsrcs;
-//    }
 
 }
