@@ -195,21 +195,37 @@ function getUpdate(){
                     <!-- Tabs Links -->
                     <ul class="nav nav-tabs" id="argoTabs" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="nav-tab-1" data-toggle="tab" href="#tab-1" role="tab" aria-controls="tab-1" aria-selected="true"><i class="fas fa-list"></i>關於我</a>
+                            <a class="nav-link active" id="nav-tab-1" data-toggle="tab" href="#tab-1" role="tab" aria-controls="tab-1" aria-selected="true"><i class="fas fa-list"></i>開始配對</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" id="nav-tab-1" data-toggle="tab" href="#tab-2" role="tab" aria-controls="tab-1" aria-selected="true"><i class="fas fa-list"></i>關於我</a>
+                            <a class="nav-link" id="nav-tab-2" data-toggle="tab" href="#tab-2" role="tab" aria-controls="tab-2" aria-selected="false"><i class="fas fa-envelope-open-text"></i>關於我</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="nav-tab-2" data-toggle="tab" href="#tab-3" role="tab" aria-controls="tab-2" aria-selected="false"><i class="fas fa-envelope-open-text"></i>篩選資料</a>
+                            <a class="nav-link" id="nav-tab-3" data-toggle="tab" href="#tab-3" role="tab" aria-controls="tab-3" aria-selected="false"><i class="fas fa-chart-bar"></i>篩選資料</a>
                         </li>
                     </ul>
                     <!-- end of tabs links -->
-
+					
+					
+                        
                     <!-- Tabs Content -->
                     <div class="tab-content" id="argoTabsContent">
+                     <div class="tab-pane fade show active" id="tab-1" role="tabpanel" aria-labelledby="tab-1">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="text-container">
+                                    	<form action="/group5/user/pairing/start2pair" method="post" id="goPairForm">
+				        					<input type="hidden" name="mainPid" id="mPdId">
+				        					<input type="submit" value="今日配對" class="btn-solid-reg goPair">
+				    					</form>
+                                    </div> <!-- end of text-container -->
+                                </div> <!-- end of col -->
+                            </div> <!-- end of row -->
+                        </div> <!-- end of tab-pane -->
+                        <!-- end of tab -->
+                        
                         <!-- Tab -->
-                        <div class="tab-pane fade show active" id="tab-2" role="tabpanel" aria-labelledby="tab-1">
+                        <div class="tab-pane fade" id="tab-2" role="tabpanel" aria-labelledby="tab-2">
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="text-container">
@@ -319,7 +335,7 @@ function getUpdate(){
                         <!-- end of tab -->
 
                         <!-- Tab -->
-                        <div class="tab-pane fade" id="tab-2" role="tabpanel" aria-labelledby="tab-3">
+                        <div class="tab-pane fade" id="tab-3" role="tabpanel" aria-labelledby="tab-3">
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="text-container">

@@ -204,6 +204,10 @@ function preDelete(reason){
 							<p id="numberOfFavorite">收藏人數：</p>
 							<p id="genderPart">收藏性別（男／女）</p>
 							<a class="btn-solid-reg popup-with-move-anim" href="#">我要配對</a>
+							<form action="/group5/user/pairing/start2pair" method="post" id="goPairForm">
+				        		<input type="hidden" name="mainPid" id="mPdId" value="${loginMember }">
+				        		<input type="submit" value="今日配對" class="btn-solid-reg goPair">
+				    		</form>
 						</div><!-- end of text-container -->
 					</div><!-- end of col -->
 					<div class="col-lg-6">

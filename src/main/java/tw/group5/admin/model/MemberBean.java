@@ -48,10 +48,6 @@ public class MemberBean {
 	@JoinColumn(name = "fk_memberDetail_id")
 	private MemberDetail memberDetail;
 	
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL)
-	@Transient
-	private Set<PairingLog> pairingLogs = new HashSet<PairingLog>();
 
 	public MemberBean() {
 		super();

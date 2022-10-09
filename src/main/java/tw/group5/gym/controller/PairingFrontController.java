@@ -72,7 +72,10 @@ public class PairingFrontController {
 	}
 	
 	@PostMapping("/start2pair")
-	public String processMatching(int mainPid,Model m) {
+	public String processMatching(Integer mainPid,Model m) {
+		if(mainPid==null) {
+			return "redirect:/group5/user/pairing/want2pair";
+		}
 		PairData mainPD = pDataService.findById(mainPid);
 		// 因為今天已經配過對過了，要加個attribute讓jsp知道要顯示配對進度
 		DailyPairLog alreadyPairOrNot = pDataService.alreadyPairOrNot(mainPD);
