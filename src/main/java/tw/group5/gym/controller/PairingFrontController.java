@@ -139,5 +139,12 @@ public class PairingFrontController {
 		return pDataService.savePairData(pData);
 	}
 	
+	@PostMapping("/memberfind")
+	@ResponseBody
+	public PairData processFindPData(@RequestBody MemberBean memberBean) {
+		return pDataService.findByMember(memberBean);
+	}
+	
+	
 	
 }

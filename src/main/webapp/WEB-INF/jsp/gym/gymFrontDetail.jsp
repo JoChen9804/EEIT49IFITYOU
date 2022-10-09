@@ -72,6 +72,22 @@ $(function(){
 		$("#preDelete").text("已提出刪除申請");
 	}
 	
+	$("#goPair").on("click",function(){
+		let member01={'id':'${loginMember.id }'};
+		console.log(member01);
+		$.ajax({
+			type:"post",
+			url:"/group5/user/pairing/memberfind",
+			data:JSON.stringify(member01),
+			dataType:"json",
+			contentType:"application/json",
+			success:function(data){
+				$("#mPdId").val(data.pdId);
+				$("#goPairForm").submit();
+			}
+		})
+	});
+	
 })
 let mId = "${loginMember.id }";
 let logId = '${logStatus.logId}';
@@ -203,11 +219,10 @@ function preDelete(reason){
 							<h2><span class="material-symbols-outlined">waving_hand</span>&nbsp;健友在這裡</h2>
 							<p id="numberOfFavorite">收藏人數：</p>
 							<p id="genderPart">收藏性別（男／女）</p>
-							<a class="btn-solid-reg popup-with-move-anim" href="#">我要配對</a>
+							<button class="btn-solid-reg" id="goPair">我要配對</button>
 							<form action="/group5/user/pairing/start2pair" method="post" id="goPairForm">
-				        		<input type="hidden" name="mainPid" id="mPdId" value="${loginMember }">
-				        		<input type="submit" value="今日配對" class="btn-solid-reg goPair">
-				    		</form>
+						        <input type="hidden" name="mainPid" id="mPdId">
+						    </form>
 						</div><!-- end of text-container -->
 					</div><!-- end of col -->
 					<div class="col-lg-6">

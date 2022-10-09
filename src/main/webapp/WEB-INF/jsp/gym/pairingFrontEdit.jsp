@@ -213,7 +213,7 @@ function getUpdate(){
                      <div class="tab-pane fade show active" id="tab-1" role="tabpanel" aria-labelledby="tab-1">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <div class="text-container">
+                                    <div class="text-container d-flex justify-content-center">
                                     	<form action="/group5/user/pairing/start2pair" method="post" id="goPairForm">
 				        					<input type="hidden" name="mainPid" id="mPdId">
 				        					<input type="submit" value="今日配對" class="btn-solid-reg goPair">
