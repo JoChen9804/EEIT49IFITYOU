@@ -48,5 +48,6 @@ public interface MainPostRepository extends JpaRepository<MainPostBean, Integer>
     //審核狀態
     public List<MainPostBean> findByPostPermission(String postPermission);
     
+    public List<MainPostBean> findByPostTypeName(String postTypeName);
     
 }

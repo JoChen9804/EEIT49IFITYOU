@@ -89,6 +89,31 @@
     margin: 0;
 }
 
+.iconHome{
+    font-size:20px;
+}
+
+.iconSide{
+    font-size:15px;
+    float: right;
+}
+.samerow {
+    position: relative;
+    top: 2px;
+    }
+    
+    
+.enlarge:hover{
+    transform:scale(1.2);
+    transition: all 1s ease 0s;
+}
+
+.enlarge {  
+       
+    transform: scale(1);  
+    transition: all 1s ease 0s;
+} 
+
 
 </style>
 <!-- Favicon  -->
@@ -185,7 +210,6 @@
 								
 								    }
 								});
-                    	
                     	
                     });
                     
@@ -371,17 +395,17 @@
                             success: function(data){
                             	$.each(data, function(i,n){
                             		var div ="<div class='col-xs-6 col-sm-6 col-md-12 col-lg-12 col-xl-12'>" +
-				                                "<div class='side'>" +
+				                                "<div class='side enlarge'>" +
 				                                   " <div class='entry-header'>" +
  				                                       
 				                                   "<a style='text-decoration:none;' href='/group5/MainPost.watch/" + n.mainPostNo +"'>" +
 				                                   "<img class='post-thumbnail__img' width='130' height='100'src='" + n.p_image +"'>" +
-				                                   "<h4 class='sideh4'>" + n.title + "</h4>" +
-				                                   "<small class='text-muted'>會員帳號:" + n.account + "</small></a>" +
+				                                   "<small class='sideh4 samerow'>" + n.title + "</small>" + "<i class='fa-solid fa-eye iconSide samerow'>" + n.ctr + "</i><br/>" +
+				                                   "<small class='text-muted'>會員:" + n.account + "</small></a>" +
 				                                    "</div>" +
 				                                "</div>" +
 				                            "</div>";
-				                   popularPosts.append(div);       
+				                   popularPosts.append(div);         
 				                            
                             	});
                             }
@@ -490,7 +514,7 @@
                                                       <button type='submit' style='border:none'  
                                                       class='btn btn-outline-success btn-icon-split fa-solid fa-magnifying-glass fa-1x'>觀看</button>
                                                     </form>
-                                                    <i class="fa-solid fa-eye fa-1x">${allmpbs.ctr}</i>
+                                                    <i class="fa-solid fa-eye iconHome">${allmpbs.ctr}</i>
                                                 </div>
                                             </div>
                                         </div>

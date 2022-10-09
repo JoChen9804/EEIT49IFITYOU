@@ -60,6 +60,9 @@ public class MainPostService {
         return mpResp.findByPostPermission(postPermission);
     }
     
+    public List<MainPostBean> findByPostTypeName(String postTypeName){
+        return mpResp.findByPostTypeName(postTypeName);
+    }
     
     public List<MainPostBean> allPosts(Object titles) {
         return mpResp.allPostss(titles);
