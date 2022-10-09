@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.springframework.stereotype.Component;
 
@@ -60,6 +61,9 @@ public class ActivityActivity {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "activity", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private Set<ActivitySignUp> signUp = new LinkedHashSet<ActivitySignUp>();
+
+	@Column(name = "totalsignup")
+	private int totalSignUp;
 
 	public int getActivityId() {
 		return activityId;
@@ -165,5 +169,13 @@ public class ActivityActivity {
 		this.signUp = signUp;
 	}
 
+	public int getTotalSignUp() {
+		return totalSignUp;
+	}
+
+	public void setTotalSignUp(int totalSignUp) {
+		this.totalSignUp = totalSignUp;
+	}
+	
 	
 }

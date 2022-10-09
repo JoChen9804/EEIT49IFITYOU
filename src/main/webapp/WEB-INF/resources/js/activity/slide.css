@@ -1,7 +1,7 @@
 @charset "UTF-8";
         .wrap {
-            width: 800px;
-            height: 400px;
+            width: 1000px;
+            height: 500px;
             background-color: black;
             margin: 0 auto;
             position: relative;
@@ -27,8 +27,8 @@
         }
 
         .slide-img li {
-            width: 800px;
-            height: 400px;
+            width: 1000px;
+            height: 500px;
         }
 
         .slide-img li img {

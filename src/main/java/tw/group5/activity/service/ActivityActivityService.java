@@ -85,4 +85,11 @@ public class ActivityActivityService {
 		return aaRepository.findAll();
 	}
 	
+	/*
+	 * 抓前三多報名人數活動
+	 */
+	public List<ActivityActivity> selectImgToShow() {
+		return aaRepository.selectImgToShow();
+	} 
+	
 }

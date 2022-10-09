@@ -35,7 +35,7 @@
                         	活動時間: <c:choose><c:when test="${signUpActivity.startTime == signUpActivity.endTime}">${signUpActivity.startTime}</c:when><c:otherwise>${signUpActivity.startTime} ~ ${signUpActivity.endTime}</c:otherwise></c:choose>
                         <br>
                         </p>
-                        <form id="privacyForm" data-toggle="validator" data-focus="false" action="/group5/user/signupadd.controller" method="post">
+                        <form  data-toggle="validator" data-focus="false" action="/group5/user/signupadd.controller" method="post">
                         <ul class="list-unstyled li-space-lg">
                             <li class="media">
                                 <i class="fas fa-square"></i>
@@ -57,7 +57,7 @@
                                 <i class="fas fa-square"></i>
                                 <div class="media-body">
                                 	<div class="form-group">
-                                        <input type="email" class="form-control-input" id=signUpMail required>
+                                        <input type="email" class="form-control-input" name="memberEmail" id=signUpMail required>
                                         <label class="label-control" for="pemail">Email</label>
                                         <div class="help-block with-errors"></div>
                                     </div>
@@ -67,7 +67,7 @@
                                 <i class="fas fa-square"></i>
                                 <div class="media-body">
                                 	<div class="form-group">
-                                        <input type="email" class="form-control-input" id="signUpPhone" required>
+                                        <input type="text" class="form-control-input" name="memberPhone" id="signUpPhone" maxlength="11" pattern="09\d{8}" required>
                                         <label class="label-control" for="pemail">Phoen</label>
                                         <div class="help-block with-errors"></div>
                                     </div>
@@ -93,6 +93,8 @@
                         <input type="button" id="confirmSignUp" value="確定報名" class="btn-solid-reg page-scroll"/>
                          &emsp;
                         <a class="btn-solid-reg page-scroll" href="/group5/toactivity/${signUpActivity.activityId}">返回</a>
+                         &emsp;&emsp;
+                        <input type="button" id='lazyInput' value="一鍵輸入" class="btn-solid-reg page-scroll"/>
                         </form>
                        
                     </div> <!-- end of text-container -->
@@ -132,6 +134,13 @@
 				  }
 				});
 			}
+    	});
+    	
+    	$('#lazyInput').click(function(){
+    		$('#signUpMail').val("${loginM.email}");
+    		$('#signUpPhone').val("${loginM.memberDetail.cellphone}");
+    		$('#signUpMail').attr('class', "form-control-input notEmpty");
+    		$('#signUpPhone').attr('class', "form-control-input notEmpty");
     	});
     </script>
     

@@ -16,7 +16,7 @@
                 index = $(this).index()
                 console.log(index)
 
-                slideMove = 0 - index * 800
+                slideMove = 0 - index * 1000
                 $('.slide-img').css('left', slideMove)
                 $(this).css('background', 'white').siblings().css('background', 'transparent')
 
@@ -42,12 +42,12 @@
 
             /*重複動作可以取出做成function*/
             function moveImg() {
-                slideMove = 0 - index * 800
+                slideMove = 0 - index * 1000
                 $('.slide-img').css('left', slideMove)
                 $('.pages li').eq(index).css('background', 'white').siblings().css('background', 'transparent')
             }
 
-            setInterval(autoImg, 2000)
+            setInterval(autoImg, 5000)
             function autoImg() {
                 index++
                 if (index >= pagesLi) {

@@ -25,9 +25,9 @@
             <a class="slide-arrow" id="slidePrev"><i class="fa-solid fa-angle-left"></i></a>
             <a class="slide-arrow right" id="slideNext"><i class="fa-solid fa-angle-right"></i></a>
             <ul class="slide-img">
-                <li><img src="/Path/slide1 (1).jpg" alt=""></li>
-                <li><img src="/Path/slide1 (2).jpg" alt=""></li>
-                <li><img src="/Path/slide1 (3).jpg" alt=""></li>
+            	<c:forEach var="si" items="${showImg}">
+            		<li><img src="/Path/${si.photoData}" alt=""></li>
+            	</c:forEach>
             </ul>
             <ul class="pages">
                 <li></li>
@@ -64,7 +64,8 @@
 										<c:otherwise>${aqa.startTime}~${aqa.endTime}</c:otherwise>
 									</c:choose>
                             	</p>
-                            	<p id="count"><i class="fa-solid fa-user"></i> 已報名人數: ${activity_countMember[aqa.activityId]}</p>
+                            	<!-- <p id="count"><i class="fa-solid fa-user"></i> 已報名人數: ${activity_countMember[aqa.activityId]}</p> -->
+                            	<p id="count"><i class="fa-solid fa-user"></i> 已報名人數: ${aqa.totalSignUp}</p>
                         	</div>
                     	</a>
                     	<!-- end of card -->

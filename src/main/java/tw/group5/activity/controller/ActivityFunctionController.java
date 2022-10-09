@@ -96,11 +96,13 @@ public class ActivityFunctionController extends HttpServlet {
 	@GetMapping("/activityuser")
 	public String UserCenter(Model m) {
 		List<ActivityActivity> activity = avtivityService.findAll();
-		HashMap<Integer, Integer> countMember = new HashMap<Integer, Integer>();
+		/*HashMap<Integer, Integer> countMember = new HashMap<Integer, Integer>();
 		for (ActivityActivity activity1 : activity) {
 			countMember.put(activity1.getActivityId(), signUpService.countSignUpMember(activity1.getActivityId()));
+			activity1.setTotalSignUp(signUpService.countSignUpMember(activity1.getActivityId()));
 		}
-		m.addAttribute("activity_countMember", countMember);
+		m.addAttribute("activity_countMember", countMember);*/
+		m.addAttribute("showImg", avtivityService.selectImgToShow());
 		m.addAttribute("activity_queryAll", activity);
 		return "activity/ActivityAllActivityUser"; 
 	}
@@ -234,15 +236,19 @@ public class ActivityFunctionController extends HttpServlet {
 									String memberEmail,
 									int activityId) {
 		ActivitySignUp signUp=new ActivitySignUp();
-		signUp.setActivity(avtivityService.selectById(activityId));
+		ActivityActivity activity = avtivityService.selectById(activityId);
+		signUp.setActivity(activity);
 		signUp.setMemberId(memberId);
 		signUp.setMemberName(memberName);
 		signUp.setEmail(memberEmail);
 		signUp.setPhone(memberPhone);
 		signUp.setSignUpTime(signUpService.getTime());
 		
+		activity.setTotalSignUp(signUpService.countSignUpMember(activityId));
+		
 		System.out.println(memberAccount+","+memberId+","+memberName+","+memberPhone+","+memberEmail+",");
 		
+		avtivityService.update(activity);
 		ActivitySignUp signUp1 = signUpService.insert(signUp);
 		
 		m.addAttribute("signUp_add", signUp1);
