@@ -47,22 +47,36 @@ public class PairDataService {
 		return pdRespository.findByMember(member);
 	}
 	
+	//檢查今日是否配對過
+	public DailyPairLog alreadyPairOrNot(PairData mainData) {
+		//找自己的"配對"資料
+		DailyPairLog checkSelfRepart = dailyplRespository.findByMainData(mainData);
+		if(checkSelfRepart!=null) {
+			return checkSelfRepart;
+		}
+		return null;
+	}
+	
 	
 	//回傳mainData配到的人+寫入dailypairlog
 	public PairData matching(PairData mainData){
 		//找到全部的人
 		List<PairData> allpd = pdRespository.findAll();
-		//檢查有沒有已經被分配到的
+		//找自己的"被配對"資料
 		DailyPairLog checkRepart = dailyplRespository.findByPair(mainData);
+		
+		//檢查有沒有已經被分配到的
 		if(checkRepart!=null) { //之前有人被分配到main
-			//新增一筆紀錄
-			dailyplRespository.save(new DailyPairLog(checkRepart.getPair(),checkRepart.getMainData()));
+			PairData pair = checkRepart.getMainData();
+			int ms = matchingScore(mainData,pair);
+			double percent=(double)ms/(double)34;
+			double a =1.0-percent;
+			int count=(int) (a*100);
+			pair.setMatchingScore(count);
+			//新增一筆紀錄在dailylog
+			dailyplRespository.save(new DailyPairLog(checkRepart.getPair(),pair));
 			//回傳之前配到main的那位
-			return checkRepart.getMainData();
-		}
-		List<DailyPairLog> pairTimes = dailyplRespository.findByMainData(mainData);
-		if(pairTimes.size()==3) {
-			return null;
+			return pair;
 		}
 		for(PairData pd:allpd) {
 			System.out.println(pd.getMember().getId());
@@ -71,35 +85,9 @@ public class PairDataService {
 				pd.setMatchingScore(35);
 				continue;
 			}
-			if(pairTimes!=null) {
-				for(DailyPairLog checktimes:pairTimes) {
-					System.out.println("配過了");
-					PairData pair = checktimes.getPair();
-					if(pair.getMember().getId().equals(pd.getMember().getId())) {
-						pd.setMatchingScore(35);
-					}
-				}
-			}
 			System.out.println("給");
-			int gender=0;
-			switch (pd.getMember().getMemberDetail().getGender()) {
-			case "男":
-				gender=1;
-				break;
-			case "女":
-				gender=3;
-				break;
-			default:
-				gender=2;
-				break;
-			}
 			//m=3*(|Gx-Gy|)+3*(|Rx-Ry|)+2*(|Tx-Ty|)+|Fx-Fy|+|Kx-Ky|+A
-			int m = 3*(Math.abs(mainData.getPairGender()-gender))
-					+3*(Math.abs(mainData.getPairRelationship()-pd.getRelationship()))
-					+2*(Math.abs(mainData.getWorkoutTime()-pd.getWorkoutTime()))
-					+Math.abs(mainData.getWorkoutFrequency()-pd.getWorkoutFrequency())
-					+Math.abs(mainData.getWorkoutType()-pd.getWorkoutType())
-					+countlocation(mainData.getCurrentLocation(), pd.getCurrentLocation());
+			int m = matchingScore(mainData,pd);
 			pd.setMatchingScore(m);
 		}
 		//按分數排序
@@ -123,18 +111,48 @@ public class PairDataService {
 			System.out.println("sort:"+pd2.getPdId()+"/"+pd2.getMember().getMemberAccount()+"/"+pd2.getMatchingScore());
 		}
 		//寫入dailylog
-		dailyplRespository.save(new DailyPairLog(mainData,allpd.get(0)));
+		PairData result = new PairData();
+		DailyPairLog save= new DailyPairLog();
+		for(int j=0;j<allpd.size();j++) {
+			if(dailyplRespository.findByPair(allpd.get(j))==null) {
+				save= dailyplRespository.save(new DailyPairLog(mainData,allpd.get(j)));
+				result = allpd.get(j);
+				break;
+			}
+		}
 		//交出去前把配對指數轉成百分比
-		PairData result = allpd.get(0);
 		double percent=(double)result.getMatchingScore()/(double)34;
-		System.out.println(percent+"percent");
 		double a =1.0-percent;
 		int count=(int) (a*100);
-		System.out.println("百分比分數"+count);
 		result.setMatchingScore(count);
+		save.setPairScore(count);
 		return result;
 	}
 	
+	//算配對指數 //m=3*(|Gx-Gy|)+3*(|Rx-Ry|)+2*(|Tx-Ty|)+|Fx-Fy|+|Kx-Ky|+A
+	public int matchingScore(PairData x,PairData y) {
+		int gender=0;
+		switch (y.getMember().getMemberDetail().getGender()) {
+		case "男":
+			gender=1;
+			break;
+		case "女":
+			gender=3;
+			break;
+		default:
+			gender=2;
+			break;
+		}
+		int m=3*(Math.abs(x.getPairGender()-gender))
+			+3*(Math.abs(x.getPairRelationship()-y.getRelationship()))
+			+2*(Math.abs(x.getWorkoutTime()-y.getWorkoutTime()))
+			+Math.abs(x.getWorkoutFrequency()-y.getWorkoutFrequency())
+			+Math.abs(x.getWorkoutType()-y.getWorkoutType())
+			+countlocation(x.getCurrentLocation(), y.getCurrentLocation());
+		return m;
+	}
+	
+	//算LOCATION
 	public int countlocation(String mainLocation, String pdLocation) {
 		String[] pdsplit = pdLocation.split("、");
 		int i=0;

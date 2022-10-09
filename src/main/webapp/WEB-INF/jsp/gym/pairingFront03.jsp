@@ -11,6 +11,13 @@
 let returnResult;
 $(function(){
 	let ans;
+	//顯示其先查詢配對進度----------------------------------
+	if('${already}'!=''){
+		console.log('今天配對過囉，幫你看對方進度!')
+		theAns('${already}')
+	}
+
+	
 	$("#yes2pair").on("click",function(){
 		ans={ main: "${mainPD.pdId }", partner : "${matching.pdId }", ans2pair: "yes"};
 		if(returnResult==null){
@@ -36,27 +43,28 @@ $(function(){
 			success: function(data){
 				returnResult=data;
 				console.log(data);
-				if(data=="wait"){
-					$("#yes2pair").css("display","none");
-					$("#no2pair").css("display","none");
-					$("#lastitem").append("<h5 style='color:#C62828;'>目前還未收到${matching.member.memberAccount}回應</h5>");
-				}else if(data=="show"){
-					$("#yes2pair").css("display","none");
-					$("#no2pair").css("display","none");
-					let textadd='<li class="media"><i class="fas fa-square"></i><div class="media-body">聯絡資訊：${matching.member.memberDetail.pairContactInfo}</div></li>'
-								+'<li class="media"><i class="fas fa-square"></i><div class="media-body">想對健友說的話：${matching.member.memberDetail.pairInfo}</div></li>';
-					$("#lastitem").append(textadd);
-				}else if(data=="end"){
-					$(".form-container").empty();
-					$(".form-container").append("<img src='/group5/images/undraw_missed_chances_k3cq.png' style='width:100%'><div style='margin-top:20px'>健友今天與您擦肩而過！</div>");
-					
-				}
+				theAns(data);
 			}
 		});
 	}
 	
-	function nextperson(){
-		//$("#sendNext").submit();
+	function theAns(data){
+		console.log('data'+data)
+		if(data==null||data=="wait"){
+			$("#yes2pair").css("display","none");
+			$("#no2pair").css("display","none");
+			$("#lastitem").append("<h5 style='color:#C62828;'>目前還未收到${matching.member.memberAccount}回應</h5>");
+		}else if(data==1||data=="show"){
+			$("#yes2pair").css("display","none");
+			$("#no2pair").css("display","none");
+			let textadd='<li class="media"><i class="fas fa-square"></i><div class="media-body">聯絡資訊：${matching.member.memberDetail.pairContactInfo}</div></li>'
+						+'<li class="media"><i class="fas fa-square"></i><div class="media-body">想對健友說的話：${matching.member.memberDetail.pairInfo}</div></li>';
+			$("#lastitem").append(textadd);
+		}else if(data==0||data=="end"){
+			$(".form-container").empty();
+			$(".form-container").append("<img src='/group5/images/undraw_missed_chances_k3cq.png' style='width:100%'><div style='margin-top:20px'>健友今天與您擦肩而過！</div>");
+			
+		}
 	}
 })
 </script>

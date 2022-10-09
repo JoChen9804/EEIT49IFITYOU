@@ -31,6 +31,11 @@ public class DailyPairLog {
 	@Column(name = "RESULT")
 	private Integer result;
 	
+	@Column(name = "PAIRSCORE")
+	private Integer pairScore;
+	
+	
+	
 	public DailyPairLog() {
 	}
 
@@ -75,6 +80,14 @@ public class DailyPairLog {
 
 	public void setPair(PairData pair) {
 		this.pair = pair;
+	}
+
+	public Integer getPairScore() {
+		return pairScore;
+	}
+
+	public void setPairScore(Integer pairScore) {
+		this.pairScore = pairScore;
 	}
 	
 	

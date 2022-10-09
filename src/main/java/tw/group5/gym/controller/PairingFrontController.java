@@ -74,11 +74,16 @@ public class PairingFrontController {
 	@PostMapping("/start2pair")
 	public String processMatching(int mainPid,Model m) {
 		PairData mainPD = pDataService.findById(mainPid);
-		PairData matching = pDataService.matching(mainPD);
-		if(matching==null) {
-			return "gym/pairingFront04";
+		// 因為今天已經配過對過了，要加個attribute讓jsp知道要顯示配對進度
+		DailyPairLog alreadyPairOrNot = pDataService.alreadyPairOrNot(mainPD);
+		if(alreadyPairOrNot!=null) {
+			alreadyPairOrNot.getPair().setMatchingScore(alreadyPairOrNot.getPairScore());
+			m.addAttribute("matching", alreadyPairOrNot.getPair());
+			m.addAttribute("already",alreadyPairOrNot.getResult());
+		}else {
+			PairData matching = pDataService.matching(mainPD);
+			m.addAttribute("matching", matching);
 		}
-		m.addAttribute("matching", matching);
 		m.addAttribute("mainPD", mainPD);
 		return "gym/pairingFront03";
 	}
@@ -86,13 +91,14 @@ public class PairingFrontController {
 	@PostMapping("/pairmove")
 	@ResponseBody
 	public String processPairMoveAction(int main,int partner,String ans2pair) {
+		System.out.println("main"+main+"partner"+partner);
 		DailyPairLog result = pDataService.findByMainDataAndPair(main, partner);
 		if(ans2pair.equals("yes")) {
 			result.setResult(1);
 			pDataService.updateDailyPairLog(result);
 			//確認對方有沒有先同意了
 			DailyPairLog result2 = pDataService.findByMainDataAndPair(partner, main);
-			if(result2==null) {
+			if(result2==null||result2.getResult()==null) {
 				return "wait"; //對方還沒回應
 			}else if(result2.getResult()==1) {
 				return "show"; //對方同意
@@ -130,14 +136,5 @@ public class PairingFrontController {
 		return pDataService.savePairData(pData);
 	}
 	
-	@PostMapping("/update2")
-	@ResponseBody
-	public PairData processPairDataUpdate2(@RequestBody PairData pData) {
-		int pdId = pData.getPdId();
-		PairData result = pDataService.findById(pdId);
-		result.setPairGender(pData.getPairGender());
-		result.setPairRelationship(pData.getPairRelationship());
-		return pDataService.savePairData(result);
-	}
 	
 }

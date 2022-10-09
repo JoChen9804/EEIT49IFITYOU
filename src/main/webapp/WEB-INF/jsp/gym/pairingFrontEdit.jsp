@@ -7,6 +7,7 @@
 <title>配對中心</title>
 <!-- Core plugin JavaScript-->
 <script src="/group5/js/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 let i=1;
 $(function(){
@@ -43,14 +44,23 @@ $(function(){
     	console.log(pairdataBean);
     	$.ajax({
     		type:'post',
-    		url:'/group5/user/pairing/update2',
+    		url:'/group5/user/pairing/save2',
     		contentType:'application/json',
     		data:JSON.stringify(pairdataBean),
     		dataType:'json',
     		success:function(data){
     			getUpdate();
+    			Swal.fire(
+    					  '更新成功',
+    					  '',
+    					  'warning'
+    					)
     		}
     	});
+    })
+    
+    $(".goPair").on("click",function(){
+    	$("#goPairForm").submit();
     })
 });
 let pairdataBean;
@@ -67,6 +77,11 @@ function submitPairData(){
 		dataType:'json',
 		success:function(data){
 			getUpdate();
+			Swal.fire(
+					  '更新成功',
+					  '',
+					  'warning'
+					)
 		}
 	});
 }
@@ -81,6 +96,7 @@ function getUpdate(){
 		success:function(data){
 			console.log(data);
 			pdId=data.pdId;
+			$("#mPdId").val(pdId);
 			$("#showLocText").text(data.currentLocation);
 			let str=data.currentLocation;
 			let list=str.split("、");
@@ -169,7 +185,7 @@ function getUpdate(){
             <div class="row" style="padding:10px">
                 <div class="col-lg-12">
                     <div class="above-heading">I FIT YOU</div>
-                    <h2 class="h2-heading">配對資料修改</h2>
+                    <h2 class="h2-heading">配對中心</h2>
                     <p class="p-heading">尋找最適合你的</p>
                 </div> <!-- end of col -->
             </div> <!-- end of row -->
@@ -182,7 +198,10 @@ function getUpdate(){
                             <a class="nav-link active" id="nav-tab-1" data-toggle="tab" href="#tab-1" role="tab" aria-controls="tab-1" aria-selected="true"><i class="fas fa-list"></i>關於我</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="nav-tab-2" data-toggle="tab" href="#tab-2" role="tab" aria-controls="tab-2" aria-selected="false"><i class="fas fa-envelope-open-text"></i>篩選資料</a>
+                            <a class="nav-link active" id="nav-tab-1" data-toggle="tab" href="#tab-2" role="tab" aria-controls="tab-1" aria-selected="true"><i class="fas fa-list"></i>關於我</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="nav-tab-2" data-toggle="tab" href="#tab-3" role="tab" aria-controls="tab-2" aria-selected="false"><i class="fas fa-envelope-open-text"></i>篩選資料</a>
                         </li>
                     </ul>
                     <!-- end of tabs links -->
@@ -190,7 +209,7 @@ function getUpdate(){
                     <!-- Tabs Content -->
                     <div class="tab-content" id="argoTabsContent">
                         <!-- Tab -->
-                        <div class="tab-pane fade show active" id="tab-1" role="tabpanel" aria-labelledby="tab-1">
+                        <div class="tab-pane fade show active" id="tab-2" role="tabpanel" aria-labelledby="tab-1">
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="text-container">
@@ -287,8 +306,9 @@ function getUpdate(){
 				                            <div class="form-message">
 				                                <div class="h3 text-center hidden" id="vforAll"></div>
 				                            </div>
-				                            <div class="form-group">
-				                                <button type="button" class="form-control-submit-button" id="subMePair">資料修改</button>
+				                            <div class="form-group d-flex justify-content-center">
+				                                <button type="button" class="btn-solid-reg" id="subMePair" style="margin:0 15px">資料修改</button>
+				                                <button type="button" class="btn-solid-reg goPair" style="margin:0 15px">今日配對</button>
 				                            </div>
 				                        </div>
 				                        <!-- end of newsletter form -->
@@ -299,7 +319,7 @@ function getUpdate(){
                         <!-- end of tab -->
 
                         <!-- Tab -->
-                        <div class="tab-pane fade" id="tab-2" role="tabpanel" aria-labelledby="tab-2">
+                        <div class="tab-pane fade" id="tab-2" role="tabpanel" aria-labelledby="tab-3">
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="text-container">
@@ -333,8 +353,9 @@ function getUpdate(){
 				                            <div class="form-message">
 				                                <div class="h3 text-center hidden" id="vforAll"></div>
 				                            </div>
-				                            <div class="form-group">
-				                                <button type="button" class="form-control-submit-button" id="subU">儲存修改</button>
+				                            <div class="form-group d-flex justify-content-center">
+				                                <button type="button" class="btn-solid-reg" id="subU" style="margin:0 15px">儲存修改</button>
+				                                <button type="button" class="btn-solid-reg goPair" style="margin:0 15px">今日配對</button>
 				                            </div>
 				                        </div>
 				                        <!-- end of newsletter form -->
@@ -346,7 +367,9 @@ function getUpdate(){
                         
                     </div> <!-- end of tab content -->
                     <!-- end of tabs content -->
-
+					<form action="/group5/user/pairing/start2pair" method="post" id="goPairForm">
+				        <input type="hidden" name="mainPid" id="mPdId">
+				    </form>
                 </div> <!-- end of col -->
             </div> <!-- end of row -->
         </div> <!-- end of container -->
