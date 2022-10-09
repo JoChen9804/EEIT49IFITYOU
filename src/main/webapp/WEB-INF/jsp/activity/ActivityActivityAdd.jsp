@@ -293,7 +293,7 @@ response.setCharacterEncoding("UTF-8");
 	
 	</script>
 	
-	<script> 
+<script> 
 	
 	$(function(){
 		$('#forColor').attr('style', 'background-color:white' );
@@ -358,10 +358,10 @@ response.setCharacterEncoding("UTF-8");
     	$('#deadline').val('2022-11-01');
     	$('#startTime').val('2022-12-15');
     	$('#endTime').val('2022-12-30');
-    	myEditor.setData('<p style="text-align:center;"><span style="font-size:22px;">測試標題</span></p><p style="text-align:center;"><strong>台北市建築世代會為專業建築開發之新世代領導者組成，擁有共同理念。</strong><br><s>將『家』的溫度、『城市的文明』一磚一瓦建造成型，取之於社會用之於社會。</s><br>常年以行動散播愛分享愛，舉辦慈善耶誕路跑<br>今年即將邁入10週年，讓我們一同藉由運動一同響應公益，為愛而跑，讓更多孩童獲得實質的支持與幫助。<br>路跑報名費所得將全數捐贈。</p><p><img class="image_resized" style="width:27.55%;" src="/Path/upload1665202075808.jpg"></p><p style="text-align:center;">這次一隻可愛的鳥</p>');
+    	myEditor.setData('<p style="text-align:center;"><span style="font-size:22px;">活動內容</span></p><p style="text-align:center;"><strong>台北市建築世代會為專業建築開發之新世代領導者組成，擁有共同理念。</strong><br><s>將『家』的溫度、『城市的文明』一磚一瓦建造成型，取之於社會用之於社會。</s><br>常年以行動散播愛分享愛，舉辦慈善耶誕路跑<br>今年即將邁入10週年，讓我們一同藉由運動一同響應公益，為愛而跑，讓更多孩童獲得實質的支持與幫助。<br>路跑報名費所得將全數捐贈。</p><p><img class="image_resized" style="width:27.55%;" src="/Path/upload1665202075808.jpg"></p><p style="text-align:center;">這次一隻可愛的鳥</p>');
     })
     
-	</script>
+</script>
 
 	<%@ include file="../admin/AdminstyleFoot.jsp"%>
 	

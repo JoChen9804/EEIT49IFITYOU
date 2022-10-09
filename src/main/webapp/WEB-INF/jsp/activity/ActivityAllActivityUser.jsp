@@ -5,18 +5,38 @@
 <head>
 <meta charset="UTF-8">
 <title>I FIT YOU</title>
-
-</head>
-<body>
-<%@ include file="../admin/FrontStageHead.jsp"%>
-
 	<!-- JQuery -->
  	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
  	
  	<!-- fontawesome -->
     <script src="https://kit.fontawesome.com/5b36a12f3a.js" crossorigin="anonymous"></script>
+    
+    <!-- vegas -->
+    <link rel="stylesheet" href="/group5/js/activity/vegas/vegas.min.css">	   
+    <script src="/group5/js/activity/vegas/vegas.min.js"></script> 
+    <link rel="stylesheet" href="/group5/js/activity/slide.css">	   
+</head>
+<body>
+<%@ include file="../admin/FrontStageHead.jsp"%>
 
-		<br><br>
+		<div style="width:500px; height:500px" id="test"></div>
+	<div class="container" style="margin-top: -24rem;">
+        <div class="wrap">
+            <a class="slide-arrow" id="slidePrev"><i class="fa-solid fa-angle-left"></i></a>
+            <a class="slide-arrow right" id="slideNext"><i class="fa-solid fa-angle-right"></i></a>
+            <ul class="slide-img">
+                <li><img src="/Path/slide1 (1).jpg" alt=""></li>
+                <li><img src="/Path/slide1 (2).jpg" alt=""></li>
+                <li><img src="/Path/slide1 (3).jpg" alt=""></li>
+            </ul>
+            <ul class="pages">
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+    </div>
+		
 		
 	  <div class="cards-1">
         <div class="container">
@@ -56,7 +76,22 @@
         </div> <!-- end of container -->
     </div> <!-- end of cards-1 -->
     <!-- end of description -->
-    
+      <!--  
+<script>
+          
+    	$(function(){
+    		$("#test").css("background-color","yellow");
+    		$("#test").vegas({
+                slides: [
+                    { src: "/Path/slide1 (1).jpg" },
+                    { src: "/Path/slide1 (2).jpg" },
+                    { src: "/Path/slide1 (3).jpg" },
+                ]
+            });
+    	});
+    </script>
+    -->
+        <script type="text/javascript" src="/group5/js/activity/slide.js"></script>
 <%@ include file="../admin/FrontStageFoot.jsp"%>
 </body>
 </html>

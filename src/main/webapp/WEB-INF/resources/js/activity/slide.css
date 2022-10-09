@@ -1,0 +1,87 @@
+@charset "UTF-8";
+        .wrap {
+            width: 800px;
+            height: 400px;
+            background-color: black;
+            margin: 0 auto;
+            position: relative;
+
+            /*把溢出的圖藏起來*/
+            overflow: hidden;
+        }
+
+        .slide-img {
+            position: absolute;
+            left: 0;
+            margin: 0;
+            padding: 0;
+
+
+            list-style: none;
+
+            /*把li便並排*/
+            display: flex;
+
+            /* left: -1600px; 控制這個屬性調整顯示的圖片*/
+            width: 4000px;
+        }
+
+        .slide-img li {
+            width: 800px;
+            height: 400px;
+        }
+
+        .slide-img li img {
+            width: 100%;
+            height: 100%;
+
+            /*依據元素內容調整比例*/
+            object-fit: cover;
+        }
+
+        /*整排換頁圓點的設定*/
+        .pages {
+            position: absolute;
+            list-style: none;
+            bottom: 10px;
+            display: flex;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+
+            /*主軸對其設定*/
+            justify-content: center;
+        }
+
+        /*頁面顯示圓點*/
+        .pages li {
+            border: 1px solid white;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            margin: 10px;
+        }
+
+        .slide-arrow {
+            position: absolute;
+            z-index: 1;
+            /* background-color: red; */
+            font-size: 36px;
+            width: 40px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            color: gray;
+            opacity: .8;
+            cursor: pointer;
+            justify-content: center;
+
+        }
+
+        .right {
+            right: 0;
+        }
+
+        .slide-arrow:hover {
+            opacity: 1;
+        }

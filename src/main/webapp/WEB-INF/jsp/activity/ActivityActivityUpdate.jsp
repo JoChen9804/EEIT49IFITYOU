@@ -60,15 +60,15 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 		<form:input type="hidden" path="activityId" id="testgetID" value="${update_activity.activityId}"/>
 		<form:input type="hidden" path="a_account" value="${loginMember.adminName }"/>
 		<input type="hidden" name="dataId" value="123"/>
-		<h2 style="text-align: center;">修改活動</h2>
+		<h1 style="text-align: center; font-weight:bold;">修改活動</h1>
 
 				<!-- Details -->
 				<div class="card shadow mb-4" style="margin: 2rem 4.7rem;">
     <div id="details" class="basic-1" style="padding-top: 2.5rem; padding-bottom: 2.5rem;">
-        <div class="container">
+        <div class="container d-flex justify-content-center">
             <div class="row">
                 <div class="col-lg-6">
-                    <div class="text-container">
+                    <div class="text-container ">
                         <ul class="list-unstyled li-space-lg">
                             <li class="media">
                                 <i class="fas fa-square"></i>

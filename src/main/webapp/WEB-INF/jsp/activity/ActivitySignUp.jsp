@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,10 +31,11 @@
                     <div class="text-container">
                         <h2>活動報名表</h2>
                         <p>
-                        報名活動: ${signUpActivity.activityTitle}<br>
-                        活動時間: ${signUpActivity.startTime} ~ ${signUpActivity.endTime}<br>
+                        	報名活動: ${signUpActivity.activityTitle}<br>
+                        	活動時間: <c:choose><c:when test="${signUpActivity.startTime == signUpActivity.endTime}">${signUpActivity.startTime}</c:when><c:otherwise>${signUpActivity.startTime} ~ ${signUpActivity.endTime}</c:otherwise></c:choose>
+                        <br>
                         </p>
-                        <form action="/group5/user/signupadd.controller" method="post">
+                        <form id="privacyForm" data-toggle="validator" data-focus="false" action="/group5/user/signupadd.controller" method="post">
                         <ul class="list-unstyled li-space-lg">
                             <li class="media">
                                 <i class="fas fa-square"></i>
@@ -52,6 +53,27 @@
                                 <input type="hidden" name="memberName" value="${loginM.memberName}"/>
 								</div>
                             </li>
+                             <li class="media">
+                                <i class="fas fa-square"></i>
+                                <div class="media-body">
+                                	<div class="form-group">
+                                        <input type="email" class="form-control-input" id=signUpMail required>
+                                        <label class="label-control" for="pemail">Email</label>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+								</div>
+                            </li>
+                             <li class="media">
+                                <i class="fas fa-square"></i>
+                                <div class="media-body">
+                                	<div class="form-group">
+                                        <input type="email" class="form-control-input" id="signUpPhone" required>
+                                        <label class="label-control" for="pemail">Phoen</label>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+								</div>
+                            </li>
+                            <!-- 
                             <li class="media">
                                 <i class="fas fa-square"></i>
                                 <div class="media-body">
@@ -64,6 +86,7 @@
                                 連絡電話: <input type="text" style="margin-bottom: 0.5em;" name="memberPhone" id="signUpPhone" value="${loginM.memberDetail.cellphone}"/>
 								</div>
                             </li>
+                             -->
                         </ul>
                         <input type="hidden" name="memberId" value="${loginM.id}"/>
                         <input type="hidden" name="activityId" value="${signUpActivity.activityId}"/>
