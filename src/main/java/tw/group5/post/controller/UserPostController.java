@@ -160,7 +160,7 @@ public class UserPostController extends HttpServlet {
     @ResponseBody 
     @PostMapping("/TopThreePostsAJAX") 
     public List<MainPostBean> topThreePosts() {
-        List<MainPostBean> topThreePosts = mpService.topThreePosts();
+        List<MainPostBean> topThreePosts = firstImagePath(mpService.topThreePosts());
         System.out.println("次數:"+topThreePosts.get(2).getCtr());
         
         return topThreePosts;
@@ -182,7 +182,6 @@ public class UserPostController extends HttpServlet {
             return userposts;
         }
     }
-    
     
     
     // 發布貼文
@@ -230,6 +229,27 @@ public class UserPostController extends HttpServlet {
         }
         return mavMpost;
     }
+    
+    // 觀看 測試超連結
+    @GetMapping("/MainPost.watch/{mainPostNo}")
+    public ModelAndView getWatchPost(@PathVariable("mainPostNo")Integer mainPostNo) {
+        MainPostBean queryOne = mpService.selectById(mainPostNo);
+        //已發布的 點閱率+1
+        if("已發布".equals(queryOne.getPostPermission())){
+            queryOne.setCtr(queryOne.getCtr()+1);
+            mpService.update(queryOne);
+        }
+        ModelAndView mavMpost = takeOutmpBean(queryOne,USERPOSTDETAILS);
+        mavMpost.addObject("postPhoto", postPhoto);
+        // -----------上面是主貼文------------
+        List<ReplyPostBean> allReply = rpService.allReply(mainPostNo);
+        if(!allReply.isEmpty()) {
+            ModelAndView mav = takeOutrpBean(allReply,mavMpost);
+            return mav;
+        }
+        return mavMpost;
+    }
+    
     
     // 刪除 ok
     @ResponseBody

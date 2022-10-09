@@ -78,6 +78,18 @@
 .p1 {
     margin: 0;
 }
+
+.side{
+     width:130px;
+     height: 170px;
+
+}
+
+.sideh4{
+    margin: 0;
+}
+
+
 </style>
 <!-- Favicon  -->
 </head>
@@ -350,17 +362,36 @@
                     
                     //觀看前三名貼文
                     function topThreePosts(){
+                    	var popularPosts = $("#popularPosts");
                         console.log()
                         $.ajax({
                             type: "Post",
                             url: "/group5/TopThreePostsAJAX",
                             dataType : 'json',
                             success: function(data){
-                                //location.reload();
-                                console.log(data)
+                            	$.each(data, function(i,n){
+                            		var div ="<div class='col-xs-6 col-sm-6 col-md-12 col-lg-12 col-xl-12'>" +
+				                                "<div class='side'>" +
+				                                   " <div class='entry-header'>" +
+ 				                                       
+				                                   "<a style='text-decoration:none;' href='/group5/MainPost.watch/" + n.mainPostNo +"'>" +
+				                                   "<img class='post-thumbnail__img' width='130' height='100'src='" + n.p_image +"'>" +
+				                                   "<h4 class='sideh4'>" + n.title + "</h4>" +
+				                                   "<small class='text-muted'>會員帳號:" + n.account + "</small></a>" +
+				                                    "</div>" +
+				                                "</div>" +
+				                            "</div>";
+				                   popularPosts.append(div);       
+				                            
+                            	});
                             }
-                        })
+                        });
                     }
+                    
+                    
+                   
+                    
+                    
                     
                     
                     </script>
@@ -437,41 +468,9 @@
 										</form>
 
 
-<!-- 										<table class="table table-sm"> -->
-<!-- 											<thead> -->
-<!-- 												<tr> -->
-<!-- 													<th>圖片</th> -->
-<!-- 													<th>類型</th> -->
-<!-- 													<th>標題</th> -->
-<!-- 													<th>發布日期</th> -->
-<!-- 													<th>最後回覆</th> -->
-<!-- 													<th>觀看</th> -->
-<!-- 												</tr> -->
-<!-- 											</thead> -->
-<%-- 											<c:forEach var="allmpbs" items="${query}"> --%>
-<!-- 												<tbody> -->
-<!-- 													<tr> -->
-<!-- 														<a href="/group5/PostWtch/${allmpbs.mainPostNo}"></a> -->
-<!-- 														<td class="align-middle"><img class="imgfront" -->
-<%-- 															src="${allmpbs.p_image}"></td> --%>
-<%-- 														<td class="align-middle">[${allmpbs.postTypeName}]</td> --%>
-<%-- 														<td class="align-middle">${allmpbs.title}</td> --%>
-<%-- 														<td class="align-middle">${allmpbs.account}<br />${allmpbs.addtime}</td> --%>
-<%-- 														<td class="align-middle">${allmpbs.replyAccount}<br />${allmpbs.lastReplyTime} --%>
-<!-- 														</td> -->
-<!-- 														<td class="align-middle"> -->
-<!-- 															<form action="PostWtch" method="GET"> -->
-<!-- 																<input type="hidden" name="mainPostNo" -->
-<%-- 																	value="${allmpbs.mainPostNo}"> <input --%>
-<!-- 																	type="submit" class="btn btn-outline-success" -->
-<!-- 																	value="觀看"> -->
-<!-- 															</form> -->
-<!-- 														</td> -->
-<!-- 													</tr> -->
-<!-- 												</tbody> -->
-<%-- 											</c:forEach> --%>
-<!-- 										</table> -->
+<!--/////////////////// 首頁的主貼文//////////////////////////////////// -->
 										<h3>${error}</h3>
+										
 										<c:forEach var="allmpbs" items="${query}">
 										      <div class="card mb-3" style="max-width: 900px;">
                                         <div class="row g-0">
@@ -488,7 +487,8 @@
                                                     <p class="p1"><small class="text-muted">發布時間:${allmpbs.addtime}</small></p>
                                                     <form action="PostWtch" method="GET">
                                                       <input type="hidden" name="mainPostNo"value="${allmpbs.mainPostNo}"> 
-                                                      <input type="submit" class="btn btn-outline-success" value="觀看">
+                                                      <button type='submit' style='border:none'  
+                                                      class='btn btn-outline-success btn-icon-split fa-solid fa-magnifying-glass fa-1x'>觀看</button>
                                                     </form>
                                                     <i class="fa-solid fa-eye fa-1x">${allmpbs.ctr}</i>
                                                 </div>
@@ -515,57 +515,25 @@
 <!--                             action="https://ld-wp.template-help.com/wordpress_52382/"> -->
                            
                             <form action="UserPostAll" method="GET">
-                            <input type="text" name="title" class="form-control entertitle"
+                                <input type="text" name="title" class="form-control entertitle"
                                                             placeholder="請輸入標題" required
                                                             oninvalid="setCustomValidity('請輸入標題')"
                                                             oninput="setCustomValidity('')"><label style="color:#FF0000"
                                                             for="floatingInputGrid"></label>
                             
-                            <input type="submit" class="btn-solid-reg inquiretitle" value="查詢">
-<!--                             查詢:<input type="text" placeholder="Search" value="" /> -->
-<!--                             <button type="submit" class="search-form__submit btn btn-primary"><i -->
-<!--                                     class="material-icons">search</i></button> -->
-
-                         </form>
+                                <input type="submit" class="btn-solid-reg inquiretitle" value="查詢">
+                            </form>
+                         
+                         
                     </aside>
                     <aside id="widget-custom-posts-2" class="widget widget-custom-posts custom-posts">
                         <h3 class="widget-title">熱門貼文</h3>
+                        <div class="row">
                         
-                        <div class="custom-posts__holder row">
-                            <div class="custom-posts__item post col-xs-6 col-sm-6 col-md-12 col-lg-12 col-xl-12">
-                                <div class="post-inner">
-                                    <div class="entry-header">
-                                        <div class="post-thumbnail">
-                                            <img class="post-thumbnail__img" width="130" height="100"
-                                            src="https://ld-wp.template-help.com/wordpress_52382/wp-content/uploads/2016/07/image41-130x136.jpg">
-                                                    
-                                       </div>
-                                        <h4>標題</h4> 
-                                        <span class="post__date">使用者</span>
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            
-                            
-                            <div class="custom-posts__item post col-xs-6 col-sm-6 col-md-12 col-lg-12 col-xl-12">
-                                <div class="post-inner">
-                                    <div class="entry-header">
-                                        <div class="post-thumbnail"><a
-                                                href="https://ld-wp.template-help.com/wordpress_52382/2016/05/17/gallery-format/"
-                                                class="post-thumbnail__link"><img class="post-thumbnail__img"
-                                                    src="http://fakeimg.pl/130x136/000/fff/?text=130x136"
-                                                    alt="Gallery Format" width="130" height="136"></a></div>
-                                        <h4><a href="https://ld-wp.template-help.com/wordpress_52382/2016/05/17/gallery-format/"
-                                                title="Gallery Format">Gallery Format</a></h4> <span
-                                            class="post__date"><a
-                                                href="https://ld-wp.template-help.com/wordpress_52382/2016/05/17/"
-                                                class="post__date-link"><time
-                                                    datetime="2016-05-17T14:37:10+00:00">17.05.2016</time></a></span>
-                                    </div>
-                                </div>
-                            </div>
+                        <div id ="popularPosts"></div> 
+                        
+                 
+                        
                         </div>
                     </aside>
 
@@ -580,9 +548,9 @@
                                     href="https://ld-wp.template-help.com/wordpress_52382/category/conflict-management/">Conflict
                                     management</a>
                             </li>
-
                         </ul>
                     </aside>
+                    
                     <aside id="recent-comments-2" class="widget widget_recent_comments">
                         <h5 class="widget-title">Recent Comments</h5>
                         <ul id="recentcomments">
