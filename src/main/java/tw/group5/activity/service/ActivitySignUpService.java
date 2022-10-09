@@ -23,6 +23,9 @@ public class ActivitySignUpService {
 	@Autowired
 	private ActivitySignUpRepository signUpRepository;
 	
+	@Autowired
+	private ActivityActivityService activityService;
+	
 	/*
 	 * 時間處理
 	 * 回傳sql date格式字串
@@ -34,7 +37,11 @@ public class ActivitySignUpService {
 	}
 
 	public ActivitySignUp insert(ActivitySignUp signUp) {
-		return signUpRepository.save(signUp);
+		ActivityActivity activity = signUp.getActivity();
+		ActivitySignUp signUpSave = signUpRepository.save(signUp);
+		activity.setTotalSignUp(signUpRepository.countSignUpMember(activity.getActivityId()));
+		activityService.update(activity);
+		return signUpSave;
 	}
 	
 	public ActivitySignUp update(ActivitySignUp signUp) {
@@ -42,7 +49,11 @@ public class ActivitySignUpService {
 	}
 	
 	public void delete(int id) {
+		ActivitySignUp signUp = signUpRepository.findById(id).get();
+		ActivityActivity activity = signUp.getActivity();
 		signUpRepository.deleteById(id);
+		activity.setTotalSignUp(signUpRepository.countSignUpMember(activity.getActivityId()));
+		activityService.update(activity);
 	}
 	
 	public List<ActivitySignUp> findAll() {
@@ -59,10 +70,6 @@ public class ActivitySignUpService {
 	
 	public Set<ActivitySignUp> queryByActivity(ActivityActivity activity ) {
 		return signUpRepository.findByActivity(activity);
-	}
-	
-	public Integer countSignUpMember(Integer activityId) {
-		return signUpRepository.countSignUpMember(activityId);
 	}
 	
 }

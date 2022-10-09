@@ -2,7 +2,6 @@ package tw.group5.activity.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -242,13 +241,8 @@ public class ActivityFunctionController extends HttpServlet {
 		signUp.setPhone(memberPhone);
 		signUp.setSignUpTime(signUpService.getTime());
 		
-		activity.setTotalSignUp(signUpService.countSignUpMember(activityId));
-		
 		System.out.println(memberAccount+","+memberId+","+memberName+","+memberPhone+","+memberEmail+",");
-		
-		avtivityService.update(activity);
 		ActivitySignUp signUp1 = signUpService.insert(signUp);
-		
 		m.addAttribute("signUp_add", signUp1);
 		return "redirect:/group5/toactivity/"+activityId; 
 	}
@@ -265,9 +259,7 @@ public class ActivityFunctionController extends HttpServlet {
 	@PostMapping("/admin/signupdelete.controller")
 	@ResponseStatus(HttpStatus.OK)
 	public void signDelete(@RequestBody int id) {
-		
 		System.out.println("抓刪除ID="+id);
-		
 		signUpService.delete(id);
 	}
 	
