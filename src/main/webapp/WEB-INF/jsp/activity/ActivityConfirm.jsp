@@ -20,10 +20,6 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 <link href="/group5/css/styles.css" rel="stylesheet">
 
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script type="text/javascript">
-$('#forColor').attr('style', 'background-color:white' );
-</script>
-
 </head>
 <body>
 
@@ -54,73 +50,43 @@ $('#forColor').attr('style', 'background-color:white' );
                             <li class="media">
                                 <i class="fas fa-square"></i>
                                 <div class="media-body">
-										活動名稱:
-										<c:choose>
-											<c:when test="${upd}">${update_activity.activityTitle}</c:when>
-											<c:when test="${query}">${query_activity.activityTitle}</c:when>
-											<c:otherwise>${add_activity.activityTitle}</c:otherwise>
-										</c:choose>
+										活動名稱: ${query_activity.activityTitle}
 									</div>
 								</li>
                             <li class="media">
                                 <i class="fas fa-square"></i>
                                 <div class="media-body">
-                               		活動類型:
-										<c:choose>
-											<c:when test="${query}">${query_activity.typeContent}</c:when>
-											<c:otherwise>${add_activity.typeContent}</c:otherwise>
-										</c:choose>
+                               		活動類型: ${query_activity.typeContent}
 									</div>
                             </li>
                             <li class="media">
                                 <i class="fas fa-square"></i>
                                 <div class="media-body">
-										主辦方:
-										<c:choose>
-											<c:when test="${query}">${query_activity.holder}</c:when>
-											<c:otherwise>${add_activity.holder}</c:otherwise>
-										</c:choose>
+										主辦方: ${query_activity.holder}
 									</div>
                             </li>
                             <li class="media">
                                 <i class="fas fa-square"></i>
                                 <div class="media-body">
-										活動地點:
-										<c:choose>
-											<c:when test="${query}">${query_activity.location}</c:when>
-											<c:otherwise>${add_activity.location}</c:otherwise>
-										</c:choose>
+										活動地點: ${add_activity.location}
 									</div>
                             </li>
                             <li class="media">
                                 <i class="fas fa-square"></i>
                                 <div class="media-body">
-										活動開始日:
-										<c:choose>
-											<c:when test="${query}">${query_activity.startTime}</c:when>
-											<c:otherwise>${add_activity.startTime}</c:otherwise>
-										</c:choose>
+										活動開始日: ${query_activity.startTime}
 									</div>
                             </li>
                             <li class="media">
                                 <i class="fas fa-square"></i>
                                 <div class="media-body">
-									活動結束日:
-									<c:choose>
-										<c:when test="${query}">${query_activity.endTime}</c:when>
-										<c:otherwise>${add_activity.endTime}</c:otherwise>
-									</c:choose>
+									活動結束日: ${query_activity.endTime}
 								</div>
 							</li>
 							<button data-bs-toggle="modal" data-bs-target="#activityContent" class="btn-solid-reg page-scroll" style="float:left;">活動內容</button>
 							&emsp;
 							<form ACTION="updateactivity.controller" method="post" enctype="multipart/form-data" style="float:left; margin-left:3px;">
-								<input type="hidden" name="dataId" value="
-									<c:choose>
-										<c:when test="${query}">${query_activity.activityId}</c:when>
-										<c:otherwise>${add_activity.activityId}</c:otherwise>
-									</c:choose>
-								" />
+								<input type="hidden" name="dataId" value="${query_activity.activityId}" />
 								<input type="submit" name="update" value="修改" class="btn-solid-reg page-scroll" />
 							</form>
                         </ul>
@@ -134,10 +100,7 @@ $('#forColor').attr('style', 'background-color:white' );
                                 <i class="fas fa-square"></i>
                                 <div class="media-body">
                                 	封面: <br>
-                                	<img width="450" src='/Path/<c:choose>
-											<c:when test="${query}">${query_activity.photoData}</c:when>
-											<c:otherwise>${add_activity.photoData}</c:otherwise>
-										</c:choose>' />
+                                	<img width="450" src='/Path/${query_activity.photoData}' />
 								</div>
 							</li>
 						</ul>
@@ -177,10 +140,7 @@ $('#forColor').attr('style', 'background-color:white' );
     		<div class="modal-content">
       			<div class="modal-body">
       				<div>
-      					<c:choose>
-							<c:when test="${query}">${query_activity.activityContent}</c:when>
-							<c:otherwise>${add_activity.activityContent}</c:otherwise>
-						</c:choose>
+      					${query_activity.activityContent}
       				</div>
       			</div>
 	   			<div class="modal-footer">

@@ -140,7 +140,7 @@ public class ActivityFunctionController extends HttpServlet {
 			}
 			activity.setReviseTime(avtivityService.getTime());
 			if (avtivityService.insert(activity)!=null) {
-				m.addAttribute("add_activity", avtivityService.selectById(activity.getActivityId()));
+				m.addAttribute("query_activity", avtivityService.selectById(activity.getActivityId()));
 				return "activity/ActivityConfirm";
 			}
 			return "redirect:activitymain.controller";
