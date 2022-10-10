@@ -6,15 +6,48 @@
 <meta charset="UTF-8">
 <title>I FIT YOU</title>
 	<!-- JQuery -->
- 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+ 	<script src="/group5/js/jquery.min.js"></script>
+ 	
+ 	<!-- flickity輪播 -->
+	<script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js" defer></script>
+<!-- 	<script src="https://npmcdn.com/flickity@2/dist/flickity.pkgd.js"></script> -->
+ 	<link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
  	
  	<!-- fontawesome -->
     <script src="https://kit.fontawesome.com/5b36a12f3a.js" crossorigin="anonymous"></script>
     
     <!-- vegas -->
-    <link rel="stylesheet" href="/group5/js/activity/vegas/vegas.min.css">	   
-    <script src="/group5/js/activity/vegas/vegas.min.js"></script> 
-    <link rel="stylesheet" href="/group5/js/activity/slide.css">	   
+    <link rel="stylesheet" href="/group5/js/activity/slide.css">	
+<!--     <script src="/group5/js/activity/flickity.pkgd.min.js"></script>	 -->
+<!-- 	<script src="stylesheet" href="/group5/js/activity/flickity/flickity.pkgd.min.js"></script> -->
+    
+	<style>
+		.test {
+			width: 1000px;
+			height: 400px;
+			object-fit: cover;
+		}
+
+		.test1 {
+			width: 1000px;
+			height: 400px;
+		}
+	</style>
+	<script type="text/javascript">
+	
+		function loadFlickity() {
+			 console.log('123');
+			$('.main-carousel').flickity({
+				// options
+				cellAlign: 'left',
+				contain: true,
+				autoPlay: true,
+				wrapAround: true
+			});
+		}
+
+	</script>
+   
 </head>
 <body>
 <%@ include file="../admin/FrontStageHead.jsp"%>
@@ -36,6 +69,14 @@
             </ul>
         </div>
     </div>
+    
+<!--     <br> -->
+<!--     <div class="main-carousel test1"> -->
+<%--     	<c:forEach var="si" items="${showImg}"> --%>
+<%--     		<div class="carousel-cell"><img src="/Path/${si.photoData}" class="test" alt=""></div> --%>
+<%--    		</c:forEach> --%>
+<!-- 	</div> -->
+<!-- 	<script type="text/javascript">loadFlickity()</script> -->
 		
 		
 	  <div class="cards-1">
@@ -75,10 +116,11 @@
         </div> <!-- end of container -->
     </div> <!-- end of cards-1 -->
     <!-- end of description -->
-      <!--  
+        
 <script>
           
     	$(function(){
+    		/*
     		$("#test").css("background-color","yellow");
     		$("#test").vegas({
                 slides: [
@@ -86,10 +128,21 @@
                     { src: "/Path/slide1 (2).jpg" },
                     { src: "/Path/slide1 (3).jpg" },
                 ]
-            });
+            });*/
+            
+            //	<div class="carousel-cell"><img src="/Path/${si.photoData}" class="test"></div>
+           /*
+            let table ='';
+            let item = ${showImg};
+            ${showImg}.forEach(element => table+='div class="carousel-cell"><img src="/Path/'+ietm.photoData+'" class="test"></div>');
+            console.log('123');
+            console.log(table);
+			*/
+            
     	});
+    	
     </script>
-    -->
+    
         <script type="text/javascript" src="/group5/js/activity/slide.js"></script>
 <%@ include file="../admin/FrontStageFoot.jsp"%>
 </body>

@@ -139,9 +139,7 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 		<div class="modal-dialog modal-dialog-centered modal-lg">
     		<div class="modal-content">
       			<div class="modal-body">
-      				<div>
-      					${query_activity.activityContent}
-      				</div>
+      				${query_activity.activityContent}
       			</div>
 	   			<div class="modal-footer">
 	       			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">返回</button>

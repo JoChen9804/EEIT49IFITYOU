@@ -263,4 +263,16 @@ public class ActivityFunctionController extends HttpServlet {
 		signUpService.delete(id);
 	}
 	
+	@GetMapping("/test000")
+	public String test000() {
+		return "activity/test001";
+	}
+	
+	@PostMapping("/test001")
+	@ResponseStatus(HttpStatus.OK)
+	public void test001(String testId, String testName) {
+		System.out.println("抓測試ID="+testId);
+		System.out.println("抓測試NAME="+testName);
+	}
+	
 }
