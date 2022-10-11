@@ -40,7 +40,7 @@ public interface MainPostRepository extends JpaRepository<MainPostBean, Integer>
     
     //找觀看前三名
     @Query(value = "select * from mainPost m\r\n"
-            + "where(select count(*) from mainPost where m.ctr <ctr) <3\r\n"
+            + "where(select count(*) from mainPost where m.ctr <ctr) <3 and postPermission ='已發布'"
             + "order by m.ctr desc;",nativeQuery = true)
     public List<MainPostBean> topThreePosts();
     

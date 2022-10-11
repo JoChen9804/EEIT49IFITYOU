@@ -161,7 +161,7 @@ public class UserPostController extends HttpServlet {
     @PostMapping("/TopThreePostsAJAX") 
     public List<MainPostBean> topThreePosts() {
         List<MainPostBean> topThreePosts = firstImagePath(mpService.topThreePosts());
-        System.out.println("次數:"+topThreePosts.get(2).getCtr());
+        //System.out.println("次數:"+topThreePosts.get(2).getCtr());
         
         return topThreePosts;
     }
