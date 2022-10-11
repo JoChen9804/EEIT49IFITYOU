@@ -22,7 +22,7 @@ public class MyAccessDeniedHandler implements AccessDeniedHandler {
 //		response.setCharacterEncoding("UTF-8");
 //		response.setContentType("text/html;charset=UTF-8");
 //		response.getWriter().write("權限不足！請聯絡管理員。");
-		response.sendRedirect("admin/AccessDenied");
+		response.sendRedirect("/group5/AccessDenied");
 		
 	}
 

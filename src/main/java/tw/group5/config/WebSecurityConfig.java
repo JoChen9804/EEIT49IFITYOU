@@ -93,7 +93,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		  .logoutSuccessUrl("/group5/FrontStageMain");
 		  // 異常處理
 			http.exceptionHandling()
-				//.accessDeniedPage("/異常處理頁面");  // 請自行撰寫
+				//.accessDeniedPage("/group5/AccessDenied");  // 請自行撰寫
 				.accessDeniedHandler(myAccessDeniedHandler);	
 	}
 	

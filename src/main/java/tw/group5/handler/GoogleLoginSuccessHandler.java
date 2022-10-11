@@ -53,7 +53,8 @@ public class GoogleLoginSuccessHandler implements AuthenticationSuccessHandler{
 			newMember.setAuthority(0);
 			newMember.setEmail(email);
 			newMember.setMemberName(oauthUser.getName());
-			newMember.setMemberAccount(email);
+			String [] mAccount = email.split("@");
+			newMember.setMemberAccount(mAccount[0]);
 			MemberDetail mDetail = new MemberDetail();
 			mDetail.setCreateDate(adminService.getDate());
 			//google 登入 無須密碼

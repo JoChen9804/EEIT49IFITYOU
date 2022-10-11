@@ -37,7 +37,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler{
 			
         	AdminBean aBean = adminService.findByAccount(name);
         	session.setAttribute("loginMember", aBean);
-            response.sendRedirect("admin/backstage");
+            response.sendRedirect("admin/AdminBackstage");
             return;
 
         }

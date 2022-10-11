@@ -143,13 +143,13 @@
 			<li class="nav-item"><a class="nav-link collapsed" href="#"
 				data-toggle="collapse" data-target="#collapseFitness"
 				aria-expanded="true" aria-controls="collapseTwo"> <i
-					class="fas fa-fw fa-cog"></i> <span style="font-size: 1.2rem;font-weight:600;">菜單</span>
+					class="fas fa-fw fa-cog"></i> <span style="font-size: 1.2rem;font-weight:600;">健身菜單</span>
 			</a>
 				<div id="collapseFitness" class="collapse"
 					aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
-						<a class="collapse-item" href="/group5/admin/mainmenu.controller" style="font-size: 1.2rem; font-weight:550;">查看菜單</a>
-						<a class="collapse-item" href="/group5/admin/menuAdd.controller" style="font-size: 1.2rem; font-weight:550;">新增菜單</a>
+						<a class="collapse-item" href="/group5/admin/mainmenu.controller" style="font-size: 1.2rem; font-weight:550;">查看健身菜單</a>
+						<a class="collapse-item" href="/group5/admin/menuAdd.controller" style="font-size: 1.2rem; font-weight:550;">新增健身菜單</a>
 					</div>
 				</div></li>
 		</ul>
@@ -220,10 +220,10 @@
 							<div
 								class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
 								aria-labelledby="userDropdown">
-								<a class="dropdown-item" href="/group5/logout" data-toggle="modal"
+								<a class="h6 dropdown-item" href="/group5/logout" data-toggle="modal"
 									data-target="#logoutModal"> <i
 									class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-									Logout
+									登出
 								</a>
 							</div></li>
 

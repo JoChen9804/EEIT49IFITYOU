@@ -187,7 +187,7 @@ hr {
 			var userName = $('#exampleLastName').val();
 		if($.trim(userName) == ''){
 				$('#iconName').attr('class', 'fas fa-times');
-				$('#iconName').attr('style', 'color:gray');
+				$('#iconName').attr('style', 'color:red');
 				nameTrue = false;
 		}else {
 			$('#iconName').attr('class', 'fas fa-check');
@@ -209,7 +209,7 @@ hr {
 
 			} else {
 				$('#iconValid').attr('class', 'fas fa-times');
-				$('#iconValid').attr('style', 'color:gray');
+				$('#iconValid').attr('style', 'color:red');
 				passwordTrueOne = false;
 			}
 			if ($('#exampleInputPassword').val() === $('#exampleRepeatPassword')
@@ -220,7 +220,7 @@ hr {
 
 			} else {
 				$('#iconSame').attr('class', 'fas fa-times');
-				$('#iconSame').attr('style', 'color:gray');
+				$('#iconSame').attr('style', 'color:red');
 				passwordTrueTwo = false;
 			}
 			checkRegisterAccount();
@@ -240,7 +240,7 @@ hr {
 
 			} else {
 				$('#iconAccountLength').attr('class', 'fas fa-times');
-				$('#iconAccountLength').attr('style', 'color:gray');
+				$('#iconAccountLength').attr('style', 'color:red');
 				accountTrueOne = false;
 			}
 			var params = {
@@ -248,7 +248,7 @@ hr {
 			}
 			if($.trim(userAccount) == ''){
 				$('#iconAccountValid').attr('class', 'fas fa-times');
-				$('#iconAccountValid').attr('style', 'color:gray');
+				$('#iconAccountValid').attr('style', 'color:red');
 				accountTrueTwo = false;
 				checkRegisterAccount();
 	}else{
@@ -261,7 +261,7 @@ hr {
 					console.log('data' + data);
 					if (data == 'Y') {
 						$('#iconAccountValid').attr('class', 'fas fa-times');
-						$('#iconAccountValid').attr('style', 'color:gray');
+						$('#iconAccountValid').attr('style', 'color:red');
 						accountTrueTwo = false;
 						checkRegisterAccount();
 					}
@@ -294,7 +294,7 @@ hr {
 
 			} else {
 				$('#iconEmailFormat').attr('class', 'fas fa-times');
-				$('#iconEmailFormat').attr('style', 'color:gray');
+				$('#iconEmailFormat').attr('style', 'color:red');
 				emailTrueOne = false;
 			}
 			var params = {
@@ -302,7 +302,7 @@ hr {
 			}
 			if($.trim(userEmail) == ''){
 				$('#iconEmailValid').attr('class', 'fas fa-times');
-				$('#iconEmailValid').attr('style', 'color:gray');
+				$('#iconEmailValid').attr('style', 'color:red');
 				emailTrueTwo = false;
 				checkRegisterAccount();
 				
@@ -316,7 +316,7 @@ hr {
 					console.log('data' + data);
 					if (data == 'Y') {
 						$('#iconEmailValid').attr('class', 'fas fa-times');
-						$('#iconEmailValid').attr('style', 'color:gray');
+						$('#iconEmailValid').attr('style', 'color:red');
 						$('#registerAccount').attr('disabled', true);
 						emailTrueTwo = false;
 						checkRegisterAccount();
@@ -342,7 +342,7 @@ hr {
 			}
 			if($.trim(referralCode) == ''){
 				$('#iconEmailValid').attr('class', 'fas fa-times');
-				$('#iconEmailValid').attr('style', 'color:gray');
+				$('#iconEmailValid').attr('style', 'color:red');
 				$('#referralLabel').attr('style', 'display:none');
 				referralTrue = true;
 				checkRegisterAccount();
@@ -357,7 +357,7 @@ hr {
 					if (data == 'N') {
 						$('#referralLabel').attr('style', 'display:true;font-size: 1rem;');
 						$('#iconReferralValid').attr('class', 'fas fa-times');
-						$('#iconReferralValid').attr('style', 'color:gray');
+						$('#iconReferralValid').attr('style', 'color:red');
 						referralTrue = false;
 						checkRegisterAccount();
 					}

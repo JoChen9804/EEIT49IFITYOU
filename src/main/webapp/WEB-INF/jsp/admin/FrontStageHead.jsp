@@ -108,7 +108,7 @@
 					<li class="nav-item dropdown"><a class="nav-link page-scroll"
 						href="#pricing" style="font-size: 1.4rem;">貼文</a></li>
 					<li class="nav-item dropdown"><a class="nav-link page-scroll"
-						href="#pricing" style="font-size: 1.4rem;">菜單</a></li>
+						href="#pricing" style="font-size: 1.4rem;">健身菜單</a></li>
 
 					<li class="nav-item dropdown" style="display: none;"
 						id="memberShow"><a

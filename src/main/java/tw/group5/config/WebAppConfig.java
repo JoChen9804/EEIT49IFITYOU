@@ -12,8 +12,6 @@ public class WebAppConfig implements WebMvcConfigurer{
 	public void addViewControllers(ViewControllerRegistry registry) {
 		registry.addViewController("/group5/").setViewName("admin/FrontStageMain");
 		registry.addViewController("/group5/login").setViewName("admin/AdminLogin");
-		registry.addViewController("/group5/admin/backstage").setViewName("admin/AdminBackstage");
-		registry.addViewController("/group5/FrontStageMain").setViewName("admin/FrontStageMAIN");
 	}
 
 	@Override

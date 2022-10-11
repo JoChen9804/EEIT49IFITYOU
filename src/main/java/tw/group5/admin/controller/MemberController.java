@@ -28,6 +28,11 @@ import tw.group5.admin.service.AdminService;
 public class MemberController {
 	@Autowired
 	private AdminService adminService;
+	
+	@RequestMapping("/AccessDenied")
+	public String AccessDenied() {
+		return "admin/AccessDenied"; // 導向AccessDenied
+	}
 
 	@PostMapping(path = "/user/memberModify.controller") // 修改
 	private String modifyUserAction(String account, String pwd, String modifyimage, String sub, String idNumString,
@@ -130,12 +135,12 @@ public class MemberController {
 		adminService.updateCodeById(memberDetail);
 		
 		// 寄出驗證信
-		adminService.sendRegisterMail(email, name, randomCode, "AdminMailtemplete", "I FIT YOU 新會員註冊開通信");
+		adminService.sendRegisterMail(email, name, randomCode, "AdminMailtemplete", "I FIT YOU 新會員註冊開通信", "/verify");
 		
 		// 有填推薦人，寄推薦碼給推薦人
 		if (registerReferralCode != null && !registerReferralCode.isEmpty()) {
 			MemberBean mBeanReff = adminService.findMemberByReferralCode(mDetail.getRegisterReferralCode());
-			adminService.sendRegisterMail(mBeanReff.getEmail(), name, randomCode, "AdminReferralCode", "I FIT YOU 推薦人優惠碼發送");
+			adminService.sendRegisterMail(mBeanReff.getEmail(), name, randomCode, "AdminReferralCode", "I FIT YOU 推薦人優惠碼發送", "/verify");
 		}
 		
 		
@@ -156,5 +161,41 @@ public class MemberController {
 		}
 
 	}
+	@PostMapping(path = "/forgetPassword.controller")
+	public String forgetPasswordAction(String email) {
+		System.out.println("忘記密碼");
+		MemberBean mBean = adminService.findMemberByEmail(email);
+		String randomCode = RandomString.make(64);
+		mBean.setVerificationCode(randomCode);
+		MemberBean mBean1 = adminService.updateOne(mBean);
+		System.out.println("忘記密碼信(尚未驗證)");
+		// 寄出驗證信
+		adminService.sendRegisterMail(email, mBean1.getMemberName(), randomCode, "AdminForgetPassword", "I FIT YOU 忘記密碼驗證信", "/forgetPassword");
+		
+		return "admin/ForgetPassword";
+	}
+	
+	@GetMapping("/forgetPassword")
+	public String resetPassword(@Param("code") String code, Model m) {
+		if (adminService.verify(code)) {
+			m.addAttribute("code", code);
+			return "admin/ResetPassword";
 
+		} else {
+
+			return "admin/VerifyFail";
+		}
+
+	}
+	@PostMapping("/resetPassword.controller")
+	public String resetPasswordAction(String pwd, String code) {
+		if (adminService.verifyPassword(code, pwd)) {
+			return "admin/AdminLogin";	
+		} else {
+
+			return "admin/VerifyFail";
+		}
+		
+	}
+		
 }
