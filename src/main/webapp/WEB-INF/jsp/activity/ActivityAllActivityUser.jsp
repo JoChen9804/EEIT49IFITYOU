@@ -21,6 +21,7 @@
 <!--     <script src="/group5/js/activity/flickity.pkgd.min.js"></script>	 -->
 <!-- 	<script src="stylesheet" href="/group5/js/activity/flickity/flickity.pkgd.min.js"></script> -->
     
+    <!-- 
 	<style>
 		.test {
 			width: 1000px;
@@ -45,7 +46,7 @@
 				wrapAround: true
 			});
 		}
-
+	 -->
 	</script>
    
 </head>
@@ -54,7 +55,7 @@
 
 		<div style="width:500px; height:500px" id="test"></div>
 	<div class="container" style="margin-top: -24rem;">
-        <div class="wrap">
+        <div class="wrap" style="border-radius: 20px;">
             <a class="slide-arrow" id="slidePrev"><i class="fa-solid fa-angle-left"></i></a>
             <a class="slide-arrow right" id="slideNext"><i class="fa-solid fa-angle-right"></i></a>
             <ul class="slide-img">
@@ -93,8 +94,8 @@
                 	<c:forEach var="aqa" items="${activity_queryAll}">
 						<!-- Card -->
                    		<a class="card " href="/group5/toactivity/${aqa.activityId}"  style="text-decoration:none;">
-                       		<div class="card-image">
-                           		<img class="img-fluid" src="/Path/${aqa.photoData}" alt="alternative">
+                       		<div class="card-image" >
+                           		<img class="img-fluid" src="/Path/${aqa.photoData}" style="border-radius: 5px;" alt="alternative"/>
                         	</div>
                         	<div class="card-body">
                             	<h4 class="card-title">${aqa.activityTitle}</h4>

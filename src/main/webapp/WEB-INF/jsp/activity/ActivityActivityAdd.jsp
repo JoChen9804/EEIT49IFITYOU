@@ -62,7 +62,7 @@ response.setCharacterEncoding("UTF-8");
     <div id="details" class="basic-1" style="padding-top: 0; padding-bottom: 2.5rem;">
         <div class="container">
             <div class="row">
-                <div class="col-lg-6" style="margin-bottom: -3rem;">
+                <div class="col-lg-6 d-flex justify-content-center" style="margin-bottom: -3rem;">
 	           <!-- <div class="card shadow mb-4" > left shadow card -->
                     <div class="text-container">
                         <ul class="list-unstyled li-space-lg">
@@ -105,23 +105,31 @@ response.setCharacterEncoding("UTF-8");
                     </div> <!-- end of text-container -->
                <!--	</div> end of left shadow car -->
                 </div> <!-- end of col -->
-                <div class="col-lg-6" style="align-items: center; display: flex;">
+                <div class="col-lg-6 d-flex justify-content-center" >
+                	<div class="text-container">
                <!--	<div class="card shadow mb-4">right shadow card -->
-					<ul class="list-unstyled li-space-lg">
-						<li class="media">
-                        	<i class="fas fa-square"></i>
-                            <div class="media-body">
-								報名截止日: <form:input type="date" path="signUpDeadline" id="deadline" class="need"/>＊
-							</div>
-                        </li>	
-						<li class="image-container" style="margin:0px">
-							<i class="fas fa-square"></i>
-	                    	封面: <input type="file" id="ff" name="photo"/>
-	                    	<img  id="img1" width="200">
-						</li> <!-- end of image-container -->
-                    </ul>
+						<ul class="list-unstyled li-space-lg">
+							<li class="media">
+             	           	<i class="fas fa-square"></i>
+            	                <div class="media-body">
+									報名截止日: <form:input type="date" path="signUpDeadline" id="deadline" class="need"/>＊
+								</div>
+          	              </li>	
+							<li class="image-container" style="margin-left:0px">
+								<i class="fas fa-square"></i>
+	                    		封面: 
+<!-- 	                    	<input type="file" id="ff" name="photo"/> -->
+	                    		<label class="btn btn-primary">
+									<input id="ff" style="display:none;" type="file" name="photo">
+									<i class="fa fa-photo"></i>選擇檔案
+								</label>
+								<br>
+	                    		<img  id="img1" width="200">
+							</li> <!-- end of image-container -->
+                    	</ul>
                <!-- </div> end of right shadow car -->
-                </div> <!-- end of col -->
+                	</div> <!-- end of col -->
+                </div>
             </div> <!-- end of row -->
         </div> <!-- end of container -->
     </div> <!-- end of basic-1 -->

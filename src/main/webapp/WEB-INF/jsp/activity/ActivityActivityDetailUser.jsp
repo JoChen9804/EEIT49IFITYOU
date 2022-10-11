@@ -36,7 +36,7 @@
 
                     <!-- Video Preview -->
                     <div class="image-container">
-                        <div class="video-wrapper">
+                        <div class="">
                         	<img class="img-fluid" src="/Path/${query_activity.photoData}" alt="alternative">
                         </div> <!-- end of video-wrapper -->
                     </div> <!-- end of image-container -->

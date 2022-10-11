@@ -64,10 +64,11 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 
 				<!-- Details -->
 				<div class="card shadow mb-4" style="margin: 2rem 4.7rem;">
-    <div id="details" class="basic-1" style="padding-top: 2.5rem; padding-bottom: 2.5rem;">
-        <div class="container d-flex justify-content-center">
+    <div id="details" class="basic-1" style="padding-top: 0; padding-bottom: 0;">
+<!--         <div class="container d-flex justify-content-center"> -->
+        <div class="container">
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-6 container d-flex justify-content-center">
                     <div class="text-container ">
                         <ul class="list-unstyled li-space-lg">
                             <li class="media">
@@ -115,7 +116,7 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
                         </ul>
                     </div> <!-- end of text-container -->
                 </div> <!-- end of col -->
-                <div class="col-lg-6" style="align-items: center; display: flex;">
+                <div class="col-lg-6 container d-flex justify-content-center" >
                 
                 	<div class="text-container">
                        <ul class="list-unstyled li-space-lg">
@@ -127,11 +128,16 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
                                 	<input type="hidden" name="oldimg" value="${update_activity.photoData}"/>
 								</div>
 							</li>
-							<br>
 							<li class="media">
                                 <i class="fas fa-square"></i>
                                 <div class="media-body">
-                                	修改圖片: <input type="file" id="ff" name="photo"/>
+                                	修改圖片: 
+<!--                                 	<input type="file" id="ff" name="photo"/> -->
+                                	<label class="btn btn-primary">
+										<input id="ff" style="display:none;" type="file" name="photo">
+										<i class="fa fa-photo"></i>選擇檔案
+									</label>
+                                	
                                 	<br>
 									<img id="img1" width="230" />
 								</div>
@@ -158,7 +164,11 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 		<div style="text-align: center; margin-top: 1.5rem;">
 			<input type="button" class="upd btn-solid-reg page-scroll" value="送出">
 			<input type="hidden" name="update" value="送出">
-			<a href="activitymain.controller"><input type="button" class="btn-solid-reg page-scroll" value="返回"></a>
+<!-- 			<a href="queryactivity.controller"><input type="button" class="btn-solid-reg page-scroll" value="返回"></a> -->
+			<form ACTION="queryactivity.controller" method="post" style="float: left; margin-left: 3px" >
+				<input type="hidden" name="dataId" value="${update_activity.activityId}" />
+				<input type="submit" value="返回" class="btn-solid-reg page-scroll" />
+			</form>
 		</div>
 	</form:form>
 	
