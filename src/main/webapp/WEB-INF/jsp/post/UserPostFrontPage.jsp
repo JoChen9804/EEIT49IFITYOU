@@ -778,7 +778,7 @@
 			<!-- end of col -->
 			<div class="row justify-content-center">
 				<div class="col-lg-3">
-					<form action="/group5/Posting" enctype='multipart/form-data'
+					<form action="/group5/Posting" class ="newPost" enctype='multipart/form-data'
 						method="POST" onsubmit="return checkip()">
 						<h3>發布貼文</h3>
 						
@@ -797,7 +797,7 @@
 								</tr>
 								<tr>
 									<th><div class="mb-3">
-											標題:<input type="text" name="title" class="form-control"
+											標題:<input type="text" name="title" class="form-control newtitle"
 												id="floatingInput" placeholder="請輸入標題"
 												oninvalid="setCustomValidity('請輸入標題')"
 												oninput="setCustomValidity('')"> <label
@@ -825,8 +825,12 @@
 							</thead>
 						</table>
 					
-						<input type="submit" class="btn-solid-reg mfp-close" value="送出"><a
-							class="btn-outline-reg mfp-close as-button" href="#screenshots">取消</a>
+					
+                        <button type='submit'  style='border:none' class='btn-solid-reg as-button'>測試</button>					
+					
+					
+<!-- 						<input type="button" class="btn-solid-reg mfp-close newposting" value="送出"> -->
+						<a class="btn-outline-reg mfp-close as-button" href="#screenshots">取消</a>
 					</form>
 				</div>
 				<!--</div>-->
@@ -838,6 +842,42 @@
 	</div>
 	<!-- end of lightbox-basic -->
 	<!-- end of details lightbox 1 -->
+	
+	 <script>
+	                                   $(".newPost").submit(function(event){
+                                        event.preventDefault();
+                                        //var newtitle = $(".newtitle").text();
+                                        //console.log(newtitle);
+                                      
+                                      
+                                        
+                                        
+                                         Swal.fire({
+                                             title: '確認是否送管理員審核?',
+                                             text: '備註:審核後即可發布上貼文首頁',
+                                             icon: 'warning',
+                                             cancelButtonText: '取消',
+                                             showCancelButton: true,
+                                             confirmButtonColor: '#3085d6',
+                                             cancelButtonColor: '#d33',
+                                             confirmButtonText: '送出'
+                                         }).then((result) => {
+                                             if (result.isConfirmed) {
+                                                 Swal.fire({
+                                                     title: '修改送出成功',
+                                                     icon: 'success'
+                                                 }).then((result) => {
+                                                     $(this).submit();
+                                                 });
+                                             }
+                                         });
+                                    
+                                    
+                                    
+                                    });
+	
+	                                   </script>
+	
 
 
 

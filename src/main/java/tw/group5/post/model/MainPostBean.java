@@ -61,7 +61,7 @@ public class MainPostBean {
     private String replyAccount;         //最後回覆會員
     
     @Column(name = "ctr")
-    private Integer ctr;         //最後回覆會員
+    private int ctr;         //最後回覆會員
     
     
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "mainPostBean",cascade = CascadeType.ALL)
@@ -159,10 +159,10 @@ public class MainPostBean {
     public void setP_image(String p_image) {
         this.p_image = p_image;
     }
-    public Integer getCtr() {
+    public int getCtr() {
         return ctr;
     }
-    public void setCtr(Integer ctr) {
+    public void setCtr(int ctr) {
         this.ctr = ctr;
     }
     
