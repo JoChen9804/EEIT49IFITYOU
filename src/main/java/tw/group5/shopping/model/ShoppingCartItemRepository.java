@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
-import tw.group5.commodity.model.Commodity;
 
 
 public interface ShoppingCartItemRepository extends JpaRepository<ShoppingCartItem, Integer> {
@@ -22,5 +21,10 @@ public interface ShoppingCartItemRepository extends JpaRepository<ShoppingCartIt
 	@Modifying
 	@Query(value = "update shopping_cart_item set quantity = ?2 , subtotal = ?3 where identityNumber = ?1", nativeQuery = true)
 	public void updateQuantityInCart(Integer identityNumber, int newQuantity, int newSubtotal);
+	
+	//結帳時清空該人購物車
+	@Modifying
+	@Query(value = "delete from shopping_cart_item where account = ?1", nativeQuery = true)
+	public void deleteByAccount(String account);
 
 }

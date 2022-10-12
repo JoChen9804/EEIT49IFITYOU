@@ -145,7 +145,7 @@
                                         	
                                             			<!-- 配送方式 Radio Button -->
                                             			<div class="left">
-                                                			<input type="radio" name="shippingType" value="SevenElevenPickup" checked>
+                                                			<input type="radio" name="shippingType" value="UNIMART" checked>
                                                 			<i class="icon circle icon-radio-selected"></i>
                                             			</div>
                                             		
@@ -195,7 +195,7 @@
                                         	
                                             	<!-- 配送方式 Radio Button -->
                                             	<div class="left">
-                                                	<input type="radio" name="shippingType" value="HiLifePickup">
+                                                	<input type="radio" name="shippingType" value="HILIFE">
                                                 	<i class="icon circle icon-circle"></i>
                                             	</div>
                                             	
@@ -246,7 +246,7 @@
                                     	
                                         	<!-- 配送方式 Radio Button -->
                                             <div class="left">
-                                                <input type="radio" name="shippingType" value="FamilyPickup">
+                                                <input type="radio" name="shippingType" value="FAMI">
                                                 <i class="icon circle icon-circle"></i>
                                             </div>
                                             
@@ -463,12 +463,11 @@
                         
                         	<form action="/group5/user/shopping.cart/pay/orderInformation" method="post">
                         		<input type="hidden" name="formPayType" value="信用卡一次付清" id="formPayType">
-                        		<input type="hidden" name="formShippingType" value="123" id="formShippingType">
+                        		<input type="hidden" name="formShippingType" value="UNIMART" id="formShippingType">
                         		<input type="hidden" name="formShippingFee" value="" id="formShippingFee">
                             	<input type="hidden" name="formTotalWithDeliveryFee" value="" id="formTotalWithDeliveryFee">
                                 <input type="submit" value="下一步" class="next-step-btn cms-primaryBtnTextColor cms-primaryBtnBgColor">
                             </form>
-                            
                         </div>
                     </div>
                 </div>
@@ -507,14 +506,14 @@
 			}
 			
 			<!--預設為7-11取貨 顯示免運，並且算出下方含運費金額 -->
-			$('#calculateDeliveryFee').text("免運")
-		    $('#formShippingFee').val("免運")
+			$('#calculateDeliveryFee').text("免運");
+		    $('#formShippingFee').val("免運");
 
 			
 			<!--算出加運費總價 -->
-			$('#totalWithDeliveryFee').text(${totalWithCoupon})
-			$('#DesktopTotalWithDeliveryFee').text(${totalWithCoupon})
-			$('#formTotalWithDeliveryFee').val(${totalWithCoupon})
+			$('#totalWithDeliveryFee').text(${totalWithCoupon});
+			$('#DesktopTotalWithDeliveryFee').text(${totalWithCoupon});
+			$('#formTotalWithDeliveryFee').val(${totalWithCoupon});
 			
 			
 			<!--可根據選擇再做變化 -->
@@ -529,6 +528,7 @@
 					$('#DesktopTotalWithDeliveryFee').text(${totalWithCoupon}+220)
 					$('#formTotalWithDeliveryFee').val(${totalWithCoupon}+220)
 					$('#formShippingFee').val("NT$220")
+					$('#formShippingType').val("離島宅配")
 					
 				}else {
 					$('#calculateDeliveryFee').text("免運")
@@ -538,6 +538,17 @@
 					$('#DesktopTotalWithDeliveryFee').text(${totalWithCoupon})
 					$('#formTotalWithDeliveryFee').val(${totalWithCoupon})
 				    $('#formShippingFee').val("免運")
+				    
+				    //運送方式選擇
+				    if(shippingType === "Home"){
+				    	$('#formShippingType').val("宅配")
+				    }else if (shippingType === "UNIMART"){
+				    	$('#formShippingType').val("UNIMART")
+				    }else if (shippingType === "HILIFE"){
+				    	$('#formShippingType').val("HILIFE")
+				    }else if (shippingType === "FAMI"){
+				    	$('#formShippingType').val("FAMI")
+				    }
 				}
 				
 			})
@@ -581,6 +592,8 @@
 					$('#DesktopTotalWithDeliveryFee').text(${totalWithCoupon}+220)
 					$('#formTotalWithDeliveryFee').val(${totalWithCoupon}+220)
 					$('#formShippingFee').val("NT$220")
+					
+					$('#formShippingType').val("離島宅配")
 
 					
 				}else {
@@ -597,6 +610,17 @@
 					$('#DesktopTotalWithDeliveryFee').text(${totalWithCoupon}+80)
 					$('#formTotalWithDeliveryFee').val(${totalWithCoupon}+80)
 					$('#formShippingFee').val("NT$80")
+					
+					//運送方式選擇
+				    if(shippingType === "Home"){
+				    	$('#formShippingType').val("宅配")
+				    }else if (shippingType === "UNIMART"){
+				    	$('#formShippingType').val("UNIMART")
+				    }else if (shippingType === "HILIFE"){
+				    	$('#formShippingType').val("HILIFE")
+				    }else if (shippingType === "FAMI"){
+				    	$('#formShippingType').val("FAMI")
+				    }
 					
 				}
 			})
@@ -638,12 +662,6 @@
 			}
 				
 		});
-		
-		
-		
-		
-		
-		
 		
 	});
 	</script>

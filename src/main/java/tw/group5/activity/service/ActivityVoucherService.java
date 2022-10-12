@@ -64,6 +64,13 @@ public class ActivityVoucherService {
 	}
 	
 	/*
+	 * 用優惠券號尋找
+	 */
+	 public ActivityVoucher findByVoucherNo(String voucherNo) {
+	  return voucherReps.findByVoucherNo(voucherNo);
+	 }
+	
+	/*
 	 * 查詢全部資料回傳List
 	 */
 	public List<ActivityVoucher> findAll(){

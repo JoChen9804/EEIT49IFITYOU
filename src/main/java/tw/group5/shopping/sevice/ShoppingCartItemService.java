@@ -6,10 +6,8 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
-import tw.group5.commodity.model.Commodity;
 import tw.group5.shopping.model.ShoppingCartItem;
 import tw.group5.shopping.model.ShoppingCartItemRepository;
 
@@ -48,6 +46,12 @@ public class ShoppingCartItemService {
 	public ShoppingCartItem findByIdentityNumber(Integer identityNumber) {
 		Optional<ShoppingCartItem> optional = sCIRepo.findById(identityNumber);
 		return optional.get();
+	}
+	
+	
+	//結帳時清空該人購物車
+	public void deleteByAccount(String account) {
+		sCIRepo.deleteByAccount(account);
 	}
 	
 	
