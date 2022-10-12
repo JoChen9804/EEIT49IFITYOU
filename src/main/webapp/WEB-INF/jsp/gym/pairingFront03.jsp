@@ -9,8 +9,8 @@
 <script src="/group5/js/jquery.min.js"></script>
 <script>
 let returnResult;
+let ans;
 $(function(){
-	let ans;
 	//顯示其先查詢配對進度----------------------------------
 	if('${already}'!=''){
 		console.log('今天配對過囉，幫你看對方進度!')
@@ -31,7 +31,7 @@ $(function(){
 		}
 		//nextperson();
 	});
-	
+})	
 	function sendans(){
 		console.log("hello")
 		$.ajax({
@@ -60,13 +60,28 @@ $(function(){
 			let textadd='<li class="media"><i class="fas fa-square"></i><div class="media-body">聯絡資訊：${matching.member.memberDetail.pairContactInfo}</div></li>'
 						+'<li class="media"><i class="fas fa-square"></i><div class="media-body">想對健友說的話：${matching.member.memberDetail.pairInfo}</div></li>';
 			$("#lastitem").append(textadd);
+			successPair();
 		}else if(data==0||data=="end"){
 			$(".form-container").empty();
 			$(".form-container").append("<img src='/group5/images/undraw_missed_chances_k3cq.png' style='width:100%'><div style='margin-top:20px'>健友今天與您擦肩而過！</div>");
 			
 		}
 	}
-})
+
+	function successPair(){
+		let thePair={'mainPd':{'pdId':'${mainPD.pdId }'},'pairPd':{'pdId':'${matching.pdId }'}}
+		$.ajax({
+			type:'post',
+			url:'/group5/user/pairing/save2pairlog',
+			data:JSON.stringify(thePair),
+			contentType:'application/json',
+			dataType:'json',
+			sucess:function(){
+				console.log("yes");
+			}
+		})
+	}
+
 </script>
 </head>
 <body>

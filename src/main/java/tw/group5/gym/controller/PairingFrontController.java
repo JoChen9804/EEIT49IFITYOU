@@ -20,16 +20,13 @@ import tw.group5.admin.model.MemberRepository;
 import tw.group5.admin.service.AdminService;
 import tw.group5.gym.model.DailyPairLog;
 import tw.group5.gym.model.PairData;
-import tw.group5.gym.model.PairingLog;
+import tw.group5.gym.model.PairLog;
 import tw.group5.gym.service.PairDataService;
-import tw.group5.gym.service.PairingLogService;
 
 @Controller
 @RequestMapping("/group5/user/pairing")
 public class PairingFrontController {
 	
-	@Autowired
-	private PairingLogService pLogService;
 	
 	@Autowired
 	private AdminService adminService;
@@ -145,6 +142,14 @@ public class PairingFrontController {
 		return pDataService.findByMember(memberBean);
 	}
 	
-	
+	@PostMapping("save2pairlog")
+	@ResponseBody
+	public PairLog processSavePairLog(@RequestBody PairLog plog) {
+		if(!pDataService.checkForExists(plog.getMainPd().getPdId(), plog.getPairPd().getPdId())) {
+			//true表示存在，false表示不存在要insert
+			return pDataService.savePlog(plog);
+		}
+		return null;
+	}
 	
 }

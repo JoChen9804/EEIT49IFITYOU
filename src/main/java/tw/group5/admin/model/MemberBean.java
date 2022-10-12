@@ -18,7 +18,6 @@ import javax.persistence.Transient;
 
 import org.springframework.stereotype.Component;
 
-import tw.group5.gym.model.PairingLog;
 
 @Entity
 @Table(name = "member")

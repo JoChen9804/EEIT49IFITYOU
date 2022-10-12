@@ -106,6 +106,19 @@
 			</li>
 			<!-- Nav Item - Pages Collapse Menu æå¡ç®¡ç-->
 			<li class="nav-item"><a class="nav-link collapsed" href="#"
+				data-toggle="collapse" data-target="#collapsePair"
+				aria-expanded="true" aria-controls="collapseTwo"> <i
+					class="fas fa-fw fa-cog"></i> <span>配對</span>
+			</a>
+				<div id="collapsePair" class="collapse" aria-labelledby="headingTwo"
+					data-parent="#accordionSidebar">
+					<div class="bg-white py-2 collapse-inner rounded">
+						<a class="collapse-item" href="/group5/admin/pairing/pairMembers">配對資料</a>
+					</div>
+				</div>
+			</li>
+			<!-- Nav Item - Pages Collapse Menu æå¡ç®¡ç-->
+			<li class="nav-item"><a class="nav-link collapsed" href="#"
 				data-toggle="collapse" data-target="#collapseProducts"
 				aria-expanded="true" aria-controls="collapseTwo"> <i
 					class="fas fa-fw fa-cog"></i> <span>商品</span>

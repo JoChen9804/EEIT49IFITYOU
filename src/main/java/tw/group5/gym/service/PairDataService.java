@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -17,6 +19,8 @@ import tw.group5.gym.model.DailyPairLog;
 import tw.group5.gym.model.DailyPairLogRespository;
 import tw.group5.gym.model.PairData;
 import tw.group5.gym.model.PairDataRespository;
+import tw.group5.gym.model.PairLog;
+import tw.group5.gym.model.PairLogRespository;
 
 @Service
 @Transactional
@@ -27,6 +31,15 @@ public class PairDataService {
 	
 	@Autowired
 	private DailyPairLogRespository dailyplRespository;
+	 
+	@Autowired
+	private PairLogRespository plogRespository;
+	
+	
+	//pairData find all
+	public List<PairData> findAllPairDatas(){
+		return pdRespository.findAll();
+	}
 	
 	//pairData新增或修改
 	public PairData savePairData(PairData pairData) {
@@ -46,6 +59,114 @@ public class PairDataService {
 	public PairData findByMember(MemberBean member) {
 		return pdRespository.findByMember(member);
 	}
+	
+	
+	//pairdata count
+	public Map<String,Integer> countDatas(List<PairData> allDatas){
+		Map<String, Integer> count = new HashMap<String, Integer>();
+		int male=0, female=0, otherGender=0;
+		int t1=0, t2=0, t3=0, t4=0, t5=0, t6=0, t7=0;
+		int f0=0,f1=0, f2=0, f3=0, f4=0, f5=0, f6=0, f7=0;
+		int wt1=0,wt2=0, wt3=0;
+		for(PairData pd:allDatas) {
+			switch (pd.getMember().getMemberDetail().getGender()) {
+			case "男":
+				male++;
+				break;
+			case "女":
+				female++;
+				break;
+			default:
+				otherGender++;
+				break;
+			}
+			switch (pd.getWorkoutType()) {
+			case 1:
+				t1++;
+				break;
+			case 2:
+				t2++;
+				break;
+			case 3:
+				t3++;
+				break;
+			case 4:
+				t4++;
+				break;
+			case 5:
+				t5++;
+				break;
+			case 6:
+				t6++;
+				break;
+			case 7:
+				t7++;
+				break;
+			}
+			switch (pd.getWorkoutFrequency()) {
+			case 0:
+				f0++;
+				break;
+			case 1:
+				f1++;
+				break;
+			case 2:
+				f2++;
+				break;
+			case 3:
+				f3++;
+				break;
+			case 4:
+				f4++;
+				break;
+			case 5:
+				f5++;
+				break;
+			case 6:
+				f6++;
+				break;
+			case 7:
+				f7++;
+				break;
+			}
+			switch (pd.getWorkoutTime()) {
+			case 1:
+				wt1++;
+				break;
+			case 2:
+				wt2++;
+				break;
+			case 3:
+				wt3++;
+				break;
+			}
+		}
+		count.put("male", male);
+		count.put("female", female);
+		count.put("otherGender", otherGender);
+		count.put("t1",t1);
+		count.put("t2",t2);
+		count.put("t3",t3);
+		count.put("t4",t4);
+		count.put("t5",t5);
+		count.put("t6",t6);
+		count.put("t7",t7);
+		count.put("f0",f0);
+		count.put("f1",f1);
+		count.put("f2",f2);
+		count.put("f3",f3);
+		count.put("f4",f4);
+		count.put("f5",f5);
+		count.put("f6",f6);
+		count.put("f7",f7);
+		count.put("wt1",wt1);
+		count.put("wt2",wt2);
+		count.put("wt3",wt3);
+		return count;
+	}
+	
+	
+	
 	
 	//檢查今日是否配對過
 	public DailyPairLog alreadyPairOrNot(PairData mainData) {
@@ -74,7 +195,8 @@ public class PairDataService {
 			int count=(int) (a*100);
 			pair.setMatchingScore(count);
 			//新增一筆紀錄在dailylog
-			dailyplRespository.save(new DailyPairLog(checkRepart.getPair(),pair));
+			DailyPairLog save2 = dailyplRespository.save(new DailyPairLog(checkRepart.getPair(),pair));
+			save2.setPairScore(count);
 			//回傳之前配到main的那位
 			return pair;
 		}
@@ -175,5 +297,26 @@ public class PairDataService {
 	//dailyPairLog update/save
 	public DailyPairLog updateDailyPairLog(DailyPairLog dpl) {
 		return dailyplRespository.save(dpl);
+	}
+	
+	
+	//pairlog find by main or pair
+	public boolean checkForExists(int mainPd, int pairPd) {
+		PairLog result = plogRespository.checkForExists(mainPd, pairPd);
+		if(result==null) {
+			return false;
+		}
+		return true;
+	
+	}
+	
+	//pairlog update/save
+	public PairLog savePlog(PairLog plog) {
+		return plogRespository.save(plog);
+	}
+	
+	//pairlog find all
+	public List<PairLog> findAllPairLogs() {
+		return plogRespository.findAll();
 	}
 }
