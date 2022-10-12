@@ -16,7 +16,13 @@ $(function(){
 		console.log('今天配對過囉，幫你看對方進度!')
 		theAns('${already}')
 	}
-
+	let workoutTime=['02:01-10:00','10:01-18:00','18:01-02:00'];
+	let wF=['一週少於1天','一週1天','一週2天','一週3天','一週4天','一週5天','一週6天','一週7天'];
+	let wType=['徒手健身／街頭健身','自由重量','機械式','其他無氧運動','室內有氧（跑步機、踏步機等）','瑜珈、皮拉提斯等','其他有氧運動'];
+	
+	$("#wtype").append(wType[(${matching.workoutType}-1)]);
+	$("#wtime").append(workoutTime[(${matching.workoutTime}-1)]);
+	$("#wf").append(wF[${matching.workoutFrequency}]);
 	
 	$("#yes2pair").on("click",function(){
 		ans={ main: "${mainPD.pdId }", partner : "${matching.pdId }", ans2pair: "yes"};
@@ -111,15 +117,15 @@ $(function(){
                             </li>
                             <li class="media">
                                  <i class="fas fa-square"></i>
-                                 <div class="media-body">主要運動種類：${matching.workoutType}</div>
+                                 <div class="media-body" id="wtype">主要運動種類：<br></div>
                             </li>
                             <li class="media">
                                  <i class="fas fa-square"></i>
-                                 <div class="media-body">運動頻率：${matching.workoutFrequency}</div>
+                                 <div class="media-body" id="wf">運動頻率：</div>
                             </li>
                             <li class="media">
                                  <i class="fas fa-square"></i>
-                                 <div class="media-body">平時主要運動時間：${matching.workoutTime}</div>
+                                 <div class="media-body" id="wtime">平時主要運動時間：<br></div>
                             </li>
                         </ul>
                     	<button class="btn-solid-reg" id="yes2pair" value="yes" name="ans2pair">一起運動吧！</button>
