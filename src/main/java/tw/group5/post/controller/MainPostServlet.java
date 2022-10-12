@@ -112,7 +112,24 @@ public class MainPostServlet {
             List<MainPostBean> query = firstImagePath(mpService.allPosts());
             
             List<ReplyPostBean> reportBean = rpService.findByReplyPermissionNotNull();
-            mav.addObject("reportBean", reportBean);
+            if(!reportBean.isEmpty()) {
+                mav.addObject("reportBean", reportBean);
+            }else {
+                mav.addObject("nowhistleblower","沒有檢舉名單");
+            }
+            
+            
+            List<MemberBean> bannedList = bannedList();
+            if(!bannedList.isEmpty()) {
+                mav.addObject("bannedList",bannedList);
+            }else {
+                mav.addObject("nolist","沒有禁言名單");
+            }
+            
+            
+            
+            
+            
             mav.addObject("query", query);
 
             
@@ -137,9 +154,6 @@ public class MainPostServlet {
         }
         return mavMpost;
     }
-    
-    
-    
     
     //審核
     @PostMapping("/auditPost") 
@@ -168,16 +182,37 @@ public class MainPostServlet {
     
     //禁止發言
     @ResponseBody
-    @PostMapping("/UserPostMute/{replyaccount}")
-    public void userMute(@PathVariable("replyaccount")String replyaccount) {
+    @PostMapping("/UserPostMute/{replyaccount}/{mute}")
+    public void userMute(@PathVariable("replyaccount")String replyaccount,
+                        @PathVariable("mute")int mute) {
         MemberBean resultMember = amService.findByAccountMember(replyaccount);
         MemberDetail memberDetail = resultMember.getMemberDetail();
-        memberDetail.setMute(1);
+        memberDetail.setMute(mute);
         resultMember.setMemberDetail(memberDetail);
         amService.updateOne(resultMember);
         System.out.println("fffffffffff"+memberDetail.getMute());
     }
     
+    //禁止會員名單
+    //@ResponseBody
+    //@PostMapping("/BannedList")
+    public List<MemberBean> bannedList(){
+        System.out.println("有名單嗎???");
+        List<MemberBean> resultMember = amService.selectAllMember();
+        List<MemberBean> muteBean = new ArrayList<MemberBean>();
+       
+        for(MemberBean mBean : resultMember) {
+            if(mBean.getMemberDetail().getMute() == 1) {
+                muteBean.add(mBean);
+            }
+        }
+        
+    
+        
+       // System.out.println(muteBean.get(0).getId());
+        
+        return muteBean;
+    }
     
     
     

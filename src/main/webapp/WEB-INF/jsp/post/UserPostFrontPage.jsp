@@ -125,7 +125,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">
-					<div class="above-heading">FEATURES</div>
+<!-- 					<div class="above-heading">FEATURES</div> -->
 					<h2 class="h2-heading">論壇貼文</h2>
 					<img class="img" width="100%" height="70%"
 						src="postfolder/images/post.jpg">
@@ -195,7 +195,7 @@
 								    cancelButtonColor: '#d33',
 								    confirmButtonText: '刪除',
 								    cancelButtonText: '取消',
-								    reverseButtons: true
+								    //reverseButtons: true
 								
 								}).then((result) => {
 								    if (result.isConfirmed) {
@@ -346,7 +346,6 @@
                             cancelButtonColor: '#d33',
                             confirmButtonText: '刪除',
                             cancelButtonText: '取消',
-                            reverseButtons: true
                             
                           }).then((result) => {
                               if (result.isConfirmed) {
@@ -561,32 +560,32 @@
                         </div>
                     </aside>
 
-                    <aside id="categories-2" class="widget widget_categories">
-                        <h5 class="widget-title">Categories</h5>
-                        <ul>
-                            <li class="cat-item cat-item-1"><a
-                                    href="https://ld-wp.template-help.com/wordpress_52382/category/business-plan-consulting/">Business
-                                    plan consulting</a>
-                            </li>
-                            <li class="cat-item cat-item-27"><a
-                                    href="https://ld-wp.template-help.com/wordpress_52382/category/conflict-management/">Conflict
-                                    management</a>
-                            </li>
-                        </ul>
-                    </aside>
+<!--                     <aside id="categories-2" class="widget widget_categories"> -->
+<!--                         <h5 class="widget-title">Categories</h5> -->
+<!--                         <ul> -->
+<!--                             <li class="cat-item cat-item-1"><a -->
+<!--                                     href="https://ld-wp.template-help.com/wordpress_52382/category/business-plan-consulting/">Business -->
+<!--                                     plan consulting</a> -->
+<!--                             </li> -->
+<!--                             <li class="cat-item cat-item-27"><a -->
+<!--                                     href="https://ld-wp.template-help.com/wordpress_52382/category/conflict-management/">Conflict -->
+<!--                                     management</a> -->
+<!--                             </li> -->
+<!--                         </ul> -->
+<!--                     </aside> -->
                     
-                    <aside id="recent-comments-2" class="widget widget_recent_comments">
-                        <h5 class="widget-title">Recent Comments</h5>
-                        <ul id="recentcomments">
-                            <li class="recentcomments"><span class="comment-author-link">admin</span> on <a
-                                    href="https://ld-wp.template-help.com/wordpress_52382/2016/05/17/image-format/#comment-9">Image
-                                    Format</a></li>
-                            <li class="recentcomments"><span class="comment-author-link">admin</span> on <a
-                                    href="https://ld-wp.template-help.com/wordpress_52382/2016/05/17/bringing-a-new-cfo-at-the-time-of-crisis/#comment-8">Bringing
-                                    a new CFO at the time of crisis?</a></li>
+<!--                     <aside id="recent-comments-2" class="widget widget_recent_comments"> -->
+<!--                         <h5 class="widget-title">Recent Comments</h5> -->
+<!--                         <ul id="recentcomments"> -->
+<!--                             <li class="recentcomments"><span class="comment-author-link">admin</span> on <a -->
+<!--                                     href="https://ld-wp.template-help.com/wordpress_52382/2016/05/17/image-format/#comment-9">Image -->
+<!--                                     Format</a></li> -->
+<!--                             <li class="recentcomments"><span class="comment-author-link">admin</span> on <a -->
+<!--                                     href="https://ld-wp.template-help.com/wordpress_52382/2016/05/17/bringing-a-new-cfo-at-the-time-of-crisis/#comment-8">Bringing -->
+<!--                                     a new CFO at the time of crisis?</a></li> -->
 
-                        </ul>
-                    </aside>
+<!--                         </ul> -->
+<!--                     </aside> -->
 
                 </div>
 								
@@ -800,8 +799,8 @@
 											標題:<input type="text" name="title" class="form-control newtitle"
 												id="floatingInput" placeholder="請輸入標題"
 												oninvalid="setCustomValidity('請輸入標題')"
-												oninput="setCustomValidity('')"> <label
-												for="floatingInput">{請輸入標題}</label>
+												oninput="setCustomValidity('')"> <label style="color:#FF0000"
+												for="floatingInput"></label>
 										</div></th>
 								</tr>
 
@@ -809,15 +808,13 @@
 
 									<th><div class="form-floating">
 											內容:
-											<textarea name="content" class="form-control" cols="60"
-												rows="10" placeholder="請輸入內容" id="floatingTextarea" required
-												oninvalid="setCustomValidity('請輸入內容')"
-												oninput="setCustomValidity('')"></textarea>
-											<label for="floatingTextarea">{請輸入內容}</label>
+											<textarea name="content" class="form-control newcontent" cols="60"
+												rows="10" placeholder="請輸入內容" id="floatingTextarea"></textarea>
+											<label style="color:#FF0000" for="floatingTextarea"></label>
 										</div></th>
 								</tr>
 								<tr>
-									<th>請選擇圖片(最多五張，每張2MB以下):<input id="file1" type="file"
+									<th>請選擇圖片(最多五張):<input id="file1" type="file"
 										class="btn btn-outline-primary" name="file"
 										multiple="multiple" accept="image/*" onchange="checkip()">
 										<div id="imgs"></div></th>
@@ -826,8 +823,8 @@
 						</table>
 					
 					
-                        <button type='submit'  style='border:none' class='btn-solid-reg as-button'>測試</button>					
-					
+                        <button type='submit'  style='border:none' class='btn-solid-reg as-button'>送出</button>					
+					    <button type='submit'  style='border:none' class='btn btn-success as-button onekeyinput'>一健輸入</button>
 					
 <!-- 						<input type="button" class="btn-solid-reg mfp-close newposting" value="送出"> -->
 						<a class="btn-outline-reg mfp-close as-button" href="#screenshots">取消</a>
@@ -846,11 +843,19 @@
 	 <script>
 	                                   $(".newPost").submit(function(event){
                                         event.preventDefault();
-                                        //var newtitle = $(".newtitle").text();
-                                        //console.log(newtitle);
-                                      
-                                      
                                         
+                                        var newcontent = $(".newcontent").val();
+                                        var newtitle = $(".newtitle").val();
+                                        console.log(newcontent);
+                                        if(!newtitle){
+                                        	$(".newtitle").next().text("請輸入標題");
+                                        }
+                                        
+                                        if(!newcontent){
+                                            $(".newcontent").next().text("請輸入內容");
+                                        }
+                                        
+                                        if(newtitle && newcontent) {
                                         
                                          Swal.fire({
                                              title: '確認是否送管理員審核?',
@@ -873,8 +878,13 @@
                                          });
                                     
                                     
-                                    
+                                       
+                                        }
                                     });
+	                                   
+	                             
+	                                   
+	                                   
 	
 	                                   </script>
 	
@@ -892,7 +902,7 @@
 				<!--</div> -->
 				<!-- end of col -->
 				<div class="col-lg-12">
-				<form action="/group5/UserPost" enctype='multipart/form-data'
+				<form action="/group5/UserPost" class="modifysend" enctype='multipart/form-data'
                         method="POST" onsubmit="return checkip()">
                         <input type="hidden" name="_method" value="PUT">
                         
@@ -937,7 +947,7 @@
                                 <tr>
                                     <th>
                                         <div id="oldimgs"></div><br>
-                                         重新選擇圖片(最多五張，每張2MB以下):<input id="file1" type="file"
+                                         重新選擇圖片(最多五張):<input id="file1" type="file"
                                         class="btn btn-outline-primary" name="changeimages"
                                         multiple="multiple" accept="image/*" onchange="checkip()">
                                         
@@ -947,10 +957,24 @@
                                 </tr>
                             </thead>
                         </table>
-                        <input type="submit" class="btn-solid-reg mfp-close" value="修改送出">
+                        
+                        <button type='submit'  style='border:none' class='btn-solid-reg as-button'>修改送出</button>
+                        
+<!--                         <input type="submit" class="btn-solid-reg mfp-close" value="修改送出"> -->
                         <a class="btn-outline-reg mfp-close as-button" href="#screenshots">取消</a>
                         
                         </form>
+            
+            
+            
+                      
+            
+                                    
+            
+            
+            
+            
+            
             
 					
 				<!--	<a class="btn-solid-reg mfp-close" href="sign-up.html">SIGN UP</a>
@@ -1023,6 +1047,19 @@
     <script src="/group5/js/jquery.min.js"></script>
     <script src="js/images.js"></script>
                         <script>
+                        
+                        
+                        $(".onekeyinput").on('click', function(event){
+                            event.preventDefault();
+                           
+                            $(".newcontent").val("一堆問題");
+                            
+                            $(".newtitle").val("畢業了");
+                           
+                        });
+                        
+                        
+                        
 
                         $(function () {
                             var len = 50; // 超過50個字以"..."取代

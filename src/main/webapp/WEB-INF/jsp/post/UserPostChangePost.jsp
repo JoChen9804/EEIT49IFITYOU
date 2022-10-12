@@ -92,18 +92,19 @@
 									<tr>
 										<th><div class="mb-3">
 												標題:<input type="text" name="title"
-													class="form-control revisetitle" value="${queryContent.title}" 
+													class="form-control revisetitle" id="floatingInputGrid" value="${queryContent.title}" 
 													placeholder="請輸入標題" oninvalid="setCustomValidity('請輸入標題')"
 													oninput="setCustomValidity('')">
+													<label style="color:#FF0000" for="floatingInputGrid"></label>
 											</div></th>
 									</tr>
 
 									<tr>
 										<th><div class="form-floating">
 												內容:
-												<textarea name="content" class="form-control revisecontent" cols="60" rows="10" placeholder="請輸入內容"
-													 required oninvalid="setCustomValidity('請輸入內容')"
+												<textarea name="content" id="floatingInputGrids" class="form-control revisecontent" cols="60" rows="10"
 													oninput="setCustomValidity('')">${queryContent.content}</textarea>
+													<label style="color:#FF0000" for="floatingInputGrids"></label>
 											</div></th>
 									</tr>
 									<tr>
@@ -132,8 +133,23 @@
 								</thead>
 							</table>
 							        <script>
+						
+							        
 							        $("form").submit(function(event){
 							        	event.preventDefault();
+							        	  var revisecontent = $(".revisecontent").val();
+		                                     var revisetitle = $(".revisetitle").val();
+		                                     console.log(revisetitle);
+		                                     if(!revisetitle){
+		                                         $(".revisetitle").next().text("請輸入標題");
+		                                     }
+		                                     
+		                                     if(!revisecontent){
+		                                         $(".revisecontent").next().text("請輸入內容");
+		                                     } 
+		                                     if(revisetitle && revisecontent) {
+							        	
+							        	
 							             Swal.fire({
 							                 title: '確認是否修改送出?',
 							                 text: '備註:已發布的貼文修改會經過管理員審核!',
@@ -154,7 +170,7 @@
 							                 }
 							             });
 							        
-							        
+		                                     }
 							        
 							        });
 

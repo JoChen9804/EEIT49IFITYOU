@@ -5,6 +5,7 @@
 <html>
 <head>
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8" />
+<link rel="stylesheet" href="styles/Topic.css">
 <title>${queryOne.title}</title>
 <script src="/group5/js/jquery.min.js"></script>
 
@@ -108,7 +109,7 @@ $(function(){
 }
 
 .table1 {
-	width: 1000px;
+	width: 600px;
 	table-layout: fixed;
 	margin-left: auto;
 	margin-right: auto;
@@ -139,10 +140,29 @@ $(function(){
 }
 
 .column4 {
-	width: 1000px;
+	width: 800px;
 	text-align: center;
 	background-color: #f7f4dd;
 }
+
+.imgss {
+    width: 300px;
+    height: 200px;
+    padding: 5px 5px 5px 5px;
+    margin: 10px;
+}
+
+.content {
+    /* border: 1px solid;*/
+    /* width: 800px;*/
+    /* height: 400px; */
+    background-color: #f7f4dd;
+    /* margin: auto; */
+    word-wrap: break-word;
+}
+
+
+
 </style>
 </head>
 <body>
@@ -173,7 +193,7 @@ $(function(){
 								<p class="content">${queryOne.content}</p>
 
 								<c:forEach var="image" items="${allImages}">
-									<img class="imgpostdetails" src="${image}">
+									<img class="imgss" src="${image}">
 								</c:forEach>
 
 								<br> <input type="hidden" id="mainPostNo" name="mainPostNo"
@@ -226,7 +246,7 @@ $(function(){
 									<p>回復時間:${onereply.replyTime}</p>
 									<p>${onereply.replyContent}</p>
 									<c:forEach var="onewReplyImage" items="${onereply.r_imagess}">
-										<img class="imgpostdetails" src="${onewReplyImage}">
+										<img class="imgss" src="${onewReplyImage}">
 									</c:forEach>
 
 									<br> <input type="hidden" id="mainPostNo"
@@ -286,7 +306,7 @@ $(function(){
 							<td class="column3"><img class="imgheadstickers" src="${postPhoto}"></td>
 							<td><div class="content">
 
-									<textarea name="replyContent" id="content1" cols="80" rows="10"
+									<textarea name="replyContent" id="content1" cols="65" rows="10"
 										required oninvalid="setCustomValidity('請輸入內容')"
 										oninput="setCustomValidity('')"></textarea>
 
@@ -296,7 +316,7 @@ $(function(){
 								<div id="imgs"></div> <script src="/group5/js/jquery.min.js"></script>
 								<script src="js/images.js"></script>
 								
-								<div class="row g-2">
+								<div class="row g-3">
                                             <div class="col-md">
                                                 <div class="form-floating">
                                                     <input type="submit" class="btn-solid-reg replycontent"
@@ -310,11 +330,28 @@ $(function(){
                                                 
                                                 </div>
                                             </div>
+                                            
+                                             <div class="col-md">
+                                                <div class="form-floating">
+                                                <button type='submit'  style='border:none' class='btn btn-success as-button onekeyinput'>一健輸入</button>
+                                                
+                                                </div>
+                                            </div>
+                                            
                                         </div>
 								
 								</td>
 								</tr>
+								
 					                           <script>
+					                           $(".onekeyinput").on('click', function(event){
+					                               event.preventDefault();
+					                              
+					                               $("#content1").val("一堆問題");
+					                              
+					                           });
+					                           
+					                           
 					                           $(function(){
 					                        	   //var usermute = $(".usermute").val();
                                                    var useraccount= $(".useraccount").val();

@@ -144,14 +144,21 @@ fieldset {
                             <a class="nav-link mainpost" id="nav-tab-2" data-toggle="tab" href="#tab-2" role="tab"
                                 aria-controls="tab-2" aria-selected="false"><i class="fas fa-list"></i>貼文</a>
                         </li>
-                        </li>
+                        
                         <li class="nav-item">
                             <a class="nav-link" id="nav-tab-3" data-toggle="tab" href="#tab-3" role="tab"
                                 aria-controls="tab-3" aria-selected="false"><i
                                     class="fas fa-envelope-open-text"></i>檢舉</a>
+                        </li>
+                           <li class="nav-item">
+                            <a class="nav-link" id="nav-tab-3" data-toggle="tab" href="#tab-4" role="tab"
+                                aria-controls="tab-4" aria-selected="false"><i
+                                    class="fas fa-envelope-open-text"></i>禁言名單</a>
+                        </li>
+                        
                     </ul>
                     <!-- end of tabs links -->
-
+ 
                     <!-- Tabs Content -->
                     <div class="tab-content" id="argoTabsContent">
 
@@ -262,8 +269,10 @@ fieldset {
                                                 class="compact hover stripe">
                                                 <thead>
                                                     <tr>
-                                                        <th>選取<br>全選<input class="delete" type="checkbox"
-                                                                onclick="checkAll()" id="checkAll"></th>
+                                                        <th>選取
+<!--                                                         <br>全選<input class="delete" type="checkbox" -->
+<!--                                                                 onclick="checkAll()" id="checkAll"> -->
+                                                                </th>
                                                         <th>貼文編號</th>
                                                         <th>圖片</th>
                                                         <th>類型</th>
@@ -389,12 +398,129 @@ fieldset {
                                                     </c:forEach>
                                                 </tbody>
                                             </table>
-
+                                                    <h3 class='center'>${nowhistleblower}</h3>
                                     </div> <!-- end of text-container -->
                                 </div> <!-- end of col -->
                             </div> <!-- end of row -->
                         </div> <!-- end of tab-pane -->
                         <!-- end of tab -->
+                        
+                        
+                                                <!-- Tab -->
+                        <div class="tab-pane fade" id="tab-4" role="tabpanel" aria-labelledby="tab-4">
+                            <div class="row">
+                                
+                                <div class="col-lg-12">
+                                    <div class="text-container">
+                                    
+                                             <table class="table table-bordered bannedlist" id="table_id" 
+                                                class="compact hover stripe">
+                                                
+                                                <thead>
+                                                    <tr>
+                                                        <th>會員編號</th>
+                                                        <th>會員</th>
+                                                        <th>照片</th>
+                                                        <th>操作</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <c:forEach var="banned" items="${bannedList}">
+
+                                                        <tr class="content">
+                                                            <td class="align-middle">${banned.id}</td>
+                                                            <td class="align-middle">${banned.memberAccount}</td>
+                                                            <td class="align-middle"><img class="imgfront"
+                                                                    src="${banned.memberPhoto}"></td>
+                                                            <td class="align-middle">
+
+                                                                <input type="hidden" class="replyPhoto" value="${banned.memberAccount}">
+                                                                <button type="submit" class="btn btn-secondary btn-icon-split replyspeech" value="回復發言">
+                                                                <span class="icon text-white-50"><i class="fas fa-arrow-right"></i></span>
+                                                                <span class="text">回復發言</span></button>
+                                                            </td>
+                                                        </tr>
+                                                    </c:forEach>
+                                                </tbody>
+                                            </table>
+                                                    <h3 class='center'>${nolist}</h3>
+                                    </div> <!-- end of text-container -->
+                                </div> <!-- end of col -->
+                            </div> <!-- end of row -->
+                        </div> <!-- end of tab-pane -->
+                        <!-- end of tab -->
+                                           <script>
+                                           $(".replyspeech").on('click', function(event){
+                                               console.log("324432");
+                                               var replyaccount = $(this).prev().val();
+                                               console.log(replyaccount);
+                                              
+                                               Swal.fire({
+                                                   title: '確定回復'+replyaccount+'發言?',
+                                                   text: "",
+                                                   icon: 'warning',
+                                                   showCancelButton: true,
+                                                   confirmButtonColor: '#3085d6',
+                                                   cancelButtonColor: '#d33',
+                                                   confirmButtonText: '刪除',
+                                                   cancelButtonText: '取消',
+                                                   
+                                                 }).then((result) => {
+                                                     if (result.isConfirmed) {
+                                                    	 replySspeech(replyaccount)
+                                                         
+                                                         $(this).siblings().parent().parent().remove();
+                                                         
+                                                         Swal.fire(
+                                                                 '已回復'+replyaccount+'發言'
+                                                         ).then((result)=>{
+                                                             if(result.isConfirmed){
+                                                                 //location.reload();
+                                                             }
+                                                         });
+                                               
+                                                       }
+                                                     });
+                                               
+                                           });
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    function replySspeech(replyaccount){
+                        var mute = 0;
+                        $.ajax({
+                            type: "Post",
+                            url: "/group5/admin/UserPostMute/"+ replyaccount + "/" + mute,
+                            success: function(){
+                                var text ='已對'+ replyaccount + '回復發言!';
+                                Swal.fire(
+                                        text
+                                ).then((result)=>{
+                                    if(result.isConfirmed){
+                                    }
+                                });
+                                
+                            }
+                        });
+                    };
+                    
+                    
+                    
+                    
+                    
+                    </script>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
 
                     </div> <!-- end of tab content -->
                     <!-- end of tabs content -->
@@ -795,6 +921,7 @@ fieldset {
                 if (result.isConfirmed) {
                 	//呼叫刪除
                 	deletereply(replyNo);
+                	$(this).siblings().parent().parent().remove();
                      Swal.fire({
 		                title: '刪除成功，需要對會員'+replyaccount+'禁止發言嗎?',
 		                text: '',
@@ -808,6 +935,9 @@ fieldset {
 		            	if (result.isConfirmed) {
 		            		//呼叫禁言
 		            		userMute(replyaccount);
+		            		
+		            		
+		            		
 		            	}
                      });
                 }
@@ -830,9 +960,10 @@ fieldset {
         
         //禁止發言
         function userMute(replyaccount){
+        	var mute = 1;
             $.ajax({
                 type: "Post",
-                url: "/group5/admin/UserPostMute/"+ replyaccount,
+                url: "/group5/admin/UserPostMute/"+ replyaccount + "/" + mute,
                 success: function(){
                     var text ='已對'+ replyaccount + '禁止發言!';
                 	Swal.fire(
@@ -874,7 +1005,8 @@ fieldset {
                         title: '撤銷成功',
                         icon: 'success'
                     }).then((result) => {
-                        location.reload();
+                    	$(this).siblings().parent().parent().remove();
+                        //location.reload();
                     });
                 }
             });
