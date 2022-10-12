@@ -10,4 +10,10 @@ public interface ActivityActivityRepository extends JpaRepository<ActivityActivi
 	@Query(value = "select top 3 * from activity order by totalsignup desc;", nativeQuery = true)
 	public List<ActivityActivity> selectImgToShow();
 	
+	@Query(value = "select * from activity order by starttime asc;", nativeQuery = true)
+	public List<ActivityActivity> orderByDate();
+	
+	@Query(value = "select count(activityid) from activity where startTime like ?", nativeQuery = true)
+	public Integer countMonthActivity(String month);
+	
 }

@@ -68,7 +68,7 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
                             <li class="media">
                                 <i class="fas fa-square"></i>
                                 <div class="media-body">
-										活動地點: ${add_activity.location}
+										活動地點: ${query_activity.location}
 									</div>
                             </li>
                             <li class="media">

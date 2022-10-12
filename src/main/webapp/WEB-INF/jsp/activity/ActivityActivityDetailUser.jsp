@@ -14,6 +14,7 @@
     </style>
 </head>
 <body>
+	<%@ include file="../admin/FrontStageHead.jsp"%>
 
 	<!-- jQuery -->
 	<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
@@ -25,8 +26,11 @@
 
 	<!-- ckeditor5 -->
 	<script src="https://cdn.ckeditor.com/ckeditor5/35.2.0/super-build/ckeditor.js"></script>
+	
+	<!-- google map -->
+	<script src="//cdnjs.cloudflare.com/ajax/libs/validate.js/0.12.0/validate.min.js"></script>
 
-<%@ include file="../admin/FrontStageHead.jsp"%>
+
 
 	<!-- Video -->
     <div id="video" class="basic-2" style="background-color: white; margin-bottom: -6rem;">
@@ -49,39 +53,51 @@
         </div> <!-- end of container -->
     </div> <!-- end of basic-2 -->
     <!-- end of video -->
-    
-    <div class="divtest">
-    
-    	 <h1 style="text-align: center;">${query_activity.activityTitle}</h1>
-                    
-                    <div >
-                    	${query_activity.activityContent}
-                    </div>
-                    <div style="text-align: center; margin-bottom: 3rem;">
-                   		<form action="/group5/user/toactivitysignup" method="post" style="display:inline">
-          	         		<input type="hidden" name="userId" value=""/>
-          	         		<input type="hidden" name="activityId" value="${query_activity.activityId}"/>
-          		          	<input type="submit" id="wantToSignUp" class="btn-solid-reg page-scroll" value="我想報名"/>
-              	     	</form>
-            		   	&emsp;
-                   		<a class="btn-solid-reg page-scroll" href="../activityuser">返回</a>
-                    </div>
-    
-    </div>
-    
-    <script type="text/javascript">
-    	$(function(){
-    		let date = new Date();
-    		console.log('今天日期='+date.toISOString().split('T')[0]);
-    		console.log('國棟截止=' + '${query_activity.signUpDeadline}');
-    		console.log('已過期=' + (date.toISOString().split('T')[0] >= '${query_activity.signUpDeadline}'));
-    		if(date.toISOString().split('T')[0] >= '${query_activity.signUpDeadline}'){
-    			$('#wantToSignUp').attr("disabled","disabled")
-    								.attr("style", "background-color:gray;border:gray;color:white")
-    								.attr('value', '報名截止');
-    		}
-    	});
-    </script>
+
+
+	<div class="divtest">
+		<hr>
+		<h1 style="text-align: center;">${query_activity.activityTitle}</h1>
+		<hr>
+		<div>${query_activity.activityContent}</div>
+		<hr>
+		<h1 style="text-align: center;">活動地點</h1>
+		<hr>
+		<iframe width="900px" height="300px" frameborder="0" class="map"
+			style="border: 0; border-radius: 20px;"
+			src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAebEgcRugex4c_DH0B8HVeB0qwwpuA6DI&q=${query_activity.location}"
+			allowfullscreen>
+		</iframe>
+
+		<br>
+		<br>
+
+		<div style="text-align: center; margin-bottom: 3rem;">
+			<form action="/group5/user/toactivitysignup" method="post" style="display: inline">
+				<input type="hidden" name="userId" value="" /> 
+				<input type="hidden" name="activityId" value="${query_activity.activityId}" />
+				<input type="submit" id="wantToSignUp" class="btn-solid-reg page-scroll" value="我想報名" />
+			</form>
+			&emsp; <a class="btn-solid-reg page-scroll" href="../activityuser">返回</a>
+		</div>
+
+	</div>
+
+	<script type="text/javascript">
+		$(function() {
+			let date = new Date();
+			console.log('今天日期=' + date.toISOString().split('T')[0]);
+			console.log('活動截止=' + '${query_activity.signUpDeadline}');
+			console
+					.log('已過期='
+							+ (date.toISOString().split('T')[0] >= '${query_activity.signUpDeadline}'));
+			if (date.toISOString().split('T')[0] >= '${query_activity.signUpDeadline}') {
+				$('#wantToSignUp').attr("disabled", "disabled").attr("style",
+						"background-color:gray;border:gray;color:white").attr(
+						'value', '報名截止');
+			}
+		});
+	</script>
 
 <%@ include file="../admin/FrontStageFoot.jsp"%>
 </body>

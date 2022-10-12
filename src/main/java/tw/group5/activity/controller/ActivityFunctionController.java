@@ -2,6 +2,7 @@ package tw.group5.activity.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -38,6 +39,20 @@ public class ActivityFunctionController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	/*
+	 * 其他方法
+	 */
+	public HashMap<String, Integer> statisticsActivity(List<ActivityActivity> activities) {
+		
+		for (ActivityActivity activity : activities) {
+//			if(activity.getStartTime()>="2022-1-1") {
+//				
+//			}
+		}
+		
+		return null;
+	}
+	
+	/*
 	 * CKEditor上傳圖片
 	 */
 	@PostMapping("/admin/uploadimages")
@@ -56,7 +71,21 @@ public class ActivityFunctionController extends HttpServlet {
 		result.setUrl(saveFileDir1);
 		return result;
 	}
+	
+	/*
+	 * statistics
+	 */
+	@GetMapping("/admin/statisticsmain.controller")
+	public String processStatisticsMainAction(Model m) {
+		List<ActivityActivity> orderByDate = avtivityService.orderByDate();
+		System.out.println("開始日期"+ orderByDate.get(0).getStartTime());
+		System.out.println("結束日期"+ orderByDate.get(orderByDate.size()-1).getStartTime());
 		
+		 m.addAttribute("activity", avtivityService.countMonthActivity());
+		return "activity/ActivityStatistics";
+	}
+	
+	
 	/*
 	 * voucher
 	 */
@@ -95,12 +124,14 @@ public class ActivityFunctionController extends HttpServlet {
 	@GetMapping("/activityuser")
 	public String UserCenter(Model m) {
 		List<ActivityActivity> activity = avtivityService.findAll();
-		/*HashMap<Integer, Integer> countMember = new HashMap<Integer, Integer>();
+		/*
+		HashMap<Integer, Integer> countMember = new HashMap<Integer, Integer>();
 		for (ActivityActivity activity1 : activity) {
 			countMember.put(activity1.getActivityId(), signUpService.countSignUpMember(activity1.getActivityId()));
 			activity1.setTotalSignUp(signUpService.countSignUpMember(activity1.getActivityId()));
 		}
-		m.addAttribute("activity_countMember", countMember);*/
+		m.addAttribute("activity_countMember", countMember);
+		*/
 		m.addAttribute("showImg", avtivityService.selectImgToShow());
 		m.addAttribute("activity_queryAll", activity);
 		return "activity/ActivityAllActivityUser"; 

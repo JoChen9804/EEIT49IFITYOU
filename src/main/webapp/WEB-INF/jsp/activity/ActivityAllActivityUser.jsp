@@ -9,7 +9,7 @@
  	<script src="/group5/js/jquery.min.js"></script>
  	
  	<!-- flickity輪播 -->
-	<script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js" defer></script>
+<!-- 	<script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js" defer></script> -->
 <!-- 	<script src="https://npmcdn.com/flickity@2/dist/flickity.pkgd.js"></script> -->
  	<link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
  	
@@ -21,12 +21,11 @@
 <!--     <script src="/group5/js/activity/flickity.pkgd.min.js"></script>	 -->
 <!-- 	<script src="stylesheet" href="/group5/js/activity/flickity/flickity.pkgd.min.js"></script> -->
     
-    <!-- 
 	<style>
 		.test {
 			width: 1000px;
 			height: 400px;
-			object-fit: cover;
+/* 			object-fit: cover;	 */
 		}
 
 		.test1 {
@@ -34,50 +33,63 @@
 			height: 400px;
 		}
 	</style>
-	<script type="text/javascript">
+	<script>
 	
-		function loadFlickity() {
-			 console.log('123');
-			$('.main-carousel').flickity({
-				// options
-				cellAlign: 'left',
-				contain: true,
-				autoPlay: true,
-				wrapAround: true
-			});
-		}
-	 -->
+// 		function loadFlickity() {
+// 			 console.log('123');
+// 			$('.main-carousel').flickity({
+// 				// options
+// 				cellAlign: 'left',
+// 				contain: true,
+// 				autoPlay: true,
+// 				wrapAround: true
+// 			});
+// 		}
 	</script>
    
 </head>
 <body>
 <%@ include file="../admin/FrontStageHead.jsp"%>
+<script src="https://npmcdn.com/flickity@2/dist/flickity.pkgd.js"></script>
 
-		<div style="width:500px; height:500px" id="test"></div>
-	<div class="container" style="margin-top: -24rem;">
-        <div class="wrap" style="border-radius: 20px;">
-            <a class="slide-arrow" id="slidePrev"><i class="fa-solid fa-angle-left"></i></a>
-            <a class="slide-arrow right" id="slideNext"><i class="fa-solid fa-angle-right"></i></a>
-            <ul class="slide-img">
-            	<c:forEach var="si" items="${showImg}">
-            		<li><img src="/Path/${si.photoData}" alt=""></li>
-            	</c:forEach>
-            </ul>
-            <ul class="pages">
-                <li></li>
-                <li></li>
-                <li></li>
-            </ul>
-        </div>
-    </div>
+	<div style="width:500px; height:500px" id="test"></div>
+<!-- 	<div class="container" style="margin-top: -24rem;"> -->
+<!--         <div class="wrap" style="border-radius: 20px;"> -->
+<!--             <a class="slide-arrow" id="slidePrev"><i class="fa-solid fa-angle-left"></i></a> -->
+<!--             <a class="slide-arrow right" id="slideNext"><i class="fa-solid fa-angle-right"></i></a> -->
+<!--             <ul class="slide-img"> -->
+<%--             	<c:forEach var="si" items="${showImg}"> --%>
+<%--             		<li><img src="/Path/${si.photoData}" alt=""></li> --%>
+<%--             	</c:forEach> --%>
+<!--             </ul> -->
+<!--             <ul class="pages"> -->
+<!--                 <li></li> -->
+<!--                 <li></li> -->
+<!--                 <li></li> -->
+<!--             </ul> -->
+<!--         </div> -->
+<!--     </div> -->
     
 <!--     <br> -->
-<!--     <div class="main-carousel test1"> -->
-<%--     	<c:forEach var="si" items="${showImg}"> --%>
-<%--     		<div class="carousel-cell"><img src="/Path/${si.photoData}" class="test" alt=""></div> --%>
-<%--    		</c:forEach> --%>
-<!-- 	</div> -->
-<!-- 	<script type="text/javascript">loadFlickity()</script> -->
+
+	<div class="container" style="margin-top: -24rem; border-radius: 20px;">
+    	<div class="main-carousel test1" style=" margin: 0 auto; position: relative; ">
+    		<c:forEach var="si" items="${showImg}">
+    			<a href="/group5/toactivity/${si.activityId}"  style="text-decoration:none;">
+    				<div class="carousel-cell"><img src="/Path/${si.photoData}" class="test" alt=""></div>
+    			</a>
+   			</c:forEach>
+		</div>
+	</div>
+	
+	<script>
+	$('.main-carousel').flickity({
+		cellAlign: 'left',
+		contain: true,
+		autoPlay: true,
+		wrapAround: true
+	});
+	</script>
 		
 		
 	  <div class="cards-1">
@@ -130,16 +142,6 @@
                     { src: "/Path/slide1 (3).jpg" },
                 ]
             });*/
-            
-            //	<div class="carousel-cell"><img src="/Path/${si.photoData}" class="test"></div>
-           /*
-            let table ='';
-            let item = ${showImg};
-            ${showImg}.forEach(element => table+='div class="carousel-cell"><img src="/Path/'+ietm.photoData+'" class="test"></div>');
-            console.log('123');
-            console.log(table);
-			*/
-            
     	});
     	
     </script>

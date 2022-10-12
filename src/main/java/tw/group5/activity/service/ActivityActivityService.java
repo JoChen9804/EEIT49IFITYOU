@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -91,5 +92,26 @@ public class ActivityActivityService {
 	public List<ActivityActivity> selectImgToShow() {
 		return aaRepository.selectImgToShow();
 	} 
+	
+	/*
+	 * 依活動日期排序
+	 */
+	public List<ActivityActivity> orderByDate() {
+		return aaRepository.orderByDate();
+	}
+	
+	/*
+	 * 用月份查詢活動數
+	 */
+	public String countMonthActivity() {
+//		HashMap<Integer, Integer> count = new HashMap<Integer, Integer>();
+		String count = "[";
+		for (int i = 1; i <= 12; i++) {
+			String tt = "2022-"+i+"%";
+			count+= aaRepository.countMonthActivity(tt)+",";
+		}
+		count+="]";
+		return count;
+	}
 	
 }

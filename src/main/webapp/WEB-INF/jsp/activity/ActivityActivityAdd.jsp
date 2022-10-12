@@ -69,36 +69,36 @@ response.setCharacterEncoding("UTF-8");
                             <li class="media">
                                 <i class="fas fa-square"></i>
                                 <div class="media-body">
-									活動名稱: <form:input type="text" id="activityTitle" path="activityTitle" placeholder="activityTitle" class="need"/>＊請勿超過20個字
+									<label>活動名稱 </label> <form:input type="text" id="activityTitle" path="activityTitle" placeholder="activityTitle" class="need"/>＊請勿超過20個字
 								</div>
                             <li class="media">
                                 <i class="fas fa-square"></i>
                                 <div class="media-body">
-                               		活動類型: <form:input type="text" id="typeContent" path="typeContent" placeholder="typeContent" class="need"/>＊
+                               		<label>活動類型 </label> <form:input type="text" id="typeContent" path="typeContent" placeholder="typeContent" class="need"/>＊
 								</div>
                             </li>
                             <li class="media">
                                	<i class="fas fa-square"></i>
                                	<div class="media-body">
-									主辦方: <form:input type="text" id="holder" path="holder" placeholder="holder" class="need"/>＊
+									<label>主辦方 </label> <form:input type="text" id="holder" path="holder" placeholder="holder" class="need"/>＊
 								</div>
                             </li>
                             <li class="media">
                                 <i class="fas fa-square"></i>
                                 <div class="media-body">
-									活動地點: <form:input type="text" id="location" path="location" placeholder="location" class="need"/>＊
+									<label>活動地點 </label> <form:input type="text" id="location" path="location" placeholder="location" class="need"/>＊
 								</div>
                             </li>
                             <li class="media">
 	                            <i class="fas fa-square"></i>
 	                            <div class="media-body">
-									活動開始日: <form:input type="date" path="startTime" id="startTime" class="need"/>＊
+									<label>活動開始日 </label> <form:input type="date" path="startTime" id="startTime" class="need"/>＊
 								</div>
 	                        </li>
 	                        <li class="media">
 	                            <i class="fas fa-square"></i>
 	                            <div class="media-body">
-									活動結束日: <form:input type="date" path="endTime" id="endTime" class="need"/>＊
+									<label>活動結束日 </label> <form:input type="date" path="endTime" id="endTime" class="need"/>＊
 								</div>
 							</li>
                         </ul>
@@ -112,7 +112,7 @@ response.setCharacterEncoding("UTF-8");
 							<li class="media">
              	           	<i class="fas fa-square"></i>
             	                <div class="media-body">
-									報名截止日: <form:input type="date" path="signUpDeadline" id="deadline" class="need"/>＊
+									<label>報名截止日</label> <form:input type="date" path="signUpDeadline" id="deadline" class="need"/>＊
 								</div>
           	              </li>	
 							<li class="image-container" style="margin-left:0px">
@@ -323,19 +323,26 @@ response.setCharacterEncoding("UTF-8");
     		
     	$("#activityContent").val(myEditor.getData());
     		
+		var errorMsg = '請檢查以下欄位:<br><p style="font-weight:bold;">';
 		var rs = false;
-    	$(".need").each(function(){
+    	var count=0;
+    	$(".need").each(function(i){
     		if($(this).val()==""){
-    	    	console.log('檢查到欄位有空值!');
-        		Swal.fire({
-    				title:'資料不完整',
-   					text:'請檢查＊號欄位是否都有填入',
-   					icon:'warning'
-   				});
+    			count++;
+    			errorMsg+="<font style='color: red;'>"+$(this).prev().text()+"</font>,";
    		   		rs = true;
        		}
    		});
-   		if(rs)return;
+    	errorMsg = errorMsg.slice(0, -1)+'</p>'
+   		if(rs){
+   			console.log('檢查到欄位有空值!');
+    		Swal.fire({
+				title:'資料不完整',
+					html:errorMsg,
+					icon:'warning'
+				});
+   			return;
+   		}
    		
    		let date = new Date();
 		if(date.toISOString().split('T')[0] >= $('#endTime').val() || date.toISOString().split('T')[0] >= $('#deadline').val()){

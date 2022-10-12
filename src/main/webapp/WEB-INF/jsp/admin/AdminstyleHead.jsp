@@ -86,6 +86,7 @@
 				<div id="collapseActivities" class="collapse"
 					aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
+						<a class="collapse-item" href="/group5/admin/statisticsmain.controller">活動數據</a>
 						<a class="collapse-item" href="/group5/admin/activitymain.controller">活動管理</a>
 						<a class="collapse-item" href="/group5/admin/vouchermain.controller">優惠券管理</a>
 					</div>
