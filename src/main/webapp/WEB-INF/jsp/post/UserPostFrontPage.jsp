@@ -119,6 +119,29 @@
     
 }
 
+/* .postwatch:hover{ */
+/*     box-shadow:10px 10px 5px rgha(0,0,0,0.8); */
+/* } */
+
+
+        .postwatch{
+/*             width: 500px; */
+/*             height: 500px; */
+            background-color: skyblue;
+            transition: all 0.5s;
+/*             text-align: center; */
+/*             line-height: 500px; */
+/*             margin-top: 100px; */
+/*             margin-left: 100px */
+
+        }
+        .postwatch:hover{
+            box-shadow: 10px 10px 20px rgba(0,0,0,0.2);  #x、y都偏移10px，陰影的厚度為20px
+            transform: translate3d(0,-15px,0);  #在y軸向上移動15px
+            /*transform: scale(1.5,1.5);*/
+            /*transform: skew(30deg,0);*/
+        }
+
 </style>
 <!-- Favicon  -->
 </head>
@@ -575,8 +598,9 @@
 										<h3>${error}</h3>
 										
 										<c:forEach var="allmpbs" items="${query}">
-										      <div class="card mb-3" style="max-width: 900px;">
+										      <div class="card mb-3 postwatch" style="max-width: 900px;">
                                         <div class="row g-0">
+                                       
                                             <div class="col-md-5 col-lg-5">
                                                 <img src="${allmpbs.p_image}" width="450px"
                                                     height="250px" class="w-100">
@@ -584,18 +608,25 @@
 
                                             <div class="col-md-7 col-lg-7">
                                                 <div class="card-body">
+                                                
+                                                <a style='text-decoration:none;' href='/group5/MainPost.watch/${allmpbs.mainPostNo}'>
                                                     <h3 class="card-title">${allmpbs.title}&emsp;[${allmpbs.postTypeName}]</h3>
                                                     <p class="card-text">${allmpbs.content}</p>
                                                     <p class="p1"><small class="text-muted">發布會員:${allmpbs.account}</small></p>
                                                     <p class="p1"><small class="text-muted">發布時間:${allmpbs.addtime}</small></p>
-                                                    <form action="PostWtch" method="GET">
-                                                      <input type="hidden" name="mainPostNo"value="${allmpbs.mainPostNo}"> 
-                                                      <button type='submit' style='border:none'  
-                                                      class='btn btn-outline-success btn-icon-split fa-solid fa-magnifying-glass fa-1x'>觀看</button>
-                                                    </form>
+<!--                                                     <form action="PostWtch" method="GET"> -->
+<%--                                                       <input type="hidden" name="mainPostNo"value="${allmpbs.mainPostNo}">  --%>
+<!--                                                       <button type='submit' style='border:none'   -->
+<!--                                                       class='btn btn-outline-success btn-icon-split fa-solid fa-magnifying-glass fa-1x'>觀看</button> -->
+<!--                                                     </form> -->
                                                     <i class="fa-solid fa-eye iconHome">${allmpbs.ctr}</i>
+                                                    </a>
+                                                
                                                 </div>
                                             </div>
+                                            
+                                            
+                                            
                                         </div>
 
                                     </div>
