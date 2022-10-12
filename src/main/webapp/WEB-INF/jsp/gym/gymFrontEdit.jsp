@@ -33,11 +33,6 @@
     let districtNow=addressNow.substring(3,6);
     let weekdaysChoose="${update.gymOpenHours }";
     $(function(){
-    	/*
-        weekdaysChoose.split('<br>').forEach(element => element.split(',').forEach(function(x){
-            $(".btn-group label:contains("+x.substring(2,3)+")").prev().prop("checked","true");
-        }));
-		*/
         city();
         $("option:contains("+cityNow+")").prop("selected","true");
         $("#district").append("<option value="+districtNow+" selected id='preSelected'>"+districtNow);
@@ -78,7 +73,9 @@
 		//picture
 		$('#ff').on('change', function(e){      
 			//預覽
+			let file = this.files[0];
 			let objectURL = URL.createObjectURL(file);
+			console.log(objectURL);
 			$('#img1').attr('src', objectURL);
 		});
 		

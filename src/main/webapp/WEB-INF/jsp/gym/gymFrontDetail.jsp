@@ -57,19 +57,19 @@ $(function(){
                 autocapitalize: 'off'
             },
             showCancelButton: true,
-            confirmButtonText: 'Look up',
+            confirmButtonText: '檢舉',
         }).then((result) => {
             if (result.isConfirmed) {
             	let reason=result.value;
             	preDelete(reason);
                 Swal.fire({
-                    title: '已提出刪除',
+                    title: '已提出檢舉',
                 })
             }
         })
 	})
 	if("${logStatus.gymDel}"==1){
-		$("#preDelete").text("已提出刪除申請");
+		$("#preDelete").text("已提出檢舉");
 	}
 	
 	$("#goPair").on("click",function(){
@@ -145,11 +145,11 @@ function preDelete(reason){
 		contentType: 'application/json',
 		data:JSON.stringify(gymlog),
 		success:function(){
-			$("#preDelete").text("已提出刪除申請");
+			$("#preDelete").text("已提出檢舉申請");
 		},
 		error:function(){
 			Swal.fire(
-					  '刪除失敗',
+					  '檢舉失敗',
 					  '請洽管理員諮，或詢稍後再試一次！',
 					  'error'
 					)
@@ -179,7 +179,7 @@ function preDelete(reason){
 								<div class="media-body">健友評分：${gymDetail.rating}</div></li>
 						</ul>
 						<a class="btn-outline-reg" href="/group5/user/gym/edit/${gymDetail.gymId }" id="editGym">編輯</a>
-						<button class="btn-outline-red" id="preDelete">申請刪除</button>
+						<button class="btn-outline-red" id="preDelete">檢舉</button>
                     	<input type="hidden" value="${loginMember.id }" id="memberIdNow">
 						<hr>
 						<div class="saved">

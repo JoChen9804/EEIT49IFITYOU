@@ -83,6 +83,34 @@ $(function(){
 		$("#picture").submit();
 	}
 	
+	$("#goData").on("click",function(){
+		$("#gymName").val("資資健身工作室");
+		$(".showNameText").text("資資健身工作室");
+		$("option:contains('桃園市')").prop("selected","true");
+        $("#district").append("<option value='中壢區' selected id='preSelected'>"+'中壢區');
+        $("#gymAddressDetail").val("新生路二段421號");
+		$(".showAddressText").text("桃園市中壢區新生路二段421號");
+		$("#btncheck1").prop("checked","true");
+		$("#btncheck2").prop("checked","true");
+		$("#btncheck3").prop("checked","true");
+		$("#btncheck4").prop("checked","true");
+		$("#btncheck5").prop("checked","true");
+		$("#btncheck6").prop("checked","true");
+		$("#btncheck7").prop("checked","true");
+		$("#btncheck1").prop("disabled","true");
+		$("#btncheck2").prop("disabled","true");
+		$("#btncheck3").prop("disabled","true");
+		$("#btncheck4").prop("disabled","true");
+		$("#btncheck5").prop("disabled","true");
+		$("#btncheck6").prop("disabled","true");
+		$("#btncheck7").prop("disabled","true");
+		$(".openTime").val("06:00");
+		$(".closeTime").val("22:00");
+		$(".showTimesText").html("星期一,星期二,星期三,星期四,星期五,星期六,星期日06:00-22:00");
+	})
+	
+	
+	
 });
 
 </script>
@@ -166,6 +194,7 @@ $(function(){
 					</div>
 					<div class="col-12">
 						<button class="btn btn-primary" type="submit" id="submitAdd">新增</button>
+						<button class="btn btn-primary" type="submit" id="goData">一鍵輸入</button>
 					</div>
 					<div id="addResult" style="padding-top: 12px;"></div>
 				</div>

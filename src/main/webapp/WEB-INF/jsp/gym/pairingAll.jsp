@@ -25,7 +25,6 @@
     <script src="/group5/js/dataTables.bootstrap4.min.js"></script>
     <script src="/group5/js/datatables-demo.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
-    
 </head>
 <body>
 <%@ include file="../admin/AdminstyleHead.jsp" %>
@@ -67,40 +66,49 @@
                     </div>
                 </div>
             </div> <!-- card end -->
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">參與配對會員之性別分布</h6>
-                </div>
-                <div class="card-body d-flex">
-                	<div class="w-50">
-	                    <canvas id="genderChart"></canvas>
-                	</div>
-                </div>
-            </div>
-            
-        </div> <!-- col end -->
+       </div> <!-- col end -->
         <div class="col-lg-6">
         	<div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">參與配對會員之運動種類偏好</h6>
-                </div>
-                <div class="card-body">
-					<div class="w-100">
-	                    <canvas id="wtChart"></canvas>
-                	</div>
-                </div>
-            </div>
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">參與配對會員之運動頻率</h6>
-                </div>
-                <div class="card-body">
-                	<div class="w-100">
-	                    <canvas id="wfChart"></canvas>
-                	</div>
-                </div>
-            </div> <!-- card end -->
-            <div class="card shadow mb-4">
+	        	<div class="card-header py-3">
+	            	<h6 class="m-0 font-weight-bold text-primary">參與配對會員之性別分布</h6>
+	            </div>
+	            <div class="card-body d-flex">
+	                <div class="w-80">
+		            	<canvas id="genderChart"></canvas>
+	                </div>
+	            </div>
+	        </div>
+        </div> <!-- col end -->
+	</div>
+    <div class="row">
+        <div class="col-lg-6">
+			<div class="card shadow mb-4">
+	        	<div class="card-header py-3">
+	            	<h6 class="m-0 font-weight-bold text-primary">參與配對會員之運動頻率</h6>
+	            </div>
+	            <div class="card-body">
+	                <div class="w-100">
+		            	<canvas id="wfChart"></canvas>
+	                </div>
+	            </div>
+	    	</div> <!-- card end -->
+        </div>
+        <div class="col-lg-6">
+	        	<div class="card shadow mb-4">
+	                <div class="card-header py-3">
+	                    <h6 class="m-0 font-weight-bold text-primary">參與配對會員之運動種類偏好</h6>
+	                </div>
+	                <div class="card-body">
+						<div class="w-100">
+		                    <canvas id="wtChart"></canvas>
+	                	</div>
+	                </div>
+	            </div>
+        	</div>
+    </div><!-- row end -->
+    <div class="row">
+    	<div class="col-lg-6">
+			<div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">參與配對會員之運動時間偏好</h6>
                 </div>
@@ -109,9 +117,9 @@
 						<canvas id="ttChart"></canvas>
 					</div>
                 </div>
-            </div><!-- card end -->
-        </div> <!-- col end -->
-    </div><!-- row end -->
+            </div><!-- card end -->    	
+    	</div>
+    </div>    
     <script>
 	const genderData1={
 			labels: ['男', '女'],

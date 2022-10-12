@@ -33,6 +33,21 @@ $(function(){
      $("#subMePair").on("click",function(){
     	 submitPairData();
      })
+     
+     $("#goData").on("click",function(){
+        $("#showLocText").text("臺北市、新北市、桃園市、臺中市");
+        $("#dataWT").prop("selected","true");
+        $("#dataF").prop("selected","true");
+        $("#dataT").prop("selected","true");
+        $("#dataR").prop("selected","true");
+        $("#connection").attr("class","form-control-input notEmpty");
+        $("#connection").text("Line Id: @happy2meet");
+        $("#toPartner").text("有機會一起健身吧！");
+        $("#toPartner").attr("class","form-control-input notEmpty");
+        $("#nterms").prop("checked","true");
+	})
+     
+     
 });
 let pairdataBean;
 function submitPairData(){
@@ -50,6 +65,7 @@ function submitPairData(){
 			$("#submit01").submit();
 		}
 	});
+	
 }
 </script>
 </head>
@@ -103,7 +119,7 @@ function submitPairData(){
 	                                <option class="select-option" value="" disabled selected>請選擇最常運動的時段</option>
 	                                <option class="select-option" value="1">02:01-10:00</option>
 	                                <option class="select-option" value="2">10:01-18:00</option>
-	                                <option class="select-option" value="3">18:01-02:00</option>
+	                                <option class="select-option" value="3" id="dataWT">18:01-02:00</option>
                                 </select>
                                 <div class="help-block with-errors"></div>
                             </div>
@@ -115,7 +131,7 @@ function submitPairData(){
 	                                <option class="select-option" value="2">一週2天</option>
 	                                <option class="select-option" value="3">一週3天</option>
 	                                <option class="select-option" value="4">一週4天</option>
-	                                <option class="select-option" value="5">一週5天</option>
+	                                <option class="select-option" value="5" id="dataF">一週5天</option>
 	                                <option class="select-option" value="6">一週6天</option>
 	                                <option class="select-option" value="7">一週7天</option>
                                 </select>
@@ -125,7 +141,7 @@ function submitPairData(){
                             	<select class="form-control-select" id="workoutType" required>
 	                                <option class="select-option" value="" disabled selected>請選擇偏好的運動種類</option>
 	                                <option class="select-option" value="1">徒手健身／街頭健身</option>
-	                                <option class="select-option" value="2">自由重量</option>
+	                                <option class="select-option" value="2" id="dataT">自由重量</option>
 	                                <option class="select-option" value="3">機械式</option>
 	                                <option class="select-option" value="4">其他無氧運動</option>
 	                                <option class="select-option" value="5">室內有氧（跑步機、踏步機等）</option>
@@ -137,7 +153,7 @@ function submitPairData(){
                             <div class="form-group">
                             	<select class="form-control-select" id="relationship" required>
 	                                <option class="select-option" value="" disabled selected>請選擇目前的感情狀態</option>
-	                                <option class="select-option" value="1">單身</option>
+	                                <option class="select-option" value="1" id="dataR">單身</option>
 	                                <option class="select-option" value="3">非單身</option>
 	                                <option class="select-option" value="2">其他</option>
                                 </select>
@@ -154,14 +170,15 @@ function submitPairData(){
                                 <div class="help-block with-errors"></div>
                             </div>
                             <div class="form-group checkbox">
-                                <input type="checkbox" id="nterms" value="Agreed-to-Terms" required>勾選表示已閱讀並同意<a href="privacy-policy.html">隱私及使用條款</a> 
+                                <input type="checkbox" id="nterms" value="Agreed-to-Terms" required>勾選表示同意資料將被合理運用至配對相關功能。 
                                 <div class="help-block with-errors"></div>
                             </div>
                             <div class="form-message">
                                 <div class="h3 text-center hidden" id="vforAll"></div>
                             </div>
-                            <div class="form-group">
-                                <button type="button" class="form-control-submit-button" id="subMePair">申請配對</button>
+                            <div class="form-group d-flex justify-content-center">
+                                <button type="button" class="btn-solid-reg" id="subMePair">申請配對</button>
+                                <button type="button" class="btn-solid-reg" id="goData">一鍵輸入</button>
                             </div>
                         </div>
                         <!-- end of newsletter form -->
