@@ -455,20 +455,6 @@
 
 
 											<div class="row g-2">
-												<div class="col-md">
-<!-- 													<div class="form-floating"> -->
-<!-- 														<input type="text" name="title" class="form-control entertitle" -->
-<!-- 															placeholder="請輸入標題" required -->
-<!-- 															oninvalid="setCustomValidity('請輸入標題')" -->
-<!-- 															oninput="setCustomValidity('')"><label style="color:#FF0000" -->
-<!-- 															for="floatingInputGrid"></label> -->
-<!-- 													</div> -->
-												</div>  
-<!-- 												<div class="col-md"> -->
-<!-- 													<div class="form-floating"> -->
-<!-- 														<input type="submit" class="btn-solid-reg inquiretitle" value="查詢"> -->
-<!-- 													</div> -->
-<!-- 												</div> -->
 												
 												<script>
                                                    $(".inquiretitle").on('click', function(event){
@@ -498,15 +484,39 @@
 
 												<div class="col-md">
 													<div class="form-floating">
-														<a class="btn-solid-reg popup-with-move-anim"
+														<a class="btn-solid-reg popup-with-move-anim " 
 															href="#details-lightbox-1">發布貼文</a>
+															<div class="release"></div>
 													</div>
 												</div>
 
 
 											</div>
 										</form>
-
+                                        
+                                        <script>
+                                       
+                                      
+                                        
+                                            $(function(e){
+                                            	var account = $(".useraccount").val();
+                                            	console.log(account);
+                                            	
+//                                             	if(!account){
+//                                             		$(".release").append(`<h3 class='center'>請登入會員才能發布</h3>`)
+//                                             	}
+                                           
+                                            });
+                                            
+                                            
+                                            
+                                            
+                                            
+                                        
+                                        </script>
+                                        
+                                        
+                                        
 
 <!--/////////////////// 首頁的主貼文//////////////////////////////////// -->
 										<h3>${error}</h3>
@@ -550,9 +560,6 @@
                                             role="complementary">
                                 <aside id="search-2">
                                 
-                                
-<!--                         <form role="search" method="get" class="search-form" -->
-<!--                             action="https://ld-wp.template-help.com/wordpress_52382/"> -->
                            
                             <form action="UserPostAll" method="GET">
                                 <input type="text" name="title" class="form-control entertitle"
@@ -639,94 +646,6 @@
 									<div class="text-container">
 									   <table id="userPosts" class="table table-sm"></table>
 
-															
-															<script type="text/javascript">
-															
-// 															$(function() {
-// 															     $(".deletepost").click(function(){
-                                                                    
-//                                                                     let deletepost = $(this).prev().val();
-//                                                                     console.log(deletepost);
-                                                                    
-//                                                                     Swal.fire({
-//                                                                         title: '確定刪除貼文？',
-//                                                                         text: "",
-//                                                                         icon: 'warning',
-//                                                                         showCancelButton: true,
-//                                                                         confirmButtonColor: '#3085d6',
-//                                                                         cancelButtonColor: '#d33',
-//                                                                         confirmButtonText: '刪除',
-//                                                                         cancelButtonText: '取消',
-//                                                                         reverseButtons: true
-                                                                        
-//                                                                       }).then((result) => {
-//                                                                           if (result.isConfirmed) {
-//                                                                               let deleteid = $(this).prev().val();
-//                                                                               $(this).siblings().parent().parent().remove();
-//                                                                               deletePost(deleteid);
-//                                                                               Swal.fire(
-//                                                                             		  '已刪除貼文!'
-//                                                                               ).then((result)=>{
-//                                                                             	  if(result.isConfirmed){
-//                                                                                       //location.reload();
-//                                                                                   }
-//                                                                               });
-                                                                    
-//                                                                             }
-//                                                                           });
-                                                                    
-//                                                                  });
-															     
-// 					                                            var onereply = document.getElementById("${allmpbs.mainPostNo}");
-// 					                                            onereply.onclick = function(event) {
-// 					                                            	  $("#oldimgs").html(""); // 清除預覽
-// 		                                                                readURL(this);
-// 		                                                                $("#imgs").html(""); // 清除
-//                                                                         readURL(this);
-					                                            	
-// 					                                                console.log("${allmpbs.mainPostNo}");
-// 					                                                let mpBean = {
-// 					                                                    "updatepost" : "${allmpbs.mainPostNo}"
-// 					                                                };
-// 					                                                $.ajax({
-// 					                                                     type : "post",
-// 					                                                     url : '/group5/PostRevise',
-// 					                                                     data : mpBean,
-// 					                                                     dataType : 'json',
-// 					                                                     success : function(data) {
-// 					                                                    	 console.log(data);
-					                                                    	 
-// 					                                                    	 //單選還是有問題~
-// 					                                                    	 $(".revisecontent").text(data.content);
-// 					                                                    	 $(".revisetitle").val(data.title);
-// 					                                                    	 $("input[name='postTypeName'][value='"+data.postTypeName+"']").attr("checked",true);
-// 					                                                    	 $(".reviseaccount").val(data.account);
-// 					                                                    	 $(".reviseamainPostNo").val(data.mainPostNo);
-					                                                    	 
-// 					                                                           //照片處理
-// 					                                                    	   var img =data.p_image.split(',');
-// 					                                                           for(var i=0; i <img.length -1; i++){
-// 					                                                        	   var imgss = $("<img width='300' height='200'>").attr('src', img[i]);
-// 	                                                                               console.log(img.length);
-// 	                                                                               $("#oldimgs").append(imgss);
-// 					                                                           }
-					                                                           
-// 					                                                            }
-					                                                
-// 					                                                        });
-// 					                                            }
-					                                            
-					                                            
-															
-															
-// 															});
-															
-															
-															
-															
-													</script>  
-															
-															
 
 
 									</div>
