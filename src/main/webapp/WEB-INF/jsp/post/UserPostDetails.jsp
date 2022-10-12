@@ -41,8 +41,9 @@ $(function(){
       (async () => {
 
           const { value: text } = await Swal.fire({
+        	title:'檢舉原因',
             input: 'textarea',
-            inputLabel: '檢舉原因',
+            inputLabel: '',
             inputPlaceholder: '請輸入內容',
             inputAttributes: {
               'aria-label': 'Type your message here'
@@ -63,11 +64,6 @@ $(function(){
           }
 
           })()
-	  
-	  
-	    
-	  
-	  
 	  
 
   })
@@ -347,7 +343,7 @@ $(function(){
 					                           $(".onekeyinput").on('click', function(event){
 					                               event.preventDefault();
 					                              
-					                               $("#content1").val("一堆問題");
+					                               $("#content1").val("運動虔敬量不要空腹，會建議吃點蛋白巧克力，運動後再補充一杯高蛋白。");
 					                              
 					                           });
 					                           

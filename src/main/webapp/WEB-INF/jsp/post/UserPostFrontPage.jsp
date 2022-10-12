@@ -236,11 +236,25 @@
                                             $('#favoriteShow').append(`<h3 class='center'>查無收藏紀錄</h3>`);
                                         }else{
                                         
+                                        	
+                                        var len = 50;	
+                                        var content = n.content;
+                                        var text = '' ;
+                                        
+                                        if(content.length > len){
+                                        	  text = content.substring(0, len - 1) + "...";
+                                        }else{
+                                        	text = content ;
+                                        }
+                                        
+                                        console.log(content.length);
+                                            	
+                                        	
                                         var title = n.title;
                                         var tr = "<tr class='content'>" + 
                                                  "<td class='align-middle'>" + n.postTypeName + "</td>" +
                                                  "<td class='align-middle'>" + n.title + "</td>" + 
-                                                 "<td class='align-middle'>" + n.content + "</td>" + 
+                                                 "<td class='align-middle card-text'>" + text + "</td>" + 
                                                  "<td class='align-middle'>" + n.account + "<br/>"+ n.addtime +"</td>" +
                                                  "<td class='align-middle'>" +
                                                  "<input type='hidden' class='deletefasss' name='mainPostNo' value='"+ n.mainPostNo +"'>" +
@@ -304,6 +318,7 @@
                                         }else{
                                         
                                         var title = n.title;
+                                        
                                         var tr ="<tbody><tr>" +
                                         "<td class='align-middle'><img class='imgfront' src='" + n.p_image + "'></td>" +
                                         "<td class='align-middle'>" + [n.postTypeName] + "</td>" +
@@ -330,6 +345,8 @@
                                     });
                             }
                         });
+                    
+                    
                     }
                     
                     //user刪除貼文
@@ -960,26 +977,11 @@
                         
                         <button type='submit'  style='border:none' class='btn-solid-reg as-button'>修改送出</button>
                         
-<!--                         <input type="submit" class="btn-solid-reg mfp-close" value="修改送出"> -->
                         <a class="btn-outline-reg mfp-close as-button" href="#screenshots">取消</a>
                         
                         </form>
             
             
-            
-                      
-            
-                                    
-            
-            
-            
-            
-            
-            
-					
-				<!--	<a class="btn-solid-reg mfp-close" href="sign-up.html">SIGN UP</a>
-					<a class="btn-outline-reg mfp-close as-button" href="#screenshots">BACK</a>-->
-					
 					
 					
 				</div>
@@ -992,55 +994,8 @@
 	<!-- end of lightbox-basic -->
 	<!-- end of details lightbox 2 -->
 
-	<!-- Details Lightbox 3 -->
-	<div id="details-lightbox-3"
-		class="lightbox-basic zoom-anim-dialog mfp-hide">
-		<div class="container">
-			<div class="row">
-				<button title="Close (Esc)" type="button" class="mfp-close x-button">×</button>
-				
-				
-				<div class="col-lg-8">
-					<div class="image-container">
-						<img class="img-fluid" src="images/details-lightbox.png"
-							alt="alternative">
-					</div>
-					<!-- end of image-container -->
-				</div>
-				<!-- end of col -->
-				<div class="col-lg-4">
-					<h3>Analytics Tools</h3>
-					<hr>
-					<h5>Core service</h5>
-					<p>It's very easy to start using Tivo. You just need to fill
-						out and submit the Sign Up Form and you will receive access to the
-						app.</p>
-					<ul class="list-unstyled li-space-lg">
-						<li class="media"><i class="fas fa-square"></i>
-							<div class="media-body">List building framework</div></li>
-						<li class="media"><i class="fas fa-square"></i>
-							<div class="media-body">Easy database browsing</div></li>
-						<li class="media"><i class="fas fa-square"></i>
-							<div class="media-body">User administration</div></li>
-						<li class="media"><i class="fas fa-square"></i>
-							<div class="media-body">Automate user signup</div></li>
-						<li class="media"><i class="fas fa-square"></i>
-							<div class="media-body">Quick formatting tools</div></li>
-						<li class="media"><i class="fas fa-square"></i>
-							<div class="media-body">Fast email checking</div></li>
-					</ul>
-					<a class="btn-solid-reg mfp-close" href="sign-up.html">SIGN UP</a>
-					<a class="btn-outline-reg mfp-close as-button" href="#screenshots">BACK</a>
-				</div>
-				<!-- end of col -->
-			</div>
-			<!-- end of row -->
-		</div>
-		<!-- end of container -->
-	</div>
-	<!-- end of lightbox-basic -->
-	<!-- end of details lightbox 3 -->
-	<!-- end of details lightboxes -->
+
+	
 
 
 

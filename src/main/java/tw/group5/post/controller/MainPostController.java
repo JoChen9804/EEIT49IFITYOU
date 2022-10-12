@@ -39,7 +39,7 @@ import tw.group5.post.service.ReplyPostService;
 @Controller
 @RequestMapping("/group5/admin")
 @SessionAttributes(names= {"useradmin"})
-public class MainPostServlet {
+public class MainPostController {
 
     @Autowired
     private MainPostService mpService;
@@ -126,10 +126,6 @@ public class MainPostServlet {
                 mav.addObject("nolist","沒有禁言名單");
             }
             
-            
-            
-            
-            
             mav.addObject("query", query);
 
             
@@ -139,6 +135,31 @@ public class MainPostServlet {
         }
         return mav;
     }
+    
+    //找待審核
+    @GetMapping("/PendingReviewAJAX") @ResponseBody
+    public  List<MainPostBean> pendingReview(MainPostBean mpBean) {
+        System.out.println("234234234234234");
+        
+        if (mpBean.getPostPermission() !=null && "待審核".equals(mpBean.getPostPermission())) {
+            List<MainPostBean> pending = firstImagePath(mpService.findByPostPermission(mpBean.getPostPermission()));
+            if(pending.isEmpty()) {
+                MainPostBean bean = new MainPostBean();
+                bean.setMainPostNo(0);
+                pending.add(bean);
+            }
+            return pending;
+        
+        }else if(mpBean.getPostPermission() !=null && "所有貼文".equals(mpBean.getPostPermission())){
+            List<MainPostBean> query = firstImagePath(mpService.allPosts());
+            return query;
+        }
+        
+        return null;
+    }
+    
+    
+    
     
     // 觀看ok
     @PostMapping("/MainPost.watch")
