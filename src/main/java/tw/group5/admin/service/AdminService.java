@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -285,6 +286,36 @@ public class AdminService {
 	    	System.out.println("密碼修改成功");
 	    	return true;
 	    }
+	}
+	
+	public boolean checkPassword (String id, String memberPassword, String newPassword) {
+		Integer idInteger = Integer.parseInt(id);
+		Optional<MemberBean> op = memberRepo.findById(idInteger);
+		if (op.isEmpty()) {
+			return false;
+		}
+		String encodedPassword = op.get().getMemberPassword();
+		if (encodedPassword.equals("googlelogin")){
+			return false;
+		}
+		if (matches(memberPassword, encodedPassword)) {
+			MemberBean mBean = op.get();
+			String bcEncode = new BCryptPasswordEncoder().encode(newPassword);
+			System.out.println(newPassword);
+			mBean.setMemberPassword(bcEncode);
+			memberRepo.save(mBean);
+			return true;
+			
+		}
+		return false;
+	}
+	
+	public boolean matches(String rawPassword, String encodedPassword) {
+	    if (encodedPassword == null || encodedPassword.length() == 0) {
+	        return false;
+	    }
+
+	    return BCrypt.checkpw(rawPassword, encodedPassword);
 	}
 
 }

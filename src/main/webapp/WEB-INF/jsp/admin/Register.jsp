@@ -101,8 +101,7 @@ hr {
 												style="font-size: 1rem">&ensp;&ensp;<i
 												class="fas fa-times" style="color: red" id="iconEmailValid"></i>&ensp;此Email沒有重複
 											</label> <label style="font-size: 1rem">&ensp;&ensp;&ensp;&ensp;&ensp;<i
-												class="fas fa-times" style="color: red"
-												id="iconEmailFormat"></i>&ensp;Email格式正確
+												class="fas fa-times" style="color: red" id="iconEmailFormat"></i>&ensp;Email格式正確
 											</label>
 										</div>
 										<div class="form-group row">
@@ -148,11 +147,13 @@ hr {
 									<hr
 										style="margin-bottom: 0.5rem; margin-top: 0.5rem; border-radius: 10rem;">
 									<div class="text-center">
-										<a class="small" href="/group5/ForgetPassword">忘記密碼?</a>
+										<a class="small" href="/group5/ForgetPassword">忘記密碼?</a>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
 									</div>
 
 									<div class="text-center">
-										<a class="small" href="/group5/login">已經有帳號了?登入!</a>
+										<a class="small" href="/group5/login">已經有帳號了?登入</a>&ensp;&ensp;
+										<button type="button" id="inputData" class="btn-solid-reg"
+											onclick="inputDataAction()">一鍵輸入</button>
 									</div>
 								</div>
 							</div>
@@ -166,6 +167,19 @@ hr {
 
 	<%@ include file="FrontStageFoot.jsp"%>
 	<script>
+	function inputDataAction(){
+		$('#exampleFirstName').val('kelly2643');
+		$('#exampleFirstName').trigger('change')
+		$('#exampleLastName').val('阿洵');
+		$('#exampleLastName').trigger('change')
+		$('#exampleInputEmail').val('ke62lly@outlook.com');
+		$('#exampleInputEmail').trigger('change')
+		$('#exampleInputPassword').val('asdf1234');
+		$('#exampleInputPassword').trigger('change')
+		$('#exampleRepeatPassword').val('asdf1234');
+		$('#exampleRepeatPassword').trigger('change')
+		
+	}
 	
 	var nameTrue = false;
 	var passwordTrueOne = false;

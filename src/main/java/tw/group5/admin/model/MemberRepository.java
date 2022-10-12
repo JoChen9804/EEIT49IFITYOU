@@ -15,5 +15,6 @@ public interface MemberRepository extends JpaRepository<MemberBean, Integer> {
 	public Optional<MemberBean> findByAccount(String memberName);
 	public Optional<MemberBean> findByEmail(String memberEmail);
 	public Optional<MemberBean> findByVerificationCode(String verificationCode);
+	public Optional<MemberBean> findById(String id);
 	
 }

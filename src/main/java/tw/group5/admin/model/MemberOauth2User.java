@@ -35,7 +35,8 @@ public class MemberOauth2User implements OAuth2User{
         return oauth2User.<String>getAttribute("email");     
     }
     
-    public String getPassword() {
-    	return oauth2User.getAttribute("password");
+    public String getPicture() {
+    	return oauth2User.<String>getAttribute("picture");
+    	
     }
 }

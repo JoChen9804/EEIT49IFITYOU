@@ -59,11 +59,14 @@ public class GoogleLoginSuccessHandler implements AuthenticationSuccessHandler{
 			mDetail.setCreateDate(adminService.getDate());
 			//google 登入 無須密碼
 			newMember.setMemberPassword("googlelogin");
+			newMember.setMemberPhoto(oauthUser.getPicture());
+			System.out.println(oauthUser.getPicture());
 			mDetail.setMute(0);
 			mDetail.setPostPermission(0);
 			mDetail.setPairWilling(0);
 			mDetail.setRegisterReferralCode(null);
 			newMember.setMemberDetail(mDetail);
+			
 			MemberBean addNewMember = adminService.insert(newMember);
 			String referralCode = adminService.encode(addNewMember.getId());
 			// 生成推薦碼
@@ -74,7 +77,7 @@ public class GoogleLoginSuccessHandler implements AuthenticationSuccessHandler{
 			session.setAttribute("loginMember", newMember);
 			
 			// 寄出第三方登入註冊信
-			adminService.sendRegisterMail(email, oauthUser.getName(), randomCode, "AdminGoogleLogin", "I FIT YOU 新會員goole登入創建帳號成功信");
+			adminService.sendRegisterMail(email, oauthUser.getName(), randomCode, "AdminGoogleLogin", "I FIT YOU 新會員goole登入創建帳號成功信","");
 			
 			// 有填推薦人，寄推薦碼給推薦人
 			response.sendRedirect("/group5/FrontStageMain");

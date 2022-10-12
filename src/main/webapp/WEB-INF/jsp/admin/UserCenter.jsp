@@ -10,15 +10,15 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
 <style>
 .addr-county {
-	width: 80px;
+	width: 90px;
 }
 
 .addr-district {
-	width: 95px;
+	width: 120px;
 }
 
 .addr-zipcode {
-	width: 90px;
+	width: 120px;
 }
 </style>
 </head>
@@ -28,32 +28,7 @@
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js"
 		type="text/javascript"></script>
-	<form action="/group5/user/memberPassword.controller" method="post"
-		id="passwordModifySubmit">
-		<input name="submitNewPassword" id="submitNewPassword" type="hidden">
-		<input name="submitOrginPassword" id="submitOrginPassword"
-			type="hidden"> <input name="idNumString"
-			value="${loginMember.id}" type="hidden">
-	</form>
-	<form action="/group5/user/memberModify.controller" method="post"
-		enctype="multipart/form-data" id="updateForm">
-		<input name="mute" value="${loginMember.memberDetail.mute}" type="hidden"> <input
-			name="referralCode" value="${loginMember.memberDetail.referralCode}" type="hidden">
-		<input name="postPermission"
-			value="${loginMember.memberDetail.postPermission}" type="hidden"> <input
-			name="recentLoginDate"
-			value="${loginMember.memberDetail.recentLoginDate}" type="hidden"> <input
-			name="idNumString" value="${loginMember.id}" type="hidden"> <input
-			name="account" value="${loginMember.memberAccount}" type="hidden">
-		<input name="originalRealPassword"
-			value="${loginMember.memberPassword}" type="hidden"> <input
-			name="modifyimage" value="false" type="hidden" id="modifyimage">
-		<input name="nowimage" value="${loginMember.memberPhoto}"
-			type="hidden"> <input name="detailId"
-			value="${loginMember.memberDetail.id}" type="hidden"> <input
-			name="hrefSubmit" type="hidden" id="hrefSubmit"><input
-			style="margin-bottom: 0.5em;" type="hidden" name="pwd" maxlength="16"
-			required value="******">
+	
 
 		<!-- Features -->
 		<div id="features" class="tabs">
@@ -76,7 +51,7 @@
 									class="fas fa-envelope-open-text"></i>基本資料</a></li>
 							<li class="nav-item"><a class="nav-link" id="nav-tab-2"
 								data-toggle="tab" href="#tab-2" role="tab" aria-controls="tab-2"
-								aria-selected="false"><i class="fas fa-list"></i>論壇與健友</a></li>
+								aria-selected="false"><i class="fas fa-list"></i>其他資訊</a></li>
 						</ul>
 						<!-- end of tabs links -->
 
@@ -94,8 +69,7 @@
 												<img src="${loginMember.memberPhoto}" height=350 width=350
 													id="img">
 											</div>
-											<br /> <input type="file" name="filepath" accept="image/*"
-												id="file_input" style="display: none">
+											<br /> 
 											<button type="button" onclick="file_input.click()"
 												class="btn-solid-reg" style="vertical-align: middle;">上傳照片</button>
 										</div>
@@ -103,6 +77,7 @@
 
 									</div>
 									<!-- end of col -->
+									<!-- 修改密碼專區 -->
 									<div class="col-lg-5">
 										<div style="text-align: left; valign: top">
 											<label>帳號：</label> <input style="margin-bottom: 0.5em;"
@@ -110,38 +85,47 @@
 												value="${loginMember.memberAccount}" disabled><br />
 											<label for="pwd1" class="t1">密碼：</label> <input
 												style="margin-bottom: 0.5em;" id="pwd1" type="password"
-												maxlength="16" required onblur="testPassword()"
-												value="******" disabled size=15> <input type="button"
-												value="修改密碼" class="btn-solid-reg" id="passwordChange"><br />
+												maxlength="16" required onchange="testPassword()"
+												value="******" disabled size=15> <input
+												type="button" value="修改密碼" class="btn-solid-reg"
+												id="passwordChange"><br />
 											<div style="display: none" id="passwordAgain">
 												<label for="pwd2" class="t1">再次輸入密碼：</label><input id="pwd2"
 													type="password" name="pwd2" maxlength="16" required
-													onblur="testPassword()" style="margin-bottom: 0.5em;"><br />
+													onchange="testPassword()" style="margin-bottom: 0.5em;"><br />
 												<div style="height: 160px">
 													<ul>
 														<li class="media"><i class="fas fa-times"
 															style="color: red" id="iconSame"></i>
-															<div class="media-body" style="font-size:1.2rem">&ensp;兩次輸入密碼須相同</div></li>
+															<div class="media-body" style="font-size: 1.2rem">&ensp;兩次輸入密碼須相同</div></li>
 														<li class="media"><i class="fas fa-times"
 															style="color: red" id="iconValid"></i>
-															<div class="media-body" style="font-size:1.2rem">&ensp;密碼須為8~16為英數字組合</div></li>
+															<div class="media-body" style="font-size: 1.2rem">&ensp;密碼須為8~16為英數字組合</div></li>
 													</ul>
 													<label for="inputOrginal">請輸入原密碼：</label><input
 														id="inputOrginal" type="password" name="inputOrginal"
 														maxlength="16" required style="margin-bottom: 0.5em;"><br />
 
-													<input type="button" value="確認修改" class="btn-solid-reg"
-														id="passwordConfirm">
+													<button class="btn-solid-reg" id="passwordConfirm">確認修改</button>
 
 												</div>
 											</div>
-
-											<label for="name1" class="t1">姓名：</label> <input
+										<form action="/group5/user/memberModify.controller"
+											method="post" enctype="multipart/form-data" id="updateForm">
+											<input type="file" name="filepath" accept="image/*"
+												id="file_input" style="display: none">
+											<input name="idNumString" value="${loginMember.id}"
+												type="hidden"> <input name="modifyimage"
+												value="false" type="hidden" id="modifyimage"> <input
+												name="nowimage" value="${loginMember.memberPhoto}"
+												type="hidden"> <input type="hidden" name="pwd"
+												maxlength="16" required value="******"> <label
+												for="name1" class="t1">姓名：</label> <input
 												style="margin-bottom: 0.5em;" id="name1" type="text"
 												name="name" required value="${loginMember.memberName}"><br />
 											<label for="email1" class="t1">Email：</label><input
 												id="email1" type="email" name="email" required
-												style="margin-bottom: 0.7em;" value="${loginMember.email}">
+												style="margin-bottom: 0.7em;" value="${loginMember.email}" disabled>
 											<br /> <label for="" class="t1">生日：</label><input
 												type="date" name="birthday"
 												style="margin-bottom: 0.7em; width: 190px;"
@@ -176,12 +160,14 @@
 											<input type="button" value="修改" id="sub1"
 												class="btn-solid-reg modifySubmit"
 												style="position: absolute; left: 30%">
-										</div>
+										</form>
+									</div>
 										<!-- end of text-container -->
 									</div>
 									<!-- end of col -->
 								</div>
 								<!-- end of row -->
+								
 							</div>
 							<!-- end of tab-pane -->
 							<!-- end of tab -->
@@ -199,43 +185,36 @@
 										</div>
 										<!-- end of image-container -->
 									</div>
+
 									<!-- end of col -->
 									<div class="col-lg-6">
 										<div class="text-container" style="text-align: left;">
 											<c:choose>
-												<c:when test="${loginMember.memberDetail.mute==0}">
-													<label>論壇狀態：您目前可以發言喔~~</label>
-													<br />
+												<c:when test="${loginMember.memberDetail.pairWilling==0}">
+													<label>健友配對：您目前尚未參加 &ensp;</label>
 												</c:when>
-												<c:when test="${loginMember.memberDetail.mute==1}">
-													<label>論壇狀態：很抱歉，您目前無法發言~~</label>
-													<br />
+												<c:when test="${loginMember.memberDetail.pairWilling==1}">
+													<label>健友配對：您目前正在配對中 &ensp;</label>
 												</c:when>
 											</c:choose>
-											<div class="st1">
-												<label for="" class="t1" id="match">參加健友配對：</label> <label>
-													<input type="radio" name="match" value="1" id="pairT">是
-												</label> &emsp; <label> <input type="radio" name="match"
-													value="0" class="radio" checked id="pairF">否
-												</label>
-											</div>
-											<div class="st1 hide1" style="display: none">
-												<h6>配對成功後，您的聯繫資訊與給健友的話將提供給配對成功之健友。</h6>
-												<h6 style="color: red;">如無法同意請勿參加!!</h6>
-												<label for="pairContactInfo" class="t1">配對聯繫：</label>
-												<textarea id="pairContactInfo" name="pairContactInfo">${loginMember.memberDetail.pairContactInfo}</textarea>
-											</div>
-											<div class="st1 hide1" style="display: none">
-												<label for="pairRequest" class="t1">配對需求：</label>
-												<textarea id="pairRequest" name="pairRequest">${loginMember.memberDetail.pairRequest}</textarea>
-											</div>
-											<div class="st1 hide1" style="display: none">
-												<label for="pairInfo" class="t1">給健友的話：</label>
-												<textarea id="pairInfo" name="pairInfo">${loginMember.memberDetail.pairInfo}</textarea>
-											</div>
-											<input type="button" value="修改" id="sub1"
-												class="btn-solid-reg modifySubmit"
-												style="position: absolute; left: 20%">
+											<a href="#" class="btn-solid-reg" id="passwordChange">點此前往健友配對</a>
+											<br />
+											<br />
+											<c:choose>
+												<c:when test="${loginMember.memberDetail.mute==0}">
+													<label>論壇狀態：您目前可以發言 &ensp;</label>
+
+												</c:when>
+												<c:when test="${loginMember.memberDetail.mute==1}">
+													<label>論壇狀態：您目前正在禁言中 &ensp;</label>
+
+												</c:when>
+											</c:choose>
+											<a href="#" class="btn-solid-reg" id="passwordChange">點此前往論壇</a>
+											<br />
+											<br />
+
+
 										</div>
 										<!-- end of text-container -->
 									</div>
@@ -258,8 +237,8 @@
 		</div>
 		<!-- end of tabs -->
 		<!-- end of features -->
-		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-		<script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script>
 			//twzipcode引用
 			$(function() {
 				$("#twzipcode").twzipcode({
@@ -332,10 +311,12 @@
 					$('#pwd1').attr('disabled', false);
 					$('#pwd1').val('');
 					$('#pwd2').val('');
+					$('#inputOrginal').val(''),
 					$('#iconValid').attr('class', 'fas fa-times');
 					$('#iconValid').attr('style', 'color:red');
 					$('#iconSame').attr('class', 'fas fa-times');
 					$('#iconSame').attr('style', 'color:red');
+					$('#passwordConfirm').attr('disabled', true);
 					
 				}else{
 					$('#passwordAgain').attr('style','display:none');
@@ -352,55 +333,45 @@
 			})
 			//正則表達式專區
 			//密碼8-16位英數字組合
-			function testPassword(){
+			//正則表達式
+		//密碼8-16位英數字組合
+		function testPassword() {
 			var passwordFilter = /^(?=.*[0-9\!@#\$%\^&\*])(?=.*[a-zA-Z]).{8,16}$/;
 			let blnTest = passwordFilter.test($('#pwd1').val());
-			if(blnTest){
+			if (blnTest) {
 				$('#iconValid').attr('class', 'fas fa-check');
 				$('#iconValid').attr('style', 'color:green');
-				
-			}else{
+				passwordTrueOne = true;
+
+			} else {
 				$('#iconValid').attr('class', 'fas fa-times');
 				$('#iconValid').attr('style', 'color:red');
+				passwordTrueOne = false;
 			}
-			if ($('#pwd1').val() === $('#pwd2').val()){
+			if ($('#pwd1').val() === $('#pwd2')
+					.val()) {
 				$('#iconSame').attr('class', 'fas fa-check');
 				$('#iconSame').attr('style', 'color:green');
-				
-			}else{
+				passwordTrueTwo = true;
+
+			} else {
 				$('#iconSame').attr('class', 'fas fa-times');
 				$('#iconSame').attr('style', 'color:red');
+				passwordTrueTwo = false;
 			}
-			if(blnTest && $('#pwd1').val() === $('#pwd2').val()){
-				$('#passwordConfirm').attr('disabled', true);
-				
-				
-			}else{
-				$('#passwordConfirm').attr('disabled', false);
-			}
-			
+			checkPassword();
+		}
+			function checkPassword() {
+				console.log(passwordTrueOne, passwordTrueTwo);
+				if (passwordTrueOne && passwordTrueTwo) {
+					$('#passwordConfirm').attr('disabled', false);
+				} else {
+					$('#passwordConfirm').attr('disabled', true);
+				}
 			}
 
 			$(document).ready(function() {
-			//是否參加健有配對之表單動態實現
-			$('input:radio[name="match"]').change(
-				function() {
-					var matchVal = $(this).val();
-					if (matchVal == 0) {
-						var list, index;
-						list = document.getElementsByClassName('hide1')
-					for (index = 0; index < list.length; ++index) {
-						list[index].setAttribute("style","display: none");
-					}
-					document.getElementById('hide2').setAttribute("style","");
-
-					} else {
-						var list, index;
-						list = document.getElementsByClassName('hide1')
-					for (index = 0; index < list.length; ++index) {
-						list[index].setAttribute("style","");}
-						}
-					});
+				$('#passwordConfirm').attr('disabled', true);
 			if("${loginMember.memberDetail.gender}"=="男"){
             	document.getElementById("male").checked = true;
             	document.getElementById("female").checked = false;
@@ -425,15 +396,61 @@
 							});
 
 			});
+			
+			
 			$("#passwordConfirm").on('click', function(event){
 				$('submitNewPassword').val($('#pwd1').val());
 				$('submitOrginPassword').val($('#inputOrginal').val());
+				var userPassword = $('#inputOrginal').val();
+				var id = $('#idNumString').val();
+				var newPassword = $("#pwd1").val();
+				var params = {
+						"memberPassword" : '' + userPassword,
+						"id" : '' + "${loginMember.id}",
+						"newPassword" : '' + newPassword
+					}
+				console.log(params);
+				$.ajax({
+					type : 'post',
+					url : '/group5/user/modifyPassword.controller',
+					contentType : 'application/json',
+					data : JSON.stringify(params), 
+					success : function(data) {
+						console.log('data' + data);
+						if (data == 'Y') {
+							Swal.fire({
+								  title:'修改密碼成功!',
+								  icon:'success'
+								}).then((result) => {
+							$('#passwordAgain').attr('style','display:none');
+							$('#passwordAgain').val('');
+							$('#passwordChange').val("修改密碼");
+							$('#pwd1').attr('disabled', true);
+							$('#pwd1').val('******');
+							$('#pwd2').val('******');
+							$('#iconValid').attr('class', 'fas fa-times');
+							$('#iconValid').attr('style', 'color:red');
+							$('#iconSame').attr('class', 'fas fa-times');
+							$('#iconSame').attr('style', 'color:red');
+								});
+						}
+						if (data == 'N') {
+							Swal.fire({
+								  title:'修改失敗!',
+								  text:'您輸入的原密碼錯誤，請重新輸入。或是如果您使用的是google登入，因本網站不會紀錄您的google密碼，故無法使用此功能。',
+								  icon:'error'
+							  });
+						}
+					},
+					error : function(e) {
+						console.log(e);
+					}
+				}); 
 				
 			});
 			//css調整專區
 			$('#features').attr('style','padding-top:6rem');
 		</script>
-	</form>
 	<%@ include file="FrontStageFoot.jsp"%>
 </body>
 </html>
