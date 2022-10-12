@@ -3,7 +3,10 @@ package tw.group5.post.controller;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpSession;
@@ -164,6 +167,30 @@ public class UserPostController extends HttpServlet {
         //System.out.println("次數:"+topThreePosts.get(2).getCtr());
         
         return topThreePosts;
+    }
+    
+    //點閱率前三名貼文
+    @ResponseBody 
+    @PostMapping("/CaseDrilltopThreeAJAX") 
+    public List<MainPostBean> caseDrilltopThree() {
+        List<MainPostBean> query = firstImagePath(mpService.findByPostPermission(published));
+        for(MainPostBean beans : query) {
+        if(!"".equals(beans.getLikeNumber()) && beans.getLikeNumber().indexOf(",") !=-1 && beans.getLikeNumber()!=null) {
+            String[] oldlikes = beans.getLikeNumber().split(",");
+            beans.setLikeNumber(String.valueOf(oldlikes.length));
+        }else {
+            beans.setLikeNumber("0");
+        }
+        }
+        List<MainPostBean> newquery = 
+                query.stream().sorted(Comparator.comparing(MainPostBean::getLikeNumber).reversed()).collect(Collectors.toList());
+        for(int i = 1 ; i<newquery.size() ; i++) {
+            newquery.remove(i);
+        }
+        
+        System.out.println("77777777777"+newquery.size());
+        
+        return newquery;
     }
     
     

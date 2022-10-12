@@ -121,7 +121,8 @@ fieldset {
 <!--      <a class="btn-solid-reg " href="/group5/admin/AllPostStatus">貼文管理</a> -->
     
     <!-- Features -->
-    <div id="features" class="tabs">
+            <!--     class="tabs" -->
+    <div id="features" class="">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -580,10 +581,6 @@ fieldset {
                     
                     
                     
-                    
-                    
-                    
-                    
                     function replySspeech(replyaccount){
                         var mute = 0;
                         $.ajax({
@@ -603,18 +600,7 @@ fieldset {
                     };
                     
                     
-                    
-                    
-                    
                     </script>
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
 
                     </div> <!-- end of tab content -->
                     <!-- end of tabs content -->
@@ -626,60 +612,11 @@ fieldset {
     <!-- end of features -->
 
 
-    <!-- Details Lightboxes -->
-    <!-- Details Lightbox 1 -->
-    <div id="details-lightbox-1" class="lightbox-basic zoom-anim-dialog mfp-hide">
-        <div class="container">
-            <div class="row">
-                <button title="Close (Esc)" type="button" class="mfp-close x-button">×</button>
-                <div class="col-lg-8">
-                    <div class="image-container">
-                        <img class="img-fluid" src="images/details-lightbox.png" alt="alternative">
-                    </div> <!-- end of image-container -->
-                </div> <!-- end of col -->
-                <div class="col-lg-4">
-
-
-
-
-                    <h1>維修中~~~~~~~~~~~~~~</h1>
-
-
-
-                    <a class="btn-solid-reg mfp-close" href="sign-up.html">SIGN UP</a> <a
-                        class="btn-outline-reg mfp-close as-button" href="#screenshots">BACK</a>
-                </div> <!-- end of col -->
-            </div> <!-- end of row -->
-        </div> <!-- end of container -->
-    </div> <!-- end of lightbox-basic -->
-    <!-- end of details lightbox 1 -->
-
-    
-    <!-- end of details lightbox 3 -->
-    <!-- end of details lightboxes -->
-
 
 
         <script>
         var members = new Set([]);
-        $('.delete').on('click', function() {
-            let checked = $(this).prop('checked')
-            
-            console.log(members);
-           // let checkAll = $("#checkAll").prop('checked',"false");
-            //let checkAlls = $("#checkAll").parent().next().text()
-            //console.log(checkAlls);
-            
-            if (checked) {
-                $(this).closest('tr').addClass('active')
-                var deleteObject = $(this).parent().next().text()
-                members.add(deleteObject);
-            } else {
-                var deleteObject = $(this).parent().next().text()
-                members.delete(deleteObject);
-                $(this).closest('tr').removeClass('active')
-            }
-        });
+
         
         
         $(document).on('click','.delete', function() {
@@ -763,9 +700,10 @@ fieldset {
         
         
         
-        $(".turnDown").on('click', function(event) {
-            (async () => {
 
+        
+        $(document).on('click',".turnDown", function(event) {
+            (async () => {
                 const { value: text } = await Swal.fire({
                   title:'駁回原因',
                   input: 'textarea',
@@ -777,9 +715,7 @@ fieldset {
                   showCancelButton: true
                 })
                 if (text) {
-                    
                     var mainPostNo = $(this).prev().val();
-                    
                     console.log(mainPostNo);
                     let xreason=text;  
                     console.log(xreason);
@@ -790,10 +726,8 @@ fieldset {
                            dataType : 'json',
                            success: function(){
                                console.log("ok");
-                               
                            }
                        })
-                    
                     Swal.fire("已駁回").then((result)=>{
                         if(result.isConfirmed){
                             location.reload();
@@ -801,10 +735,11 @@ fieldset {
                         }
                     });
                 }
-
                 })()
-       
         });
+        
+        
+        
         
                     
         $(function () {
@@ -836,8 +771,6 @@ fieldset {
             	var img = $("<img class='imgpostdetails'>").attr('src', replyimage[i]);
                 $(".imgs").append(img);
             }
-            
-            
             
             console.log();
         });
@@ -981,8 +914,60 @@ fieldset {
             $("a[href='" + anchor + "']").tab("show");
         });
         
-        
+//      $('.delete').on('click', function() {
+//      let checked = $(this).prop('checked')
+     
+//      console.log(members);
+//     // let checkAll = $("#checkAll").prop('checked',"false");
+//      //let checkAlls = $("#checkAll").parent().next().text()
+//      //console.log(checkAlls);
+     
+//      if (checked) {
+//          $(this).closest('tr').addClass('active')
+//          var deleteObject = $(this).parent().next().text()
+//          members.add(deleteObject);
+//      } else {
+//          var deleteObject = $(this).parent().next().text()
+//          members.delete(deleteObject);
+//          $(this).closest('tr').removeClass('active')
+//      }
+//  });
 
+//         $(".turnDown").on('click', function(event) {
+//             (async () => {
+//                 const { value: text } = await Swal.fire({
+//                   title:'駁回原因',
+//                   input: 'textarea',
+//                   inputLabel: '',
+//                   inputPlaceholder: '請輸入內容',
+//                   inputAttributes: {
+//                     'aria-label': 'Type your message here'
+//                   },
+//                   showCancelButton: true
+//                 })
+//                 if (text) {
+//                     var mainPostNo = $(this).prev().val();
+//                     console.log(mainPostNo);
+//                     let xreason=text;  
+//                     console.log(xreason);
+//                     $.ajax({
+//                            type: "POST",
+//                            url: "/group5/admin/turnDownPost",
+//                            data : {mainPostNo:mainPostNo,xreason:xreason},
+//                            dataType : 'json',
+//                            success: function(){
+//                                console.log("ok");
+//                            }
+//                        })
+//                     Swal.fire("已駁回").then((result)=>{
+//                         if(result.isConfirmed){
+//                             location.reload();
+           
+//                         }
+//                     });
+//                 }
+//                 })()
+//         });
         
         </script>
         

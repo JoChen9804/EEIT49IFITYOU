@@ -114,6 +114,10 @@
     transition: all 1s ease 0s;
 } 
 
+.cardss{
+  width:450px;
+    
+}
 
 </style>
 <!-- Favicon  -->
@@ -172,9 +176,15 @@
                     		
                     		topThreePosts()
                     		
+                    		caseDrilltopThreeAJAX()
+                    		
                     	}else{
                     		console.log("空值");
-                    		topThreePosts()                    		
+                    		topThreePosts()
+                    		
+                    		caseDrilltopThreeAJAX()
+                    		  $(".sendoutonekeyinput").append(`<h3 class='center'>請登入或加入會員</h3>`);
+                    		  $(".sendout").attr('disabled',true);
                     		
                     		 $('#favoriteShow').append(`<h3 class='center'>請登入或加入會員</h3>`);
                     		 $('#userPosts').append(`<h3 class='center'>請登入或加入會員</h3>`);
@@ -254,7 +264,7 @@
                                         var tr = "<tr class='content'>" + 
                                                  "<td class='align-middle'>" + n.postTypeName + "</td>" +
                                                  "<td class='align-middle'>" + n.title + "</td>" + 
-                                                 "<td class='align-middle card-text'>" + text + "</td>" + 
+                                                 "<td class='align-middle card-text cardss'>" + text + "</td>" + 
                                                  "<td class='align-middle'>" + n.account + "<br/>"+ n.addtime +"</td>" +
                                                  "<td class='align-middle'>" +
                                                  "<input type='hidden' class='deletefasss' name='mainPostNo' value='"+ n.mainPostNo +"'>" +
@@ -410,13 +420,30 @@
                             dataType : 'json',
                             success: function(data){
                             	$.each(data, function(i,n){
+                            		
+                            		var len = 7; 
+                                    var title = n.title;
+                                    var text = '' ;
+                                    
+                                    if(title.length > len){
+                                          text = title.substring(0, len - 1) + "...";
+                                    }else{
+                                        text = title ;
+                                    }
+                                    
+                                    console.log(title.length);
+                            		
+                            		
+                            		
+                            		
+                            		
                             		var div ="<div class='col-xs-6 col-sm-6 col-md-12 col-lg-12 col-xl-12'>" +
 				                                "<div class='side enlarge'>" +
 				                                   " <div class='entry-header'>" +
  				                                       
 				                                   "<a style='text-decoration:none;' href='/group5/MainPost.watch/" + n.mainPostNo +"'>" +
 				                                   "<img class='post-thumbnail__img' width='130' height='100'src='" + n.p_image +"'>" +
-				                                   "<small class='sideh4 samerow'>" + n.title + "</small>" + "<i class='fa-solid fa-eye iconSide samerow'>" + n.ctr + "</i><br/>" +
+				                                   "<small class='sideh4 samerow'>" + text + "</small>" + "<i class='fa-solid fa-eye iconSide samerow'>" + n.ctr + "</i><br/>" +
 				                                   "<small class='text-muted'>會員:" + n.account + "</small></a>" +
 				                                    "</div>" +
 				                                "</div>" +
@@ -429,7 +456,49 @@
                     }
                     
                     
-                   
+                    //案讚前三
+                    function caseDrilltopThreeAJAX(){
+                        $.ajax({
+                            type: "POST",
+                            url: "/group5/CaseDrilltopThreeAJAX",
+                            dataType : 'json',
+                            success: function(data){
+                                console.log(data);
+                                $('#caseDrilltopThree').empty(""); //先清空
+                                    var table = $("#caseDrilltopThree");
+                                    //table.append(`<ol>`);
+                                    $.each(data, function(i,n){
+                                        var li = $("#olil");    
+                                        var len = 10;   
+                                        var title = n.title;
+                                        var text = '' ;
+                                        
+                                        if(title.length > len){
+                                              text = title.substring(0, len - 1) + "...";
+                                        }else{
+                                            text = title ;
+                                        }
+                                        
+                                        console.log(title.length);
+                                        
+                                        var div =                      
+                                                "<li class='cat-item cat-item-1'>" +
+                                        "<a href='/group5/MainPost.watch/" + n.mainPostNo +"'>" +text +"</a></li>"  ;
+                                        
+                                        
+                                        li.append(div);
+                                        
+                                       // table.append(`</ol>`);
+                                        
+                                        
+                                        
+                                        
+                                    });
+                            }
+                        });
+                        
+                        
+                    }
                     
                     
                     
@@ -484,7 +553,7 @@
 
 												<div class="col-md">
 													<div class="form-floating">
-														<a class="btn-solid-reg popup-with-move-anim " 
+														<a class="btn-solid-reg popup-with-move-anim"  
 															href="#details-lightbox-1">發布貼文</a>
 															<div class="release"></div>
 													</div>
@@ -492,28 +561,12 @@
 
 
 											</div>
+											  
+											
+											
 										</form>
                                         
-                                        <script>
-                                       
-                                      
-                                        
-                                            $(function(e){
-                                            	var account = $(".useraccount").val();
-                                            	console.log(account);
-                                            	
-//                                             	if(!account){
-//                                             		$(".release").append(`<h3 class='center'>請登入會員才能發布</h3>`)
-//                                             	}
-                                           
-                                            });
-                                            
-                                            
-                                            
-                                            
-                                            
-                                        
-                                        </script>
+                                     
                                         
                                         
                                         
@@ -584,19 +637,12 @@
                         </div>
                     </aside>
 
-<!--                     <aside id="categories-2" class="widget widget_categories"> -->
-<!--                         <h5 class="widget-title">Categories</h5> -->
-<!--                         <ul> -->
-<!--                             <li class="cat-item cat-item-1"><a -->
-<!--                                     href="https://ld-wp.template-help.com/wordpress_52382/category/business-plan-consulting/">Business -->
-<!--                                     plan consulting</a> -->
-<!--                             </li> -->
-<!--                             <li class="cat-item cat-item-27"><a -->
-<!--                                     href="https://ld-wp.template-help.com/wordpress_52382/category/conflict-management/">Conflict -->
-<!--                                     management</a> -->
-<!--                             </li> -->
-<!--                         </ul> -->
-<!--                     </aside> -->
+                    <aside id="categories-2" class="widget widget_categories">
+                       <h5 class="widget-title">案讚前三</h5>
+                            <div id="caseDrilltopThree"></div> 
+                            <ol id="olil">
+                            </ol>
+                    </aside>
                     
 <!--                     <aside id="recent-comments-2" class="widget widget_recent_comments"> -->
 <!--                         <h5 class="widget-title">Recent Comments</h5> -->
@@ -759,9 +805,9 @@
 						</table>
 					
 					
-                        <button type='submit'  style='border:none' class='btn-solid-reg as-button'>送出</button>					
+                        <button type='submit'  style='border:none' class='btn-solid-reg as-button sendout'>送出</button>					
 					    <button type='submit'  style='border:none' class='btn btn-success as-button onekeyinput'>一健輸入</button>
-					
+		                  <div class="sendoutonekeyinput"></div>
 <!-- 						<input type="button" class="btn-solid-reg mfp-close newposting" value="送出"> -->
 						<a class="btn-outline-reg mfp-close as-button" href="#screenshots">取消</a>
 					</form>
@@ -926,9 +972,15 @@
                         $(".onekeyinput").on('click', function(event){
                             event.preventDefault();
                            
-                            $(".newcontent").val("一堆問題");
+                            $(".newcontent").val("想請教各位大大，每次練上半身背部感受總是差，上半身課表如下:四組，次數10、8、6、4下，重量遞增\n" +
+                            		"機械式胸推\n" +
+                            		"滑輪下拉\n" +
+                            		"槓鈴肩推\n" +
+                                    " \n" +
+                            		"有在想是不是平常有駝背習慣，導致不太感覺得到背部的發力? 有聽說過可以分為兩段式，先稍微將肩頰骨內收(挺胸)\n" +
+                            		"，再做動作。不知道各位大大在練背上還能提供什麼意見?感謝你們!");
                             
-                            $(".newtitle").val("畢業了");
+                            $(".newtitle").val("背肌感受度不高");
                            
                         });
                         
