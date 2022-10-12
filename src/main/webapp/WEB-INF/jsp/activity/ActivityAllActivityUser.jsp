@@ -22,17 +22,18 @@
 <!-- 	<script src="stylesheet" href="/group5/js/activity/flickity/flickity.pkgd.min.js"></script> -->
     
 	<style>
-		.test {
-			width: 1000px;
-			height: 400px;
-/* 			object-fit: cover;	 */
-		}
+.test {
+	width: 1000px;
+	height: 400px;
+	/* 			object-fit: cover;	 */
+}
 
-		.test1 {
-			width: 1000px;
-			height: 400px;
-		}
-	</style>
+.test1 {
+	width: 1000px;
+	height: 400px;
+}
+
+</style>
 	<script>
 	
 // 		function loadFlickity() {
@@ -75,7 +76,7 @@
 	<div class="container" style="margin-top: -24rem; border-radius: 20px;">
     	<div class="main-carousel test1" style=" margin: 0 auto; position: relative; ">
     		<c:forEach var="si" items="${showImg}">
-    			<a href="/group5/toactivity/${si.activityId}"  style="text-decoration:none;">
+    			<a href="/group5/toactivity/${si.activityId}" title="前往活動頁面" style="text-decoration:none;">
     				<div class="carousel-cell"><img src="/Path/${si.photoData}" class="test" alt=""></div>
     			</a>
    			</c:forEach>
