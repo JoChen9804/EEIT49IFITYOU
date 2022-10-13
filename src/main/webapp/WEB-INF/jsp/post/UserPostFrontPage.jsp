@@ -119,28 +119,30 @@
     
 }
 
-/* .postwatch:hover{ */
-/*     box-shadow:10px 10px 5px rgha(0,0,0,0.8); */
-/* } */
 
 
-        .postwatch{
+
+.postwatch{
 /*             width: 500px; */
 /*             height: 500px; */
-            background-color: skyblue;
-            transition: all 0.5s;
+   background-color: skyblue;
+   transition: all 0.5s;
 /*             text-align: center; */
 /*             line-height: 500px; */
 /*             margin-top: 100px; */
 /*             margin-left: 100px */
 
-        }
-        .postwatch:hover{
-            box-shadow: 10px 10px 20px rgba(0,0,0,0.2);  #x、y都偏移10px，陰影的厚度為20px
-            transform: translate3d(0,-15px,0);  #在y軸向上移動15px
+}
+.postwatch:hover{
+     box-shadow: 10px 10px 20px rgba(0,0,0,0.2); /* #x、y都偏移10px，陰影的厚度為20px*/
+     transform: translate3d(0,-15px,0);  /*#在y軸向上移動15px*/
             /*transform: scale(1.5,1.5);*/
             /*transform: skew(30deg,0);*/
-        }
+}
+
+.background{
+background-color: #f3f7fd;
+}
 
 </style>
 <!-- Favicon  -->
@@ -201,11 +203,17 @@
                     		
                     		caseDrilltopThreeAJAX()
                     		
+                    		userPostAll()
+                    		
+                    		
                     	}else{
                     		console.log("空值");
                     		topThreePosts()
                     		
+                    		userPostAll()
+                    		
                     		caseDrilltopThreeAJAX()
+                    		
                     		  $(".sendoutonekeyinput").append(`<h3 class='center'>請登入或加入會員</h3>`);
                     		  $(".sendout").attr('disabled',true);
                     		
@@ -453,13 +461,7 @@
                                     }else{
                                         text = title ;
                                     }
-                                    
                                     console.log(title.length);
-                            		
-                            		
-                            		
-                            		
-                            		
                             		var div ="<div class='col-xs-6 col-sm-6 col-md-12 col-lg-12 col-xl-12'>" +
 				                                "<div class='side enlarge'>" +
 				                                   " <div class='entry-header'>" +
@@ -513,9 +515,6 @@
                                         
                                        // table.append(`</ol>`);
                                         
-                                        
-                                        
-                                        
                                     });
                             }
                         });
@@ -523,8 +522,71 @@
                         
                     }
                     
+                    //所有貼文
+                    function userPostAll(title){
+                    	$('#userPostsHome').empty("");
+                    	var title = $(".entertitle").val();
+                        
+                    	var userPostsHome = $("#userPostsHome");
+                        console.log("所有貼文")
+                        
+                        $.ajax({
+                            type: "Get",
+                            url: "/group5/UserPostAllAJAX",
+                            data : {title:title},
+                            dataType : 'json',
+                            success: function(data){
+                                $.each(data, function(i,n){
+                                    var len = 50; 
+                                    var content = n.content;
+                                    var text = '' ;
+                                    //var mainPostNo = n.MainPostNo;
+                                    
+                                    console.log( );
+                                    if(n.mainPostNo==0){
+                                    	userPostsHome.append(`<h3 class='center'>查無資料</h3>`)
+                                   
+                                    }
+                                    
+                                    console.log("sdfsdf:"+n.mainPostNo);
+                                    
+                                    if(content!=null){
+                                    	
+                                    
+                                    
+                                    if(content.length > len){
+                                    	
+                                    	text = content.substring(0, len - 1) + "...";
+                                    	
+                                    }else{
+                                    	text = content ;
+                                    }
+                                    
+                                    
+                                    
+                                    var div ="<div class='card mb-3 postwatch' style='max-width: 900px;'>" +
+                                    "<div class='row g-0'><div class='col-md-5 col-lg-5'>" +
+                                        "<img src='"+n.p_image+"' width='450px' height='250px' class='w-100'></div>" +
+                                    "<div class='col-md-7 col-lg-7'><div class='card-body'>" +
+                                        "<a style='text-decoration:none;' href='/group5/MainPost.watch/"+ n.mainPostNo + "'>" +
+                                            "<h3 class='card-title'>" + n.title + "&emsp;" +"[" +n.postTypeName +"]</h3>" +
+                                            "<p class='card-text'>" + text + "</p>" +
+                                            "<p class='p1'><small class='text-muted'>發布會員:"+  n.account + "</small></p>" +
+                                            "<p class='p1'><small class='text-muted'>發布時間:"+  n.addtime + "</small></p>" +
+                                            "<i class='fa-solid fa-eye iconHome'>"+  n.ctr + "</i></a>" +
+                                        "</div></div></div></div>"
+                                    	
+                                    	;
+                                 userPostsHome.append(div);    
+                                 
+                                    }
+                                            
+                                });
+                            }
+                        });
+                    }
                     
-                    
+           
                     
                     </script>
                     
@@ -549,22 +611,7 @@
 											<div class="row g-2">
 												
 												<script>
-                                                   $(".inquiretitle").on('click', function(event){
-										            var rs = false;
-										            $(".entertitle").each(function(){
-										                if($(this).val()==""){
-										                    console.log('請輸入標題');
-										                    Swal.fire({
-										                        title:'請輸入標題',
-										                        icon:'warning'
-										                    });
-										                    $(this).next().text('請輸入標題');
-										                    rs = true;
-										                }
-										            });
-										            if(rs)return;
-										            
-										        });
+                                       
                                                    </script>
 
 												<div class="col-md">
@@ -597,44 +644,37 @@
 <!--/////////////////// 首頁的主貼文//////////////////////////////////// -->
 										<h3>${error}</h3>
 										
-										<c:forEach var="allmpbs" items="${query}">
-										      <div class="card mb-3 postwatch" style="max-width: 900px;">
-                                        <div class="row g-0">
+										<div id="userPostsHome"></div>
+										
+<%-- 										<c:forEach var="allmpbs" items="${query}"> --%>
+<!-- 										      <div class="card mb-3 postwatch" style="max-width: 900px;"> -->
+<!--                                         <div class="row g-0"> -->
                                        
-                                            <div class="col-md-5 col-lg-5">
-                                                <img src="${allmpbs.p_image}" width="450px"
-                                                    height="250px" class="w-100">
-                                            </div>
+<!--                                             <div class="col-md-5 col-lg-5"> -->
+<%--                                                 <img src="${allmpbs.p_image}" width="450px" --%>
+<!--                                                     height="250px" class="w-100"> -->
+<!--                                             </div> -->
 
-                                            <div class="col-md-7 col-lg-7">
-                                                <div class="card-body">
+<!--                                             <div class="col-md-7 col-lg-7"> -->
+<!--                                                 <div class="card-body"> -->
                                                 
-                                                <a style='text-decoration:none;' href='/group5/MainPost.watch/${allmpbs.mainPostNo}'>
-                                                    <h3 class="card-title">${allmpbs.title}&emsp;[${allmpbs.postTypeName}]</h3>
-                                                    <p class="card-text">${allmpbs.content}</p>
-                                                    <p class="p1"><small class="text-muted">發布會員:${allmpbs.account}</small></p>
-                                                    <p class="p1"><small class="text-muted">發布時間:${allmpbs.addtime}</small></p>
-<!--                                                     <form action="PostWtch" method="GET"> -->
-<%--                                                       <input type="hidden" name="mainPostNo"value="${allmpbs.mainPostNo}">  --%>
-<!--                                                       <button type='submit' style='border:none'   -->
-<!--                                                       class='btn btn-outline-success btn-icon-split fa-solid fa-magnifying-glass fa-1x'>觀看</button> -->
-<!--                                                     </form> -->
-                                                    <i class="fa-solid fa-eye iconHome">${allmpbs.ctr}</i>
-                                                    </a>
+<%--                                                 <a style='text-decoration:none;' href='/group5/MainPost.watch/${allmpbs.mainPostNo}'> --%>
+<%--                                                     <h3 class="card-title">${allmpbs.title}&emsp;[${allmpbs.postTypeName}]</h3> --%>
+<%--                                                     <p class="card-text">${allmpbs.content}</p> --%>
+<%--                                                     <p class="p1"><small class="text-muted">發布會員:${allmpbs.account}</small></p> --%>
+<%--                                                     <p class="p1"><small class="text-muted">發布時間:${allmpbs.addtime}</small></p> --%>
+<%--                                                     <i class="fa-solid fa-eye iconHome">${allmpbs.ctr}</i> --%>
+<!--                                                     </a> -->
                                                 
-                                                </div>
-                                            </div>
+<!--                                                 </div> -->
+<!--                                             </div> -->
                                             
-                                            
-                                            
-                                        </div>
+<!--                                         </div> -->
 
-                                    </div>
-										</c:forEach>
+<!--                                     </div> -->
+<%-- 										</c:forEach> --%>
 										
 									</div>
-									
-									
 									
 									<!-- end of text-container -->
 								</div>
@@ -645,7 +685,7 @@
                                 <aside id="search-2">
                                 
                            
-                            <form action="UserPostAll" method="GET">
+<!--                             <form action="UserPostAll" method="GET"> -->
                                 <input type="text" name="title" class="form-control entertitle"
                                                             placeholder="請輸入標題" required
                                                             oninvalid="setCustomValidity('請輸入標題')"
@@ -653,8 +693,29 @@
                                                             for="floatingInputGrid"></label>
                             
                                 <input type="submit" class="btn-solid-reg inquiretitle" value="查詢">
-                            </form>
-                         
+<!--                             </form> -->
+                                    <script>
+                                    $(".inquiretitle").on('click', function(event){
+                                        var rs = false;
+                                        $(".entertitle").each(function(){
+                                            if($(this).val()==""){
+                                                console.log('請輸入標題');
+                                                Swal.fire({
+                                                    title:'請輸入標題',
+                                                    icon:'warning'
+                                                });
+                                                $(this).next().text('請輸入標題');
+                                                rs = true;
+                                            }
+                                        });
+                                        userPostAll()
+                                        if(rs)return;
+                                        
+                                    });
+                                    
+                                    
+                    
+                                        </script>
                          
                     </aside>
                     <aside id="widget-custom-posts-2" class="widget widget-custom-posts custom-posts">
@@ -669,7 +730,7 @@
                     </aside>
 
                     <aside id="categories-2" class="widget widget_categories">
-                       <h5 class="widget-title">案讚前三</h5>
+                       <h5 class="widget-title">按讚前三</h5>
                             <div id="caseDrilltopThree"></div> 
                             <ol id="olil">
                             </ol>
@@ -706,9 +767,7 @@
 						<!-- end of tab-pane -->
 						<!-- end of tab -->
 						<!-- ////////////////////// 全部貼文///////////////////////////// -->
-                        <script>
-                           $(".card-body").css("padding", "0");
-                        </script>
+                    
 
 
 
@@ -721,8 +780,9 @@
 
 								<div class="col-lg-12">
 									<div class="text-container">
+									
+									
 									   <table id="userPosts" class="table table-sm"></table>
-
 
 
 									</div>
@@ -734,8 +794,6 @@
 						<!-- end of tab -->
 
 
-
-
 						<!-- Tab -->
 						
 						<div class="tab-pane fade" id="tab-3" role="tabpanel"
@@ -745,7 +803,7 @@
                                          <div class="text-container">
 							
 <!-- 							<div id ="favoriteShow"></div> -->
-							<table id="favoriteShow" class="table table-sm"></table>
+							     <table id="favoriteShow" class="table table-sm"></table>
                                 
 								<!-- end of col -->
 							</div>
@@ -780,16 +838,13 @@
 		<div class="container">
 			<div class="row">
 				<button title="Close (Esc)" type="button" class="mfp-close x-button">×</button>
-				<!--<div class="col-lg-8">
-                    <div class="image-container">
-                         <img class="img-fluid" src="images/details-lightbox.png"
-                            alt="alternative">
-                    </div>-->
-				<!-- end of image-container -->
+	
 			</div>
+			
+			
 			<!-- end of col -->
 			<div class="row justify-content-center">
-				<div class="col-lg-3">
+				<div class="col-lg-6">
 					<form action="/group5/Posting" class ="newPost" enctype='multipart/form-data'
 						method="POST" onsubmit="return checkip()">
 						<h3>發布貼文</h3>
@@ -797,7 +852,7 @@
 						<table class="img-fluid">
 							<thead>
 								<tr>
-									<th><label> <input type="radio"
+									<th>種類:<label> <input type="radio"
 											name="postTypeName" value="飲食" id="" required
 											oninvalid="setCustomValidity('請輸入帳號')"
 											oninput="setCustomValidity('')">飲食
@@ -942,7 +997,7 @@
                                                 id="floatingInput" placeholder="請輸入標題"
                                                 oninvalid="setCustomValidity('請輸入標題')"
                                                 oninput="setCustomValidity('')"> <label
-                                                for="floatingInput">{請輸入標題}</label>
+                                                for="floatingInput"></label>
                                         </div></th>
                                 </tr>
 
@@ -991,7 +1046,10 @@
 	<!-- end of details lightbox 2 -->
 
 
-	
+	    <script>
+                           $(".card-body").css("padding", "0");
+                           $(".lightbox-basic").css("background","#f3f7fd");
+                        </script>
 
 
 

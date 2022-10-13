@@ -159,6 +159,45 @@ public class UserPostController extends HttpServlet {
         return mav;
     }
     
+    //貼文首頁
+    @GetMapping("/UserPostAllAJAX") @ResponseBody
+    public List<MainPostBean> postForntAJAX(MainPostBean mpBean,HttpSession session) {
+        
+        MemberBean user = (MemberBean)session.getAttribute("loginMember");
+        List<MainPostBean> query =null;
+        if(user != null) {
+            memberBean((MemberBean) user);
+            MemberDetail memberDetail = user.getMemberDetail();
+            System.out.println("找會員id"+memberDetail.getId());
+            System.out.println("找會員id"+memberDetail.getMute());
+        }
+        System.out.println("目前使用者Ajax:"+memberAccount);
+        //找到會員帳號先入到Bean
+        //mpBean.setAccount(memberAccount);
+        ModelAndView mav = new ModelAndView(USERPOSTFRONTPAGE);
+        mav.addObject("user",user);
+        
+        //查詢標題已發布的
+        if (mpBean.getTitle() != null) {
+             query = firstImagePath(mpService.userallPosts(mpBean.getTitle(),published));
+            if (query.isEmpty()) {
+                MainPostBean mpBeans = new MainPostBean();
+                mpBeans.setMainPostNo(0);
+                query.add(mpBeans);
+                System.out.println("131232"+query.get(0).getMainPostNo());
+                return query;
+            }
+            
+        } else {
+            //使用的發布的
+            query = firstImagePath(mpService.findByPostPermission(published));
+            System.out.println("AjaxAjax:");
+        } 
+        
+        return query;
+    }
+    
+    
     //點閱率前三名貼文
     @ResponseBody 
     @PostMapping("/TopThreePostsAJAX") 
@@ -169,18 +208,18 @@ public class UserPostController extends HttpServlet {
         return topThreePosts;
     }
     
-    //點閱率前三名貼文
+    //案讚前三名貼文
     @ResponseBody 
     @PostMapping("/CaseDrilltopThreeAJAX") 
     public List<MainPostBean> caseDrilltopThree() {
         List<MainPostBean> query = firstImagePath(mpService.findByPostPermission(published));
         for(MainPostBean beans : query) {
-        if(!"".equals(beans.getLikeNumber()) && beans.getLikeNumber().indexOf(",") !=-1 && beans.getLikeNumber()!=null) {
-            String[] oldlikes = beans.getLikeNumber().split(",");
-            beans.setLikeNumber(String.valueOf(oldlikes.length));
-        }else {
-            beans.setLikeNumber("0");
-        }
+            if(!"".equals(beans.getLikeNumber()) && beans.getLikeNumber().indexOf(",") !=-1 && beans.getLikeNumber()!=null) {
+                String[] oldlikes = beans.getLikeNumber().split(",");
+                beans.setLikeNumber(String.valueOf(oldlikes.length));
+            }else {
+                beans.setLikeNumber("0");
+            }
         }
         List<MainPostBean> newquery = 
                 query.stream().sorted(Comparator.comparing(MainPostBean::getLikeNumber).reversed()).collect(Collectors.toList());
@@ -367,8 +406,6 @@ public class UserPostController extends HttpServlet {
             ModelAndView mav = takeOutrpBean(allReply,mavmPost);
             return mav;
     }
-    
-    
     
     //主貼文重新整理一個bean
     public ModelAndView takeOutmpBean(MainPostBean mpBean ,String view) {
@@ -578,21 +615,6 @@ public class UserPostController extends HttpServlet {
         return null;
     }
 
-    
-    
-    
-    
-    
-    // 跳到修改頁面 ajax
-//  @PostMapping("/PostRevise") @ResponseBody
-//  public MainPostBean modifyPages(Integer updatepost) {
-//      MainPostBean queryContent = mpService.selectById(updatepost);
-//      return queryContent;
-//  }
-//  
-//  @PostMapping("/postimges")@ResponseBody
-//  public String[] imges(String imges) {
-//      System.out.println("sdfsdf"+imges);
-//      return null;
-//  }
+
+
 }
