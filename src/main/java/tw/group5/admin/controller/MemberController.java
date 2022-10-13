@@ -1,6 +1,6 @@
 package tw.group5.admin.controller;
 
-import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.nimbusds.jose.shaded.json.JSONObject;
+
 import net.bytebuddy.utility.RandomString;
 import tw.group5.admin.model.MemberBean;
 import tw.group5.admin.model.MemberDetail;
@@ -28,43 +30,37 @@ import tw.group5.admin.service.AdminService;
 public class MemberController {
 	@Autowired
 	private AdminService adminService;
+	
+	@RequestMapping("/AccessDenied")
+	public String AccessDenied() {
+		return "admin/AccessDenied"; // 導向AccessDenied
+	}
 
 	@PostMapping(path = "/user/memberModify.controller") // 修改
-	private String modifyUserAction(String account, String pwd, String modifyimage, String sub, String idNumString,
-			String name, String email, String gender, String nickname, String birthday, String cellphone,
-			String zipcode, String address, String registerReferralCode, String match, String pairContactInfo,
-			String pairRequest, String pairInfo, String nowimage, @RequestParam("mute") String muteModify,
-			@RequestParam("referralCode") String referralCodeModify, String originalRealPassword,
-			@RequestParam("postPermission") String postPermissionModify, String hrefSubmit,
-			@RequestParam("recentLoginDate") String recentLoginDateModify, @RequestParam("filepath") MultipartFile mf,
-			String detailId, Model m, HttpSession session) {
+	private String modifyUserAction(String modifyimage, String idNumString,
+			String name, String gender, String nickname, String birthday, String cellphone,
+			String zipcode, String address, String nowimage, String originalRealPassword, 
+		    @RequestParam("filepath") MultipartFile mf, Model m) {
 
 		String memberPhoto;
-		Integer authority = 0;
 		// 修改
-		String modifyPassword;
-		modifyPassword = originalRealPassword;
-
-		MemberBean nowMember = (MemberBean) session.getAttribute("loginMember");
-		System.out.println(nowMember);
-
-		String referralCode = referralCodeModify;
-		Integer mute = Integer.parseInt(muteModify);
-		Integer postPermission = Integer.parseInt(postPermissionModify);
-		String recentLoginDate = recentLoginDateModify;
-		MemberDetail mDetail = new MemberDetail(gender, nickname, birthday, cellphone, zipcode, address, referralCode,
-				registerReferralCode, mute, postPermission, Integer.parseInt(match), pairContactInfo, pairRequest,
-				pairInfo, recentLoginDate);
-		mDetail.setId(Integer.parseInt(detailId));
-		MemberBean mBean;
-		if (modifyimage.equals("true")) {
-			memberPhoto = adminService.imageProcess(account, modifyimage, mf, false);
-			mBean = new MemberBean(account, modifyPassword, authority, name, memberPhoto, email, mDetail);
-		} else {
-			mBean = new MemberBean(account, modifyPassword, authority, name, nowimage, email, mDetail);
-		}
 		Integer idNum = Integer.parseInt(idNumString);
-		mBean.setId(idNum);
+		MemberBean mBean = adminService.selectOneMember(idNum);
+		MemberDetail mDetail = mBean.getMemberDetail();
+		mDetail.setBirthday(birthday);
+		mDetail.setCellphone(cellphone);
+		mDetail.setGender(gender);
+		mDetail.setMemberAddress(address);
+		mDetail.setPostalCode(zipcode);
+		if (modifyimage.equals("true")) {
+			memberPhoto = adminService.imageProcess(mBean.getMemberAccount(), modifyimage, mf, false);
+			mBean.setMemberName(name);
+			mBean.setMemberPhoto(memberPhoto);
+			mBean.setMemberDetail(mDetail);
+		} else {
+			mBean.setMemberName(name);
+			mBean.setMemberDetail(mDetail);
+		}
 
 		MemberBean member = adminService.updateOne(mBean);
 		m.addAttribute("loginMember", member);
@@ -115,6 +111,7 @@ public class MemberController {
 		mDetail.setMute(0);
 		mDetail.setPostPermission(0);
 		mDetail.setPairWilling(0);
+		mDetail.setGender("秘密");
 		String randomCode = RandomString.make(64);
 
 		MemberBean mBean = new MemberBean(account, bcEncode, authority, name, email, mDetail);
@@ -130,23 +127,89 @@ public class MemberController {
 		adminService.updateCodeById(memberDetail);
 		
 		// 寄出驗證信
-		adminService.sendRegisterMail(email, name, randomCode);
-		return "admin/FrontStageMain";
+		adminService.sendRegisterMail(email, name, randomCode, "AdminMailtemplete", "I FIT YOU 新會員註冊開通信", "/verify");
+		
+		// 有填推薦人，寄推薦碼給推薦人
+		if (registerReferralCode != null && !registerReferralCode.isEmpty()) {
+			MemberBean mBeanReff = adminService.findMemberByReferralCode(mDetail.getRegisterReferralCode());
+			adminService.sendRegisterMail(mBeanReff.getEmail(), name, randomCode, "AdminReferralCode", "I FIT YOU 推薦人優惠碼發送", "/verify");
+		}
+		
+		
+		return "admin/AdminLogin";
 
 	}
 
 	@GetMapping("/verify")
 	public String verifyUser(@Param("code") String code) {
 		if (adminService.verify(code)) {
-			System.out.println(code);
 			System.out.println("會員驗證成功");
-			return "verify_success";
+			return "admin/VerifySuccess";
 
 		} else {
 
 			System.out.println("會員驗證失敗");
-			return "verify_fail";
+			return "admin/VerifyFail";
 		}
-	}
 
+	}
+	@PostMapping(path = "/forgetPassword.controller")
+	public String forgetPasswordAction(String email) {
+		System.out.println("忘記密碼");
+		MemberBean mBean = adminService.findMemberByEmail(email);
+		String randomCode = RandomString.make(64);
+		mBean.setVerificationCode(randomCode);
+		MemberBean mBean1 = adminService.updateOne(mBean);
+		System.out.println("忘記密碼信(尚未驗證)");
+		// 寄出驗證信
+		adminService.sendRegisterMail(email, mBean1.getMemberName(), randomCode, "AdminForgetPassword", "I FIT YOU 忘記密碼驗證信", "/forgetPassword");
+		
+		return "admin/ForgetPassword";
+	}
+	
+	@GetMapping("/forgetPassword")
+	public String resetPassword(@Param("code") String code, Model m) {
+		if (adminService.verify(code)) {
+			m.addAttribute("code", code);
+			return "admin/ResetPassword";
+
+		} else {
+
+			return "admin/VerifyFail";
+		}
+
+	}
+	@PostMapping("/resetPassword.controller")
+	public String resetPasswordAction(String pwd, String code) {
+		if (adminService.verifyPassword(code, pwd)) {
+			return "admin/AdminLogin";	
+		} else {
+
+			return "admin/VerifyFail";
+		}
+		
+	}
+	
+	
+	@PostMapping("/user/modifyPassword.controller")
+	public ResponseEntity<String> modifyPasswordAction(@RequestBody Map<String, ?> jsonObject) {
+		JSONObject object2 = new JSONObject(jsonObject);
+		System.out.println(object2.get("memberPassword"));
+		String id = (String) object2.get("id");
+		String memberPassword = (String) object2.get("memberPassword");
+		String newPassword = (String) object2.get("newPassword");
+		if (adminService.checkPassword(id, memberPassword, newPassword)) {
+			System.out.println("yyyyyyyyyyyyyyyyyyy");
+			return new ResponseEntity<String>("Y", HttpStatus.OK);	
+		} else {
+			System.out.println("nnnnnnnnnnnnnnnn");
+			return new ResponseEntity<String>("N", HttpStatus.OK);
+		}
+		
+	}
+	
+	
+	
+	
+		
 }

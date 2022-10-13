@@ -56,7 +56,7 @@ tr.active {
 	</form>
 	<br>
 	<br>
-	<div class="table-responsive">
+	<div class="table-responsive table table-hover">
 		<table class="table table-bordered" id="table_id"
 			class="compact hover stripe">
 			<thead>
@@ -99,7 +99,10 @@ tr.active {
 		</table>
 	</div>
 	<script>
-		$('#table_id').dataTable({});1
+		$('#table_id').dataTable({});
+		$('#table_id tbody tr').on('click', function () {
+	        $(this).toggleClass('selected');
+	    });
 
 	</script>
 	<script src="js/admin/adminDeleteBatch.js"></script>

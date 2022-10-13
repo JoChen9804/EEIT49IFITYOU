@@ -1,6 +1,10 @@
 package tw.group5.admin.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +47,60 @@ public class AdminController {
 	}
 
 	@RequestMapping("/admin/AdminBackstage")
-	public String adminBackstage(Model m) {
+	public String adminBackstage(Model m) throws ParseException {
+		Date date = new Date();
+		long nowDate =date.getTime();
+		System.out.println(nowDate);
+		List<MemberBean> result = adminService.selectAllMember();
+		int[] arrMonth = new int[]{0,0,0,0,0,0,0,0,0,0};
+		int men = 0;
+		int women = 0;
+		int secret = 0;
+		int activeMember = 0;
+		for(int i=0; i<result.size(); i++) {
+			System.out.println("這是第幾"+ i);
+			String createDate = result.get(i).getMemberDetail().getCreateDate();
+			String loginDateString = result.get(i).getMemberDetail().getRecentLoginDate();
+			if (loginDateString != null) {
+				Date loginDate = new SimpleDateFormat("yyyy-MM-dd").parse(loginDateString);				
+				long login =loginDate.getTime();
+				if (nowDate - login <= 1209600000) {
+					activeMember ++;
+				}
+			}
+			
+			if(createDate != null) {
+				Integer month = Integer.parseInt(createDate.split("-")[1]);
+				System.out.println("月份"+month);
+				arrMonth[month-1] +=1;
+				System.out.println("數量"+arrMonth);	
+			}
+			String gender = result.get(i).getMemberDetail().getGender();
+			if(gender.equals("男")) {
+				men++;
+			}else if(gender.equals("女")) {
+				women++;
+			}else {
+				secret++;
+			}
+		}
+		int count =  Arrays.stream(arrMonth).sum();
+		int[] arrMonthSum = new int[]{0,0,0,0,0,0,0,0,0,0};
+		int sum = 0;
+		for(int i=0; i<arrMonth.length; i++) {
+			arrMonthSum[i] = sum + arrMonth[i];
+			sum += arrMonth[i];
+		}
+		int percentage = (activeMember*100)/count;
+		m.addAttribute("percentage", percentage);
+		m.addAttribute("allAmount", count);
+		m.addAttribute("allMonth", arrMonth);
+		m.addAttribute("arrMonthSum",arrMonthSum);
+		m.addAttribute("men", men);
+		m.addAttribute("women", women);
+		m.addAttribute("secret", secret);
+		m.addAttribute("activeMember",activeMember);
+		
 		return "admin/AdminBackstage"; // 導向AdminBackstage.jsp頁面
 	}
 
@@ -194,7 +251,7 @@ public class AdminController {
 
 			MemberDetail mDetail = new MemberDetail(gender, nickname, birthday, cellphone, zipcode, address,
 					referralCode, registerReferralCode, mute, postPermission, pairWilling, pairContactInfo, pairRequest,
-					pairInfo, recentLoginDate);
+					pairInfo, null);
 			MemberBean mBean = new MemberBean(account, bcEncode, authority, name, memberPhoto, email, mDetail);
 			MemberBean mBean1 = adminService.insert(mBean);
 			referralCode = adminService.encode(mBean1.getId());

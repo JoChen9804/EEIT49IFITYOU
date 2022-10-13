@@ -12,7 +12,10 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import tw.group5.activity.model.ActivityVoucher;
@@ -25,6 +28,7 @@ import tw.group5.admin.model.MemberDetailRepository;
 import tw.group5.admin.model.MemberRepository;
 
 @Service(value = "adminService")
+@Transactional
 public class AdminService {
 
 	@Autowired
@@ -88,8 +92,8 @@ public class AdminService {
 
 	public List<String> memberTitleList() {
 		List<String> memberTitleList = new ArrayList<String>();
-		Collections.addAll(memberTitleList, "修改", "刪除", "編號", "照片", "帳號", "密碼", "姓名", "email", "性別", "暱稱", "生日", "手機",
-				"郵遞區號", "地址", "推薦碼", "推薦人代碼", "禁言", "貼文權限", "配對意願", "配對聯繫", "配對需求", "給建友的話", "最近登入日期");
+		Collections.addAll(memberTitleList, "修改", "刪除", "編號", "狀態","照片", "帳號", "密碼", "姓名", "email", "性別", "生日", "手機",
+				"推薦碼", "郵遞區號", "地址",  "推薦人代碼", "禁言", "配對意願", "創建日期", "最近登入日期");
 		return memberTitleList;
 	}
 
@@ -196,7 +200,7 @@ public class AdminService {
 		}
 		return true;
 	}
-
+	//找email(存在確認)
 	public boolean findEmail(String newEmail) {
 		Optional<MemberBean> op = memberRepo.findByEmail(newEmail);
 		if (op.isEmpty()) {
@@ -205,6 +209,7 @@ public class AdminService {
 		return true;
 	}
 	
+	//找email(回傳人)
 	public MemberBean findMemberByEmail(String newEmail) {
 		Optional<MemberBean> op = memberRepo.findByEmail(newEmail);
 		if (op.isEmpty()) {
@@ -212,7 +217,8 @@ public class AdminService {
 		}
 		return op.get();
 	}
-
+	
+	//找推薦碼(存在確認)
 	public boolean findByReferralCode(String referralCode) {
 		Optional<MemberDetail> op = memberDetailRepo.findByReferralCode(referralCode);
 		if (op.isEmpty()) {
@@ -220,29 +226,40 @@ public class AdminService {
 		}
 		return true;
 	}
+	//找推薦碼(回傳人)
+	public MemberBean findMemberByReferralCode(String referralCode) {
+		Optional<MemberDetail> op = memberDetailRepo.findByReferralCode(referralCode);
+		if (op.isEmpty()) {
+			return null;			
+		}
+		return op.get().getMember();
+	}
+	
+	
+	//寄註冊信
 	public String sendRegisterMail(String toEmailAddress, String name, 
-			String verificationCode) {
+			String verificationCode, String templete, String subject, String mode) {
 		String fromEmail = "eeit49group5@gmail.com";
 		List<String> toEmail = new ArrayList<>();
 		toEmail.add(toEmailAddress); //
-		String subject = "I FIT YOU 新會員註冊開通信";
 		//取得優惠券
 		Optional<ActivityVoucher> op = voucherRepo.findByVoucherTitle(85);
 		String coupon = op.get().getVoucherNo();
 		
-		String verifyURL = "http://localhost:8080/group5" + "/verify?code=" + verificationCode;
-		System.out.println(verifyURL);
+		String verifyURL = "http://localhost:8080/group5" + mode + "?code=" + verificationCode;
+
 		Map<String, String> params = new HashMap<>();
 		params.put("name", name);
 		params.put("verifyURL", verifyURL);
 		params.put("coupon", coupon);
 		
-		String html = templateService.render("AdminMailtemplete", params);
+		String html = templateService.render(templete, params);
 		
 		mailService.registerMimeMail(fromEmail, toEmail, subject, html);
 		
 		return "email";
 	}
+	
 	public boolean verify(String verificationCode) {
 	    Optional<MemberBean> op = memberRepo.findByVerificationCode(verificationCode);
 	    MemberBean mBean = op.get();
@@ -251,14 +268,55 @@ public class AdminService {
 	        
 	    } else {
 	    	
-	        mBean.setVerificationCode(null);
 	        mBean.setAuthority(0);
-	        
 	        memberRepo.save(mBean);
-	         
 	        return true;
 	    }
 	     
+	}
+	public boolean verifyPassword(String verificationCode, String pwd) {
+	    Optional<MemberBean> op = memberRepo.findByVerificationCode(verificationCode);
+	    MemberBean mBean = op.get();
+	    if ( mBean == null ) {
+	    	return false;
+	        
+	    } else {
+	    	String bcEncode = new BCryptPasswordEncoder().encode(pwd);
+	    	mBean.setMemberPassword(bcEncode);
+	    	memberRepo.save(mBean);
+	    	System.out.println("密碼修改成功");
+	    	return true;
+	    }
+	}
+	
+	public boolean checkPassword (String id, String memberPassword, String newPassword) {
+		Integer idInteger = Integer.parseInt(id);
+		Optional<MemberBean> op = memberRepo.findById(idInteger);
+		if (op.isEmpty()) {
+			return false;
+		}
+		String encodedPassword = op.get().getMemberPassword();
+		if (encodedPassword.equals("googlelogin")){
+			return false;
+		}
+		if (matches(memberPassword, encodedPassword)) {
+			MemberBean mBean = op.get();
+			String bcEncode = new BCryptPasswordEncoder().encode(newPassword);
+			System.out.println(newPassword);
+			mBean.setMemberPassword(bcEncode);
+			memberRepo.save(mBean);
+			return true;
+			
+		}
+		return false;
+	}
+	
+	public boolean matches(String rawPassword, String encodedPassword) {
+	    if (encodedPassword == null || encodedPassword.length() == 0) {
+	        return false;
+	    }
+
+	    return BCrypt.checkpw(rawPassword, encodedPassword);
 	}
 
 

@@ -37,6 +37,13 @@ public class GoogleLoginSuccessHandler implements AuthenticationSuccessHandler{
 		
 		if (mBean != null) {
 			System.out.println("有找到使用者");
+	        MemberDetail mDetail = mBean.getMemberDetail();
+	        mDetail.setRecentLoginDate(adminService.getDate());
+	        
+	        adminService.encode(mBean.getId());
+	        mBean.setMemberDetail(mDetail);
+	        
+	        adminService.updateOne(mBean);
 			session.setAttribute("loginMember", mBean);
 			response.sendRedirect("/group5/FrontStageMain");
 			
@@ -46,18 +53,33 @@ public class GoogleLoginSuccessHandler implements AuthenticationSuccessHandler{
 			newMember.setAuthority(0);
 			newMember.setEmail(email);
 			newMember.setMemberName(oauthUser.getName());
-			newMember.setMemberAccount(email);
+			String [] mAccount = email.split("@");
+			newMember.setMemberAccount(mAccount[0]);
 			MemberDetail mDetail = new MemberDetail();
 			mDetail.setCreateDate(adminService.getDate());
 			//google 登入 無須密碼
 			newMember.setMemberPassword("googlelogin");
+			newMember.setMemberPhoto(oauthUser.getPicture());
+			System.out.println(oauthUser.getPicture());
 			mDetail.setMute(0);
 			mDetail.setPostPermission(0);
 			mDetail.setPairWilling(0);
 			mDetail.setRegisterReferralCode(null);
 			newMember.setMemberDetail(mDetail);
-			adminService.insert(newMember);
+			
+			MemberBean addNewMember = adminService.insert(newMember);
+			String referralCode = adminService.encode(addNewMember.getId());
+			// 生成推薦碼
+			MemberDetail memberDetail = addNewMember.getMemberDetail();
+			memberDetail.setReferralCode(referralCode);
+			adminService.updateCodeById(memberDetail);
+			String randomCode = "000";
 			session.setAttribute("loginMember", newMember);
+			
+			// 寄出第三方登入註冊信
+			adminService.sendRegisterMail(email, oauthUser.getName(), randomCode, "AdminGoogleLogin", "I FIT YOU 新會員goole登入創建帳號成功信","");
+			
+			// 有填推薦人，寄推薦碼給推薦人
 			response.sendRedirect("/group5/FrontStageMain");
 		}
 	}

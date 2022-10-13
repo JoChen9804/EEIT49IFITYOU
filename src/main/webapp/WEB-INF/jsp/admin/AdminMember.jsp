@@ -64,8 +64,7 @@ tr.active {
 	<br>
 	<br>
 	<div class="table-responsive">
-		<table class="table table-bordered" id="table_id"
-			class="compact hover stripe responsive">
+		<table class="table table-bordered nowrap compact hover responsive" id="table_id">
 			<thead>
 				<tr>
 					<th>顯示</th>
@@ -88,35 +87,31 @@ tr.active {
 						</td>
 						<td><input class="delete" type="checkbox" value="刪除"></td>
 						<td>${row.id}</td>
+						<td><c:choose>
+								<c:when test="${row.authority==0}">正常</c:when>
+								<c:when test="${row.authority==99}">未開通</c:when>
+							</c:choose></td>
 						<td><img src="${row.memberPhoto}" height=60 width=75></td>
 						<td>${row.memberAccount}</td>
 						<td>****</td>
 						<td>${row.memberName}</td>
 						<td>${row.email}</td>
 						<td>${row.memberDetail.gender}</td>
-						<td>${row.memberDetail.nickname}</td>
 						<td>${row.memberDetail.birthday}</td>
 						<td>${row.memberDetail.cellphone}</td>
+						<td>${row.memberDetail.referralCode}</td>
 						<td>${row.memberDetail.postalCode}</td>
 						<td>${row.memberDetail.memberAddress}</td>
-						<td>${row.memberDetail.referralCode}</td>
 						<td>${row.memberDetail.registerReferralCode}</td>
 						<td><c:choose>
 								<c:when test="${row.memberDetail.mute==0}">無</c:when>
 								<c:when test="${row.memberDetail.mute==1}">禁言中</c:when>
 							</c:choose></td>
 						<td><c:choose>
-								<c:when test="${row.memberDetail.postPermission==0}">一般</c:when>
-								<c:when test="${row.memberDetail.postPermission==1}">高級</c:when>
-								<c:when test="${row.memberDetail.postPermission==2}">最高</c:when>
-							</c:choose></td>
-						<td><c:choose>
 								<c:when test="${row.memberDetail.pairWilling==0}">無</c:when>
 								<c:when test="${row.memberDetail.pairWilling==1}">有</c:when>
 							</c:choose></td>
-						<td>${row.memberDetail.pairContactInfo}</td>
-						<td>${row.memberDetail.pairRequest}</td>
-						<td>${row.memberDetail.pairInfo}</td>
+						<td>${row.memberDetail.createDate}</td>
 						<td>${row.memberDetail.recentLoginDate}</td>
 
 					</tr>

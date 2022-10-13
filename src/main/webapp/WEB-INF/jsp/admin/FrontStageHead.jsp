@@ -110,14 +110,15 @@
 					<li class="nav-item dropdown"><a class="nav-link page-scroll"
 						href="/group5/UserPostAll" style="font-size: 1.4rem;">貼文</a></li>
 					<li class="nav-item dropdown"><a class="nav-link page-scroll"
-						href="#pricing" style="font-size: 1.4rem;">菜單</a></li>
+						href="#pricing" style="font-size: 1.4rem;">健身菜單</a></li>
 
 					<li class="nav-item dropdown" style="display: none;"
 						id="memberShow"><a
 						class="btn-outline-sm dropdown-toggle page-scroll"
 						id="navbarDropdown" role="button" aria-haspopup="true"
-						aria-expanded="false"> <img class="img-profile rounded-circle"
-							src="${loginMember.memberPhoto}" height=55px width=55px></a> <!-- Dropdown - User Information -->
+						aria-expanded="false"> 
+						<img class="img-profile rounded-circle"
+							src="" height=55px width=55px id="memberPic"></a> <!-- Dropdown - User Information -->
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 							<a class="dropdown-item" href="/group5/user/UserCenter"><span
 								class="item-text" style="font-size: 1.2rem">會員中心</span></a>
@@ -148,6 +149,13 @@
 			if (OneMember) {
 				$('#memberShow').attr('style', '');
 				$('#loginShow').attr('style', 'display:none;');
+				if('${loginMember.memberPhoto}'){
+				$('#memberPic').attr('src','${loginMember.memberPhoto}');
+					
+				}else{
+					$('#memberPic').attr('src','img/undraw_profile_3.svg');
+				}
+				
 			}
 		})
 	</script>

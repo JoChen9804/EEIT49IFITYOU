@@ -10,6 +10,7 @@ import tw.group5.admin.model.MemberOauth2User;
 
 @Service
 public class MemberOAuth2UserService extends DefaultOAuth2UserService{
+	
 
 	@Override
 	public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {

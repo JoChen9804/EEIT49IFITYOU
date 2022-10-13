@@ -45,6 +45,8 @@ hr {
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<!-- recaptcha -->
+	<script src="http://www.google.com/recaptcha/api.js" async defer></script>
 	<!-- Header -->
 	<header id="header" class="header">
 		<div class="header-content" style="padding-top: 4rem;">
@@ -56,7 +58,7 @@ hr {
 
 			<!-- Custom scripts for all pages-->
 			<script src="js/sb-admin-2.min.js"></script>
-	
+
 			<div class="container">
 				<div class="card o-hidden border-0 shadow-lg my-5">
 					<div class="card-body p-0">
@@ -76,10 +78,10 @@ hr {
 													id="exampleFirstName" placeholder="帳號" required
 													onchange="checkAccount()" name="account"> <label
 													style="font-size: 1rem; margin-bottom: 0rem;">&ensp;&ensp;<i
-													class="fas fa-times" style="color: gray"
+													class="fas fa-times" style="color: red"
 													id="iconAccountValid"></i>&ensp;此帳號沒有重複
 												</label> <label style="font-size: 1rem">&ensp;&ensp;<i
-													class="fas fa-times" style="color: gray"
+													class="fas fa-times" style="color: red"
 													id="iconAccountLength"></i>&ensp;帳號須為4~16字並以字母開頭
 												</label>
 											</div>
@@ -88,7 +90,7 @@ hr {
 													name="name" id="exampleLastName" placeholder="姓名" required
 													onchange="testName()"> <label
 													style="font-size: 1rem; margin-bottom: 0rem;">&ensp;&ensp;<i
-													class="fas fa-times" style="color: gray" id="iconName"></i>&ensp;姓名為必填欄位
+													class="fas fa-times" style="color: red" id="iconName"></i>&ensp;姓名為必填欄位
 												</label>
 											</div>
 										</div>
@@ -97,10 +99,9 @@ hr {
 												id="exampleInputEmail" placeholder="Email" required
 												onchange="checkEmail()" name="email"> <label
 												style="font-size: 1rem">&ensp;&ensp;<i
-												class="fas fa-times" style="color: gray" id="iconEmailValid"></i>&ensp;此Email沒有重複
+												class="fas fa-times" style="color: red" id="iconEmailValid"></i>&ensp;此Email沒有重複
 											</label> <label style="font-size: 1rem">&ensp;&ensp;&ensp;&ensp;&ensp;<i
-												class="fas fa-times" style="color: gray"
-												id="iconEmailFormat"></i>&ensp;Email格式正確
+												class="fas fa-times" style="color: red" id="iconEmailFormat"></i>&ensp;Email格式正確
 											</label>
 										</div>
 										<div class="form-group row">
@@ -117,9 +118,9 @@ hr {
 													placeholder="再次輸入密碼" required>
 											</div>
 											<label class="col-sm-5.9" style="font-size: 1rem">&ensp;&ensp;&ensp;&ensp;<i
-												class="fas fa-times" style="color: gray" id="iconSame"></i>&ensp;兩次輸入密碼須相同&ensp;&ensp;&ensp;
+												class="fas fa-times" style="color: red" id="iconSame"></i>&ensp;兩次輸入密碼須相同&ensp;&ensp;&ensp;
 											</label> <label class="col-sm-6.1" style="font-size: 1rem"><i
-												class="fas fa-times" style="color: gray" id="iconValid"></i>&ensp;密碼須為8~16字英數字組合</label>
+												class="fas fa-times" style="color: red" id="iconValid"></i>&ensp;密碼須為8~16字英數字組合</label>
 										</div>
 										<div class="form-group row">
 											<div class="col-sm-6">
@@ -128,11 +129,12 @@ hr {
 													onchange="checkReferral()" name="registerReferralCode">
 												<label style="font-size: 1rem; display: none;"
 													id="referralLabel">&ensp;&ensp;<i
-													class="fas fa-times" style="color: gray"
+													class="fas fa-times" style="color: red"
 													id="iconReferralValid"></i>&ensp;推薦碼請輸入正確
 												</label>
 											</div>
-											<div class="col-sm-6"
+											<div class="col-sm-6 g-recaptcha"
+												data-sitekey="6Le5aFsiAAAAAK-1RkjDL21gFKWLFrM86XRu0Ab_"
 												style="align-items: center; display: flex;"></div>
 										</div>
 										<hr style="margin-bottom: 0.5rem; margin-top: 0.5rem">
@@ -142,13 +144,16 @@ hr {
 									</form>
 
 
-									<hr style="margin-bottom: 0.5rem; margin-top: 0.5rem;border-radius: 10rem;">
+									<hr
+										style="margin-bottom: 0.5rem; margin-top: 0.5rem; border-radius: 10rem;">
 									<div class="text-center">
-										<a class="small" href="/group5/ForgetPassword">忘記密碼?</a>
+										<a class="small" href="/group5/ForgetPassword">忘記密碼?</a>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
 									</div>
 
 									<div class="text-center">
-										<a class="small" href="/group5/login">已經有帳號了?登入!</a>
+										<a class="small" href="/group5/login">已經有帳號了?登入</a>&ensp;&ensp;
+										<button type="button" id="inputData" class="btn-solid-reg"
+											onclick="inputDataAction()">一鍵輸入</button>
 									</div>
 								</div>
 							</div>
@@ -162,6 +167,19 @@ hr {
 
 	<%@ include file="FrontStageFoot.jsp"%>
 	<script>
+	function inputDataAction(){
+		$('#exampleFirstName').val('kelly2643');
+		$('#exampleFirstName').trigger('change')
+		$('#exampleLastName').val('阿洵');
+		$('#exampleLastName').trigger('change')
+		$('#exampleInputEmail').val('ke62lly@outlook.com');
+		$('#exampleInputEmail').trigger('change')
+		$('#exampleInputPassword').val('asdf1234');
+		$('#exampleInputPassword').trigger('change')
+		$('#exampleRepeatPassword').val('asdf1234');
+		$('#exampleRepeatPassword').trigger('change')
+		
+	}
 	
 	var nameTrue = false;
 	var passwordTrueOne = false;
@@ -183,7 +201,7 @@ hr {
 			var userName = $('#exampleLastName').val();
 		if($.trim(userName) == ''){
 				$('#iconName').attr('class', 'fas fa-times');
-				$('#iconName').attr('style', 'color:gray');
+				$('#iconName').attr('style', 'color:red');
 				nameTrue = false;
 		}else {
 			$('#iconName').attr('class', 'fas fa-check');
@@ -205,7 +223,7 @@ hr {
 
 			} else {
 				$('#iconValid').attr('class', 'fas fa-times');
-				$('#iconValid').attr('style', 'color:gray');
+				$('#iconValid').attr('style', 'color:red');
 				passwordTrueOne = false;
 			}
 			if ($('#exampleInputPassword').val() === $('#exampleRepeatPassword')
@@ -216,7 +234,7 @@ hr {
 
 			} else {
 				$('#iconSame').attr('class', 'fas fa-times');
-				$('#iconSame').attr('style', 'color:gray');
+				$('#iconSame').attr('style', 'color:red');
 				passwordTrueTwo = false;
 			}
 			checkRegisterAccount();
@@ -236,7 +254,7 @@ hr {
 
 			} else {
 				$('#iconAccountLength').attr('class', 'fas fa-times');
-				$('#iconAccountLength').attr('style', 'color:gray');
+				$('#iconAccountLength').attr('style', 'color:red');
 				accountTrueOne = false;
 			}
 			var params = {
@@ -244,7 +262,7 @@ hr {
 			}
 			if($.trim(userAccount) == ''){
 				$('#iconAccountValid').attr('class', 'fas fa-times');
-				$('#iconAccountValid').attr('style', 'color:gray');
+				$('#iconAccountValid').attr('style', 'color:red');
 				accountTrueTwo = false;
 				checkRegisterAccount();
 	}else{
@@ -257,7 +275,7 @@ hr {
 					console.log('data' + data);
 					if (data == 'Y') {
 						$('#iconAccountValid').attr('class', 'fas fa-times');
-						$('#iconAccountValid').attr('style', 'color:gray');
+						$('#iconAccountValid').attr('style', 'color:red');
 						accountTrueTwo = false;
 						checkRegisterAccount();
 					}
@@ -290,7 +308,7 @@ hr {
 
 			} else {
 				$('#iconEmailFormat').attr('class', 'fas fa-times');
-				$('#iconEmailFormat').attr('style', 'color:gray');
+				$('#iconEmailFormat').attr('style', 'color:red');
 				emailTrueOne = false;
 			}
 			var params = {
@@ -298,7 +316,7 @@ hr {
 			}
 			if($.trim(userEmail) == ''){
 				$('#iconEmailValid').attr('class', 'fas fa-times');
-				$('#iconEmailValid').attr('style', 'color:gray');
+				$('#iconEmailValid').attr('style', 'color:red');
 				emailTrueTwo = false;
 				checkRegisterAccount();
 				
@@ -312,7 +330,7 @@ hr {
 					console.log('data' + data);
 					if (data == 'Y') {
 						$('#iconEmailValid').attr('class', 'fas fa-times');
-						$('#iconEmailValid').attr('style', 'color:gray');
+						$('#iconEmailValid').attr('style', 'color:red');
 						$('#registerAccount').attr('disabled', true);
 						emailTrueTwo = false;
 						checkRegisterAccount();
@@ -338,7 +356,7 @@ hr {
 			}
 			if($.trim(referralCode) == ''){
 				$('#iconEmailValid').attr('class', 'fas fa-times');
-				$('#iconEmailValid').attr('style', 'color:gray');
+				$('#iconEmailValid').attr('style', 'color:red');
 				$('#referralLabel').attr('style', 'display:none');
 				referralTrue = true;
 				checkRegisterAccount();
@@ -353,7 +371,7 @@ hr {
 					if (data == 'N') {
 						$('#referralLabel').attr('style', 'display:true;font-size: 1rem;');
 						$('#iconReferralValid').attr('class', 'fas fa-times');
-						$('#iconReferralValid').attr('style', 'color:gray');
+						$('#iconReferralValid').attr('style', 'color:red');
 						referralTrue = false;
 						checkRegisterAccount();
 					}
@@ -381,6 +399,7 @@ hr {
 		}
 		//註冊成功之提示
 			$("#registerAccount").on('click', function(event){
+				if(grecaptcha.getResponse()){
 						  Swal.fire({
 							  title:'會員創建成功!',
 							  text:  $('#exampleLastName').val() + '會員您好，請至您的email點選驗證信中之連結。',
@@ -388,6 +407,16 @@ hr {
 						  }).then((result) => {
 				$('#registerForm').submit();
 							});
+					
+				}else{
+					 Swal.fire({
+						  title:'請記得勾選我不是機器人',
+						  text:  '請先勾選我不是機器人，讓本網站可以確認您是真人喔。',
+						  icon:'error'
+					  }).then((result) => {
+						});
+					
+				}
 
 			});
 		

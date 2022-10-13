@@ -4,6 +4,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+.big_font{
+	font-size:1.14rem;
+}
+.big_font2{
+	font-size:1.4rem;
+}
+
+</style>
 
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -43,9 +52,9 @@
 				class="sidebar-brand d-flex align-items-center justify-content-center"
 				href="/group5/admin/AdminBackstage">
 				<div class="sidebar-brand-icon rotate-n-15">
-					<img src="/group5/img/i_ift_you.jpg" class="img-profile rounded-circle" height=50 width=50/>
+					<img src="/group5/img/i_ift_you.jpg" class="img-profile rounded-circle" height=55 width=55/>
 				</div>
-				<div class="sidebar-brand-text mx-4">
+				<div class="sidebar-brand-text mx-4 big_font">
 					I FIT YOU<br>管理系統 <sup></sup>
 				</div>
 			</a>
@@ -54,24 +63,24 @@
 			<hr class="sidebar-divider">
 
 			<!-- Heading -->
-			<div class="sidebar-heading">管理項目</div>
+			<div class="sidebar-heading" style="font-size: 1.2rem;font-weight:600;">管理項目</div>
 
 			<!-- Nav Item - Pages Collapse Menu æå¡ç®¡ç-->
 			<li class="nav-item"><a class="nav-link collapsed" href="#"
 				data-toggle="collapse" data-target="#collapseMember"
 				aria-expanded="true" aria-controls="collapseTwo"> <i
-					class="fas fa-fw fa-cog"></i> <span>使用者</span>
+					class="fas fa-fw fa-cog"></i> <span style="font-size: 1.2rem;font-weight:600;">使用者</span>
 			</a>
 				<div id="collapseMember" class="collapse"
 					aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<form class="collapse-item" ACTION="/group5/admin/adminAdminAction.controller" method="post">
 							<INPUT type="submit" name="adminAdminAction" value="管理員管理"
-								style="border: none; background-color:transparent">
+								style="border: none; background-color:transparent; font-size: 1.2rem; font-weight:550;">
 						</form>
 						<form class="collapse-item" ACTION="/group5/admin/adminMemberAction.controller" method="post">
 							<INPUT type="submit" name="adminMemberAction" value="會員管理"
-								style="border: none; background-color:transparent">
+								style="border: none; background-color:transparent; font-size: 1.2rem; font-weight:550;">
 						</form>
 					</div>
 				</div></li>
@@ -81,7 +90,7 @@
 			<li class="nav-item"><a class="nav-link collapsed" href="#"
 				data-toggle="collapse" data-target="#collapseActivities"
 				aria-expanded="true" aria-controls="collapseUtilities"> <i
-					class="fas fa-fw fa-cog"></i> <span>活動</span>
+					class="fas fa-fw fa-cog"></i> <span style="font-size: 1.2rem;font-weight:600;">活動</span>
 			</a>
 				<div id="collapseActivities" class="collapse"
 					aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
@@ -95,13 +104,13 @@
 			<li class="nav-item"><a class="nav-link collapsed" href="#"
 				data-toggle="collapse" data-target="#collapseArea"
 				aria-expanded="true" aria-controls="collapseTwo"> <i
-					class="fas fa-fw fa-cog"></i> <span>據點</span>
+					class="fas fa-fw fa-cog"></i> <span style="font-size: 1.2rem;font-weight:600;">據點</span>
 			</a>
 				<div id="collapseArea" class="collapse" aria-labelledby="headingTwo"
 					data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
-						<a class="collapse-item" href="/group5/admin/gym/allMain">查詢地點</a>
-						<a class="collapse-item" href="/group5/admin/gym/addMain">新增地點</a>
+						<a class="collapse-item" href="/group5/admin/gym/allMain" style="font-size: 1.2rem; font-weight:550;">查詢地點</a>
+						<a class="collapse-item" href="/group5/admin/gym/addMain" style="font-size: 1.2rem; font-weight:550;">新增地點</a>
 					</div>
 				</div>
 			</li>
@@ -122,113 +131,84 @@
 			<li class="nav-item"><a class="nav-link collapsed" href="#"
 				data-toggle="collapse" data-target="#collapseProducts"
 				aria-expanded="true" aria-controls="collapseTwo"> <i
-					class="fas fa-fw fa-cog"></i> <span>商品</span>
+					class="fas fa-fw fa-cog"></i> <span style="font-size: 1.2rem;font-weight:600;">商品</span>
 			</a>
 				<div id="collapseProducts" class="collapse"
 					aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
-						<a class="collapse-item" href="/group5/admin/commodity_administration">商品管理</a>
+						<a class="collapse-item" href="/group5/admin/commodity_administration" style="font-size: 1.2rem; font-weight:550;">商品管理</a>
 					</div>
 				</div></li>
 			<!-- Nav Item - Pages Collapse Menu æå¡ç®¡ç-->
 			<li class="nav-item"><a class="nav-link collapsed" href="#"
 				data-toggle="collapse" data-target="#collapseText"
 				aria-expanded="true" aria-controls="collapseTwo"> <i
-					class="fas fa-fw fa-cog"></i> <span>貼文</span>
+					class="fas fa-fw fa-cog"></i> <span style="font-size: 1.2rem;font-weight:600">貼文</span>
 			</a>
 				<div id="collapseText" class="collapse" aria-labelledby="headingTwo"
 					data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<form class="collapse-item" ACTION="/group5/admin/MainPost.all" method="get">
 							<input type="hidden" name="todo" value="allposts"> 
-							<INPUT type="submit" name="goToFrontPage" value="貼文管理" style="border: none; background-color:transparent">
+							<INPUT type="submit" name="goToFrontPage" value="貼文管理" style="border: none; background-color:transparent;font-size: 1.2rem; font-weight:550;">
 						</form>
 					</div>
 				</div></li>
 			<li class="nav-item"><a class="nav-link collapsed" href="#"
 				data-toggle="collapse" data-target="#collapseFitness"
 				aria-expanded="true" aria-controls="collapseTwo"> <i
-					class="fas fa-fw fa-cog"></i> <span>菜單</span>
+					class="fas fa-fw fa-cog"></i> <span style="font-size: 1.2rem;font-weight:600;">健身菜單</span>
 			</a>
 				<div id="collapseFitness" class="collapse"
 					aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
-						<a class="collapse-item" href="/group5/admin/mainmenu.controller">查看菜單</a>
-						<a class="collapse-item" href="/group5/admin/menuAdd.controller">新增菜單</a>
+						<a class="collapse-item" href="/group5/admin/mainmenu.controller" style="font-size: 1.2rem; font-weight:550;">查看健身菜單</a>
+						<a class="collapse-item" href="/group5/admin/menuAdd.controller" style="font-size: 1.2rem; font-weight:550;">新增健身菜單</a>
 					</div>
 				</div></li>
 		</ul>
 		<!-- End of Sidebar -->
 
-		<!-- Content Wrapper -->
-		<div id="content-wrapper" class="d-flex flex-column">
+		        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
 
-			<!-- Main Content -->
-			<div id="content">
+            <!-- Main Content -->
+            <div id="content">
 
-				<!-- Topbar -->
-				<nav
-					class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-					<!-- Sidebar Toggle (Topbar) -->
-					<button id="sidebarToggleTop"
-						class="btn btn-link d-md-none rounded-circle mr-3">
-						<i class="fa fa-bars"></i>
-					</button>
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
 
-					<!-- Topbar Search -->
-					<h6 style="color: #5a5c69">
-						<br> 歡迎管理員登入後臺管理系統
-					</h6>
+                    <!-- Topbar Search -->
 
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
 
-					<!-- Topbar Navbar -->
-					<ul class="navbar-nav ml-auto">
+                        <!-- Nav Item - Alerts -->
 
-						<!-- Nav Item - Search Dropdown (Visible Only XS) -->
-						<li class="nav-item dropdown no-arrow d-sm-none"><a
-							class="nav-link dropdown-toggle" href="#" id="searchDropdown"
-							role="button" data-toggle="dropdown" aria-haspopup="true"
-							aria-expanded="false"> <i class="fas fa-search fa-fw"></i>
-						</a> <!-- Dropdown - Messages -->
-							<div
-								class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-								aria-labelledby="searchDropdown">
-								<form class="form-inline mr-auto w-100 navbar-search">
-									<div class="input-group">
-										<input type="text"
-											class="form-control bg-light border-0 small"
-											placeholder="Search for..." aria-label="Search"
-											aria-describedby="basic-addon2">
-										<div class="input-group-append">
-											<button class="btn btn-primary" type="button">
-												<i class="fas fa-search fa-sm"></i>
-											</button>
-										</div>
-									</div>
-								</form>
-							</div></li>
-
-
-						<div class="topbar-divider d-none d-sm-block"></div>
+                        <!-- Nav Item - Messages -->
 
 						<!-- Nav Item - User Information -->
 						<li class="nav-item dropdown no-arrow"><a
 							class="nav-link dropdown-toggle" href="#" id="userDropdown"
 							role="button" data-toggle="dropdown" aria-haspopup="true"
 							aria-expanded="false"> <span
-								class="mr-3 d-none d-lg-inline text-gray-600 big"><span>${loginMember.adminName}</span>
-							</span> <img class="img-profile rounded-circle"
-								src="${loginMember.adminPhoto}">
+								class="mr-4 d-none d-lg-inline text-gray-600 big big_font2"><span>${loginMember.adminName}</span>
+							</span> <img class="rounded-circle"
+								src="${loginMember.adminPhoto}" height=55 width=55 />
 
 						</a> <!-- Dropdown - User Information -->
 							<div
 								class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
 								aria-labelledby="userDropdown">
-								<a class="dropdown-item" href="/group5/logout" data-toggle="modal"
+								<a class="h6 dropdown-item" href="/group5/logout" data-toggle="modal"
 									data-target="#logoutModal"> <i
 									class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-									Logout
+									登出
 								</a>
 							</div></li>
 
