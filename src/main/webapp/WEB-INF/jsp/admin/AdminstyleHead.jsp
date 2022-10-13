@@ -115,9 +115,9 @@
 				<div id="collapseActivities" class="collapse"
 					aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
-						<a class="collapse-item" href="/group5/admin/statisticsmain.controller" style="border: none; background-color:transparent; font-size: 1.2rem; font-weight:550;">活動數據</a>
 						<a class="collapse-item" href="/group5/admin/activitymain.controller" style="border: none; background-color:transparent; font-size: 1.2rem; font-weight:550;">活動管理</a>
 						<a class="collapse-item" href="/group5/admin/vouchermain.controller" style="border: none; background-color:transparent; font-size: 1.2rem; font-weight:550;">優惠券管理</a>
+						<a class="collapse-item" href="/group5/admin/statisticsmain.controller" style="border: none; background-color:transparent; font-size: 1.2rem; font-weight:550;">活動數據</a>
 					</div>
 				</div></li>
 			<!-- Nav Item - Pages Collapse Menu æå¡ç®¡ç-->
@@ -159,8 +159,8 @@
 				<div id="collapseProducts" class="collapse"
 					aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
-						<a class="collapse-item" href="/group5/admin/commodity_administration">商品管理</a>
-						<a class="collapse-item" href="/group5/admin/order_administration">訂單管理</a>
+						<a class="collapse-item" href="/group5/admin/commodity_administration" style="border: none; background-color:transparent; font-size: 1.2rem; font-weight:550;">商品管理</a>
+						<a class="collapse-item" href="/group5/admin/order_administration" style="border: none; background-color:transparent; font-size: 1.2rem; font-weight:550;">訂單管理</a>
 					</div>
 				</div></li>
 			<!-- Nav Item - Pages Collapse Menu æå¡ç®¡ç-->

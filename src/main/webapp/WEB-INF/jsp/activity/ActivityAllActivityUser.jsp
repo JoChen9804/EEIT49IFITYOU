@@ -74,10 +74,10 @@
 <!--     <br> -->
 
 	<div class="container" style="margin-top: -24rem; border-radius: 20px;">
-    	<div class="main-carousel test1" style=" margin: 0 auto; position: relative; ">
+    	<div class="main-carousel test1" style=" margin: 0 auto; position: relative; border-radius: 20px;">
     		<c:forEach var="si" items="${showImg}">
     			<a href="/group5/toactivity/${si.activityId}" title="前往活動頁面" style="text-decoration:none;">
-    				<div class="carousel-cell"><img src="/Path/${si.photoData}" class="test" alt=""></div>
+    				<div class="carousel-cell" style="border-radius: 20px;"><img src="/Path/${si.photoData}" style="border-radius: 20px;" class="test" alt=""></div>
     			</a>
    			</c:forEach>
 		</div>
