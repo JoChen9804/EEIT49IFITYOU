@@ -61,7 +61,7 @@ public class AdminController {
 			System.out.println("這是第幾"+ i);
 			String createDate = result.get(i).getMemberDetail().getCreateDate();
 			String loginDateString = result.get(i).getMemberDetail().getRecentLoginDate();
-			if (loginDateString != null) {
+			if (loginDateString != null && !loginDateString.equals("")) {
 				Date loginDate = new SimpleDateFormat("yyyy-MM-dd").parse(loginDateString);				
 				long login =loginDate.getTime();
 				if (nowDate - login <= 1209600000) {

@@ -235,7 +235,7 @@
 		      yAxes: [{
 		        ticks: {
 		          min: 0,
-		          max: 20,
+		          max: 15,
 		          maxTicksLimit: 5,
 		          padding: 10,
 		          // Include a dollar sign in the ticks
