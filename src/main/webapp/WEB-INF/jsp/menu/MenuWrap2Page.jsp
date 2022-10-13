@@ -274,7 +274,8 @@ div {
 						<form action="BackLobby" method="post">
 								<button class="btn btn-primary" type="submit">大廳 LOBBY</button>
 						</form>
-							<form action="BackLobby" method="post">
+								<form action="QueryOne" method="GET">
+						<input type="hidden" name="setid" value="${setid}">
 								<button class="btn btn-primary" type="submit">查看已加入!</button>
 						</form>
 

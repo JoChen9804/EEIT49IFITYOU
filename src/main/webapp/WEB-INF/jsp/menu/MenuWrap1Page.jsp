@@ -249,7 +249,7 @@ console.log(${setid})
 				<div class="col-lg-12">
 
 					<div class="above-heading">MENU</div>
-					<h2 class="h2-heading">select your motion type</h2>
+					<h2 class="h2-heading">SELECT YOUR MOTION TYPE</h2>
 				</div>
 				<!-- end of col -->
 			</div>
@@ -263,7 +263,8 @@ console.log(${setid})
 							<button class="btn btn-primary" type="submit">大廳 LOBBY</button>
 						</form>
 						</form>
-						<form action="BackLobby" method="post">
+						<form action="QueryOne" method="GET">
+						<input type="hidden" name="setid" value="${setid}">
 							<button class="btn btn-primary" type="submit">查看已加入!</button>
 						</form>
 
@@ -275,7 +276,7 @@ console.log(${setid})
 						<div class="card-body">
 							<div class="card-title">腿部 LEG</div>
 
-							<div class="frequency">下肢動作訓練</div>
+							
 							<div class="frequency">
 								<img width='260' height='200' src="/img/LEGS.png">
 							</div>
@@ -312,7 +313,7 @@ console.log(${setid})
                     </div> -->
 						<div class="card-body">
 							<div class="card-title">有氧伸展 Aerobic/Stretch</div>
-							<div class="frequency">有氧伸展訓練</div>
+							
 							<div class="frequency">
 								<img width='260' height='200' src="/img/ABROC.png">
 							</div>

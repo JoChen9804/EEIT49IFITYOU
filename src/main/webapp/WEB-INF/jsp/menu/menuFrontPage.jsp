@@ -71,11 +71,24 @@
        </div>
        
            
- </div>      
+ </div>
+ 
+
+<script type="text/javascript">
+
+function menutable(){
+	console.log($('#table_id'))
+	createTable()
+	$('#table_id').dataTable();
+}
+
+
+
+</script>       
     
 
 <div class="table-responsive">
-<table>
+<table id="table_id">
 <thead>
 <tr>
 <th>ID</th>
@@ -98,7 +111,7 @@
 
 <td><input type="hidden" id="imgpre" value="${list.imageurl}"><button type="button" class="btn btn-outline-secondary preimg" 
 	data-bs-toggle="modal" data-bs-target="#btnpreview" >預覽圖片</button></td>
-<td><button type="button" class="btn btn-outline-secondary edit" 
+<td><input type="hidden" id="imgpre" value="${list.imageurl}"><button type="button" class="btn btn-outline-secondary editx" 
 	data-bs-toggle="modal" data-bs-target="#btnEdit" >修改</button></td>
 	
 <td>
@@ -157,7 +170,7 @@ $(".preimg").on("click",function(){
 	
 	});
 
-$('.edit').on("click",function(){
+$('.editx').on("click",function(){
 	console.log("開始修改");
 	let id=$(this).parent().siblings(".IdofList").text();
 	let name=$(this).parent().siblings(".exerciseNameOfList").text();
@@ -165,10 +178,15 @@ $('.edit').on("click",function(){
 	let part=$(this).parent().siblings(".PartOfList").text();
 	let intro=$(this).parent().siblings(".IntroOfList").text();
 	
+	var img = $(this).prev().val();
+	
+	$(".imginput").attr("src",img);
+	
 	console.log("ID:"+ id);
 	console.log("part"+part);
 	console.log("Name:"+name);
 	console.log("Intro:"+intro);
+	console.log("Img:"+img)
 	
 	$("#updateTitle").text(name);
 	$("#id").val(id);
@@ -246,12 +264,58 @@ var id=""
 							</div>
 							
 								<div class="input-group mb-3">
-								<label class="input-group-text" for="imageurl">新更改圖片：</label>
+								<label class="input-group-text" for="imageurl">更改圖片：</label>
 								<input type="text" name="imageurl" placeholder="上傳圖片" id="imageurl" class="form-control">
 								 <input type="hidden" id="p_image" name="p_image" value="${list.imgurl}">
-								 <img width='300' height='200' src="${list.imgurl}">
+								 <img width='300' height='200' class="imginput" src="${list.imgurl}">
+								 
+								 
+								 <div id="text"></div>
+								 <div id="imgs"></div>
+								 
+								 
 								 <input id="file1" type="file" class="upl" name="chamgeimages" multiple="multiple" 
-                                  accept="image/*" onchange="checkip()">      
+                                  accept="image/*" onchange="checkip()"> 
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  <script type="text/javascript">
+                                  $("#file1").change(function() {
+                                	    $("#imgs").html(""); // 清除預覽
+                                	    readURL(this);
+                                	    $("#text").append(`<p>原更新照片</p>`);
+                                	});
+
+                                	function readURL(input) {
+                                	    if (input.files && input.files.length >= 0) {
+                                	        if (input.files.length < 6) {
+                                	            for (var i = 0; i < input.files.length; i++) {
+                                	                var reader = new FileReader();
+                                	                reader.onload = function(e) {
+                                	                    var img = $("<img width='300' height='200'>").attr('src', e.target.result);
+                                	                    $("#imgs").append(img);
+                                	                }
+                                	                reader.readAsDataURL(input.files[i]);
+                                	            }
+                                	        } else {
+                                	            var noPictures = $("<p>選擇圖片超過五張，請重新選擇</p>");
+                                	            $("#imgs").append(noPictures);
+                                	        }
+
+                                	    } else {
+                                	        var noPictures = $("<p>目前沒有圖片</p>");
+                                	        $("#imgs").append(noPictures);
+                                	    }
+                                	}
+                                  
+                                  </script>
+                                  
+                                  
+                                  
+                                  
+                                       
          <div id="imgs"></div>  
 							</div>
 							

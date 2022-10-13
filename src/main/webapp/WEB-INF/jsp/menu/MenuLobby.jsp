@@ -28,229 +28,172 @@ response.setCharacterEncoding("UTF-8");
 	href="https://cdn.datatables.net/1.11.2/css/jquery.dataTables.css">
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style type="text/css">
-.cards-1 {
-	padding-top: 3.25rem;
-	padding-bottom: 3rem;
-	text-align: center;
-}
 
-.cards-1 .h2-heading {
-	margin-bottom: 3.5rem;
-}
+ .bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            z-index: -999;
+        }
+        .bg img {
+            min-height: 100%;
+            width: 100%;
+        }
+        
+       .wrap {
+            width: 800px;
+            height: 400px;
+            background-color: black;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
 
-.cards-1 .card {
-	max-width: 21rem;
-	margin-right: auto;
-	margin-bottom: 3.5rem;
-	margin-left: auto;
-	padding: 0;
-	border: none;
-}
+        .slide-img {
+            position: absolute;
+            left: 0;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            display: flex;
+            /* left: -1600px; */
+            width: 4000px;
+        }
 
-.cards-1 .card-image {
-	max-width: 16rem;
-	margin-right: auto;
-	margin-bottom: 2rem;
-	margin-left: auto;
-}
+        .slide-img li {
+            width: 800px;
+            height: 400px;
+        }
 
-.cards-1 .card-title {
-	margin-bottom: 0.5rem;
-}
+        .slide-img li img {
+            width: 100%;
+            height: 100%;
+            /* 控制元素內容 調整比例 */
+            object-fit: cover;
+        }
 
-.cards-1 .card-body {
-	padding: 0;
-}
+        .pages {
+            position: absolute;
+            list-style: none;
+            bottom: 10px;
+            display: flex;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            justify-content: center;
+        }
 
-/************************/
-/*     07. Features     */
-/************************/
-.tabs {
-	padding-top: 8rem;
-	padding-bottom: 8.125rem;
-	background-color: #f3f7fd;
-}
+        .pages li {
+            border: 1px solid white;
+            width: 20px;
+            height: 20px;
+            border-radius: 20%;
+            margin: 0 5px
+        }
 
-.tabs .h2-heading, .tabs .p-heading {
-	text-align: center;
-}
+        .slide-arrow {
+            position: absolute;
+            z-index: 1;
+            font-size: 36px;
+            width: 30px;
+            height: 100%;
+            display: flex;
+            /* 交錯軸置中 */
+            align-items: center;
+            /* 主軸置中 */
+            justify-content: center;
+            color: white;
+            /* 透明度 */
+            opacity: .6;
+            /* 滑鼠型態 */
+            cursor: pointer;
+        }
 
-.tabs .nav-tabs {
-	display: block;
-	margin-bottom: 2.25rem;
-	border-bottom: none;
-}
+        .right {
+            right: 0;
+        }
 
-.tabs .nav-link {
-	padding: 0.375rem 1rem 0.375rem 1rem;
-	border: none;
-	color: #86929b;
-	font-weight: 700;
-	font-size: 1.25rem;
-	line-height: 1.75rem;
-	text-align: center;
-	text-decoration: none;
-	transition: all 0.2s ease;
-}
-
-.tabs .nav-link:hover, .tabs .nav-link.active {
-	background: transparent;
-	color: #4e73df;
-}
-
-.tabs .nav-link .fas {
-	margin-right: 0.625rem;
-}
-
-.tabs .image-container {
-	margin-bottom: 2.75rem;
-}
-
-.tabs .list-unstyled .fas {
-	color: #4e73df;
-	font-size: 0.5rem;
-	line-height: 1.625rem;
-}
-
-.tabs .list-unstyled .media-body {
-	margin-left: 0.625rem;
-}
-
-.tabs #tab-1 h3 {
-	margin-bottom: 0.75rem;
-}
-
-.tabs #tab-1 .list-unstyled {
-	margin-bottom: 1.5rem;
-}
-
-.tabs #tab-2 h3 {
-	margin-bottom: 0.75rem;
-}
-
-.tabs #tab-2 .list-unstyled {
-	margin-bottom: 1.5rem;
-}
-
-.tabs #tab-3 h3 {
-	margin-bottom: 0.75rem;
-}
-
-.tabs #tab-3 .list-unstyled {
-	margin-bottom: 1.5rem;
-}
-
-/***************************************************************/
-.p-heading {
-	margin-bottom: 3.25rem;
-}
-
-.container {
-	width: 100%;
-	padding-right: 15px;
-	padding-left: 15px;
-	margin-right: auto;
-	margin-left: auto;
-}
-
-div {
-	display: block;
-}
-
-.decorative-line {
-	display: block;
-	width: 5rem;
-	height: 0.5rem;
-	margin-right: auto;
-	margin-left: auto;
-}
-
-/***************************************/
-.cards-2 {
-	padding-top: 7.875rem;
-	padding-bottom: 2.25rem;
-	text-align: center;
-}
-
-.cards-2 .h2-heading {
-	margin-bottom: 3.75rem;
-}
-
-.cards-2 .card {
-	display: block;
-	max-width: 19rem;
-	margin-right: auto;
-	margin-bottom: 3rem;
-	margin-left: auto;
-	border: 1px solid #ccd3df;
-	border-radius: 0.375rem;
-}
-
-.cards-2 .card .card-body {
-	padding: 2.5rem 2rem 2.75rem 2em;
-}
-
-.cards-2 .card .card-title {
-	margin-bottom: 0.5rem;
-	color: #4e73df;
-	font: 700 1.125rem/1.5rem "Open Sans", sans-serif;
-}
-
-.cards-2 .card .price .currency {
-	margin-right: 0.25rem;
-	color: #434c54;
-	font-weight: 700;
-	font-size: 1.5rem;
-	vertical-align: 40%;
-}
-
-.cards-2 .card .price .value {
-	color: #434c54;
-	font: 700 3.25rem/3.5rem "Open Sans", sans-serif;
-	text-align: center;
-}
-
-.cards-2 .card .frequency {
-	font-size: 0.875rem;
-}
-
-.cards-2 .card .divider {
-	height: 1px;
-	margin-top: 1.75rem;
-	margin-bottom: 2rem;
-	border: none;
-	background-color: #ccd3df;
-}
-
-.cards-2 .card .list-unstyled {
-	margin-top: 1.875rem;
-	margin-bottom: 1.625rem;
-	text-align: left;
-}
-
-.cards-2 .card .list-unstyled .media {
-	margin-bottom: 0.5rem;
-}
-
-.cards-2 .card .list-unstyled .fas {
-	color: #4e73df;
-	font-size: 0.875rem;
-	line-height: 1.625rem;
-}
-
-.cards-2 .card .list-unstyled .fas.fa-times {
-	margin-left: 0.1875rem;
-	margin-right: 0.125rem;
-	color: #555;
-}
-
-.cards-2 .card .list-unstyled .media-body {
-	margin-left: 0.625rem;
-}
+        .slide-arrow:hover {
+            opacity: 1;
+        }
 </style>
 </head>
 
-<body>
+<body>  
+
+   <input type="hidden" class="useraccount" value="${loginMember.memberAccount}">
+
+
+    <script>
+        $(function () {
+
+            /*
+            1.放第一張圖
+            2.放n張圖
+            3.放分頁
+            4.第一張圖移動
+            5.n張圖的移動
+            6.分頁的換色
+            7.左右的換頁
+            */
+            let index = 0
+            let slideMove = 0
+            $('.pages li').eq(0).css('background', 'white')
+            $('.pages li').on('mouseenter', function () {
+                // console.log('123')
+                // $('.slide-img').css('left', '-800px')
+                // let index = $(this).index()
+                index = $(this).index()
+                // console.log(index)
+                // let slideMove = 0 - index * 800
+                slideMove = 0 - index * 800
+                $('.slide-img').css('left', slideMove)
+                $(this).css('background', 'white').siblings().css('background', 'transparent')
+            })
+            let pagesli = $('.pages li').length
+            $('#slideNext').on('click', function () {
+                index++;
+                if (index >= pagesli) {
+                    index = 0
+                }
+                slideMove = 0 - index * 800
+                $('.slide-img').css('left', slideMove)
+                $('.pages li').eq(index).css('background', 'white').siblings().css('background', 'transparent')
+            })
+
+            $('#slidePrev').on('click', function () {
+                index--;
+                if (index < 0) {
+                    index = pagesli - 1
+                }
+                moveImg()
+            })
+            function moveImg() {
+                slideMove = 0 - index * 800
+                $('.slide-img').css('left', slideMove)
+                $('.pages li').eq(index).css('background', 'white').siblings().css('background', 'transparent')
+            }
+
+            setInterval(autoImg, 2000)
+            function autoImg() {
+                index++
+                if (index >= pagesli) {
+                    index = 0
+                }
+                moveImg()
+            }
+        })
+
+    </script> 
+
+      
+     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://kit.fontawesome.com/464da6b4aa.js" crossorigin="anonymous"></script>
+
+
+    
       
     	<input type="hidden" name="userAccount" value="123"> 
     	
@@ -277,36 +220,64 @@ div {
     
 	<%@ include file="../admin/FrontStageHead.jsp"%>
 	
+
+	
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<script type="text/javascript" charset="utf8"
 		src="https://cdn.datatables.net/1.11.2/js/jquery.dataTables.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
 	
-	<div id="pricing" class="cards-2">
+	
+	
+	<div class="container">
+        <div class="wrap">
+            <a class="slide-arrow right" id="slideNext"><i class="fa-solid fa-chevron-right"></i></a>
+            <a class="slide-arrow" id="slidePrev"><i class="fa-solid fa-angle-left"></i></a>
+            <ul class="slide-img">
+                <li><img src="https://media.istockphoto.com/photos/active-senior-asian-woman-exercising-at-home-practicing-fitness-and-picture-id1350206394?k=20&m=1350206394&s=612x612&w=0&h=qVZ5ee8AZC8rmSHcINGp8O606odX0aFzyWMc9IRvxEA=" alt=""></li>
+                <li><img src="https://media.istockphoto.com/photos/young-asian-man-athlete-running-on-beach-picture-id1322417673?k=20&m=1322417673&s=612x612&w=0&h=R75ma2IU9H5gvlQYNBRSm1MjvhhIctChR-hGpY1YA2I=" alt=""></li>
+                <li><img src="https://media.istockphoto.com/photos/group-of-people-yoga-and-heathy-living-picture-id1324987683?k=20&m=1324987683&s=612x612&w=0&h=OLRI5r5ni5I9xDy1q26q1Eq9gYY5w98YbRLU_x3jO2k=" alt=""></li>
+                <li><img src="https://media.istockphoto.com/photos/out-running-on-a-beautiful-day-picture-id514690917?k=20&m=514690917&s=612x612&w=0&h=57a7bQLpb2cWDY6bkR7n23efujFtk0-rXHuUiOnmRK4=" alt=""></li>
+                <li><img src="https://media.istockphoto.com/photos/no-gym-required-how-to-get-fit-at-home-picture-id1339710682?k=20&m=1339710682&s=612x612&w=0&h=7ImIEMsbiRyi8nrHNiRIVNO5OM3C1smPfJxfjLdBShU=" alt=""></li>
+            </ul>
+            <ul class="pages">
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://kit.fontawesome.com/464da6b4aa.js" crossorigin="anonymous"></script>
+	
+		<div id="pricing" class="cards-1">
+		
+	<div id="pricing" class="cards-2" >
 		<div class="container">
 			<div class="row">
 				<h2 class="h2-heading">My OWN MENU</h2>
 				<div class="col-lg-12"></div>
 			</div>
-			
-			
-			
-			
-			
-			
 			<input type="hidden" name="userAccount" value="123"> 
 			<button type="button" class="btn btn-primary adddone" 
     		    		data-bs-toggle="modal" data-bs-target="#addone" >加 1 !</button>
-			
+		</div>
 		</div>
 		<!-- end of col -->
 		
-		
 	</div>
 	<!-- end of row -->
+
 	
+	
+	
+		
     <div id="show"></div>
+    
     <div id ="ddd"></div>
 	<script>$('#table_id').dataTable({});</script>
 	<script>			
@@ -319,55 +290,54 @@ div {
     	$('#show').html(`
 				&emsp;&emsp;&emsp;
 				
-    			<table id="table_id">
-				<thead>
-				<tr>
-				<th>名稱</th>
-				<th>日期</th>
-				<th>查看內容</th>
-				<th>加新動作</th>
-				<th>刪除菜單</th>
-				</tr>
-			</thead>
-			
-    			<c:forEach var="ql" items="${queryAll}">
-    			<tr>
-    			<td>${ql.menuName}</td>
-    			<td>${ql.createDate}</td>
     			
+    			
+			    <div class="row"  >
+ 		      <c:forEach var="ql" items="${queryAll}">
+ 		       <div class="col-lg-3">
+ 		            <!-- Blog post-->
+ 		            <div class="card mb-4">
+ 		                <a href="#!"><img class="card-img-top" src="https://media.istockphoto.com/vectors/sports-training-with-coach-concept-vector-id1357660172?k=20&m=1357660172&s=612x612&w=0&h=yrJtXbcKl1r-kcaDhjiP5hMYMRHnQBzozfmSyDcvOL8="
+ 		                        alt="..." /></a>
+ 		                <div class="card-body">
+ 		                    <div class="small text-muted">${ql.createDate}</div>
+ 		                    <h2 class="card-title h4">${ql.menuName}</h2>
+ 		                  
+ 		                   
+ 		                    <form action="QueryOne" method="get" style="display : inline">
+ 		        			<input type="hidden" name="setid" value="${ql.setid}">
+ 		        		     <button type="submit" class="btn btn-primary edit" 
+ 		        		    		data-bs-toggle="modal">查看</button>
+ 		        		    </form>
+ 		                    <form action="goWrap1" method="get" style="display : inline">
+ 		    				<input type="hidden" name="setid" value="${ql.setid}">
+ 		    				  <button type="submit" class="btn btn-primary edit" 
+ 		      		    		data-bs-toggle="modal">加</button>
+ 		    			    </form>
+ 		                    <form action="msetDel" method="get" style="display : inline">
+ 		    				<input type="hidden" name="setid" value="${ql.setid}">
+ 		    				<input type="submit"  class="btn btn-primary del"  value="刪除!">
+ 		    			    </form>
+ 		                </div>
+ 		            </div>
+ 		            </div>
+ 		       	</c:forEach>
+ 		            </div>
+			    
     		
-    					
-    			<td>
-    			<form action="QueryOne" method="get">
-    			<input type="hidden" name="setid" value="${ql.setid}">
-    		     <button type="submit" class="btn btn-primary edit" 
-    		    		data-bs-toggle="modal">查看內容!</button>
-    		    </form>
-			    </td>
-			    <td>
-				<form action="goWrap1" method="get">
-				<input type="hidden" name="setid" value="${ql.setid}">
-				  <button type="submit" class="btn btn-primary edit" 
-  		    		data-bs-toggle="modal">加新動作!</button>
-			    </form>
-			    </td>
-			    <td>
-			    <form action="msetDel" method="get">
-				<input type="hidden" name="setid" value="${ql.setid}">
-				<input type="submit"  class="btn btn-primary del"  value="刪除菜單!">
-			    </form>
-			    </td>
-			    </tr>
-    			</c:forEach>
-    			</table>
     			`);
     			}
     		    });
   
     </script>
+   
+ 
 
-	<%@ include file="../admin/FrontStageFoot.jsp"%>
+
+ 
+	
 </body>
+<%@ include file="../admin/FrontStageFoot.jsp"%>
 
 <script type="text/javascript">
 

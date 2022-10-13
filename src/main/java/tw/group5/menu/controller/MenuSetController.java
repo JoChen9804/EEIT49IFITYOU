@@ -46,6 +46,22 @@ public class MenuSetController {
 		return"menu/MenuLobby";
 	}
 	
+	@GetMapping("/MenuLobby2")
+	public String mainAction2(Model m) {
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		AdminBean admin = adminService.findByAccount(username);
+		m.addAttribute("userAdmin", admin);
+		List<MenuSetbean> list = mSetService.findAll();
+		m.addAttribute("page", "query");
+		m.addAttribute("queryAll",list);
+		return"menu/MenuLobby2";
+	}
+	
+	
+	
+	
+	
+	
 	@GetMapping("/goWrap1")
 	public String wrap1Actiom(Model m , Integer setid) {
 		System.out.println(setid);
