@@ -615,6 +615,12 @@ fieldset {
 
 
         <script>
+        
+        $(function(){
+    		console.log('測試測試');
+    		$('#forColor').attr('style', 'background-color: white');
+    	}); 
+        
         var members = new Set([]);
 
         

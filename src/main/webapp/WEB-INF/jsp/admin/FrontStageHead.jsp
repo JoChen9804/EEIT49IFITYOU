@@ -108,7 +108,7 @@
 					<!-- end of dropdown menu -->
 
 					<li class="nav-item dropdown"><a class="nav-link page-scroll"
-						href="#pricing" style="font-size: 1.4rem;">貼文</a></li>
+						href="/group5/UserPostAll" style="font-size: 1.4rem;">貼文</a></li>
 					<li class="nav-item dropdown"><a class="nav-link page-scroll"
 						href="#pricing" style="font-size: 1.4rem;">菜單</a></li>
 
