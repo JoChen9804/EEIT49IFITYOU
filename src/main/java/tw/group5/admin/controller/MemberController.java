@@ -40,18 +40,20 @@ public class MemberController {
 	private String modifyUserAction(String modifyimage, String idNumString,
 			String name, String gender, String nickname, String birthday, String cellphone,
 			String zipcode, String address, String nowimage, String originalRealPassword, 
-		    @RequestParam("filepath") MultipartFile mf, Model m) {
+			String match, @RequestParam("filepath") MultipartFile mf, Model m) {
 
 		String memberPhoto;
 		// 修改
 		Integer idNum = Integer.parseInt(idNumString);
 		MemberBean mBean = adminService.selectOneMember(idNum);
 		MemberDetail mDetail = mBean.getMemberDetail();
+		Integer matchInteger = Integer.parseInt(match);
 		mDetail.setBirthday(birthday);
 		mDetail.setCellphone(cellphone);
 		mDetail.setGender(gender);
 		mDetail.setMemberAddress(address);
 		mDetail.setPostalCode(zipcode);
+		mDetail.setPairWilling(matchInteger);
 		if (modifyimage.equals("true")) {
 			memberPhoto = adminService.imageProcess(mBean.getMemberAccount(), modifyimage, mf, false);
 			mBean.setMemberName(name);

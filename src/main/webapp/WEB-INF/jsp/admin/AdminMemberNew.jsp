@@ -288,6 +288,11 @@ h5 {
 							name="recentLoginDate"
 							value="${OneMember.memberDetail.recentLoginDate}">
 					</div>
+					<div class="st1 hide3" style="display: none">
+						<label for="" class="t1">創建會員日：</label><input type="date"
+							name="createDate"
+							value="${OneMember.memberDetail.createDate}">
+					</div>
 				</div>
 
 

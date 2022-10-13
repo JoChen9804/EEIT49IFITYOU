@@ -194,12 +194,14 @@
 											</div>
 
 										</div>
+										<button type="button" id="inputDataMember1"
+											class="btn-solid-reg small" onclick="inputDataMember1()" style="padding:16px">會員</button>&ensp;
 										<button type="button" id="inputDataMember"
-											class="btn-solid-reg small" onclick="inputDataMember()">新會員</button>
+											class="btn-solid-reg small" onclick="inputDataMember()" style="padding:16px">新會員</button>&ensp;
 										<button type="button" id="inputDataAdmin1"
-											class="btn-solid-reg small" onclick="inputDataAdmin1()">管理員</button>
+											class="btn-solid-reg small" onclick="inputDataAdmin1()" style="padding:16px">管理員</button>&ensp;
 										<button type="button" id="inputDataAdmin2"
-											class="btn-solid-reg small" onclick="inputDataAdmin2()">高級管理員</button>
+											class="btn-solid-reg small" onclick="inputDataAdmin2()" style="padding:16px">高級管理員</button>
 									</div>
 								</div>
 							</div>
@@ -215,6 +217,11 @@
 	</header>
 	<!-- end of header -->
 	<script>
+	function inputDataMember1(){
+		$('#uname').val('curt7965');
+		$('#exampleInputPassword').val('curt1234');
+		
+	}
 	function inputDataMember(){
 		$('#uname').val('kelly2643');
 		$('#exampleInputPassword').val('asdf1234');
