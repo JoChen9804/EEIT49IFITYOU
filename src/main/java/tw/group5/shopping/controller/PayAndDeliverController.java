@@ -42,7 +42,10 @@ public class PayAndDeliverController {
 		//new一個order物件，開始放入一些屬性，先放到session，到最後資料齊了再存入SQL
 		Order order = new Order();
 	
-		order.setVoucherNo(voucherNo);
+		if (voucherNo.equals("NULL")) {	
+		}else {
+			order.setVoucherNo(voucherNo);
+		}
 		order.setVoucherDiscount(voucherDiscount);
 		
 		m.addAttribute("order", order);
@@ -136,17 +139,15 @@ public class PayAndDeliverController {
 		order.setCommoditySubtotal(commoditySubtotal);
 		
 		//物流方式存到訂單
-		if (shippingType == "UNIMART" ) {
+		if (shippingType.equals("UNIMART")) {
 			order.setShippingType("7-ELEVEN超商取貨");
-			System.out.println("123");
-		}else if (shippingType == "HILIFE") {
+		}else if (shippingType.equals("HILIFE")) {
 			order.setShippingType("萊爾富超商取貨");
-		}else if (shippingType == "FAMI") {
+		}else if (shippingType.equals("FAMI")) {
 			order.setShippingType("全家超商取貨");
 		}else {
 			order.setShippingType(shippingType);
 		}
-		System.out.println(shippingType);
 		
 		//且物流方式要放到session決定step3的畫面顯示
 		m.addAttribute("shippingType", shippingType);

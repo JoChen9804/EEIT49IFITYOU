@@ -154,51 +154,39 @@ table {
     width: 100%;
 }
 
-.column01 {
-	text-align:center;
-    width: 5%;
-    padding-left: 3px
-}
-
-.column02 {
-	text-align:center;
-    width: 5%;
-    padding-left: 10px;
-}
-
 .column1 {
 	text-align:center;
-    width: 8%;
+    width: 15%;
 }
 
 .column2 {
 	text-align:center;
-    width: 11%;
+    width: 8%;
 }
 
 .column3 {
 	text-align:center;
-    width: 13%;
+    width: 15%;
 }
 
 .column4 {
 	text-align:center;
-    width: 25%;
+    width: 13%;
 }
 
 .column5 {
 	text-align:center;
-    width: 11%;
+    width: 19%;
 }
 
 .column6 {
 	text-align:center;
-    width: 11%;
+    width: 20%;
 }
 
 .column7 {
 	text-align:center;
-    width: 11%;
+    width: 10%;
 }
 
 .table100-head th {
@@ -238,7 +226,7 @@ table {
 
 .table100.ver1 th {
     font-family: Lato-Bold;
-    font-size: 18px;
+    font-size: 19px;
     color: #fff;
     line-height: 1.4;
 
@@ -247,7 +235,7 @@ table {
 
 .table100.ver1 td {
     font-family: Lato-Regular;
-    font-size: 15px;
+    font-size: 17px;
     color: #808080;
     line-height: 1.4;
 }

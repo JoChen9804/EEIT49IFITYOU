@@ -29,19 +29,24 @@
         rel="stylesheet">
 
     <style>
-        span.col-xs-5.col-sm-4 {
-            padding: 8px 15px 8px 25px;
-        }
+    
+    span.col-xs-5.col-sm-4 {
+       padding: 8px 15px 8px 25px;
+    }
+    
+    span.col-xs-7.col-sm-8 {
+    padding: 8px 15px;
+    }
 
-        .page-cart .panel-order-info h4,
-        .page-checkout .panel-order-info h4,
-        .page-order-show .panel-order-info h4 {
-            font-weight: 500;
-            border-bottom: 1px solid #e7e7e7;
-            padding-bottom: 10px;
-            background-color: #f7f7f7;
-            padding: 8px 0 8px 15px;
-        }
+    .page-cart .panel-order-info h4,
+    .page-checkout .panel-order-info h4,
+    .page-order-show .panel-order-info h4 {
+       font-weight: 500;
+       border-bottom: 1px solid #e7e7e7;
+       padding-bottom: 10px;
+       background-color: #f7f7f7;
+       padding: 8px 0 8px 15px;
+    }
     </style>
     
     <style>
@@ -263,16 +268,16 @@
                                         <h4>訂單資訊</h4>
                                         <div class="row">
                                             <span class="col-xs-5 col-sm-4">訂單號碼:</span>
-                                            <span class="col-xs-7 col-sm-8">${myorder.orderNo}</span>
+                                            <span class="col-xs-7.col-sm-8">${myorder.orderNo}</span>
                                         </div>
                                         
                                         <div class="row">
                                             <span class="col-xs-5 col-sm-4">訂單日期:</span>
-                                            <span class="col-xs-7 col-sm-8 datetime">${myorder.orderTime}</span>
+                                            <span class="col-xs-7.col-sm-8 datetime">${myorder.orderTime}</span>
                                         </div>
                                         <div class="row">
                                             <span class="col-xs-5 col-sm-4">訂單狀態:</span>
-                                            <span class="col-xs-7 col-sm-8">${myorder.orderStatus}</span>
+                                            <span class="col-xs-7.col-sm-8">${myorder.orderStatus}</span>
                                         </div>
                                     </div>
                                     
@@ -280,11 +285,11 @@
                                         <h4>顧客資訊</h4>
                                         <div class="row">
                                             <span class="col-xs-5 col-sm-4">名稱:</span>
-                                            <span class="col-xs-7 col-sm-8" ng-non-bindable="">${memeberName }</span>
+                                            <span class="col-xs-7.col-sm-8">${memeberName }</span>
                                         </div>
                                         <div class="row">
                                             <span class="col-xs-5 col-sm-4">電話號碼:</span>
-                                            <span class="col-xs-7 col-sm-8">${memberPhone}</span>
+                                            <span class="col-xs-7.col-sm-8">${memberPhone}</span>
                                         </div>
                                     </div>
                                     <!-- User fields -->
@@ -298,34 +303,74 @@
                                             <span class="col-xs-7 col-sm-8">${myorder.shippingType}</span>
                                         </div>
 
-                                        <!-- 物流追蹤 -->
-                                        <div class="row">
-                                            <span class="col-xs-7 col-sm-8 col-sm-offset-4">
-                                                <a href="https://www.famiport.com.tw/Web_Famiport/page/process.aspx"
-                                                    target="_blank" class="btn btn-primary btn-sm">全家物流追蹤</a>
-                                            </span>
-                                        </div>
-
-
-                                        <!-- ezship, 711, Family Mart, SL Logistics YTO -->
                                         
-                                        <div class="row"><span class="col-xs-5 col-sm-4">全家店號</span><span
-                                                class="col-xs-7 col-sm-8">F000355</span></div>
-                                        <div class="row"><span class="col-xs-5 col-sm-4">全家門市名稱</span><span
-                                                class="col-xs-7 col-sm-8">全家板橋大仁店</span></div>
-                                        <div class="row"><span class="col-xs-5 col-sm-4">收件人中文全名(需與身份證姓名相同)</span><span
-                                                class="col-xs-7 col-sm-8">林柏安</span></div>
-                                        <div class="row"><span class="col-xs-5 col-sm-4">收件人電話號碼</span><span
-                                                class="col-xs-7 col-sm-8">0909286***</span></div>
-                                        <div class="row"><span class="col-xs-5 col-sm-4">門市地址</span><span
-                                                class="col-xs-7 col-sm-8">新北市板橋區大仁街108之1號</span></div>
-                                        <div class="row"><span class="col-xs-5 col-sm-4">配送編號</span><span
-                                                class="col-xs-7 col-sm-8">00941653641</span></div>
+                                        
+                                        <c:if test="${myorder.shippingType == '7-ELEVEN超商取貨' }">
+                                        <div class="row">
+                                        	<span class="col-xs-5 col-sm-4">7-ELEVEN 店號:</span>
+                                        	<span class="col-xs-7 col-sm-8">${myorder.storeID }</span>
+                                        </div>
+                                        
+                                        <div class="row">
+                                        	<span class="col-xs-5 col-sm-4">7-ELEVEN 門市名稱:</span>
+                                        	<span class="col-xs-7 col-sm-8">7-ELEVEN ${myorder.storeName}</span>
+                                        </div>
+                                        
+                                        <div class="row">
+                                        	<span class="col-xs-5 col-sm-4">門市地址:</span>
+                                        	<span class="col-xs-7 col-sm-8">${myorder.deliveryAddress}</span>
+                                        </div>
+                                        </c:if>
+                                        
+                                        <c:if test="${myorder.shippingType == '全家超商取貨' }">
+                                        <div class="row">
+                                        	<span class="col-xs-5 col-sm-4">全家店號:</span>
+                                        	<span class="col-xs-7 col-sm-8">${myorder.storeID }</span>
+                                        </div>
+                                        
+                                        <div class="row">
+                                        	<span class="col-xs-5 col-sm-4">全家門市名稱:</span>
+                                        	<span class="col-xs-7 col-sm-8">全家 ${myorder.storeName}</span>
+                                        </div>
+                                        <div class="row">
+                                        	<span class="col-xs-5 col-sm-4">門市地址:</span>
+                                        	<span class="col-xs-7 col-sm-8">${myorder.deliveryAddress}</span>
+                                        </div>
+                                        </c:if>
+                                        
+                                        <c:if test="${myorder.shippingType == '萊爾富超商取貨' }">
+                                        <div class="row">
+                                        	<span class="col-xs-5 col-sm-4">萊爾富店號:</span>
+                                        	<span class="col-xs-7 col-sm-8">${myorder.storeID }</span>
+                                        </div>
+                                        
+                                        <div class="row">
+                                        	<span class="col-xs-5 col-sm-4">萊爾富門市名稱:</span>
+                                        	<span class="col-xs-7 col-sm-8">萊爾富 ${myorder.storeName}</span>
+                                        </div>
+                                        <div class="row">
+                                        	<span class="col-xs-5 col-sm-4">門市地址:</span>
+                                        	<span class="col-xs-7 col-sm-8">${myorder.deliveryAddress}</span>
+                                        </div>
+                                        </c:if>
+                                        
+                                        <c:if test="${myorder.shippingType == '宅配' || myorder.shippingType == '離島宅配' }">
+                                        <div class="row">
+                                        	<span class="col-xs-5 col-sm-4">宅配地址:</span>
+                                        	<span class="col-xs-7 col-sm-8">${myorder.deliveryAddress}</span>
+                                        </div>
+                                        </c:if>
+                                        
+                                        
+                                        <div class="row"><span class="col-xs-5 col-sm-4">收件人中文全名(需與身份證姓名相同):</span><span
+                                                class="col-xs-7 col-sm-8">${myorder.pickerName}</span></div>
+                                        <div class="row"><span class="col-xs-5 col-sm-4">收件人電話號碼:</span><span
+                                                class="col-xs-7 col-sm-8">${myorder.pickerCellphone}</span></div>
+                                                
+                                        
+                                        
 
 
-                                        <!--  FamilyMart delivery info -->
-
-                                        <!--  Store Pickup info -->
 
                                     </div>
 
