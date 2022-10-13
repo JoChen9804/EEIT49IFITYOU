@@ -32,13 +32,15 @@ for(let i=0; i<star.length;i++){
 
 let saved=document.querySelector('#saved');
 saved.addEventListener('click',function(){
+	console.log(logId);
 	if(logId!=""){
 		$.ajax({
 			type: "post",
 			url: "/group5/user/gym/gymFavorite/"+logId
 		});
 	}else{
-		let logBean={"memberId":mId, "gymId":gymBean, "favorite": 1};
+		let logBean={"memberId":mId, "gym":gymBean, "favorite": 1};
+		console.log(logBean)
 		$.ajax({
 			type: "post",
 			url: "/group5/user/gym/gymFavorite",

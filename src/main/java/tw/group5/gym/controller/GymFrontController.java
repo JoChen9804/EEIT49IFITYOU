@@ -93,7 +93,7 @@ public class GymFrontController {
 	@PostMapping("/user/gym/gymFavorite")
 	@ResponseBody
 	public GymLog processAddFavoriteAction(@RequestBody GymLog gLog) {
-		gLog.setGym(gymService.findById(gLog.getGymId()));
+		gLog.setGym(gymService.findById(gLog.getGym().getGymId()));
 		gLog.setMember(adminService.selectOneMember(gLog.getMemberId()));
 		return gymLogService.addGymLog(gLog);
 	}
