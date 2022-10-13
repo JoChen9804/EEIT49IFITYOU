@@ -61,10 +61,12 @@ public class AdminController {
 			System.out.println("這是第幾"+ i);
 			String createDate = result.get(i).getMemberDetail().getCreateDate();
 			String loginDateString = result.get(i).getMemberDetail().getRecentLoginDate();
-			Date loginDate = new SimpleDateFormat("yyyy-MM-dd").parse(loginDateString);
-			long login =loginDate.getTime();
-			if (nowDate - login <= 1209600000) {
-				activeMember ++;
+			if (loginDateString != null) {
+				Date loginDate = new SimpleDateFormat("yyyy-MM-dd").parse(loginDateString);				
+				long login =loginDate.getTime();
+				if (nowDate - login <= 1209600000) {
+					activeMember ++;
+				}
 			}
 			
 			if(createDate != null) {
@@ -249,7 +251,7 @@ public class AdminController {
 
 			MemberDetail mDetail = new MemberDetail(gender, nickname, birthday, cellphone, zipcode, address,
 					referralCode, registerReferralCode, mute, postPermission, pairWilling, pairContactInfo, pairRequest,
-					pairInfo, recentLoginDate);
+					pairInfo, null);
 			MemberBean mBean = new MemberBean(account, bcEncode, authority, name, memberPhoto, email, mDetail);
 			MemberBean mBean1 = adminService.insert(mBean);
 			referralCode = adminService.encode(mBean1.getId());

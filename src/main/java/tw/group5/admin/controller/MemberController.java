@@ -111,6 +111,7 @@ public class MemberController {
 		mDetail.setMute(0);
 		mDetail.setPostPermission(0);
 		mDetail.setPairWilling(0);
+		mDetail.setGender("秘密");
 		String randomCode = RandomString.make(64);
 
 		MemberBean mBean = new MemberBean(account, bcEncode, authority, name, email, mDetail);
@@ -135,7 +136,7 @@ public class MemberController {
 		}
 		
 		
-		return "admin/FrontStageMain";
+		return "admin/AdminLogin";
 
 	}
 

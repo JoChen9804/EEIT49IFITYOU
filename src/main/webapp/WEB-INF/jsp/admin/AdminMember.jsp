@@ -86,11 +86,11 @@ tr.active {
 							</form>
 						</td>
 						<td><input class="delete" type="checkbox" value="刪除"></td>
+						<td>${row.id}</td>
 						<td><c:choose>
 								<c:when test="${row.authority==0}">正常</c:when>
 								<c:when test="${row.authority==99}">未開通</c:when>
 							</c:choose></td>
-						<td>${row.id}</td>
 						<td><img src="${row.memberPhoto}" height=60 width=75></td>
 						<td>${row.memberAccount}</td>
 						<td>****</td>

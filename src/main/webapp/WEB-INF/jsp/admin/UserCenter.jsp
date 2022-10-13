@@ -189,14 +189,13 @@
 									<!-- end of col -->
 									<div class="col-lg-6">
 										<div class="text-container" style="text-align: left;">
-											<c:choose>
-												<c:when test="${loginMember.memberDetail.pairWilling==0}">
-													<label>健友配對：您目前尚未參加 &ensp;</label>
-												</c:when>
-												<c:when test="${loginMember.memberDetail.pairWilling==1}">
-													<label>健友配對：您目前正在配對中 &ensp;</label>
-												</c:when>
-											</c:choose>
+											<div class="st1">
+												<label for="" class="t1" id="match">參加健友配對：</label> <label>
+													<input type="radio" name="match" value="1" id="pairT">是
+												</label> &emsp; <label> <input type="radio" name="match"
+													value="0" class="radio" checked id="pairF">否
+												</label>
+											</div>
 											<a href="#" class="btn-solid-reg" id="passwordChange">點此前往健友配對</a>
 											<br />
 											<br />

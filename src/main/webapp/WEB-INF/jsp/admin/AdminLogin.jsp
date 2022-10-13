@@ -113,7 +113,7 @@
 </head>
 <body class="bg-gradient-primary">
 	<%@ include file="FrontStageHead.jsp"%>
-	
+
 	<!-- Header -->
 	<header id="header" class="header">
 		<div class="header-content" style="padding-top: 4rem;">
@@ -152,12 +152,11 @@
 											</div>
 											<form class="user" ACTION="login" method="post">
 												<div class="form-group">
-													<br> <br>
-													<input type="text" class="form-control form-control-user"
-														id="uname" aria-describedby="emailHelp"
-														placeholder="請輸入帳號..." name="name" required
-														style="font-size: 1.2rem"> <input type="hidden"
-														name="username" id="username">
+													<br> <br> <input type="text"
+														class="form-control form-control-user" id="uname"
+														aria-describedby="emailHelp" placeholder="請輸入帳號..."
+														name="name" required style="font-size: 1.2rem"> <input
+														type="hidden" name="username" id="username">
 												</div>
 												<div class="form-group">
 													<input type="password"
@@ -174,17 +173,17 @@
 													</div>
 												</div>
 												<p id="errorMsg">${errorMsgMap.LoginError}</p>
-												
-												
+
+
 												<INPUT type="submit" value="login"
 													class="btn btn-primary btn-user btn-block" id="loginbutton">
 												<hr>
 											</form>
 											<a href="/oauth2/authorization/google"
 												class="btn btn-google btn-user btn-block btn-primary"
-												style="border-radius: 10rem;padding: 0.75rem 1rem;color: #fff; background-color: #ea4335; border-color: #fff; text-decoration: none; font-size: 1.2rem;">
+												style="border-radius: 10rem; padding: 0.75rem 1rem; color: #fff; background-color: #ea4335; border-color: #fff; text-decoration: none; font-size: 1.2rem;">
 												<i class="fab fa-google fa-fw"></i> Login with Google
-											</a> 
+											</a>
 											<hr>
 											<div class="text-center">
 												<a class="small" href="/group5/ForgetPassword">忘記密碼?</a>
@@ -192,9 +191,15 @@
 											<div class="text-center">
 												<a class="small" href="/group5/Register">沒有帳號嗎?加入I FIT
 													YOU!!</a>
-
 											</div>
+
 										</div>
+										<button type="button" id="inputDataMember"
+											class="btn-solid-reg small" onclick="inputDataMember()">新會員</button>
+										<button type="button" id="inputDataAdmin1"
+											class="btn-solid-reg small" onclick="inputDataAdmin1()">管理員</button>
+										<button type="button" id="inputDataAdmin2"
+											class="btn-solid-reg small" onclick="inputDataAdmin2()">高級管理員</button>
 									</div>
 								</div>
 							</div>
@@ -210,6 +215,21 @@
 	</header>
 	<!-- end of header -->
 	<script>
+	function inputDataMember(){
+		$('#uname').val('kelly2643');
+		$('#exampleInputPassword').val('asdf1234');
+		
+	}
+	function inputDataAdmin1(){
+		$('#uname').val('adam');
+		$('#exampleInputPassword').val('adam1234');
+		
+	}
+	function inputDataAdmin2(){
+		$('#uname').val('kelly');
+		$('#exampleInputPassword').val('kelly1234');
+		
+	}
 		$(document).ready(
 				function() {
 					$('#loginbutton').attr("style",
