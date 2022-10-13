@@ -35,11 +35,13 @@ public class MenuSetController {
 	@Autowired
 	private AdminService adminService;
 	
+	
 	@GetMapping("/MenuLobby")
 	public String mainAction(Model m) {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		AdminBean admin = adminService.findByAccount(username);
-		m.addAttribute("userAdmin", admin);
+//		AdminBean admin = adminService.findByAccount(username);
+		MemberBean member = adminService.findByAccountMember(username);
+		m.addAttribute("userAdmin", member);
 		List<MenuSetbean> list = mSetService.findAll();
 		m.addAttribute("page", "query");
 		m.addAttribute("queryAll",list);
@@ -66,8 +68,9 @@ public class MenuSetController {
 	public String wrap1Actiom(Model m , Integer setid) {
 		System.out.println(setid);
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		AdminBean admin = adminService.findByAccount(username);
-		m.addAttribute("userAdmin", admin);
+//		AdminBean admin = adminService.findByAccount(username);
+		MemberBean member = adminService.findByAccountMember(username);
+		m.addAttribute("userAdmin", member);
 		m.addAttribute("setid",setid);
 		
 		return"menu/MenuWrap1Page";	

@@ -25,7 +25,7 @@ import tw.group5.menu.service.MenuDataService;
 import tw.group5.menu.service.MenuDetailService;
 
 @Controller
-@RequestMapping("/group5/admin")
+@RequestMapping("/group5")
 @SessionAttributes(names= {"userAdmin"})
 public class MenuDetailController {
 	

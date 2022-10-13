@@ -190,10 +190,8 @@
 				<div id="collapseFitness" class="collapse"
 					aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
-						<a class="collapse-item" href="/group5/admin/mainmenu.controller"
-							style="font-size: 1.2rem; font-weight: 550;">查看健身菜單</a> <a
-							class="collapse-item" href="/group5/admin/menuAdd.controller"
-							style="font-size: 1.2rem; font-weight: 550;">新增健身菜單</a>
+						<a class="collapse-item" href="/group5/admin/insertandadd"
+							style="font-size: 1.2rem; font-weight: 550;">菜單動作管理</a>
 					</div>
 				</div></li>
 		</ul>

@@ -17,13 +17,14 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import tw.group5.admin.model.AdminBean;
+import tw.group5.admin.model.MemberBean;
 import tw.group5.admin.service.AdminService;
 import tw.group5.menu.model.MenuDatabean;
 import tw.group5.menu.service.MenuDataService;
 
 
 @Controller
-@RequestMapping("/group5/admin")
+@RequestMapping("/group5")
 @SessionAttributes(names= {"userAdmin"})
 public class MenuDataController {
 	
@@ -38,7 +39,7 @@ public class MenuDataController {
 	 * back page
 	 */
 	
-	@GetMapping("/insertandadd")
+	@GetMapping("/admin/insertandadd")
 	public String processMainAction(Model m) {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		AdminBean admin = adminService.findByAccount(username);
@@ -49,7 +50,7 @@ public class MenuDataController {
 	}
 
 	
-	@GetMapping("/insertandadd2")
+	@GetMapping("/admin/insertandadd2")
 	public String processMainAction2(Model m) {
 		System.out.println("find leg!");
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -84,7 +85,7 @@ public class MenuDataController {
 		  return mdService.update(mdbean);
 	}
 	
-	@PostMapping("/UpdateAction2")
+	@PostMapping("/admin/UpdateAction2")
 	public String processAllUpdateAction2(MenuDatabean mdbean,@RequestParam("chamgeimages") MultipartFile mfs) {	
 		System.out.println(mfs.getOriginalFilename());
 		  String mb2 = mdService.addImages(mfs);
@@ -109,7 +110,7 @@ public class MenuDataController {
 		  return "redirect:insertandadd";
 	}
 	
-	@GetMapping("/ALLdeleteAction3")
+	@GetMapping("/admin/ALLdeleteAction3")
 	public String menuDelete(Model m, int id) {
 	mdService.deletebyId(id);
 	return "redirect:insertandadd";
@@ -125,10 +126,16 @@ public class MenuDataController {
 		System.out.println(setid);
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		List<MenuDatabean> list = mdService.find1();
-		AdminBean admin = adminService.findByAccount(username);
-		m.addAttribute("querySelect",list);
-		m.addAttribute("userAdmin", admin);
+		
+		for (MenuDatabean menuDatabean : list) {
+			System.out.println("測動作細項"+menuDatabean.getExerciseName());
+		}
+		
+//		AdminBean admin = adminService.findByAccount(username);
+		MemberBean member = adminService.findByAccountMember(username);
+		m.addAttribute("userAdmin", member);
 		m.addAttribute("setid",setid);
+		m.addAttribute("querySelect",list);
 		return"menu/MenuWrap2Page";	
 	}
 
