@@ -23,7 +23,7 @@ import tw.group5.menu.model.MenuSetbean;
 import tw.group5.menu.service.MenuSetService;
 
 @Controller
-@RequestMapping("/group5/admin")
+@RequestMapping("/group5")
 @SessionAttributes(names= {"userAdmin"})
 public class MenuSetController {
 	
