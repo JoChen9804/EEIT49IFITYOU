@@ -2,6 +2,7 @@ package tw.group5.activity.service;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -70,6 +71,22 @@ public class ActivitySignUpService {
 	
 	public Set<ActivitySignUp> queryByActivity(ActivityActivity activity ) {
 		return signUpRepository.findByActivity(activity);
+	}
+	
+	public List<ActivitySignUp> findByMemberId(int memberId) {
+		return signUpRepository.findByMemberId(memberId);
+	}
+	
+	/*
+	 * 批次查詢
+	 */
+	public List<ActivityActivity> usersActivityQuery(int id) {
+		List<ActivitySignUp> usersSignUp = signUpRepository.findByMemberId(id);
+		List<ActivityActivity> usersActivty =  new ArrayList<ActivityActivity>();
+		for (ActivitySignUp usersactivity : usersSignUp) {
+			usersActivty.add(usersactivity.getActivity());
+		}
+		return usersActivty;
 	}
 	
 }

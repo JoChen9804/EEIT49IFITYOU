@@ -126,6 +126,9 @@
 							<a class="dropdown-item" href="/group5/user/pairing/pairedit"><span
 								class="item-text" style="font-size: 1.2rem">健友配對</span></a>
 							<div class="dropdown-items-divide-hr"></div>
+							<a class="dropdown-item" href="/group5/user/selfactivtyconfirm/${loginMember.id}"><span
+								class="item-text" style="font-size: 1.2rem">已報名活動</span></a>
+							<div class="dropdown-items-divide-hr"></div>
 							<a class="dropdown-item" href="/logout" data-toggle="modal"
 								data-target="#logoutModal"><span class="item-text" style="font-size: 1.2rem"><i
 									class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>登出</span></a>

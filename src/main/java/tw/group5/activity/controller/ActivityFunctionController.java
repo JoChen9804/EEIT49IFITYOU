@@ -137,6 +137,17 @@ public class ActivityFunctionController extends HttpServlet {
 		return "activity/ActivityAllActivityUser"; 
 	}
 	
+	//會員已報名活動查看
+		@GetMapping("/user/selfactivtyconfirm/{memberId}")
+		public String selfActivtyConfirm(@PathVariable(name = "memberId")int memberId, Model m) {
+			List<ActivityActivity> activity = signUpService.usersActivityQuery(memberId);
+			
+			System.out.println("抓報名活動="+memberId);
+			
+			m.addAttribute("activity_queryAll", activity);
+			return "activity/UserSelfActivityConfirm"; 
+		}
+	
 	//查詢
 	@GetMapping("/toactivity/{activityId}")
 	public String toactivity(@PathVariable(name = "activityId")int activityId, Model m) {

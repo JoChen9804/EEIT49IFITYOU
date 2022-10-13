@@ -18,8 +18,6 @@
     
     <!-- vegas -->
     <link rel="stylesheet" href="/group5/js/activity/slide.css">	
-<!--     <script src="/group5/js/activity/flickity.pkgd.min.js"></script>	 -->
-<!-- 	<script src="stylesheet" href="/group5/js/activity/flickity/flickity.pkgd.min.js"></script> -->
     
 	<style>
 .test {
@@ -97,7 +95,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="above-heading">DESCRIPTION</div>
+                    <div class="above-heading">ALL ACTIVITY</div>
                     <h2 class="h2-heading">所有活動</h2>
                 </div> <!-- end of col -->
             </div> <!-- end of row -->

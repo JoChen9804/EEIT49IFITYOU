@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import tw.group5.activity.model.ActivityActivity;
 import tw.group5.activity.model.ActivityActivityRepository;
+import tw.group5.activity.model.ActivitySignUp;
 
 @Service
 @Transactional
