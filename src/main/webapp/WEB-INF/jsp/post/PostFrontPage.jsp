@@ -122,7 +122,7 @@ fieldset {
     
     <!-- Features -->
             <!--     class="tabs" -->
-    <div id="features" class="">
+    <div id="features" class="tabs">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
