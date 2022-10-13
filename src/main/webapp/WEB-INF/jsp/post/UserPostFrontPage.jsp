@@ -605,7 +605,7 @@ background-color: #f3f7fd;
 								<div class="col-lg-9">
 									<div class="text-container">
 
-										<form action="UserPostAll" method="GET">
+										
 
 
 											<div class="row g-2">
@@ -616,10 +616,10 @@ background-color: #f3f7fd;
 
 												<div class="col-md">
 													<div class="form-floating">
-														<a class="btn-solid-reg" href="/group5/UserPostAll">所有貼文</a>
+													<input type="submit" class="btn-solid-reg  postingall" value="所有貼文">
 													</div>
 												</div>
-
+                                                <form action="UserPostAll" method="GET">
 
 												<div class="col-md">
 													<div class="form-floating">
@@ -628,19 +628,14 @@ background-color: #f3f7fd;
 															<div class="release"></div>
 													</div>
 												</div>
-
+                                                </form>
 
 											</div>
-											  
 											
-											
-										</form>
+										
+										
+										
                                         
-                                     
-                                        
-                                        
-                                        
-
 <!--/////////////////// 首頁的主貼文//////////////////////////////////// -->
 										<h3>${error}</h3>
 										
@@ -714,6 +709,13 @@ background-color: #f3f7fd;
                                     });
                                     
                                     
+                                    $(".postingall").on('click', function(event){
+                                    	var title = $(".entertitle").val(null);
+                                        userPostAll()
+                                    });
+                                    
+                                    
+                                    
                     
                                         </script>
                          
@@ -722,9 +724,12 @@ background-color: #f3f7fd;
                         <h3 class="widget-title">熱門貼文</h3>
                         <div class="row">
                         
+                        
+                        
                         <div id ="popularPosts"></div> 
                         
-                 
+                        
+                        
                         
                         </div>
                     </aside>
@@ -735,28 +740,8 @@ background-color: #f3f7fd;
                             <ol id="olil">
                             </ol>
                     </aside>
-                    
-<!--                     <aside id="recent-comments-2" class="widget widget_recent_comments"> -->
-<!--                         <h5 class="widget-title">Recent Comments</h5> -->
-<!--                         <ul id="recentcomments"> -->
-<!--                             <li class="recentcomments"><span class="comment-author-link">admin</span> on <a -->
-<!--                                     href="https://ld-wp.template-help.com/wordpress_52382/2016/05/17/image-format/#comment-9">Image -->
-<!--                                     Format</a></li> -->
-<!--                             <li class="recentcomments"><span class="comment-author-link">admin</span> on <a -->
-<!--                                     href="https://ld-wp.template-help.com/wordpress_52382/2016/05/17/bringing-a-new-cfo-at-the-time-of-crisis/#comment-8">Bringing -->
-<!--                                     a new CFO at the time of crisis?</a></li> -->
-
-<!--                         </ul> -->
-<!--                     </aside> -->
 
                 </div>
-								
-								
-								
-								
-								
-								
-								
 								
 								
 								
