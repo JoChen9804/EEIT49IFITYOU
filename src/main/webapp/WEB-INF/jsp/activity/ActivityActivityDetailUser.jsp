@@ -68,7 +68,7 @@
 			src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAebEgcRugex4c_DH0B8HVeB0qwwpuA6DI&q=${query_activity.location}"
 			allowfullscreen>
 		</iframe>
-
+		
 		<br>
 		<br>
 
@@ -88,9 +88,7 @@
 			let date = new Date();
 			console.log('今天日期=' + date.toISOString().split('T')[0]);
 			console.log('活動截止=' + '${query_activity.signUpDeadline}');
-			console
-					.log('已過期='
-							+ (date.toISOString().split('T')[0] >= '${query_activity.signUpDeadline}'));
+			console.log('已過期='+ (date.toISOString().split('T')[0] >= '${query_activity.signUpDeadline}'));
 			if (date.toISOString().split('T')[0] >= '${query_activity.signUpDeadline}') {
 				$('#wantToSignUp').attr("disabled", "disabled").attr("style",
 						"background-color:gray;border:gray;color:white").attr(
