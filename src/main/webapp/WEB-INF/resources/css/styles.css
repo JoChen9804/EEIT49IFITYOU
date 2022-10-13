@@ -52,7 +52,6 @@ p {
 	font: 400 1.3rem/1.625rem "Open Sans", sans-serif;
 	;
 }
-z
 .p-large {
 	font: 400 1.125rem/1.75rem "Open Sans", sans-serif;
 }
@@ -240,6 +239,26 @@ a.white {
 	color: #fff;
 	text-decoration: none;
 }
+
+.btn-outline-red {
+	display: inline-block;
+	padding: 1.1875rem 2.125rem 1.1875rem 2.125rem;
+	border: 0.125rem solid #C62828;
+	border-radius: 2rem;
+	background-color: transparent;
+	color: #C62828;
+	font: 700 0.875rem/0 "Open Sans", sans-serif;
+	text-decoration: none;
+	transition: all 0.2s;
+}
+
+.btn-outline-red:hover {
+	color: #fff;
+	background-color: #C62828;
+	text-decoration: none;
+}
+
+
 
 .form-group {
 	position: relative;

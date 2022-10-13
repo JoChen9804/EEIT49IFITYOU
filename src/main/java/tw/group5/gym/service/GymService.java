@@ -1,5 +1,7 @@
 package tw.group5.gym.service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -7,6 +9,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import tw.group5.gym.model.GymBean;
 import tw.group5.gym.model.GymLog;
@@ -23,13 +26,11 @@ public class GymService{
 
 	//新增，屬性id須為空
 	public GymBean add(GymBean gymBean) {
-		gymBean.setAdmin("group5");
 		return gymRespository.save(gymBean);
 	}
 
 	//更新，屬性id需不可為空
 	public GymBean update(GymBean gymBean) {
-		gymBean.setAdmin("group5");
 		return gymRespository.save(gymBean);
 	}
 	
@@ -77,6 +78,16 @@ public class GymService{
 			return result.get();
 		}
 		return null;
+	}
+	
+	
+	//圖片處理>>上傳檔案至資料夾並回傳檔名
+	public String processImg(int gymId, MultipartFile photoData)throws IllegalStateException, IOException {
+		String fileName = "gym-"+gymId+".jpg";
+		String saveFileDir = "./src/main/webapp/WEB-INF/resources/images/"+fileName;
+		File saveFilePath = new File(saveFileDir);
+		photoData.transferTo(saveFilePath.getAbsoluteFile());
+		return fileName;
 	}
 	
 }

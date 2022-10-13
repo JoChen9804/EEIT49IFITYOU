@@ -62,6 +62,7 @@ public class GymLogController {
 	public GymLog processUpdateRatingAction(@PathVariable("logId") int logId,@PathVariable("rating") int rating) {
 		GymLog gymLog = gLogService.findById(logId);
 		gymLog.setRating(rating);
+		System.out.println(rating+"rattttttttttttttttttttttttting");
 		GymLog gymLogResult = gLogService.updateGymLog(gymLog);
 		gymService.updateGymRating(gymLog.getGym().getGymId());
 		return gymLogResult;

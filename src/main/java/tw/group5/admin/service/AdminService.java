@@ -187,6 +187,7 @@ public class AdminService {
 		return s;
 	}
 
+
 	// ------------前台---------------------
 	public boolean findAccount(String newUser) {
 		Optional<MemberBean> op = memberRepo.findByAccount(newUser);
@@ -258,6 +259,13 @@ public class AdminService {
 	        return true;
 	    }
 	     
+	}
+
+
+	
+	//where pairwilling =1; 1是要0是不要
+	public List<MemberDetail> findByPairWilling(int pairWilling){
+		return memberDetailRepo.findByPairWilling(pairWilling);
 	}
 
 }

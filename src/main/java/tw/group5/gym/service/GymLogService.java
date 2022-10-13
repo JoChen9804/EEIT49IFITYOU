@@ -1,6 +1,8 @@
 package tw.group5.gym.service;
 
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -13,6 +15,7 @@ import tw.group5.admin.model.MemberBean;
 import tw.group5.gym.model.GymBean;
 import tw.group5.gym.model.GymLog;
 import tw.group5.gym.model.GymLogRespository;
+import tw.group5.gym.model.GymLogCount;
 
 @Service
 @Transactional
@@ -45,7 +48,7 @@ public class GymLogService {
 	}
 	
 	//where gymNo=? 
-	public Set<GymLog> findByGym(GymBean gym){
+	public List<GymLog> findByGym(GymBean gym){
 		return gymLogRespository.findByGym(gym);
 	}
 	
@@ -54,6 +57,44 @@ public class GymLogService {
 		gymLogRespository.delete(gLog);
 	}
 	
+	//where memberId=? 
+	public List<GymLog> findByMember(MemberBean member){
+		return gymLogRespository.findByMember(member);
+	}
 	
+	//where gymNo=? and memberId<>?
+	public List<MemberBean> findPairTwoGymLogs(GymBean gym, MemberBean member){
+		Set<GymLog> gymLogsRaw = gymLogRespository.findPairTwoGymLogs(gym,member);
+		List<MemberBean> result = new ArrayList<MemberBean>();
+		for(GymLog glog:gymLogsRaw) {
+			if(glog.getMember().getMemberDetail().getPairWilling()==1) {
+				result.add(glog.getMember());
+			}
+		}
+		return result;
+	}
+	
+	//where favorite=1 and gymNo=?
+	public GymLogCount countGymLog(GymBean gym) {
+		List<GymLog> result = gymLogRespository.findByFavoriteAndGym(1, gym);
+		int male=0;
+		int female=0;
+		for(GymLog gl: result) {
+			System.out.println(gl.getMember().getMemberDetail().getGender());
+			if(gl.getMember().getMemberDetail().getGender().equals("男")) {
+				male++;
+			}else if(gl.getMember().getMemberDetail().getGender().equals("女")){
+				female++;
+			}
+		}
+		System.out.println("男"+male+"女"+female);
+		return new GymLogCount(result.size(),male,female);
+
+	}
+	
+	//count(*) where gymDel=1 and gymNo=?
+	public List<GymLog> findByGymDelAndGym(GymBean gym) {
+		return gymLogRespository.findByGymDelAndGym(1, gym);
+	}
 	
 }

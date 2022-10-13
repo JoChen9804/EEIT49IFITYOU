@@ -2,7 +2,9 @@
 
 .rating{
     border:none;
+    /*
     float:left;
+    */
 }
 
 .rating>input{

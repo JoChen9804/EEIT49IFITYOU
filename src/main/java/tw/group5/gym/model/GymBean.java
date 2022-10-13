@@ -48,14 +48,15 @@ public class GymBean implements Serializable{
 	@Column(name = "GYMRATING")
 	private Integer rating;
 	
-	@Column(name = "A_ACCOUNT")
-	private String admin;
+	@Column(name = "GYMPICTURE")
+	private String gymPicture;
+	
+	
 	
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "gym", cascade = CascadeType.ALL)
 	@Transient
 	private Set<GymLog> gymLogs = new HashSet<GymLog>();
-	
 	
 	public GymBean() {
 		
@@ -115,15 +116,6 @@ public class GymBean implements Serializable{
 		this.rating = rating;
 	}
 
-	public String getAdmin() {
-		return admin;
-	}
-
-	public void setAdmin(String admin) {
-		this.admin = admin;
-	}
-
-
 	public Set<GymLog> getGymLogs() {
 		return gymLogs;
 	}
@@ -133,6 +125,15 @@ public class GymBean implements Serializable{
 		this.gymLogs = favoriteGyms;
 	}
 
+
+	public String getGymPicture() {
+		return gymPicture;
+	}
+
+
+	public void setGymPicture(String gymPicture) {
+		this.gymPicture = gymPicture;
+	}
 
 	
 	
