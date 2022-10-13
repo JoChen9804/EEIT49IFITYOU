@@ -92,8 +92,8 @@ public class AdminService {
 
 	public List<String> memberTitleList() {
 		List<String> memberTitleList = new ArrayList<String>();
-		Collections.addAll(memberTitleList, "修改", "刪除", "狀態", "編號","照片", "帳號", "密碼", "姓名", "email", "性別", "生日", "手機",
-				"郵遞區號", "地址", "推薦碼", "推薦人代碼", "禁言", "配對意願", "創建日期", "最近登入日期");
+		Collections.addAll(memberTitleList, "修改", "刪除", "編號", "狀態","照片", "帳號", "密碼", "姓名", "email", "性別", "生日", "手機",
+				"推薦碼", "郵遞區號", "地址",  "推薦人代碼", "禁言", "配對意願", "創建日期", "最近登入日期");
 		return memberTitleList;
 	}
 
