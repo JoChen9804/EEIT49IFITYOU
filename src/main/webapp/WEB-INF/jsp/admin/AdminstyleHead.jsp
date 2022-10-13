@@ -95,9 +95,9 @@
 				<div id="collapseActivities" class="collapse"
 					aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
-						<a class="collapse-item" href="/group5/admin/statisticsmain.controller">活動數據</a>
-						<a class="collapse-item" href="/group5/admin/activitymain.controller">活動管理</a>
-						<a class="collapse-item" href="/group5/admin/vouchermain.controller">優惠券管理</a>
+						<a class="collapse-item" href="/group5/admin/statisticsmain.controller" style="border: none; background-color:transparent; font-size: 1.2rem; font-weight:550;">活動數據</a>
+						<a class="collapse-item" href="/group5/admin/activitymain.controller" style="border: none; background-color:transparent; font-size: 1.2rem; font-weight:550;">活動管理</a>
+						<a class="collapse-item" href="/group5/admin/vouchermain.controller" style="border: none; background-color:transparent; font-size: 1.2rem; font-weight:550;">優惠券管理</a>
 					</div>
 				</div></li>
 			<!-- Nav Item - Pages Collapse Menu æå¡ç®¡ç-->
@@ -118,12 +118,12 @@
 			<li class="nav-item"><a class="nav-link collapsed" href="#"
 				data-toggle="collapse" data-target="#collapsePair"
 				aria-expanded="true" aria-controls="collapseTwo"> <i
-					class="fas fa-fw fa-cog"></i> <span>配對</span>
+					class="fas fa-fw fa-cog"></i> <span style="border: none; background-color:transparent;font-size: 1.2rem; font-weight:550;">配對</span>
 			</a>
 				<div id="collapsePair" class="collapse" aria-labelledby="headingTwo"
 					data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
-						<a class="collapse-item" href="/group5/admin/pairing/pairMembers">配對資料</a>
+						<a class="collapse-item" href="/group5/admin/pairing/pairMembers" style="border: none; background-color:transparent; font-size: 1.2rem; font-weight:550;">配對資料</a>
 					</div>
 				</div>
 			</li>
