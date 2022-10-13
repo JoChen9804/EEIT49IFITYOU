@@ -15,9 +15,12 @@ import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 
 @Entity @Table(name = "mainpost")
 @Component
+@JsonIgnoreProperties(value = {"replyPostBean", "favoritePostBean"}) //不存在轉Json進行忽略
 public class MainPostBean {
     
     @Id @Column(name = "mainpostno")
@@ -37,7 +40,7 @@ public class MainPostBean {
     private String postPermission;      //論壇會員權限
     
     @Column(name = "postphoto")
-    private String postPhoto;           //會員照片        如何使用什麼型態???   
+    private String postPhoto;           //會員照片           
    
     @Column(name = "addtime")
     private String addtime;               //新增時間
@@ -57,17 +60,16 @@ public class MainPostBean {
     @Column(name = "replyaccount")
     private String replyAccount;         //最後回覆會員
     
-    
-    
-    //照片寫入 之後用不到了
-//    @OneToMany(fetch = FetchType.LAZY,mappedBy = "mainPostBean",cascade = CascadeType.ALL)
-//    private Set<PostImageBean> mainPostImages = new LinkedHashSet<PostImageBean>();
+    @Column(name = "ctr")
+    private int ctr;         //最後回覆會員
     
     
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "mainPostBean",cascade = CascadeType.ALL)
-    private Set<ReplyPostBean> ReplyPostBean = new LinkedHashSet<ReplyPostBean>();
+    private Set<ReplyPostBean> replyPostBean = new LinkedHashSet<ReplyPostBean>();
     
-
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "mainPostBean",cascade = CascadeType.ALL)
+    private Set<FavoritePostBean> favoritePostBean = new LinkedHashSet<FavoritePostBean>();
+    
     public MainPostBean() {
     }
 
@@ -157,5 +159,23 @@ public class MainPostBean {
     public void setP_image(String p_image) {
         this.p_image = p_image;
     }
+    public int getCtr() {
+        return ctr;
+    }
+    public void setCtr(int ctr) {
+        this.ctr = ctr;
+    }
     
+    public Set<ReplyPostBean> getReplyPostBean() {
+        return replyPostBean;
+    }
+    public void setReplyPostBean(Set<ReplyPostBean> replyPostBean) {
+        this.replyPostBean = replyPostBean;
+    }
+    public Set<FavoritePostBean> getFavoritePostBean() {
+        return favoritePostBean;
+    }
+    public void setFavoritePostBean(Set<FavoritePostBean> favoritePostBean) {
+        this.favoritePostBean = favoritePostBean;
+    }
 }

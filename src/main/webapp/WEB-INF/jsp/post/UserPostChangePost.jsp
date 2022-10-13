@@ -1,10 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" isErrorPage="true"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isErrorPage="true"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
+
+<script src="/group5/js/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <title>Insert title here</title>
 <style>
 .imgss {
@@ -34,38 +37,75 @@
 							<input type="hidden" name="mainPostNo" value="${queryContent.mainPostNo}">
 							<input type="hidden" name="account" value="${queryContent.account}">
                             <input type="hidden" name="likeNumber" value="${queryContent.likeNumber}">
+                            <input type="hidden" name="postPhoto" value="${queryContent.postPhoto}">
                             <input type="hidden" id="p_image" name="p_image" value="${queryContent.p_image}">
-                            <input type="hidden" name="likeNumber" value="${queryContent.replyAccount}">
-                            <input type="hidden" name="likeNumber" value="${queryContent.lastReplyTime}">
+                            <input type="hidden" name="replyAccount" value="${queryContent.replyAccount}">
+                            <input type="hidden" name="lastReplyTime" value="${queryContent.lastReplyTime}">
+                            <input type="hidden" name="ctr" value="${queryContent.ctr}">
 
 							<table class="img-fluid">
 								<thead>
 									<tr>
-										<th><label> <input type="radio"
-												class="revisepostType" name="postTypeName" value="公告"
-												required oninvalid="setCustomValidity('請輸入帳號')"
-												oninput="setCustomValidity('')">公告
-										</label> <label> <input type="radio" class="revisepostType"
-												name="postTypeName" value="分享" checked>分享
-										</label> <label> <input type="radio" class="revisepostType"
-												name="postTypeName" value="問題">問題
-										</label></th>
+										<th>
+										<c:choose>
+										
+										<c:when test="${queryContent.postTypeName=='飲食'}">
+										<label> <input type="radio"
+												class="revisepostType" name="postTypeName" 
+												value="飲食" checked>飲食</label> 
+										<label> <input type="radio" class="revisepostType"
+												name="postTypeName" value="分享" >分享</label> 
+										
+										<label> <input type="radio" class="revisepostType"
+												name="postTypeName" value="問題" >問題
+										</label>
+										</c:when>
+										
+										<c:when test="${queryContent.postTypeName=='分享'}">
+                                        <label> <input type="radio"
+                                                class="revisepostType" name="postTypeName" 
+                                                value="飲食">飲食</label> 
+                                        <label> <input type="radio" class="revisepostType"
+                                                name="postTypeName" value="分享" checked>分享</label> 
+                                        
+                                        <label> <input type="radio" class="revisepostType"
+                                                name="postTypeName" value="問題">問題
+                                        </label>
+                                        </c:when>
+                                        
+                                        <c:when test="${queryContent.postTypeName=='問題'}">
+                                        <label> <input type="radio"
+                                                class="revisepostType" name="postTypeName" 
+                                                value="飲食">飲食</label> 
+                                        <label> <input type="radio" class="revisepostType"
+                                                name="postTypeName" value="分享" >分享</label> 
+                                        
+                                        <label> <input type="radio" class="revisepostType"
+                                                name="postTypeName" value="問題" checked>問題
+                                        </label>
+                                        </c:when>
+										
+										
+										</c:choose>
+										
+										</th>
 									</tr>
 									<tr>
 										<th><div class="mb-3">
 												標題:<input type="text" name="title"
-													class="form-control revisetitle" value="${queryContent.title}" 
+													class="form-control revisetitle" id="floatingInputGrid" value="${queryContent.title}" 
 													placeholder="請輸入標題" oninvalid="setCustomValidity('請輸入標題')"
 													oninput="setCustomValidity('')">
+													<label style="color:#FF0000" for="floatingInputGrid"></label>
 											</div></th>
 									</tr>
 
 									<tr>
 										<th><div class="form-floating">
 												內容:
-												<textarea name="content" class="form-control revisecontent" cols="60" rows="10" placeholder="請輸入內容"
-													 required oninvalid="setCustomValidity('請輸入內容')"
+												<textarea name="content" id="floatingInputGrids" class="form-control revisecontent" cols="60" rows="10"
 													oninput="setCustomValidity('')">${queryContent.content}</textarea>
+													<label style="color:#FF0000" for="floatingInputGrids"></label>
 											</div></th>
 									</tr>
 									<tr>
@@ -86,13 +126,56 @@
 									
 									<tr>
                                         <th>
-									       <input type="submit" class="btn-solid-reg" value="修改送出">
+									       <input type="submit" class="btn-solid-reg modifySend" value="修改送出">
                                             <a class="btn-outline-reg" href="/group5/UserPostAll">取消</a>
 									   </th>
                                     </tr>
                                     
 								</thead>
 							</table>
+							        <script>
+						
+							        
+							        $("form").submit(function(event){
+							        	event.preventDefault();
+							        	  var revisecontent = $(".revisecontent").val();
+		                                     var revisetitle = $(".revisetitle").val();
+		                                     console.log(revisetitle);
+		                                     if(!revisetitle){
+		                                         $(".revisetitle").next().text("請輸入標題");
+		                                     }
+		                                     
+		                                     if(!revisecontent){
+		                                         $(".revisecontent").next().text("請輸入內容");
+		                                     } 
+		                                     if(revisetitle && revisecontent) {
+							        	
+							        	
+							             Swal.fire({
+							                 title: '確認是否修改送出?',
+							                 text: '備註:已發布的貼文修改會經過管理員審核!',
+							                 icon: 'warning',
+							                 cancelButtonText: '取消',
+							                 showCancelButton: true,
+							                 confirmButtonColor: '#3085d6',
+							                 cancelButtonColor: '#d33',
+							                 confirmButtonText: '送出'
+							             }).then((result) => {
+							                 if (result.isConfirmed) {
+							                     Swal.fire({
+							                         title: '修改送出成功',
+							                         icon: 'success'
+							                     }).then((result) => {
+							                    	 $(this).submit();
+							                     });
+							                 }
+							             });
+							        
+		                                     }
+							        
+							        });
+
+            </script>
                             </form>
 					</div>
 					<!-- end of text-container -->
@@ -111,9 +194,7 @@
 	</div>
 	<!-- end of basic-1 -->
 	<!-- end of details -->
-
-
-
+ 
 
 
 

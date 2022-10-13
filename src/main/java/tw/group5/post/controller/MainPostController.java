@@ -28,6 +28,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import tw.group5.admin.model.AdminBean;
+import tw.group5.admin.model.MemberBean;
+import tw.group5.admin.model.MemberDetail;
 import tw.group5.admin.service.AdminService;
 import tw.group5.post.model.MainPostBean;
 import tw.group5.post.model.ReplyPostBean;
@@ -37,7 +39,7 @@ import tw.group5.post.service.ReplyPostService;
 @Controller
 @RequestMapping("/group5/admin")
 @SessionAttributes(names= {"useradmin"})
-public class MainPostServlet {
+public class MainPostController {
 
     @Autowired
     private MainPostService mpService;
@@ -110,7 +112,20 @@ public class MainPostServlet {
             List<MainPostBean> query = firstImagePath(mpService.allPosts());
             
             List<ReplyPostBean> reportBean = rpService.findByReplyPermissionNotNull();
-            mav.addObject("reportBean", reportBean);
+            if(!reportBean.isEmpty()) {
+                mav.addObject("reportBean", reportBean);
+            }else {
+                mav.addObject("nowhistleblower","沒有檢舉名單");
+            }
+            
+            
+            List<MemberBean> bannedList = bannedList();
+            if(!bannedList.isEmpty()) {
+                mav.addObject("bannedList",bannedList);
+            }else {
+                mav.addObject("nolist","沒有禁言名單");
+            }
+            
             mav.addObject("query", query);
 
             
@@ -118,10 +133,33 @@ public class MainPostServlet {
             
             return statistics;
         }
-        
-        
         return mav;
     }
+    
+    //找待審核
+    @GetMapping("/PendingReviewAJAX") @ResponseBody
+    public  List<MainPostBean> pendingReview(MainPostBean mpBean) {
+        System.out.println("234234234234234");
+        
+        if (mpBean.getPostPermission() !=null && "待審核".equals(mpBean.getPostPermission())) {
+            List<MainPostBean> pending = firstImagePath(mpService.findByPostPermission(mpBean.getPostPermission()));
+            if(pending.isEmpty()) {
+                MainPostBean bean = new MainPostBean();
+                bean.setMainPostNo(0);
+                pending.add(bean);
+            }
+            return pending;
+        
+        }else if(mpBean.getPostPermission() !=null && "所有貼文".equals(mpBean.getPostPermission())){
+            List<MainPostBean> query = firstImagePath(mpService.allPosts());
+            return query;
+        }
+        
+        return null;
+    }
+    
+    
+    
     
     // 觀看ok
     @PostMapping("/MainPost.watch")
@@ -141,12 +179,16 @@ public class MainPostServlet {
     //審核
     @PostMapping("/auditPost") 
     public String audit(String auditNo) {
-        System.out.println(auditNo);
-        String[] mpNoList = auditNo.split(",");
-        System.out.println(mpNoList.length);
-        for(String mpNoLists : mpNoList) {
-            System.out.println(mpNoLists);
-            mpService.updatePermission("已發布",Integer.parseInt(mpNoLists));
+        System.out.println("審核審核審核審核審核審核審核審核"+auditNo);
+        
+        if( !"貼文編號".equals(auditNo)) {
+            System.out.println(auditNo);
+            String[] mpNoList = auditNo.split(",");
+            System.out.println(mpNoList.length);
+            for(String mpNoLists : mpNoList) {
+                System.out.println(mpNoLists);
+                mpService.updatePermission("已發布",Integer.parseInt(mpNoLists));
+            }
         }
         return "redirect:MainPost.all";
     }
@@ -159,8 +201,62 @@ public class MainPostServlet {
         //return "redirect:MainPost.all";
     }
     
+    //禁止發言
+    @ResponseBody
+    @PostMapping("/UserPostMute/{replyaccount}/{mute}")
+    public void userMute(@PathVariable("replyaccount")String replyaccount,
+                        @PathVariable("mute")int mute) {
+        MemberBean resultMember = amService.findByAccountMember(replyaccount);
+        MemberDetail memberDetail = resultMember.getMemberDetail();
+        memberDetail.setMute(mute);
+        resultMember.setMemberDetail(memberDetail);
+        amService.updateOne(resultMember);
+        System.out.println("fffffffffff"+memberDetail.getMute());
+    }
     
+    //禁止會員名單
+    //@ResponseBody
+    //@PostMapping("/BannedList")
+    public List<MemberBean> bannedList(){
+        System.out.println("有名單嗎???");
+        List<MemberBean> resultMember = amService.selectAllMember();
+        List<MemberBean> muteBean = new ArrayList<MemberBean>();
+       
+        for(MemberBean mBean : resultMember) {
+            if(mBean.getMemberDetail().getMute() == 1) {
+                muteBean.add(mBean);
+            }
+        }
+        
+    
+        
+       // System.out.println(muteBean.get(0).getId());
+        
+        return muteBean;
+    }
+    
+    
+    
+    // 刪除貼文
+    @DeleteMapping("/MainPostingServlet")
+    public String deleteDainPost(Integer deletepost) {
+        mpService.deleteById(deletepost);
+        return "redirect:MainPost.all";
+    }
+    
+    // 刪除回覆
+    @DeleteMapping("/ReplyPost") @ResponseBody
+    public void deleteReplyPostAJAX(ReplyPostBean rpBean) {
+        rpService.deleteById(rpBean.getReplyNo());
+    }
 
+    // 撤銷檢舉
+    @PutMapping("/RevokeReport") @ResponseBody
+    public void revokeReplyPostAJAX(ReplyPostBean rpBean) {
+        ReplyPostBean selectById = rpService.selectById(rpBean.getReplyNo());
+        selectById.setReplyPermission(null);
+        rpService.update(selectById);
+    }
     
     ////////////////////////////////////下面已搬到前台/////////////////////////
     
@@ -241,12 +337,6 @@ public class MainPostServlet {
 
 
 
-    // 刪除 ok
-    @DeleteMapping("/MainPostingServlet")
-    public String deleteDainPost(Integer deletepost) {
-        mpService.deleteById(deletepost);
-        return "redirect:MainPost.all";
-    }
 
     // 跳到修改頁面ok
     @PostMapping("/MainPostingServlet")
@@ -468,61 +558,41 @@ public class MainPostServlet {
     
     public ModelAndView statistics(List<MainPostBean> listmpBean,ModelAndView mav) {
         //貼文類型
-        int share = 0 ,announcement = 0 , question = 0;
-        
+        int share = 0 ,diet = 0 , question = 0;
         //貼文每月比數
         int jan = 0, feb =0, mar=0, apr=0, may=0, jun=0, jul=0, aug=0, sep=0, oct=0, nov=0, dec=0;
-        
-  
-        
-        
-        
+
         for(MainPostBean oneBean : listmpBean) {
             if("分享".equals(oneBean.getPostTypeName())) {
                 share++;
             }
-            if("公告".equals(oneBean.getPostTypeName())) {
-                announcement++;
+            if("飲食".equals(oneBean.getPostTypeName())) {
+                diet++;
             }
             if("問題".equals(oneBean.getPostTypeName())) {
                 question++;
             }
             
-            
             switch (oneBean.getAddtime().substring(5, oneBean.getAddtime().indexOf("-",oneBean.getAddtime().indexOf("-")+1))) {
-            case  "1": jan ++; break;
-            case  "2": feb ++; break;
-            case  "3": mar ++; break;
-            case  "4": apr ++; break;  
-            case  "5": may ++; break; 
-            case  "6": jun ++; break; 
-            case  "7": jul ++; break; 
-            case  "8": aug ++; break; 
-            case  "9": sep ++; break;
-            case "10": oct ++; break;
-            case "11": nov ++; break;
-            case "12": dec ++; break;
-            default: break;
+                case  "1": jan ++; break;
+                case  "2": feb ++; break;
+                case  "3": mar ++; break;
+                case  "4": apr ++; break;  
+                case  "5": may ++; break; 
+                case  "6": jun ++; break; 
+                case  "7": jul ++; break; 
+                case  "8": aug ++; break; 
+                case  "9": sep ++; break;
+                case "10": oct ++; break;
+                case "11": nov ++; break;
+                case "12": dec ++; break;
+                default: break;
             }
-            
-
-        
-            if ("10".equals(oneBean.getAddtime().substring(5, oneBean.getAddtime().indexOf("-",oneBean.getAddtime().indexOf("-")+1))) ) {
-                
-                System.out.println("===" + oneBean.getAddtime().substring(5, oneBean.getAddtime().indexOf("-",oneBean.getAddtime().indexOf("-")+1)));
-//                oneBean.setP_image(oneBean.getP_image().substring(0, (oneBean.getP_image().indexOf(","))));
-            }
-            
-            
-            
-            
-            
-            System.out.println(oct);
-        
+          
         }
         //貼文類型
         mav.addObject("share",share);
-        mav.addObject("announcement",announcement);
+        mav.addObject("diet",diet);
         mav.addObject("question",question);
         
         mav.addObject("jan",jan);
@@ -542,126 +612,6 @@ public class MainPostServlet {
     }
     
     
-    
-    
-    
-    
-    
-    
-    
-//    //計算有多少帳號按鑽
-//    public Map<String,String> quantityLike(String likes) {
-//        Map<String,String> map = new  HashMap<>();
-//        String[] oldlikes = likes.split(",");
-//        
-//        int i = 0; // 找到一樣的就+1
-//        for (String like : oldlikes) {
-//            
-//            if (memberAccount.equals(like)) {
-//                i++;
-//                List<String> list = new ArrayList<String>(Arrays.asList(oldlikes));
-//                list.remove(memberAccount);
-//                String [] newStr = new String [list.size()];
-//                list.toArray(newStr);
-//                String newlinkes = "";
-//                
-//                for(String oneStr : newStr) {
-//                    newlinkes += oneStr+','; 
-//                }
-//                
-//                String[] newlinkess = newlinkes.split(",");
-//                map.put("writeAccount",newlinkes);
-//                
-//                if(!"".equals(likes) && likes!=null ) {
-//                    map.put("quantityLike",String.valueOf(newlinkess.length));
-//                }else {
-//                    map.put("quantityLike","0");
-//                }
-//   
-//                break;
-//            }
-//        }
-//        if (i == 0) {
-//            String newlinkes = likes + memberAccount + ",";
-//            String[] newlinkess = newlinkes.split(",");
-//            map.put("writeAccount",newlinkes);
-//            map.put("quantityLike",String.valueOf(newlinkess.length));
-//            //queryOne.setLikeNumber(newLike);
-//            //mpService.update(queryOne);
-//        }
-//        
-//        
-//        return map;
-//    }
-    
-    
-    
-    
-    
-    
-    
-    
-    // 測試按讚紀錄 之後改成帳號串起來算陣列數量
-   // @PutMapping("/Likes")
-    public ModelAndView Likes(MainPostBean mpBean, ReplyPostBean rpBean) {
-        MainPostBean queryOne = mpService.selectById(mpBean.getMainPostNo());
-        // 改成會員帳號抓取
-        String[] oldlikes = queryOne.getLikeNumber().split(",");
-
-        int i = 0; // 找到一樣的就+1
-        for (String like : oldlikes) {
-            System.out.println(like);
-            if (like.equals(memberAccount)) {
-                i++;
-                break;
-            }
-        }
-        if (i == 0) {
-            String newLike = queryOne.getLikeNumber() + memberAccount + ",";
-            queryOne.setLikeNumber(newLike);
-            mpService.update(queryOne);
-        }
-
-        ModelAndView mavMpost = takeOutmpBean(queryOne,postDetails);
-        
-        List<ReplyPostBean> allReply = rpService.allReply(mpBean.getMainPostNo());
-        if(!allReply.isEmpty()) {
-            ModelAndView mav = takeOutrpBean(allReply,mavMpost);
-            return mav;
-        }
-        return mavMpost;
-    }
-
-    
-   // @PutMapping("/ReplyLikes")
-    public ModelAndView ReplyLikes(MainPostBean mpBean, ReplyPostBean rpBean) {
-       
-        MainPostBean queryOne = mpService.selectById(mpBean.getMainPostNo());
-        ModelAndView mavmPost = takeOutmpBean(queryOne,postDetails);
-
-        ReplyPostBean replyPostBean = rpService.selectById(rpBean.getReplyNo());
-        String[] oldReplylikes = replyPostBean.getReplyLikeNumber().split(",");
-
-        int j = 0; // 找到一樣的就+1
-        for (String likeReply : oldReplylikes) {
-            if (likeReply.equals(memberAccount)) {
-                j++;
-                break;
-            }
-        }
-        if (j == 0) {
-            String newLikeReply = replyPostBean.getReplyLikeNumber() + memberAccount + ",";
-            replyPostBean.setReplyLikeNumber(newLikeReply);
-            rpService.update(replyPostBean);
-        }
-
-        List<ReplyPostBean> allReply = rpService.allReply(mpBean.getMainPostNo());
-        ModelAndView mav = takeOutrpBean(allReply,mavmPost);
-
-        return mav;
-    }
-    
-
 
     // 觀看 測試
     //@GetMapping("/MainPost.watch2/{id}")

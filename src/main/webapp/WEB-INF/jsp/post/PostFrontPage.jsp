@@ -44,22 +44,35 @@ fieldset {
     border-radius: 15px;
     opacity: 0.85;
     margin: auto;
-    background: #f7f4dd;
-}   
+/*     background: #f7f4dd; */
+} 
+
+.imgpostdetails {
+    width: 300px;
+    padding: 5px 5px 5px 5px;
+    margin: 10px;
+}  
    
 .imgfront {
         width: 150px;
         height: 120px;
         padding: 2px 2px 2px 2px;
         margin: 2px;
-}   
+}
+
+.imgheadstickers {
+        width: 150px;
+        height: 120px;
+        padding: 2px 2px 2px 2px;
+        margin: 2px;
+}
  
 .table1 {
     width: 800px;
     table-layout: fixed;
     margin-left: auto;
     margin-right: auto;
-    background-color: #f7f4dd;
+/*     background-color: #f7f4dd; */
     top: -100px;
     left: 100px;
 }
@@ -68,29 +81,36 @@ fieldset {
     width: 200px;
     text-align: center;
     vertical-align: bottom;
-    background-color: #f7f4dd;
+/*     background-color: #f7f4dd; */
 }
 
 .column2 {
     width: 600px;
     text-align: left;
     vertical-align: bottom;
-    background-color: #f7f4dd;
+/*     background-color: #f7f4dd; */
 }
 
 .column3 {
     width: 200px;
     text-align: center;
     vertical-align: top;
-    background-color: #f7f4dd;
+/*     background-color: #f7f4dd; */
 }
 
 .column4 {
     width: 700px;
     text-align: center;
-    background-color: #f7f4dd;
-}  
-   
+/*     background-color: #f7f4dd; */
+}
+.content {
+/*     background-color: #f7f4dd; */
+    word-wrap: break-word;
+}
+.center {
+    text-align: center;
+}
+ 
     </style>
       
    </HEAD>
@@ -101,7 +121,8 @@ fieldset {
 <!--      <a class="btn-solid-reg " href="/group5/admin/AllPostStatus">貼文管理</a> -->
     
     <!-- Features -->
-    <div id="features" class="tabs">
+            <!--     class="tabs" -->
+    <div id="features" class="">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -124,14 +145,21 @@ fieldset {
                             <a class="nav-link mainpost" id="nav-tab-2" data-toggle="tab" href="#tab-2" role="tab"
                                 aria-controls="tab-2" aria-selected="false"><i class="fas fa-list"></i>貼文</a>
                         </li>
-                        </li>
+                        
                         <li class="nav-item">
                             <a class="nav-link" id="nav-tab-3" data-toggle="tab" href="#tab-3" role="tab"
                                 aria-controls="tab-3" aria-selected="false"><i
                                     class="fas fa-envelope-open-text"></i>檢舉</a>
+                        </li>
+                           <li class="nav-item">
+                            <a class="nav-link" id="nav-tab-3" data-toggle="tab" href="#tab-4" role="tab"
+                                aria-controls="tab-4" aria-selected="false"><i
+                                    class="fas fa-envelope-open-text"></i>禁言名單</a>
+                        </li>
+                        
                     </ul>
                     <!-- end of tabs links -->
-
+ 
                     <!-- Tabs Content -->
                     <div class="tab-content" id="argoTabsContent">
 
@@ -189,10 +217,10 @@ fieldset {
                                                             </div>
                                                             <div class="mt-4 text-center small">
                                                                 <span class="mr-2">
-                                                                    <i class="fas fa-circle text-primary"></i>公告
-                                                                    ${announcement}
-                                                                    <input type="hidden" class="announcement"
-                                                                        value="${announcement}">
+                                                                    <i class="fas fa-circle text-primary"></i>飲食
+                                                                    ${diet}
+                                                                    <input type="hidden" class="diet"
+                                                                        value="${diet}">
                                                                 </span>
                                                                 <span class="mr-2">
                                                                     <i class="fas fa-circle text-success"></i>分享
@@ -233,17 +261,113 @@ fieldset {
                                                 style="border: none; background-color: #1cc88a; color: white" /></span>
                                         </form>
 
-                                        <!--    <form action="MainPost.all" method="GET"> -->
-                                        <!--        <input type="submit" class="btn btn-outline-primary" name="postPermission" value="待審核"> -->
-                                        <!--    </form> -->
+<!--                                            <form action="MainPost.all" method="GET"> -->
+<!--                                                <input type="submit" class="btn btn-outline-primary" name="postPermission" value="待審核"> -->
+<!--                                            </form> -->
+<!--                                            <form action="MainPost.all" method="GET"> -->
+                                                <button type="submit" class="btn btn-info btn-icon-split pendingreview" value="所有貼文">
+                                                <span class="icon text-white-50"><i class="fas fa-info-circle"></i>
+                                                 </span><span class="text">所有貼文</span></button>
+<!--                                              </form> -->
+
+
+                                         <button type="submit" class="btn btn-info btn-icon-split pendingreview" value="待審核">
+                                          <span class="icon text-white-50"><i class="fas fa-info-circle"></i>
+                                             </span><span class="text">待審核</span></button>
+                                             <script>
+                                           $(".pendingreview").on('click', function(event){
+                                        	   var postPermission = $(this).val();
+                                        	  console.log(postPermission);
+                                        	  $("#table_ids").empty("");
+                                        	   $.ajax({
+                                                     type: "GET",
+                                                     url: "/group5/admin/PendingReviewAJAX",
+                                                     data: {postPermission:postPermission},
+                                                     dataType : 'json',
+                                                     success: function(data){
+                                                    	 console.log(data);
+                                                        
+                                                             var table = $("#table_ids");
+                                                             
+                                                             table.append(` <thead>
+                                                                     <tr>
+                                                                     <th>選取
+             <!--                                                         <br>全選<input class="delete" type="checkbox" -->
+             <!--                                                                 onclick="checkAll()" id="checkAll"> -->
+                                                                             </th>
+                                                                     <th>貼文編號</th>
+                                                                     <th>圖片</th>
+                                                                     <th>類型</th>
+                                                                     <th>標題</th>
+                                                                     <th>會員<br>發布日期</th>
+                                                                     <th>會員<br>最後回覆</th>
+                                                                     <th>狀態</th>
+                                                                     <th>操作</th>
+                                                                 </tr>
+                                                                 </thead>`);
+                                                             $.each(data, function(i,n){
+                                                                 if(n.mainPostNo == 0){
+                                                                     $('#table_ids').empty("");
+                                                                     $('#table_ids').append(`<h3 class='center'>查無紀錄</h3>`);
+                                                                 }else{
+                                                                 
+                                                                 var title = n.title;
+                                                                 
+                                                                 var tr ="<tbody><tr class='content'>" +
+                                                                 "<td class='align-middle'><input class='delete' type='checkbox'></td>" +
+                                                                 "<td class='align-middle'>" + n.mainPostNo +"</td>" +
+                                                                 "<td class='align-middle'><img class='imgfront' src='" + n.p_image + "'></td>" +
+                                                                 "<td class='align-middle'>" + [n.postTypeName] + "</td>" +
+                                                                 "<td class='align-middle'>" + n.title + "</td>" +
+                                                                 "<td class='align-middle'>" + n.account +"<br />" +n.addtime +"</td>" +
+                                                                 "<td class='align-middle'>" + n.replyAccount +"<br />" + n.lastReplyTime + "</td>" +
+                                                                 "<td class='align-middle'>" + n.postPermission+ "</td>" +
+                                                                 "<td class='align-middle'><input type='hidden' name='deletepost' class='postid' value='"+ n.mainPostNo + "'>" +
+                                                                 
+                                                                 "<form action='MainPost.watch' class='btn btn-info btn-icon-split' method='POST'>"  +
+                                                                 
+                                                                 "<span class='icon text-white-50'><i class='fas fa-info-circle'></i></span>"  +
+                                                                         "<input type='hidden' name='mainPostNo' value='"+ n.mainPostNo +"'>"  +
+                                                                         "<button type='submit' class='btn btn-info btn-icon-split' value='觀看'>"  +
+                                                                             "<span class='text'>觀看</span></button></form>"  +
+
+                                  
+                                                                 "<input type='hidden' name='xreason' value=''>"  +
+                                                                 "<input type='hidden' name='mainPostNo' value='"+ n.mainPostNo +"'>"  +
+                                                                 "<button type='submit' class='btn btn-warning btn-icon-split turnDown' value='駁回'>"  +
+                                                                 "<span class='icon text-white-50'><i class='fas fa-exclamation-triangle'></i></span>"  +
+                                                                 "<span class='text'>駁回</span></button>" 
+                                                                 
+                                                                            ;
+                                                                 table.append(tr);
+                                                                 
+                                                                 }
+                                                             });
+                                                     
+                                                             
+                                                     
+                                                     
+                                                     }
+                                                 
+                                        	   
+                                        	   
+                                        	   });
+                                        	   
+                                        	   
+                                               
+                                           });
+                                           </script>
+                                  
 
                                         <div class="table-responsive">
-                                            <table class="table table-bordered" id="table_id"
+                                            <table class="table table-bordered" id="table_ids"
                                                 class="compact hover stripe">
                                                 <thead>
                                                     <tr>
-                                                        <th>選取<br>全選<input class="delete" type="checkbox"
-                                                                onclick="checkAll()"></th>
+                                                        <th>選取
+<!--                                                         <br>全選<input class="delete" type="checkbox" -->
+<!--                                                                 onclick="checkAll()" id="checkAll"> -->
+                                                                </th>
                                                         <th>貼文編號</th>
                                                         <th>圖片</th>
                                                         <th>類型</th>
@@ -300,7 +424,7 @@ fieldset {
                                         </div>
                                        
                                         <script>
-                                            $('#table_id').dataTable({})
+                                            $('#table_ids').dataTable({})
                                             </script>
                              
 
@@ -322,10 +446,10 @@ fieldset {
                                                 class="compact hover stripe">
                                                 <thead>
                                                     <tr>
-                                                        <th>選取<br>全選<input class="delete" type="checkbox"
-                                                                onclick="checkAll()"></th>
+                                                        <th>選取<br>全選<input class="delete1" type="checkbox"
+                                                                onclick="checkAlls()"></th>
                                                         <th>回覆編號</th>
-                                                        <th>標題</th>
+                                                        <th>內容</th>
                                                         <th>會員<br>回覆時間</th>
                                                         <th>檢舉原因</th>
                                                         <th>操作</th>
@@ -335,10 +459,10 @@ fieldset {
                                                     <c:forEach var="report" items="${reportBean}">
 
                                                         <tr class="content">
-                                                            <td class="align-middle"><input class="delete"
-                                                                    type="checkbox"></td>
+                                                            <td class="align-middle"><input class="delete1" name="delete1" type="checkbox"></td>
                                                             <td class="align-middle">${report.replyNo}</td>
-                                                            <td class="align-middle replyContent">${report.replyContent}</td>
+                                                            
+                                                            <td class="align-middle card-text">${report.replyContent}</td>
                                                             <td class="align-middle replyAccount">
                                                                 ${report.replyAccount}<br />${report.replyTime}</td>
                                                             <td class="align-middle">${report.replyPermission}</td>
@@ -349,42 +473,134 @@ fieldset {
                                                                 <span class="icon text-white-50"><i class="fas fa-info-circle"></i></span>
                                                                 <span class="text">觀看</span></a>
                                                                 
-                                                           
-
-                                                                <input type="hidden" value="${report.r_image}">
-                                                                <input type="hidden" value="${report.replyNo}">
-                                                                <button type="submit" class="btn btn-warning btn-icon-split" value="刪除">
+                                                                <input type="hidden" class="replyPhoto" value="${report.replyPhoto}">
+                                                                <input type="hidden" class="replyContent" value="${report.replyContent}">
+                                                                <input type="hidden" class="replyTime" value="${report.replyTime}">
+                                                                <input type="hidden" class="replyaccount" value="${report.replyAccount}">
+                                                                <input type="hidden" class="reportimage" value="${report.r_image}">
+                                                                <input type="hidden" class="reportreplyNo" value="${report.replyNo}">
+                                                                
+                                                                <button type="submit" class="btn btn-warning btn-icon-split deletereply" value="刪除">
                                                                 <span class="icon text-white-50"><i class="fas fa-exclamation-triangle"></i></span>
                                                                 <span class="text">刪除</span></button>
+                                                                
+                                                                <button type="submit" class="btn btn-secondary btn-icon-split revoke" value="撤銷">
+                                                                <span class="icon text-white-50"><i class="fas fa-arrow-right"></i></span>
+                                                                <span class="text">撤銷</span></button>
                                                             </td>
 
                                                         </tr>
                                                     </c:forEach>
                                                 </tbody>
                                             </table>
-
-                                                        <script>
-                                                        
-                                                        $(".viewreplies").on('click', function(event){
-                                                        	let replyContent = $(this).parent().siblings(".replyContent").text();
-                                                        	let replyAccount = $(this).parent().siblings(".replyAccount").text();
-                                                        	$(".Lightbox3content").text(replyContent);
-                                                        	$(".Lightbox3account").text(replyAccount);
-                                                        	
-                                                        	
-                                                        	console.log(replyAccount);
-                                                        	
-                                                        	
-                                                        });
-                                                        
-                                                        </script>
-
-
+                                                    <h3 class='center'>${nowhistleblower}</h3>
                                     </div> <!-- end of text-container -->
                                 </div> <!-- end of col -->
                             </div> <!-- end of row -->
                         </div> <!-- end of tab-pane -->
                         <!-- end of tab -->
+                        
+                        
+                                                <!-- Tab -->
+                        <div class="tab-pane fade" id="tab-4" role="tabpanel" aria-labelledby="tab-4">
+                            <div class="row">
+                                
+                                <div class="col-lg-12">
+                                    <div class="text-container">
+                                    
+                                             <table class="table table-bordered bannedlist" id="table_id" 
+                                                class="compact hover stripe">
+                                                
+                                                <thead>
+                                                    <tr>
+                                                        <th>會員編號</th>
+                                                        <th>會員</th>
+                                                        <th>照片</th>
+                                                        <th>操作</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <c:forEach var="banned" items="${bannedList}">
+
+                                                        <tr class="content">
+                                                            <td class="align-middle">${banned.id}</td>
+                                                            <td class="align-middle">${banned.memberAccount}</td>
+                                                            <td class="align-middle"><img class="imgfront"
+                                                                    src="${banned.memberPhoto}"></td>
+                                                            <td class="align-middle">
+
+                                                                <input type="hidden" class="replyPhoto" value="${banned.memberAccount}">
+                                                                <button type="submit" class="btn btn-secondary btn-icon-split replyspeech" value="回復發言">
+                                                                <span class="icon text-white-50"><i class="fas fa-arrow-right"></i></span>
+                                                                <span class="text">回復發言</span></button>
+                                                            </td>
+                                                        </tr>
+                                                    </c:forEach>
+                                                </tbody>
+                                            </table>
+                                                    <h3 class='center'>${nolist}</h3>
+                                    </div> <!-- end of text-container -->
+                                </div> <!-- end of col -->
+                            </div> <!-- end of row -->
+                        </div> <!-- end of tab-pane -->
+                        <!-- end of tab -->
+                                           <script>
+                                           $(".replyspeech").on('click', function(event){
+                                               console.log("324432");
+                                               var replyaccount = $(this).prev().val();
+                                               console.log(replyaccount);
+                                              
+                                               Swal.fire({
+                                                   title: '確定回復'+replyaccount+'發言?',
+                                                   text: "",
+                                                   icon: 'warning',
+                                                   showCancelButton: true,
+                                                   confirmButtonColor: '#3085d6',
+                                                   cancelButtonColor: '#d33',
+                                                   confirmButtonText: '刪除',
+                                                   cancelButtonText: '取消',
+                                                   
+                                                 }).then((result) => {
+                                                     if (result.isConfirmed) {
+                                                    	 replySspeech(replyaccount)
+                                                         
+                                                         $(this).siblings().parent().parent().remove();
+                                                         
+                                                         Swal.fire(
+                                                                 '已回復'+replyaccount+'發言'
+                                                         ).then((result)=>{
+                                                             if(result.isConfirmed){
+                                                                 //location.reload();
+                                                             }
+                                                         });
+                                               
+                                                       }
+                                                     });
+                                               
+                                           });
+                    
+                    
+                    
+                    function replySspeech(replyaccount){
+                        var mute = 0;
+                        $.ajax({
+                            type: "Post",
+                            url: "/group5/admin/UserPostMute/"+ replyaccount + "/" + mute,
+                            success: function(){
+                                var text ='已對'+ replyaccount + '回復發言!';
+                                Swal.fire(
+                                        text
+                                ).then((result)=>{
+                                    if(result.isConfirmed){
+                                    }
+                                });
+                                
+                            }
+                        });
+                    };
+                    
+                    
+                    </script>
 
                     </div> <!-- end of tab content -->
                     <!-- end of tabs content -->
@@ -396,271 +612,18 @@ fieldset {
     <!-- end of features -->
 
 
-    <!-- Details Lightboxes -->
-    <!-- Details Lightbox 1 -->
-    <div id="details-lightbox-1" class="lightbox-basic zoom-anim-dialog mfp-hide">
-        <div class="container">
-            <div class="row">
-                <button title="Close (Esc)" type="button" class="mfp-close x-button">×</button>
-                <div class="col-lg-8">
-                    <div class="image-container">
-                        <img class="img-fluid" src="images/details-lightbox.png" alt="alternative">
-                    </div> <!-- end of image-container -->
-                </div> <!-- end of col -->
-                <div class="col-lg-4">
 
-
-
-
-                    <h1>維修中~~~~~~~~~~~~~~</h1>
-
-
-
-                    <a class="btn-solid-reg mfp-close" href="sign-up.html">SIGN UP</a> <a
-                        class="btn-outline-reg mfp-close as-button" href="#screenshots">BACK</a>
-                </div> <!-- end of col -->
-            </div> <!-- end of row -->
-        </div> <!-- end of container -->
-    </div> <!-- end of lightbox-basic -->
-    <!-- end of details lightbox 1 -->
-
-    <!-- Details Lightbox 2 -->
-    <div id="details-lightbox-2" class="lightbox-basic zoom-anim-dialog mfp-hide">
-        <div class="container">
-            <div class="row">
-                <button title="Close (Esc)" type="button" class="mfp-close x-button">×</button>
-                <div class="col-lg-8">
-                    <div class="image-container">
-                        <img class="img-fluid" src="images/details-lightbox.png" alt="alternative">
-                    </div> <!-- end of image-container -->
-                </div> <!-- end of col -->
-                <div class="col-lg-4">
-                    <h3>Campaign Monitoring</h3>
-                    <hr>
-
-
-
-
-
-                    <h1>維修中~~~~~~~~~~~~~~</h1>
-
-
-
-
-
-                    <a class="btn-solid-reg mfp-close" href="sign-up.html">SIGN UP</a> <a
-                        class="btn-outline-reg mfp-close as-button" href="#screenshots">BACK</a>
-                </div> <!-- end of col -->
-            </div> <!-- end of row -->
-        </div> <!-- end of container -->
-    </div> <!-- end of lightbox-basic -->
-    <!-- end of details lightbox 2 -->
-
-    <!-- Details Lightbox 3 -->
-    <div id="details-lightbox-3" class="lightbox-basic zoom-anim-dialog mfp-hide">
-        <div class="container">
-            <div class="row">
-                <button title="Close (Esc)" type="button" class="mfp-close x-button">×</button>
-            
-                <div class="col-lg-12">
-
-                    <h1>回覆觀看</h1>
-                    
-			  <table class="table-bordered table1">
-			    <tr>
-			        <td class="column3 Lightbox3account">
-			            帳號:${queryOne.account}<br>
-			            <img class="imgheadstickers Lightbox3postPhoto"
-			                src="${queryOne.postPhoto}">
-			        </td>
-			        <td>
-			            <div class="content">
-			                <P class="Lightbox3addtime">回覆時間:${queryOne.addtime}</P>
-			                <p class="content Lightbox3content">${queryOne.content}</p>
-			
-			                <c:forEach var="image"
-			                    items="${allImages}">
-			                    <img class="imgpostdetails"
-			                        src="${image}">
-			                </c:forEach>
-			
-			               
-			
-			            </div>
-			        </td>
-			    </tr>
-			
-			</table>
-                    
-                    
-                     <br> <input type="hidden"
-                                id="mainPostNo"
-                                name="mainPostNo"
-                                value="${queryOne.mainPostNo}">
-                            <button type="submit"
-                                name="likenumber"
-                                id="likemainpost"
-                                class="btn btn-outline-danger">讚${queryOne.likeNumber}</button>
-                    
-                    
-
-
-
-                    <a class="btn-solid-reg mfp-close" href="sign-up.html">SIGN UP</a> <a
-                        class="btn-outline-reg mfp-close as-button" href="#screenshots">BACK</a>
-                </div> <!-- end of col -->
-            </div> <!-- end of row -->
-        </div> <!-- end of container -->
-    </div> <!-- end of lightbox-basic -->
-    <!-- end of details lightbox 3 -->
-    <!-- end of details lightboxes -->
-
-
-    <!-- Details -->
-    <div id="details" class="basic-1">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="text-container">
-
-
-
-
-                        <h1>維修中~~~~~~~~~~~~~~</h1>
-
-
-
-                        <a class="btn-solid-reg page-scroll" href="sign-up.html">SIGN UP</a>
-                    </div> <!-- end of text-container -->
-                </div> <!-- end of col -->
-                <div class="col-lg-6">
-                    <div class="image-container">
-                        <img class="img-fluid" src="images/details.png" alt="alternative">
-                    </div> <!-- end of image-container -->
-                </div> <!-- end of col -->
-            </div> <!-- end of row -->
-        </div> <!-- end of container -->
-    </div> <!-- end of basic-1 -->
-    <!-- end of details -->
-     
-     
-       
-       
-       
-<!--    <fieldset> -->
-<!--     <h1 ALIGN=CENTER>貼文首頁</h1> -->
-    
-<!--      <table class="table table-bordered" class="compact hover stripe"> -->
-<!--           <form name="querypostbut" action="MainPost.all" method="GET"> -->
-<!--            <tr> -->
-<!--             <th>   -->
-<!--             <label for="dataa" class="t1">主貼文編號:</label> -->
-<!--             <input type="TEXT"  id=dataa name="mainPostNo"  -->
-<!--             required oninvalid="setCustomValidity('請輸入貼文編號id')" oninput="setCustomValidity('')"><BR></th> -->
-<!--             <th> -->
-<!--             <input type="submit" class="btn btn-outline-primary" name="inquireId" value="查詢"> -->
-<!--            </th> -->
-<!--         </tr> -->
-<!--              </form>  -->
-         
-<!--                <form name="likequerypostbut" action="MainPost.all" method="GET"> -->
-<!--            <tr> -->
-<!--              <th>   -->
-<!--             <label for="dataa1" class="t1">搜尋:</label> -->
-<!--             <input type="TEXT" id=dataa1 name="title"  -->
-<!--             required oninvalid="setCustomValidity('請輸入標題名稱')" oninput="setCustomValidity('')"/><BR></th> -->
-<!--             <th> -->
-<!--             <input type="submit" class="btn btn-outline-primary"  name="likequire" value="查詢標題" > -->
-<!--            </th> -->
-<!--             </tr> -->
-<!--             </form> -->
-<!--     </table> -->
-  
-<!--    <form action="MainPost.return" method="GET"> -->
-<!--         <input type="submit" class="btn btn-outline-primary"  name="returns" value="所有貼文" > -->
-<!--    </form> -->
-<!--    <div class="card-body"> -->
-<!--    <div class="table-responsive"> -->
-<!--     <table class="table table-bordered" id="table_id" class="compact hover stripe"> -->
-<!--     <thead> -->
-<!--         <tr> -->
-<!--         <th>圖片</th> -->
-<!--         <th>貼文id</th> -->
-<!--         <th>類型</th> -->
-<!--         <th>標題</th> -->
-<!--         <th>會員帳號</th> -->
-<!--         <th>發布日期</th> -->
-<!--         <th colspan="3">編輯</th> -->
-<!--         </tr> -->
-<!--     </thead> -->
-<%--     <c:forEach var="allmpbs" items="${query}"> --%>
-<!--         <tbody> -->
-<!--          <tr> -->
-<%--             <td><img class="img" src="${allmpbs.p_image}"></td> --%>
-<%--             <td>${allmpbs.mainPostNo}</td> --%>
-<%--             <td>${allmpbs.postTypeName}</td> --%>
-<%--             <td>${allmpbs.title}</td> --%>
-<!--             <td><a href="/MainPost.watch2/${allmpbs.mainPostNo}">${allmpbs.title}</a></td>             -->
-<%--             <td>${allmpbs.account}</td> --%>
-<%--             <td>${allmpbs.addtime}</td> --%>
-<!--             <td> -->
-<!--                 <form name="sendForm" action="MainPost.watch" method="POST"> -->
-<%--                     <input type="hidden" name="watch" value="${allmpbs.mainPostNo}"> --%>
-<!--                      <button type="submit" name="watch1" value="${allmpbs.mainPostNo}">1111觀看</button> -->
-<!--                     <input type="submit" class="btn btn-outline-success" value="觀看">  -->
-<!--                 </form> -->
-<!--                 </td> -->
-<!--                 <td> -->
-<!--                 <form name="AddForm" action="MainPostingServlet" method="POST">  -->
-<!--                 <input type="hidden" name="_method" value="DELETE"> -->
-<%--                 <input type="hidden" name="deletepost" value="${allmpbs.mainPostNo}"> --%>
-<%--                 <input type="submit" id="${allmpbs.mainPostNo}" class="btn btn-outline-danger" value="刪除" >  --%>
-<!--                 <script src="/group5/js/jquery.min.js"></script> -->
-<!-- 				<script> -->
-<%-- // 				var submitBtn = document.getElementById("${allmpbs.mainPostNo}"); --%>
-<!-- // 				submitBtn.onclick = function (event) { -->
-<!-- // 					var r=confirm("確認是否刪除"); -->
-<!-- // 					if (r==true){ -->
-<!-- // 						$(this).parent().submit(); -->
-<!-- // 						return true; -->
-<!-- // 				    } -->
-<!-- // 				    else{ -->
-<!-- // 				          return false; -->
-<!-- // 				         }; -->
-<!-- // 				}; -->
-<!-- 				</script> -->
-                    
-<!--                 </form> -->
-<!--                    </td> -->
-                   
-<!--                     <td> -->
-<!--                     <form name="updateForm" action="MainPostingServlet" method="POST">  -->
-<%--                     <input type="hidden" name="updatepost" value="${allmpbs.mainPostNo}"> --%>
-<!--                     <input type="submit" class="btn btn-outline-info" value="修改"> -->
-<!--                     </form> -->
-<!--                     </td> -->
-<!--             </tr> -->
-<!--         </tbody> -->
-<%--      </c:forEach> --%>
-<!--             <tbody> -->
-<%--             <tr><td colspan="9">${error}</td></tr></tbody> --%>
-<!--             </table>  -->          
-<!--              </div>  -->
-<!--                 <div class="sub"> -->
-<!--                 <form name="addForm" action="MainPosting.add" method="POST">  -->
-<!--                 <input type="submit" class="btn btn-outline-warning" name="addpost" value="發布貼文"> -->
-<!--                 </form> -->
-<!--                </div> -->
-<!--                 </div> -->
-<!--         </fieldset> -->
 
         <script>
         var members = new Set([]);
-        $('.delete').on('click', function() {
+
+        
+        
+        $(document).on('click','.delete', function() {
             let checked = $(this).prop('checked')
             
             console.log(members);
-           
+            
             if (checked) {
                 $(this).closest('tr').addClass('active')
                 var deleteObject = $(this).parent().next().text()
@@ -671,10 +634,14 @@ fieldset {
                 $(this).closest('tr').removeClass('active')
             }
         });
+        
+
+        
 
 
         $("#deleteSubmitCheck").on('click', function(event) {
             console.log(Array.from(members).join(',').length);
+            console.log(members);
             if (Array.from(members).join(',').length != 0) {
                 $('#del').val(Array.from(members).join(','));
                 Swal.fire({
@@ -708,37 +675,39 @@ fieldset {
         
         function checkAll(){
             var hobby  = document.getElementsByClassName("delete");
-           
-            var members = new Set([]);
+            var checkAll = document.getElementById("checkAll");
+           // console.log(checkAll);
+         console.log(hobby);
+            //var members = new Set([]);
             for(var i  =0;i<hobby.length;i++){
                 var h = hobby[i];
-                console.log(h);
-                if(h.checked != true){
-	                h.checked = true;               
-               }else if(h.checked == true){
-                	 h.checked = false;
-               }
                 
-                //全選 無效
-//                if(h.checked = true){
-//                    $(this).closest('tr').addClass('active')
-//                    var deleteObject = $(this).parent().next().text()
-//                    members.add(deleteObject);
-//                } else {
-//                    var deleteObject = $(this).parent().next().text()
-//                    members.delete(deleteObject);
-//                    $(this).closest('tr').removeClass('active')
-//                }
-            
+                console.log(h);
+                h.checked = checkAll.checked;
             }
         }
         
-        $(".turnDown").on('click', function(event) {
-            (async () => {
+        
+//         $("#checkAll").on('click',function(){
+//             let checkedAll = $(this).prop('checked');
+//             var hobbys   = $(".delete").parent().next().text();
+//             console.log();
+//         });
+        
+        
+        
+        
+        
+        
+        
 
+        
+        $(document).on('click',".turnDown", function(event) {
+            (async () => {
                 const { value: text } = await Swal.fire({
+                  title:'駁回原因',
                   input: 'textarea',
-                  inputLabel: '駁回原因',
+                  inputLabel: '',
                   inputPlaceholder: '請輸入內容',
                   inputAttributes: {
                     'aria-label': 'Type your message here'
@@ -746,9 +715,7 @@ fieldset {
                   showCancelButton: true
                 })
                 if (text) {
-                    
                     var mainPostNo = $(this).prev().val();
-                    
                     console.log(mainPostNo);
                     let xreason=text;  
                     console.log(xreason);
@@ -759,10 +726,8 @@ fieldset {
                            dataType : 'json',
                            success: function(){
                                console.log("ok");
-                               
                            }
                        })
-                    
                     Swal.fire("已駁回").then((result)=>{
                         if(result.isConfirmed){
                             location.reload();
@@ -770,14 +735,155 @@ fieldset {
                         }
                     });
                 }
-
                 })()
-       
         });
         
-
-             
         
+        
+        
+                    
+        $(function () {
+            var len = 20; // 超過20個字以"..."取代
+            $(".card-text").each(function (i) {
+                if ($(this).text().length > len) {
+                    $(this).attr("title", $(this).text());
+                    var text = $(this).text().substring(0, len - 1) + "...";
+                    $(this).text(text);
+                }
+            });
+        });
+             
+        $(".viewreplies").on('click', function(event){
+            //let replyContent = $(this).parent().siblings(".replyContent").text();
+            let replyPhoto = $(this).siblings(".replyPhoto").val();
+            let replyContent = $(this).siblings(".replyContent").val();
+            let replyaccount = $(this).siblings(".replyaccount").val();
+            let replyTime = $(this).siblings(".replyTime").val();
+            let replyimage = $(this).siblings(".reportimage").val().split(",");
+            $(".Lightbox3postPhoto").attr("src",replyPhoto);
+            $(".Lightbox3content").text(replyContent);
+            $(".Lightbox3account").text(replyaccount);
+            $(".Lightbox3addtime").text("回覆時間:"+replyTime);
+            
+            $(".imgs").html("");
+            
+            for(i=0 ; i < replyimage.length -1; i++){
+            	var img = $("<img class='imgpostdetails'>").attr('src', replyimage[i]);
+                $(".imgs").append(img);
+            }
+            
+            console.log();
+        });
+        
+        $(".deletereply").on('click', function (event) {
+            let replyNo = $(this).siblings(".reportreplyNo").val();
+            let replyaccount = $(this).siblings(".replyaccount").val();
+            console.log(replyaccount);
+            //userMute(replyaccount);
+            
+            Swal.fire({
+                title: '確定刪除回覆?',
+                text: '',
+                icon: 'warning',
+                cancelButtonText: '取消',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '刪除'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                	//呼叫刪除
+                	deletereply(replyNo);
+                	$(this).siblings().parent().parent().remove();
+                     Swal.fire({
+		                title: '刪除成功，需要對會員'+replyaccount+'禁止發言嗎?',
+		                text: '',
+		                icon: 'warning',
+		                cancelButtonText: '取消',
+		                showCancelButton: true,
+		                confirmButtonColor: '#3085d6',
+		                cancelButtonColor: '#d33',
+		                confirmButtonText: '禁言'
+		            }).then((result) => {
+		            	if (result.isConfirmed) {
+		            		//呼叫禁言
+		            		userMute(replyaccount);
+		            		
+		            		
+		            		
+		            	}
+                     });
+                }
+            });
+            
+        });
+        
+        //刪除回覆
+       function deletereply(replyNo){
+           $.ajax({
+               type: "Delete",
+               url: "/group5/admin/ReplyPost",
+               data: { replyNo: replyNo },
+               dataType: 'json',
+               success: function () {
+                   console.log("ok");
+               }
+           })
+       };
+        
+        //禁止發言
+        function userMute(replyaccount){
+        	var mute = 1;
+            $.ajax({
+                type: "Post",
+                url: "/group5/admin/UserPostMute/"+ replyaccount + "/" + mute,
+                success: function(){
+                    var text ='已對'+ replyaccount + '禁止發言!';
+                	Swal.fire(
+                			text
+                    ).then((result)=>{
+                        if(result.isConfirmed){
+                        }
+                    });
+                    
+                }
+            });
+        };
+        
+        
+        $(".revoke").on('click', function (event) {
+            let replyNo = $(this).siblings(".reportreplyNo").val();
+            console.log(replyNo);
+            Swal.fire({
+                title: '確定撤銷檢舉?',
+                text: '',
+                icon: 'warning',
+                cancelButtonText: '取消',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '撤銷'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "Put",
+                        url: "/group5/admin/RevokeReport",
+                        data: { replyNo: replyNo },
+                        dataType: 'json',
+                        success: function () {
+                            console.log("ok");
+                        }
+                    })
+                    Swal.fire({
+                        title: '撤銷成功',
+                        icon: 'success'
+                    }).then((result) => {
+                    	$(this).siblings().parent().parent().remove();
+                        //location.reload();
+                    });
+                }
+            });
+        });
         
         
         
@@ -808,8 +914,60 @@ fieldset {
             $("a[href='" + anchor + "']").tab("show");
         });
         
-        
+//      $('.delete').on('click', function() {
+//      let checked = $(this).prop('checked')
+     
+//      console.log(members);
+//     // let checkAll = $("#checkAll").prop('checked',"false");
+//      //let checkAlls = $("#checkAll").parent().next().text()
+//      //console.log(checkAlls);
+     
+//      if (checked) {
+//          $(this).closest('tr').addClass('active')
+//          var deleteObject = $(this).parent().next().text()
+//          members.add(deleteObject);
+//      } else {
+//          var deleteObject = $(this).parent().next().text()
+//          members.delete(deleteObject);
+//          $(this).closest('tr').removeClass('active')
+//      }
+//  });
 
+//         $(".turnDown").on('click', function(event) {
+//             (async () => {
+//                 const { value: text } = await Swal.fire({
+//                   title:'駁回原因',
+//                   input: 'textarea',
+//                   inputLabel: '',
+//                   inputPlaceholder: '請輸入內容',
+//                   inputAttributes: {
+//                     'aria-label': 'Type your message here'
+//                   },
+//                   showCancelButton: true
+//                 })
+//                 if (text) {
+//                     var mainPostNo = $(this).prev().val();
+//                     console.log(mainPostNo);
+//                     let xreason=text;  
+//                     console.log(xreason);
+//                     $.ajax({
+//                            type: "POST",
+//                            url: "/group5/admin/turnDownPost",
+//                            data : {mainPostNo:mainPostNo,xreason:xreason},
+//                            dataType : 'json',
+//                            success: function(){
+//                                console.log("ok");
+//                            }
+//                        })
+//                     Swal.fire("已駁回").then((result)=>{
+//                         if(result.isConfirmed){
+//                             location.reload();
+           
+//                         }
+//                     });
+//                 }
+//                 })()
+//         });
         
         </script>
         

@@ -5,6 +5,7 @@
 <html>
 <head>
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8" />
+<link rel="stylesheet" href="styles/Topic.css">
 <title>${queryOne.title}</title>
 <script src="/group5/js/jquery.min.js"></script>
 
@@ -23,7 +24,7 @@ $(function(){
            
             success: function(data){
                   console.log(data);
-                  $("#likemainpost").text("讚"+data.likeNumber);
+                  $("#likemainpost").text(data.likeNumber);
                  //location.reload();
             }
         });
@@ -40,8 +41,9 @@ $(function(){
       (async () => {
 
           const { value: text } = await Swal.fire({
+        	title:'檢舉原因',
             input: 'textarea',
-            inputLabel: '檢舉原因',
+            inputLabel: '',
             inputPlaceholder: '請輸入內容',
             inputAttributes: {
               'aria-label': 'Type your message here'
@@ -62,11 +64,6 @@ $(function(){
           }
 
           })()
-	  
-	  
-	    
-	  
-	  
 	  
 
   })
@@ -108,7 +105,7 @@ $(function(){
 }
 
 .table1 {
-	width: 1000px;
+	width: 600px;
 	table-layout: fixed;
 	margin-left: auto;
 	margin-right: auto;
@@ -139,14 +136,36 @@ $(function(){
 }
 
 .column4 {
-	width: 1000px;
+	width: 800px;
 	text-align: center;
 	background-color: #f7f4dd;
 }
+
+.imgss {
+    width: 300px;
+    height: 200px;
+    padding: 5px 5px 5px 5px;
+    margin: 10px;
+}
+
+.content {
+    /* border: 1px solid;*/
+    /* width: 800px;*/
+    /* height: 400px; */
+    background-color: #f7f4dd;
+    /* margin: auto; */
+    word-wrap: break-word;
+}
+
+
+
 </style>
 </head>
 <body>
 	<%@ include file="../admin/FrontStageHead.jsp"%>
+<!--                    找會員帳號  與是否禁止發言-->
+	<input type="hidden" class="usermute" value="${loginMember.memberDetail.mute}">
+	<input type="hidden" class="useraccount" value="${loginMember.memberAccount}">
 	<br>
 	<br>
 	<br>
@@ -169,16 +188,47 @@ $(function(){
 								<P>發布時間:${queryOne.addtime}</P>
 								<p class="content">${queryOne.content}</p>
 
-
 								<c:forEach var="image" items="${allImages}">
-									<img class="imgpostdetails" src="${image}">
+									<img class="imgss" src="${image}">
 								</c:forEach>
 
 								<br> <input type="hidden" id="mainPostNo" name="mainPostNo"
 									value="${queryOne.mainPostNo}">
 								<button type="submit" name="likenumber" id="likemainpost"
-									class="btn btn-outline-danger">讚${queryOne.likeNumber}</button>
-
+									class="btn btn-link fa-regular fa-thumbs-up fa-1x">${queryOne.likeNumber}</button>
+                                <button type="submit" class="btn btn-link fa-solid fa-bookmark fa-1x favorite">收藏</button>
+                                <script>
+                                $(function(){
+                                	console.log($(".usermute").val());
+									    $(".favorite").on("click",function(){
+									        var mainPostNo = $("#mainPostNo").val();
+									        $.ajax({
+									            type: "POST",
+									            url:'/group5/FavoritePostAJAX',
+									            data: {"mainPostNo":mainPostNo},
+									            dataType:'text',
+									           
+									            success: function(data){
+									            	console.log(data);
+									            	var icon = '', title = '';
+									            	
+									            	switch(data){
+									            	  case "已加入收藏" : { icon ='success'; title = data; break;}
+									            	  case "已經加入過收藏" :{ icon = 'error'; title = data; break;}
+									            	  default:{ icon = 'error'; title = data; break;}
+									            	}
+									            	
+									            	  Swal.fire({
+                                                          icon: icon,
+                                                          title: title,
+                                                          showConfirmButton: false,
+                                                          timer: 1000
+                                                        })
+									            }
+									        });
+									    });
+									});
+                                </script>
 							</div>
 						</td>
 					</tr>
@@ -192,22 +242,21 @@ $(function(){
 									<p>回復時間:${onereply.replyTime}</p>
 									<p>${onereply.replyContent}</p>
 									<c:forEach var="onewReplyImage" items="${onereply.r_imagess}">
-										<img class="imgpostdetails" src="${onewReplyImage}">
+										<img class="imgss" src="${onewReplyImage}">
 									</c:forEach>
 
 									<br> <input type="hidden" id="mainPostNo"
 										name="mainPostNo" value="${queryOne.mainPostNo}"> 
 										<input type="hidden" class="replyNo" name="replyNo" value="${onereply.replyNo}">
 									<button type="submit" name="replylikenumber"
-										id="${onereply.replyNo}" class="btn btn-outline-danger"
-										value="${onereply.replyLikeNumber}">
-										讚${onereply.replyLikeNumber}</button>
+										id="${onereply.replyNo}" class="btn btn-link fa-regular fa-thumbs-up fa-1x"
+										value="${onereply.replyLikeNumber}">${onereply.replyLikeNumber}</button>
 										
                                     <input type="hidden" class="replyNo" name="replyNo" value="${onereply.replyNo}">
-									<button type="submit" class="btn btn-outline-danger replyreport"
+									<button type="submit" style="border:none" class="btn btn-outline-danger replyreport fa-solid fa-shield-halved fa-1x"
                                                 value="${onereply.replyLikeNumber}">檢舉</button>
 										
-
+                                    
 							<script type="text/javascript">
 							
 							
@@ -232,8 +281,7 @@ $(function(){
                     console
                         .log(data);
                     document
-                        .getElementById("${onereply.replyNo}").innerText = "讚"
-                        + data.replyLikeNumber
+                        .getElementById("${onereply.replyNo}").innerText = data.replyLikeNumber
                 }
             });
         }
@@ -254,7 +302,7 @@ $(function(){
 							<td class="column3"><img class="imgheadstickers" src="${postPhoto}"></td>
 							<td><div class="content">
 
-									<textarea name="replyContent" id="content1" cols="80" rows="10"
+									<textarea name="replyContent" id="content1" cols="65" rows="10"
 										required oninvalid="setCustomValidity('請輸入內容')"
 										oninput="setCustomValidity('')"></textarea>
 
@@ -264,7 +312,7 @@ $(function(){
 								<div id="imgs"></div> <script src="/group5/js/jquery.min.js"></script>
 								<script src="js/images.js"></script>
 								
-								<div class="row g-2">
+								<div class="row g-3">
                                             <div class="col-md">
                                                 <div class="form-floating">
                                                     <input type="submit" class="btn-solid-reg replycontent"
@@ -275,26 +323,82 @@ $(function(){
                                             <div class="col-md">
                                                 <div class="form-floating">
                                                 <a class="btn-solid-reg " href="/group5/UserPostAll">返回</a>
+                                                
                                                 </div>
                                             </div>
+                                            
+                                             <div class="col-md">
+                                                <div class="form-floating">
+                                                <button type='submit'  style='border:none' class='btn btn-success as-button onekeyinput'>一健輸入</button>
+                                                
+                                                </div>
+                                            </div>
+                                            
                                         </div>
 								
 								</td>
 								</tr>
-					<script>
+								
+					                           <script>
+					                           $(".onekeyinput").on('click', function(event){
+					                               event.preventDefault();
+					                              
+					                               $("#content1").val("運動虔敬量不要空腹，會建議吃點蛋白巧克力，運動後再補充一杯高蛋白。");
+					                              
+					                           });
+					                           
+					                           
+					                           $(function(){
+					                        	   //var usermute = $(".usermute").val();
+                                                   var useraccount= $(".useraccount").val();
+                                                   console.log(useraccount);
+                                                   if(useraccount){
+					                        	   whetherToMute(useraccount)
+                                                   }else{
+                                                       console.log("未登入");
+                                                       $(".replycontent").attr('disabled',true);
+                                                       $(".replycontent").next().text('請登入或加入會員');
+                                                       $("#content1").prop("readonly",true)
+                                                   }
+					                           
+					                           });
+					           
+					                           function whetherToMute(useraccount){
+					                               $.ajax({
+					                                   type: "Post",
+					                                   url: "/group5/WhetherToMute/"+ useraccount,
+					                                   dataType : 'text',
+					                                   success: function(data){
+					                                	   console.log(data);
+					                                	   if(data == 1){
+	                                                           console.log("禁止發言");
+	                                                           $(".replycontent").attr('disabled',true);
+	                                                           $(".replycontent").next().text('禁止發言，請聯絡管理員');
+	                                                           $("#content1").prop("readonly",true)
+	                                                       }
+					                                	   
+					                                       
+					                                   }
+					                               });
+					                           }
+					           
+					                           
+					                           
+					                           
+					           
                                                    
                                                    $(".replycontent").on('click', function(event){
+                                                	   
                                                        var rs = false;
                                                        $("#content1").each(function(){
                                                            if($(this).val()==""){
                                                                console.log('請輸入內容');
-                                                               
                                                                Swal.fire({
                                                                    title:'請輸入內容',
                                                                    icon:'warning'
                                                                });
                                                                
-                                                               $(".replycontent").next().text('請輸入內容');
+                                                               $("#.replycontent").next().text('請輸入內容');
                                                                rs = true;
                                                            }
                                                        });
@@ -324,7 +428,7 @@ $(function(){
 <!-- 	</form> -->
     
 
-    
+    <script src="https://kit.fontawesome.com/f795d981d8.js" crossorigin="anonymous"></script>
  
 
 	<%@ include file="../admin/FrontStageFoot.jsp"%>

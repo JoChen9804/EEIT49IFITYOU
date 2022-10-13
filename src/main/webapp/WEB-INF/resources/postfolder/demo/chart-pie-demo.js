@@ -5,16 +5,16 @@ Chart.defaults.global.defaultFontColor = '#858796';
 // Pie Chart Example
 var ctx = document.getElementById("myPieChart");
 
-var announcement = $(".announcement").val();
+var diet = $(".diet").val();
 var share = $(".share").val();
 var question = $(".question").val();
 
 var myPieChart = new Chart(ctx, {
   type: 'doughnut',
   data: {
-    labels: ["問題", "分享", "公告"],
+    labels: ["問題", "分享", "飲食"],
     datasets: [{
-      data: [question, share, announcement],
+      data: [question, share, diet],
       backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc'],
       hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
       hoverBorderColor: "rgba(234, 236, 244, 1)",
