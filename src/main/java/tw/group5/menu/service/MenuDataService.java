@@ -35,6 +35,12 @@ public class MenuDataService {
 		return menuDataRespository.find1();
 	}
 	
+	
+	public List<MenuDatabean> find2(){
+		return menuDataRespository.find2();
+	}
+	
+	
 	public MenuDatabean update(MenuDatabean mdbean) {
 		return menuDataRespository.save(mdbean);
 	}

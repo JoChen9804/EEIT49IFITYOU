@@ -138,6 +138,26 @@ public class MenuDataController {
 		m.addAttribute("querySelect",list);
 		return"menu/MenuWrap2Page";	
 	}
+	
+	
+	@GetMapping("/wrapSelectcore")
+	public String processSelectCore(Model m , Integer setid) {
+		System.out.println("find Core!");
+		System.out.println(setid);
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		List<MenuDatabean> list = mdService.find2();
+		
+		for (MenuDatabean menuDatabean : list) {
+			System.out.println("測動作細項"+menuDatabean.getExerciseName());
+		}
+		
+//		AdminBean admin = adminService.findByAccount(username);
+		MemberBean member = adminService.findByAccountMember(username);
+		m.addAttribute("userAdmin", member);
+		m.addAttribute("setid",setid);
+		m.addAttribute("querySelect",list);
+		return"menu/MenuWrap3Page";	
+	}
 
 	
 	
