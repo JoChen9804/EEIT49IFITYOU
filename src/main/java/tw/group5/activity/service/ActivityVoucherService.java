@@ -77,11 +77,4 @@ public class ActivityVoucherService {
 		return voucherReps.findAll();
 	}
 	
-	/*
-	 * 用優惠券號尋找
-	 */
-	public ActivityVoucher findByVoucherNo(String voucherNo) {
-		return voucherReps.findByVoucherNo(voucherNo);
-	}
-	
 }
