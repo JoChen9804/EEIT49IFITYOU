@@ -122,7 +122,7 @@ fieldset {
     
     <!-- Features -->
             <!--     class="tabs" -->
-    <div id="features" class="">
+    <div id="features" class="tabs">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -544,6 +544,54 @@ fieldset {
                             </div> <!-- end of row -->
                         </div> <!-- end of tab-pane -->
                         <!-- end of tab -->
+                        
+                        
+    <!-- Details Lightbox 3 -->
+    <div id="details-lightbox-3" class="lightbox-basic zoom-anim-dialog mfp-hide">
+        <div class="container">
+            <div class="row">
+                <button title="Close (Esc)" type="button" class="mfp-close x-button">×</button>
+            
+                <div class="col-lg-12">
+                    
+              <table class="table-bordered table1">
+                <tr>
+                    <td class="column3"><div class="Lightbox3account"></div>
+                        <br>
+                        <img class="imgheadstickers Lightbox3postPhoto">
+                    </td>
+                    <td>
+                        <div class="content">
+                            <P class="Lightbox3addtime"></P>
+                            <p class="content Lightbox3content"></p>
+                             
+                             <div class="imgs"></div>
+                             
+                        </div>
+                    </td>
+                </tr>
+               </table>
+                        <div class="center">
+                     <a class="btn-outline-reg mfp-close as-button"  href="#screenshots">關閉</a>
+                     </div>
+                </div> <!-- end of col -->
+            </div> <!-- end of row -->
+        </div> <!-- end of container -->
+    </div> <!-- end of lightbox-basic -->
+    <!-- end of details lightbox 3 -->
+    <!-- end of details lightboxes -->         
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
                                            <script>
                                            $(".replyspeech").on('click', function(event){
                                                console.log("324432");
