@@ -28,105 +28,103 @@
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js"
 		type="text/javascript"></script>
-	
 
-		<!-- Features -->
-		<div id="features" class="tabs">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-12">
-						<h2 class="h2-heading">會員資料</h2>
-					</div>
-					<!-- end of col -->
+
+	<!-- Features -->
+	<div id="features" class="tabs">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<h2 class="h2-heading">會員資料</h2>
 				</div>
-				<!-- end of row -->
-				<div class="row">
-					<div class="col-lg-12">
+				<!-- end of col -->
+			</div>
+			<!-- end of row -->
+			<div class="row">
+				<div class="col-lg-12">
 
-						<!-- Tabs Links -->
-						<ul class="nav nav-tabs" id="argoTabs" role="tablist">
-							<li class="nav-item"><a class="nav-link active"
-								id="nav-tab-1" data-toggle="tab" href="#tab-1" role="tab"
-								aria-controls="tab-1" aria-selected="true"><i
-									class="fas fa-envelope-open-text"></i>基本資料</a></li>
-							<li class="nav-item"><a class="nav-link" id="nav-tab-2"
-								data-toggle="tab" href="#tab-2" role="tab" aria-controls="tab-2"
-								aria-selected="false"><i class="fas fa-list"></i>其他資訊</a></li>
-						</ul>
-						<!-- end of tabs links -->
+					<!-- Tabs Links -->
+					<ul class="nav nav-tabs" id="argoTabs" role="tablist">
+						<li class="nav-item"><a class="nav-link active"
+							id="nav-tab-1" data-toggle="tab" href="#tab-1" role="tab"
+							aria-controls="tab-1" aria-selected="true"><i
+								class="fas fa-envelope-open-text"></i>基本資料</a></li>
+						<li class="nav-item"><a class="nav-link" id="nav-tab-2"
+							data-toggle="tab" href="#tab-2" role="tab" aria-controls="tab-2"
+							aria-selected="false"><i class="fas fa-list"></i>其他資訊</a></li>
+					</ul>
+					<!-- end of tabs links -->
 
-						<!-- Tabs Content -->
-						<div class="tab-content" id="argoTabsContent"
-							style="text-align: center;">
+					<!-- Tabs Content -->
+					<div class="tab-content" id="argoTabsContent"
+						style="text-align: center;">
 
-							<!-- Tab -->
-							<div class="tab-pane fade show active" id="tab-1" role="tabpanel"
-								aria-labelledby="tab-1">
-								<div class="row">
-									<div class="col-lg-7">
-										<div class="image-container">
-											<div id="result">
-												<img src="${loginMember.memberPhoto}" height=350 width=350
-													id="img">
-											</div>
-											<br /> 
-											<button type="button" onclick="file_input.click()"
-												class="btn-solid-reg" style="vertical-align: middle;">上傳照片</button>
+						<!-- Tab -->
+						<div class="tab-pane fade show active" id="tab-1" role="tabpanel"
+							aria-labelledby="tab-1">
+							<div class="row">
+								<div class="col-lg-7">
+									<div class="image-container">
+										<div id="result">
+											<img src="${loginMember.memberPhoto}" height=350 width=350
+												id="img">
 										</div>
-										<!-- end of image-container -->
-
+										<br />
+										<button type="button" onclick="file_input.click()"
+											class="btn-solid-reg" style="vertical-align: middle;">上傳照片</button>
 									</div>
-									<!-- end of col -->
-									<!-- 修改密碼專區 -->
-									<div class="col-lg-5">
-										<div style="text-align: left; valign: top">
-											<label>帳號：</label> <input style="margin-bottom: 0.5em;"
-												id="account1" type="text" name="account" required
-												value="${loginMember.memberAccount}" disabled><br />
-											<label for="pwd1" class="t1">密碼：</label> <input
-												style="margin-bottom: 0.5em;" id="pwd1" type="password"
-												maxlength="16" required onchange="testPassword()"
-												value="******" disabled size=15> <input
-												type="button" value="修改密碼" class="btn-solid-reg"
-												id="passwordChange"><br />
-											<div style="display: none" id="passwordAgain">
-												<label for="pwd2" class="t1">再次輸入密碼：</label><input id="pwd2"
-													type="password" name="pwd2" maxlength="16" required
-													onchange="testPassword()" style="margin-bottom: 0.5em;"><br />
-												<div style="height: 160px">
-													<ul>
-														<li class="media"><i class="fas fa-times"
-															style="color: red" id="iconSame"></i>
-															<div class="media-body" style="font-size: 1.2rem">&ensp;兩次輸入密碼須相同</div></li>
-														<li class="media"><i class="fas fa-times"
-															style="color: red" id="iconValid"></i>
-															<div class="media-body" style="font-size: 1.2rem">&ensp;密碼須為8~16為英數字組合</div></li>
-													</ul>
-													<label for="inputOrginal">請輸入原密碼：</label><input
-														id="inputOrginal" type="password" name="inputOrginal"
-														maxlength="16" required style="margin-bottom: 0.5em;"><br />
+									<!-- end of image-container -->
 
-													<button class="btn-solid-reg" id="passwordConfirm">確認修改</button>
+								</div>
+								<!-- end of col -->
+								<!-- 修改密碼專區 -->
+								<div class="col-lg-5">
+									<div style="text-align: left; valign: top">
+										<label>帳號：</label> <input style="margin-bottom: 0.5em;"
+											id="account1" type="text" name="account" required
+											value="${loginMember.memberAccount}" disabled><br />
+										<label for="pwd1" class="t1">密碼：</label> <input
+											style="margin-bottom: 0.5em;" id="pwd1" type="password"
+											maxlength="16" required onchange="testPassword()"
+											value="******" disabled size=15> <input type="button"
+											value="修改密碼" class="btn-solid-reg" id="passwordChange"><br />
+										<div style="display: none" id="passwordAgain">
+											<label for="pwd2" class="t1">再次輸入密碼：</label><input id="pwd2"
+												type="password" name="pwd2" maxlength="16" required
+												onchange="testPassword()" style="margin-bottom: 0.5em;"><br />
+											<div style="height: 160px">
+												<ul>
+													<li class="media"><i class="fas fa-times"
+														style="color: red" id="iconSame"></i>
+														<div class="media-body" style="font-size: 1.2rem">&ensp;兩次輸入密碼須相同</div></li>
+													<li class="media"><i class="fas fa-times"
+														style="color: red" id="iconValid"></i>
+														<div class="media-body" style="font-size: 1.2rem">&ensp;密碼須為8~16為英數字組合</div></li>
+												</ul>
+												<label for="inputOrginal">請輸入原密碼：</label><input
+													id="inputOrginal" type="password" name="inputOrginal"
+													maxlength="16" required style="margin-bottom: 0.5em;"><br />
 
-												</div>
+												<button class="btn-solid-reg" id="passwordConfirm">確認修改</button>
+
 											</div>
+										</div>
 										<form action="/group5/user/memberModify.controller"
 											method="post" enctype="multipart/form-data" id="updateForm">
 											<input type="file" name="filepath" accept="image/*"
-												id="file_input" style="display: none">
-											<input name="idNumString" value="${loginMember.id}"
-												type="hidden"> <input name="modifyimage"
-												value="false" type="hidden" id="modifyimage"> <input
-												name="nowimage" value="${loginMember.memberPhoto}"
-												type="hidden"> <input type="hidden" name="pwd"
-												maxlength="16" required value="******"> <label
-												for="name1" class="t1">姓名：</label> <input
-												style="margin-bottom: 0.5em;" id="name1" type="text"
+												id="file_input" style="display: none"> <input
+												name="idNumString" value="${loginMember.id}" type="hidden">
+											<input name="modifyimage" value="false" type="hidden"
+												id="modifyimage"> <input name="nowimage"
+												value="${loginMember.memberPhoto}" type="hidden"> <input
+												type="hidden" name="pwd" maxlength="16" required
+												value="******"> <label for="name1" class="t1">姓名：</label>
+											<input style="margin-bottom: 0.5em;" id="name1" type="text"
 												name="name" required value="${loginMember.memberName}"><br />
 											<label for="email1" class="t1">Email：</label><input
 												id="email1" type="email" name="email" required
-												style="margin-bottom: 0.7em;" value="${loginMember.email}" disabled>
-											<br /> <label for="" class="t1">生日：</label><input
+												style="margin-bottom: 0.7em;" value="${loginMember.email}"
+												disabled> <br /> <label for="" class="t1">生日：</label><input
 												type="date" name="birthday"
 												style="margin-bottom: 0.7em; width: 190px;"
 												value="${loginMember.memberDetail.birthday}"
@@ -140,6 +138,13 @@
 												maxlength="6"
 												value="${loginMember.memberDetail.referralCode}" disabled
 												style="margin-bottom: 0.5em; width: 190px;"> <br />
+											<div class="st1">
+												<label for="" class="t1" id="match" style="margin-bottom: 0.5em;">參加健友配對：</label> <label>
+													<input type="radio" name="match" value="1" id="pairT">是
+												</label> &emsp; <label> <input type="radio" name="match"
+													value="0" class="radio" checked id="pairF" style="margin-bottom: 0.5em;">否
+												</label>
+											</div>
 											<label for="" class="t1">性別：</label>
 											<!-- label標籤有for id的功能 -->
 											<label> <input type="radio" name="gender" value="男"
@@ -149,7 +154,7 @@
 											</label>&ensp; <label> <input type="radio" name="gender"
 												value="秘密" checked id="secret" style="margin-bottom: 0.5em;">秘密
 											</label> <br />
-											<div id="twzipcode" class="st2">
+											<div id="twzipcode" class="st2" style="margin-bottom: 0.5em;">
 												<label for="address" class="t1" id="zipcode">地址：</label>
 											</div>
 											<div class="st2">
@@ -162,80 +167,81 @@
 												style="position: absolute; left: 30%">
 										</form>
 									</div>
-										<!-- end of text-container -->
-									</div>
-									<!-- end of col -->
+									<!-- end of text-container -->
 								</div>
-								<!-- end of row -->
-								
+								<!-- end of col -->
 							</div>
-							<!-- end of tab-pane -->
-							<!-- end of tab -->
+							<!-- end of row -->
 
-							<!-- Tab -->
-							<div class="tab-pane fade" id="tab-2" role="tabpanel"
-								aria-labelledby="tab-2">
-								<div class="row">
-									<div class="col-lg-6">
-										<div class="image-container">
-											<div id="result">
-												<img src="${loginMember.memberPhoto}" height=350 width=350
-													id="img">
-											</div>
-										</div>
-										<!-- end of image-container -->
-									</div>
-
-									<!-- end of col -->
-									<div class="col-lg-6">
-										<div class="text-container" style="text-align: left;">
-											<div class="st1">
-												<label for="" class="t1" id="match">參加健友配對：</label> <label>
-													<input type="radio" name="match" value="1" id="pairT">是
-												</label> &emsp; <label> <input type="radio" name="match"
-													value="0" class="radio" checked id="pairF">否
-												</label>
-											</div>
-											<a href="#" class="btn-solid-reg" id="passwordChange">點此前往健友配對</a>
-											<br />
-											<br />
-											<c:choose>
-												<c:when test="${loginMember.memberDetail.mute==0}">
-													<label>論壇狀態：您目前可以發言 &ensp;</label>
-
-												</c:when>
-												<c:when test="${loginMember.memberDetail.mute==1}">
-													<label>論壇狀態：您目前正在禁言中 &ensp;</label>
-
-												</c:when>
-											</c:choose>
-											<a href="#" class="btn-solid-reg" id="passwordChange">點此前往論壇</a>
-											<br />
-											<br />
-
-
-										</div>
-										<!-- end of text-container -->
-									</div>
-									<!-- end of col -->
-								</div>
-								<!-- end of row -->
-							</div>
-							<!-- end of tab-pane -->
-							<!-- end of tab -->
 						</div>
-						<!-- end of tab content -->
-						<!-- end of tabs content -->
+						<!-- end of tab-pane -->
+						<!-- end of tab -->
 
+						<!-- Tab -->
+						<div class="tab-pane fade" id="tab-2" role="tabpanel"
+							aria-labelledby="tab-2">
+							<div class="row">
+								<div class="col-lg-6">
+									<div class="image-container">
+										<div id="result">
+											<img src="${loginMember.memberPhoto}" height=350 width=350
+												id="img">
+										</div>
+									</div>
+									<!-- end of image-container -->
+								</div>
+
+								<!-- end of col -->
+								<div class="col-lg-6">
+									<div class="text-container" style="text-align: left;">
+									<c:choose>
+											<c:when test="${loginMember.memberDetail.pairWilling==0}">
+												<label>論壇狀態：您目前尚未配對 &ensp;</label>
+
+											</c:when>
+											<c:when test="${loginMember.memberDetail.pairWilling==1}">
+												<label>論壇狀態：您目前在配對中 &ensp;</label>
+
+											</c:when>
+										</c:choose>
+										<a href="#" class="btn-solid-reg" id="passwordChange">點此前往健友配對</a>
+										<br /> <br />
+										<c:choose>
+											<c:when test="${loginMember.memberDetail.mute==0}">
+												<label>論壇狀態：您目前可以發言 &ensp;</label>
+
+											</c:when>
+											<c:when test="${loginMember.memberDetail.mute==1}">
+												<label>論壇狀態：您目前正在禁言中 &ensp;</label>
+
+											</c:when>
+										</c:choose>
+										<a href="#" class="btn-solid-reg" id="passwordChange">點此前往論壇</a>
+										<br /> <br />
+
+
+									</div>
+									<!-- end of text-container -->
+								</div>
+								<!-- end of col -->
+							</div>
+							<!-- end of row -->
+						</div>
+						<!-- end of tab-pane -->
+						<!-- end of tab -->
 					</div>
-					<!-- end of col -->
+					<!-- end of tab content -->
+					<!-- end of tabs content -->
+
 				</div>
-				<!-- end of row -->
+				<!-- end of col -->
 			</div>
-			<!-- end of container -->
+			<!-- end of row -->
 		</div>
-		<!-- end of tabs -->
-		<!-- end of features -->
+		<!-- end of container -->
+	</div>
+	<!-- end of tabs -->
+	<!-- end of features -->
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script>
 			//twzipcode引用
