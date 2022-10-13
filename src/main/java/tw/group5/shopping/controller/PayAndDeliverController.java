@@ -18,11 +18,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import tw.group5.order.model.Order;
 import tw.group5.shopping.model.ShoppingCartItem;
 import tw.group5.shopping.sevice.ShoppingCartItemService;
 
 @Controller
-@SessionAttributes(names = {"totalWithCoupon","shoppingCartItems","orderNo","tradeDate","CheckMacValue","shippingFee","totalWithDeliveryFee"})
+@SessionAttributes(names = {"totalWithCoupon","shoppingCartItems","orderNo","tradeDate","CheckMacValue","shippingFee","totalWithDeliveryFee","order","shippingType","storeName","storeAddress","payType"})
 @RequestMapping(path = "/group5/user")
 public class PayAndDeliverController {
 	
@@ -34,10 +35,22 @@ public class PayAndDeliverController {
 	
 	//接到結帳頁面Step2:選擇付款及運送方式
 	@PostMapping(path = "/shopping.cart/pay_and_delivery")
-	public String processPayActionStep2(@RequestParam("totalWithCoupon")int totalWithCoupon, Model m) {
+	public String processPayActionStep2(@RequestParam("voucherNo")String voucherNo, @RequestParam("voucherDiscount")int voucherDiscount, @RequestParam("totalWithCoupon")int totalWithCoupon, Model m) {
 		
 		m.addAttribute("totalWithCoupon", totalWithCoupon);
-			
+		
+		//new一個order物件，開始放入一些屬性，先放到session，到最後資料齊了再存入SQL
+		Order order = new Order();
+	
+		if (voucherNo.equals("NULL")) {	
+		}else {
+			order.setVoucherNo(voucherNo);
+		}
+		order.setVoucherDiscount(voucherDiscount);
+		
+		m.addAttribute("order", order);
+		
+		
 		return "shopping/pay_and_delivery";
 	}
 		
@@ -53,6 +66,13 @@ public class PayAndDeliverController {
 		
 		shoppingCartItems = sCIService.findAllShoppingCartItems(account);
 		m.addAttribute("shoppingCartItems", shoppingCartItems);
+		
+		//算出商品的總金額
+		int  commoditySubtotal = 0;
+		for (ShoppingCartItem shoppingCartItem : shoppingCartItems) {
+			commoditySubtotal += shoppingCartItem.getSubtotal();
+		}
+		
 			
 		//*產生訂單編號放入session
 		String orderNo = "iFit";
@@ -76,7 +96,7 @@ public class PayAndDeliverController {
 		//*綠界檢核碼
 		//1.先串出Query String
 		String queryStr = "ChoosePayment=Credit&EncryptType=1&ItemName=iFit線上購物&MerchantID=3002607&MerchantTradeDate="+
-	               tradeDate+"&MerchantTradeNo="+orderNo+"&PaymentType=aio&ReturnURL=http://localhost:8080/group5/user/myorder&TotalAmount="+
+	               tradeDate+"&MerchantTradeNo="+orderNo+"&OrderResultURL=http://localhost:8080/group5/user/order_result&PaymentType=aio&ReturnURL=http://localhost:8080/group5/user/order_result&TotalAmount="+
 	               totalWithDeliveryFee+"&TradeDesc=test Description";
 		//2.最前方加入 HashKey，最後方加入 HashIV
 		queryStr = "HashKey=pwFHCqoQZGmho4w6&"+ queryStr + "&HashIV=EkRm7iFT261dpevs";
@@ -111,16 +131,55 @@ public class PayAndDeliverController {
 		m.addAttribute("shippingFee",shippingFee);
 		m.addAttribute("totalWithDeliveryFee",totalWithDeliveryFee);
 		
+		//new一個order物件，開始放入一些屬性，先放到session，到最後資料齊了再存入SQL
+		Order order = (Order) m.getAttribute("order");
+		order.setOrderNo(orderNo);
+		order.setAccount(SecurityContextHolder.getContext().getAuthentication().getName());
+		order.setPayType(payType);
+		order.setCommoditySubtotal(commoditySubtotal);
 		
-		//視物流的方式看要跳到哪個頁面
-		if (payType == "信用卡一次付清") {
-			
-		}else if(payType == "貨到付款") {
-			
+		//物流方式存到訂單
+		if (shippingType.equals("UNIMART")) {
+			order.setShippingType("7-ELEVEN超商取貨");
+		}else if (shippingType.equals("HILIFE")) {
+			order.setShippingType("萊爾富超商取貨");
+		}else if (shippingType.equals("FAMI")) {
+			order.setShippingType("全家超商取貨");
+		}else {
+			order.setShippingType(shippingType);
 		}
-			
+		
+		//且物流方式要放到session決定step3的畫面顯示
+		m.addAttribute("shippingType", shippingType);
+		
+		
+		order.setShippingFee(shippingFee);
+		order.setOrderTotal(totalWithDeliveryFee);
+		m.addAttribute("order", order);
+		
+		m.addAttribute("payType", payType);
+		
 		return "shopping/order_form";
-				
+		
 	}
+	
+	
+	//選完物流後從商店地圖導回
+	@PostMapping(path = "/store_result")
+	public String deliverStoreChoose( @RequestParam("CVSStoreID")String storeID, @RequestParam("CVSStoreName")String storeName, 
+									@RequestParam("CVSAddress")String storeAddress, Model m){
+		
+		Order order = (Order) m.getAttribute("order");
+		order.setStoreID(storeID);
+		order.setStoreName(storeName);
+		order.setDeliveryAddress(storeAddress);
+		m.addAttribute("order", order);
+		
+		m.addAttribute("storeName", storeName);
+		m.addAttribute("storeAddress", storeAddress);
+		
+		return "shopping/order_form";
+	}
+	
 
 }

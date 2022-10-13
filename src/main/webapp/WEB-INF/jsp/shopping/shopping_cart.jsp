@@ -25,6 +25,21 @@
     <link
         href="//official-static.91app.com/V2/bundles/v-638000899589737964-v/css/shoppingCart/index/Desktop?v=Obk4B9SQ-i4Mb7PQx2LIzMGvrsxgsAFY4hEcsvBLiM81"
         rel="stylesheet">
+        
+    <style>
+    #voucherBTN {
+    display: inline-block;
+    width: 60px;
+    height: 40px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ff5353;
+    color: #fff;
+    cursor: pointer;
+    font-size: 17px;
+    -webkit-appearance: none;
+    }
+    </style>
     
 </head>
 
@@ -70,9 +85,9 @@
                     </li>
                 </ul>
             </div>
-            
-        <!-- 購物車內商品呈現 -->
         </ns-progress-bar>
+        
+        <!-- 購物車內商品呈現 -->
         <div class="cart-wrapper">
             <!---->
             <div ui-view="" autoscroll="true">
@@ -189,14 +204,14 @@
                                     <span>優惠碼</span>
                                 </div>
                             </div>
-                            <!-- 優惠券選擇器入口 -->
+                            <!-- 優惠券輸入 -->
                             <div class="ecoupon-block__action">
                                 <div class="ecoupon-block__action__desc">
-                                    <input type="text" placeholder="請輸入優惠碼">
+                                    <input type="text" id="voucherNo" placeholder="請輸入優惠碼">
                                 </div>
                                 
                                 <span>
-                                    <button>使用</button>
+                                    <button id="voucherBTN">使用</button>
                                 </span>
                             </div>
                             
@@ -229,8 +244,8 @@
                                         
                                         <!--折扣-->
                                         <div class="conclusion-row">
-                                            <div class="conclusion-li__left">折扣碼</div>
-                                            <div class="conclusion-li__right fee">-NT$</div>
+                                            <div class="conclusion-li__left">折扣碼<span id="voucherTitle"></span></div>
+                                            <div class="conclusion-li__right fee">-NT$<span id="voucherDiscount"></span></div>
                                         </div>
                                         
                                         
@@ -272,6 +287,8 @@
                                     <label class="next-step-btn__hint ng-hide"></label>
                                     
                                     <form action="/group5/user/shopping.cart/pay_and_delivery" method="post">
+                                    <input type="hidden" name="voucherNo" value="NULL" id="voucherNoSend">
+                                    <input type="hidden" name="voucherDiscount" value="0" id="voucherDiscountSend">
                                     <input type="hidden" name="totalWithCoupon" value="<%=total %>" id="totalWithCoupon">
                                     <input type="submit" value="下一步" class="next-step-btn cms-primaryBtnTextColor cms-primaryBtnBgColor">
                                     </form>
@@ -436,6 +453,42 @@
     			});
     		});
     	};
+    	
+    	
+    	
+    	<!--優惠碼輸入 -->
+    	$("#voucherBTN").on("click",function(){
+    		
+    		var voucherNo = $("#voucherNo").val();
+    		
+    		$.ajax({
+    			type:"POST",
+    			url:"/group5/user/shopping.cart.voucher",
+    			data:"voucherNo=" + voucherNo,
+    			dataType:"json",
+				context: this,
+				success:function(data){
+					alert(data.result)
+					if(data.result === "套用成功!!"){
+						$("#voucherTitle").text("("+data.voucherTitle + "折)");
+						$("#voucherDiscount").text(data.voucherDiscount);
+						$('#cartTotal2').text(data.totalWithCoupon);
+      					$('#cartTotal3').text(data.totalWithCoupon);
+      					$('#totalWithCoupon').val(data.totalWithCoupon);
+      					$('#voucherNoSend').val(voucherNo);
+      					$('#voucherDiscountSend').val(data.voucherDiscount);
+					}else {
+						$("#voucherTitle").text("");
+						$("#voucherDiscount").text("");
+						$('#cartTotal2').text(data.totalWithoutCoupon);
+      					$('#cartTotal3').text(data.totalWithoutCoupon);
+      					$('#totalWithCoupon').val(data.totalWithoutCoupon);
+      					$('#voucherNoSend').val("NULL");
+      					$('#voucherDiscountSend').val("0");
+					}
+				}
+    		});
+    	});
     	
     	
     	
