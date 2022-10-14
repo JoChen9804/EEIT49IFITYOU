@@ -263,8 +263,8 @@ h5 {
 						<label for="address" class="t1" id="zipcode" style="color: black">地址：</label>
 					</div>
 					<div class="st2">
-						<label for="address" class="t1" style="color: black">詳細地址：</label> <input type="text"
-							id="address" name="address" size="30" value="">
+						<label for="address" class="t1" style="color: black">詳細地址：</label>
+						<input type="text" id="address" name="address" size="30" value="">
 					</div>
 					<div class="st1">
 						<label for="" class="t1" id="match">參加健友配對：</label> <label>
@@ -278,6 +278,8 @@ h5 {
 							id="registerReferralCode" type="text" name="registerReferralCode"
 							maxlength="6">
 					</div>
+					<button type="button" id="inputData" class="btn-solid-reg"
+						onclick="inputDataAction()">一鍵輸入</button>
 					<div class="st1 hide3" style="display: none">
 						<label for="referralCode" class="t1">你的推薦碼：</label> <input
 							id="referralCode1" type="text" name="referralCode" maxlength="6"
@@ -290,12 +292,9 @@ h5 {
 					</div>
 					<div class="st1 hide3" style="display: none">
 						<label for="" class="t1">創建會員日：</label><input type="date"
-							name="createDate"
-							value="${OneMember.memberDetail.createDate}">
+							name="createDate" value="${OneMember.memberDetail.createDate}">
 					</div>
 				</div>
-
-
 			</div>
 		</fieldset>
 		<fieldset>
@@ -307,6 +306,18 @@ h5 {
 		</fieldset>
 		<br> <br>
 		<script>
+		function inputDataAction(){
+			$('#birthday').val('1994-06-25');
+			$('#cellphone1').val('0955666777');
+			$('#email1').val('jqwe546@gmail.com');
+			$('#account1').val('jqwe546');
+			$('#pwd1').val('jqwe1234');
+			$('#pwd2').val('jqwe1234');
+			$('#name1').val('王小美');
+			$('#zipcode').val(320);
+
+		};
+		
 		$(function () {
 			console.log($('originalRealPassword').val());
 			$("#twzipcode").twzipcode({

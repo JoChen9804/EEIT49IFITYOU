@@ -192,7 +192,6 @@ hr {
 	
 		$(document).ready(function() {
 			$('#loginbutton').attr("style", "background-color:#4e73df")
-			$('#cktoggle_id2').val("on")
 			$('#group5control').attr('style', 'background-color: #53618b')
 			$('#registerAccount').attr('disabled', true);
 		});

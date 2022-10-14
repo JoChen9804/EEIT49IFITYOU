@@ -1,0 +1,16 @@
+@charset "UTF-8";
+  .feature-item {
+    margin: 15px 10px;
+    padding: 20px 30px;
+    background-color: #fff;
+    border-radius: 15px 15px 15px 15px;
+    box-shadow: 0px 0px 30px 0px rgba(0, 42, 106, 0.1);
+    flex-basis: 33.33%;
+  }
+  
+  .w-hours li {
+    padding: 6px 0px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  }
+  
+  

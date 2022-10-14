@@ -16,8 +16,10 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
 <!--引用SweetAlert2.js-->
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" type="text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js"
+	type="text/javascript"></script>
 <style>
 fieldset {
 	width: 950px;
@@ -119,6 +121,8 @@ legend {
 					<div style="visibility: hidden">
 						<input id="sub" type="text" name="sub">
 					</div>
+				<button type="button" id="inputData" class="btn-solid-reg"
+					onclick="inputDataAction()">一鍵輸入</button>
 
 				</div>
 			</div>
@@ -126,13 +130,20 @@ legend {
 		<br> <input class="pic" type="file" name="filepath"
 			accept="image/*" id="file_input"> <br>
 		<div class="sub">
-			<input type="button" value="送出" id="sub1" class="modifySubmit"> <input
-				type="reset" value="清除"> <input type="button" id="goback"
-				value="返回">
+			<input type="button" value="送出" id="sub1" class="modifySubmit">
+			<input type="reset" value="清除"> <input type="button"
+				id="goback" value="返回">
 		</div>
 		<br> <br>
 
 		<script>
+		function inputDataAction(){
+			$('#account1').val('Aaliyah');
+			$('#pwd1').val('Aaliyah1234');
+			$('#pwd2').val('Aaliyah1234');
+			
+			
+		}
 			$(document)
 					.ready(
 							function() {

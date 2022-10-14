@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
+<head>
+<style>
+p {
+	padding-left: 20px;
+	font-size: 15px;
+}
+
+img {
+	height: 50px;
+	width: 100%;
+}
+
+.div1 {
+	background-color: #f3f7fd;
+}
+
+.div2 {
+	height: 50px;
+	width: 100%;
+	background-color: #4e73df;
+	padding: 7px 7px 7px 7px;
+	align-items: center;
+	display: flex;
+}
+
+.div3 {
+	align-items: center;
+	display: flex;
+}
+
+h2 {
+	color: white;
+	display: inline-block;
+	position: absolute;
+	top: 0%;
+	left: 50%;
+}
+
+.landscape {
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	background-image: url("https://i.imgur.com/Vyh7uJx.jpg");
+	background-size: 105%;
+	background-repeat: no-repeat;
+	background-position: 50% 0;
+	display: inline-block;
+}
+</style>
+</head>
+<body>
+	<div class="div1">
+		<div class="div2">
+			<div class="div3">
+				<div class="landscape"></div>
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				<h2>I FIT YOU</h2>
+			</div>
+		</div>
+		<p>
+			親愛的用戶 <span th:text="${name}"> </span> 您好，
+		</p>
+		<p>歡迎加入 I FIT YOU 的行列，
+		<p><a th:href ="@{${verifyURL}}">請點選此連結以開通您的帳號</a></p>
+		<p>
+			註冊成功贈送85折推薦碼: <span th:text="${coupon}"> </span></p>
+		<P>（提醒您，使用期限到下個月月底喔）</P>
+		<p>祝您購物順心、交得益友、健身愉快!!!</p>
+		<p>I FIT YOU 團隊敬上~~</p>
+		<p></p>
+		<p></p>
+		<img src="https://imgur.com/UV9Pqfw.jpg">
+	</div>
+</body>
+</html>
