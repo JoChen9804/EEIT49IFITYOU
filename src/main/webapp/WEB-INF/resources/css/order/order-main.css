@@ -128,7 +128,6 @@ html {
     width: 100%;
     min-height: 80vh;
     background: 00;
-
     display: -webkit-box;
     display: -webkit-flex;
     display: -moz-box;
@@ -156,17 +155,17 @@ table {
 
 .column1 {
 	text-align:center;
-    width: 15%;
+    width: 17%;
 }
 
 .column2 {
 	text-align:center;
-    width: 8%;
+    width: 12%;
 }
 
 .column3 {
 	text-align:center;
-    width: 15%;
+    width: 18%;
 }
 
 .column4 {
@@ -176,12 +175,12 @@ table {
 
 .column5 {
 	text-align:center;
-    width: 19%;
+    width: 15%;
 }
 
 .column6 {
 	text-align:center;
-    width: 20%;
+    width: 15%;
 }
 
 .column7 {
@@ -208,7 +207,7 @@ table {
 }
 
 .table100-head {
-    position: absolute;
+    position: relative;
     width: 100%;
     top: 0;
     left: 0;
@@ -217,7 +216,7 @@ table {
 .table100-body {
 	position: relative;
     max-height: 450px;
-    overflow: auto;
+    overflow:scroll;
 }
 
 

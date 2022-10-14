@@ -9,14 +9,16 @@
 </head>
 <body>
 	<%@ include file="AdminstyleHead.jsp"%>
-	<!-- Begin Page Content -->
-	<div class="container-fluid">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
+
+	<div class="container-fluid" id="reportPage">
 		<!-- Page Heading -->
 		<div class="d-sm-flex align-items-center justify-content-between mb-4">
 			<h1 class="h3 mb-0 text-gray-800">會員人數統計表</h1>
-			<a href="#"
-				class="d-none d-sm-inline-block btn btn-primary shadow-sm"><i
-				class="fas fa-download fa-sm text-white-70"></i> 下載統計報表 </a>
+			<button 
+				class="d-none d-sm-inline-block btn btn-primary shadow-sm" id="downLoad"><i
+				class="fas fa-download fa-sm text-white-70"></i> 下載統計報表 </button>
 		</div>
 
 		<!-- Content Row -->
@@ -161,7 +163,52 @@
 	</div>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-	<script>
+	<script type="text/javascript">
+	var downPdf = document.getElementById("downLoad");
+    downPdf.onclick = function() {
+        downPdf.parentNode.removeChild(downPdf);
+        html2canvas($('#reportPage'), {
+            onrendered:function(canvas) {
+
+                var contentWidth = canvas.width;
+                var contentHeight = canvas.height;
+
+                //一頁pdf顯示html頁面生成的canvas高度;
+                var pageHeight = contentWidth / 592.28 * 841.89;
+                //未生成pdf的html頁面高度
+                var leftHeight = contentHeight;
+                //pdf頁面偏移
+                var position = 0;
+                //a4紙的尺寸[595.28,841.89]，html頁面生成的canvas在pdf中圖片的寬高
+                var imgWidth = 595.28;
+                var imgHeight = 592.28/contentWidth * contentHeight;
+
+                var pageData = canvas.toDataURL('image/jpeg', 1.0);
+
+                var pdf = new jsPDF('', 'pt', 'a4');
+
+                //有兩個高度需要區分，一個是html頁面的實際高度，和生成pdf的頁面高度(841.89)
+                //當內容未超過pdf一頁顯示的範圍，無需分頁
+                if (leftHeight < pageHeight) {
+                    pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight );
+                } else {
+                    while(leftHeight > 0) {
+                        pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight)
+                        leftHeight -= pageHeight;
+                        position -= 841.89;
+                        //避免新增空白頁
+                        if(leftHeight > 0) {
+                            pdf.addPage();
+                        }
+                    }
+                }
+                pdf.save('content.pdf');
+            }
+        })
+    }
+</script>
+<script>
+
 	$( document ).ready(function() {
 		// Set new default font family and font color to mimic Bootstrap's default styling
 		Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
