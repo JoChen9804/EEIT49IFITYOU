@@ -264,7 +264,7 @@ console.log(${setid})
 						</form>
 						</form>
 						<form action="QueryOne" method="GET">
-						<input type="hidden" name="setid" value="${setid}">
+							<input type="hidden" name="setid" value="${setid}">
 							<button class="btn btn-primary" type="submit">查看已加入!</button>
 						</form>
 
@@ -276,7 +276,7 @@ console.log(${setid})
 						<div class="card-body">
 							<div class="card-title">腿部 LEG</div>
 
-							
+
 							<div class="frequency">
 								<img width='260' height='200' src="/img/LEGS.png">
 							</div>
@@ -313,9 +313,9 @@ console.log(${setid})
                     </div> -->
 						<div class="card-body">
 							<div class="card-title">有氧伸展 Aerobic/Stretch</div>
-							
+
 							<div class="frequency">
-								<img width='260' height='200' src="/img/ABROC.png">
+								<img width='260' height='200' src="https://media.istockphoto.com/photos/female-running-in-the-city-picture-id1311479703?k=20&m=1311479703&s=612x612&w=0&h=xsEEy7_YZddMXVhR5BBcNCFHHrhn0_9kWvaGp-Ivm84=">
 							</div>
 							<div class="divider"></div>
 							<ul class="list-unstyled li-space-lg">
@@ -333,6 +333,187 @@ console.log(${setid})
 					</div>
 					<!-- end of card -->
 					<!-- end of card -->
+					
+
+					<!-- Card-->
+					<div class="card">
+						<!--<div class="label">
+                        <p class="best-value">Best Value</p>
+                    </div> -->
+						<div class="card-body">
+							<div class="card-title">拉式訓練 Pull</div>
+
+							<div class="frequency">
+								<img width='260' height='200' src="https://media.istockphoto.com/photos/close-up-of-unrecognizable-woman-exercising-on-rowing-machine-in-a-picture-id1173098988?k=20&m=1173098988&s=612x612&w=0&h=l0QygFg56L6jwp1O5qeKh5EkfpOg4epwrDij2p72q_k=">
+							</div>
+							<div class="divider"></div>
+							<ul class="list-unstyled li-space-lg">
+								<li class="media"><i class="fas fa-check"></i>
+									<div class="media-body">訓練區段:手、腹、背、上肢</div></li>
+								<li class="media"><i class="fas fa-check"></i>
+									<div class="media-body">訓練肌群:肱二頭肌、肱三頭肌、大圓肌、闊背肌、棘下肌</div></li>
+
+							</ul>
+							<div class="button-wrapper">
+								<a class="btn-solid-reg page-scroll" href="sign-up.html">SELECT
+									!</a>
+							</div>
+						</div>
+					</div>
+					<!-- end of card -->
+					<!-- end of card -->
+
+					<!-- Card-->
+					<div class="card">
+						<!--<div class="label">
+                        <p class="best-value">Best Value</p>
+                    </div> -->
+						<div class="card-body">
+							<div class="card-title">推式 Push</div>
+
+							<div class="frequency">
+								<img width='260' height='200' src="https://media.istockphoto.com/photos/man-of-steel-picture-id1031444392?k=20&m=1031444392&s=612x612&w=0&h=RMIAXwnyNZlLZIOAIDYLQj-iZgFVzViLi55zmkEOfPk=">
+							</div>
+							<div class="divider"></div>
+							<ul class="list-unstyled li-space-lg">
+								<li class="media"><i class="fas fa-check"></i>
+									<div class="media-body">訓練區段:手、腹、背、骨盆、腿部</div></li>
+								<li class="media"><i class="fas fa-check"></i>
+									<div class="media-body">訓練肌群:肱二頭肌、肱三頭肌、大圓肌、闊背肌、棘下肌、肩頰、腿部</div></li>
+
+							</ul>
+							<div class="button-wrapper">
+								<a class="btn-solid-reg page-scroll" href="sign-up.html">SELECT
+									!</a>
+							</div>
+						</div>
+					</div>
+					<!-- end of card -->
+					<!-- end of card -->
+					
+					<!-- Card-->
+					<div class="card">
+						<!--<div class="label">
+                        <p class="best-value">Best Value</p>
+                    </div> -->
+						<div class="card-body">
+							<div class="card-title">TABATA</div>
+
+							<div class="frequency">
+								<img width='260' height='200' src="https://media.istockphoto.com/photos/group-of-fit-sports-men-doing-squat-bodyweight-workout-training-on-picture-id1354524799?k=20&m=1354524799&s=612x612&w=0&h=3vWkO0DNaOSmbHGIHlz3wuhoolkJuVsBN21VpmXLSYc=">
+							</div>
+							<div class="divider"></div>
+							<ul class="list-unstyled li-space-lg">
+								<li class="media"><i class="fas fa-check"></i>
+									<div class="media-body">訓練區段:腹、背、骨盆、腿部、手部</div></li>
+								<li class="media"><i class="fas fa-check"></i>
+									<div class="media-body">訓練肌群:臀大肌、腿後腱肌群、股四頭肌、比目魚肌、腓腸肌、腿部</div></li>
+
+							</ul>
+							<div class="button-wrapper">
+								<a class="btn-solid-reg page-scroll" href="sign-up.html">SELECT
+									!</a>
+							</div>
+						</div>
+					</div>
+					<!-- end of card -->
+					<!-- end of card -->
+					
+					
+					<!-- Card-->
+					<div class="card">
+						<!--<div class="label">
+                        <p class="best-value">Best Value</p>
+                    </div> -->
+						<div class="card-body">
+							<div class="card-title">核心訓練 CORE</div>
+
+							<div class="frequency">
+								<img width='260' height='200' src="https://media.istockphoto.com/photos/young-woman-doing-some-calisthenics-picture-id1330720627?k=20&m=1330720627&s=612x612&w=0&h=9Z4X__vxyf-wvo2YlaKbrmp15LOHpIsKPlm8IQ9cWZY=">
+							</div>
+							<div class="divider"></div>
+							<ul class="list-unstyled li-space-lg">
+								<li class="media"><i class="fas fa-check"></i>
+									<div class="media-body">訓練區段:手、腹、背</div></li>
+								<li class="media"><i class="fas fa-check"></i>
+									<div class="media-body">訓練肌群:骨盆底肌肉、 腹肌、脊轉肌、橫膈膜</div></li>
+
+							</ul>
+							<div class="button-wrapper">
+						<form action="wrapSelectcore" method="get">
+									<input type="hidden" name="setid" value="${setid}">
+									<button type="submit" class="btn-solid-reg page-scrol edit"
+										data-bs-toggle="modal">SELECT !</button>
+								</form>
+							</div>
+						</div>
+					</div>
+					<!-- end of card -->
+					<!-- end of card -->
+					
+						<!-- Card-->
+					<div class="card">
+						<!--<div class="label">
+                        <p class="best-value">Best Value</p>
+                    </div> -->
+						<div class="card-body">
+							<div class="card-title">多功能舉重 weightlifting </div>
+
+							<div class="frequency">
+								<img width='260' height='200' src="https://media.istockphoto.com/photos/training-picture-id493238910?k=20&m=493238910&s=612x612&w=0&h=ur7B_aFEwcPc426QSiQB6LxmoRgOv07R4ua4lKFj5Bc=">
+							</div>
+							<div class="divider"></div>
+							<ul class="list-unstyled li-space-lg">
+								<li class="media"><i class="fas fa-check"></i>
+									<div class="media-body">訓練區段:手、腹、背、核心、腿部</div></li>
+								<li class="media"><i class="fas fa-check"></i>
+									<div class="media-body">訓練肌群:臀大肌、膕旁肌、核心、背闊肌、肩膀</div></li>
+
+							</ul>
+							<div class="button-wrapper">
+								<a class="btn-solid-reg page-scroll" href="sign-up.html">SELECT
+									!</a>
+							</div>
+						</div>
+					</div>
+					<!-- end of card -->
+					<!-- end of card -->
+					
+					<!-- Card-->
+					<div class="card">
+						<!--<div class="label">
+                        <p class="best-value">Best Value</p>
+                    </div> -->
+						<div class="card-body">
+							<div class="card-title">髓部 Hip Stablity </div>
+
+							<div class="frequency">
+								<img width='260' height='200' src="https://media.istockphoto.com/photos/fitness-woman-working-out-at-home-and-doing-singleleg-glute-bridge-picture-id1279861622?k=20&m=1279861622&s=612x612&w=0&h=KnYRRWsylWyYf6JZUYMEO5hqznaq0qp1YVQMfAaB2VU=">
+							</div>
+							<div class="divider"></div>
+							<ul class="list-unstyled li-space-lg">
+								<li class="media"><i class="fas fa-check"></i>
+									<div class="media-body">訓練區段:腿部、下肢</div></li>
+								<li class="media"><i class="fas fa-check"></i>
+									<div class="media-body">訓練肌群:臀大肌、膕旁肌、核心</div></li>
+
+							</ul>
+							<div class="button-wrapper">
+								<a class="btn-solid-reg page-scroll" href="sign-up.html">SELECT
+									!</a>
+							</div>
+						</div>
+					</div>
+					<!-- end of card -->
+					<!-- end of card -->
+
+
+
+
+
+
+
+
 
 				</div>
 				<!-- end of col -->

@@ -15,6 +15,9 @@ public interface MenuDataRespository extends JpaRepository<MenuDatabean, Integer
 	@Query(value = "select * from menuIMGData where part ='leg';",nativeQuery = true)
 	public List<MenuDatabean> find1();
 	
+	@Query(value = "select * from menuIMGData where part ='core';",nativeQuery = true)
+	public List<MenuDatabean> find2();
+	
 	public List<MenuDatabean> findByExercisename(String exerciseName);
 	
 	
