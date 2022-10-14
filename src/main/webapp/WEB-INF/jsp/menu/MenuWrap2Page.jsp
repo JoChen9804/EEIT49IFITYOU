@@ -290,6 +290,7 @@ div {
 								<div class="frequency">
 									<img width='260' height='200' src="${list.imageurl}">
 								</div>
+								
 								<div class="divider"></div>
 								<ul class="list-unstyled li-space-lg">
 									<li class="media"><i class="fas fa-check"></i>
@@ -298,6 +299,7 @@ div {
 
 								</ul>
 								<div>
+								
 									<input type="hidden" name="setid" value="${setid}"> <input
 										type="hidden" value="${list.exerciseName}">
 									<button type="button" class="btn-solid-reg page-scrol insertll"
