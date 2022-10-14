@@ -55,6 +55,7 @@
 </style>
 
 </head>
+
 <body data-spy="scroll" data-target=".fixed-top">
 
 	<!-- Preloader -->
@@ -84,9 +85,9 @@
 				href="/group5/FrontStageMain" aria-haspopup="true"
 				aria-expanded="false">
 				<div class="sidebar-brand-icon rotate-n-15">
-					<img src="/shoppingCss/i_ift_you.jpg" class="img-profile rounded-circle"
+					<img src="/group5/img/i_ift_you.jpg" class="img-profile rounded-circle"
 						height=50 width=50 />
-				</div> <a class="nav-link page-scroll" href="FrontStageMain"
+				</div> <a class="nav-link page-scroll" href="/group5/FrontStageMain"
 				style="font-size: 20px; color: white; text-decoration: none;">I
 					FIT YOU </a>
 			</a>
@@ -100,67 +101,50 @@
 					class="navbar-toggler-awesome fas fa-times"></span>
 			</button>
 			<!-- end of mobile menu toggle button -->
-			
-			
-			
-	<!-- Header區塊 -->	
-			<div class="collapse navbar-collapse layout-nav-menu nav-submenu layout-wrapper hide-when-lower-ie" id="navbarsExampleDefault">
-				<div class="layout-top cms-static__header fix-style" id="officialHeader" ng-controller="HeaderController as HeaderCtrl">
-					<div id="layout-header-fix" class="layout-header header-bottom-wrapper layout-header-fix cms-header cms-nav">
-						<div class="inner-wrap" ng-class="{'multi-shop-category-relative-block': HeaderCtrl.isMultiShopCategoryHeaderMenuEnabled}">
-							<nav data-main-menu="" class="layout-nav">
-								<div class="layout-nav-menu nav-submenu">
-			
-			
-									<ul class="navbar-nav ml-auto align-items-center nav-menu-ul">
-									
-										<li class="nav-item dropdown">
-											<a class="nav-link page-scroll" href="#header" style="font-size: 17px;">首頁<span class="sr-only">(current)</span></a>
-										</li>
-								
-										<li class="nav-item dropdown">
-											<a class="nav-link page-scroll" href="#features" style="font-size: 17px;">活動</a>
-										</li>
-								
-										<li class="nav-item dropdown">
-											<a class="nav-link page-scroll" href="#details" style="font-size: 17px;">據點</a>
-										</li>
 
+			<div class="collapse navbar-collapse" id="navbarsExampleDefault">
+				<ul class="navbar-nav ml-auto align-items-center">
+					<li class="nav-item dropdown"><a class="nav-link page-scroll"
+						href="/group5/FrontStageMain" style="font-size: 1.4rem;">首頁<span
+							class="sr-only">(current)</span></a></li>
+					<li class="nav-item dropdown">
+					<a class="nav-link page-scroll" href="/group5/activityuser" style="font-size: 1.4rem;">活動</a></li>
+					
+					<li class="nav-item dropdown"><a class="nav-link page-scroll"
+						href="/group5/gym/search" style="font-size: 1.4rem;">據點</a></li>
 
-										<!-- Dropdown Menu dropdown-toggle下拉紐-->
-										<li class="nav-item dropdown">
-											<a class="nav-link page-scroll" href="/group5/shopping" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false" style="font-size: 17px;">商品</a>
+					<!-- Dropdown Menu dropdown-toggle下拉紐-->
+					<li class="nav-item dropdown"><a
+						class="nav-link page-scroll" href="/group5/shopping"
+						id="navbarDropdown" role="button" aria-haspopup="true"
+						aria-expanded="false" style="font-size: 1.4rem;">商品</a>
 						
-						                <!-- Dropdown Menu dropdown-toggle下拉選單\-->
-										<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<!-- Dropdown Menu dropdown-toggle下拉選單\-->
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 										
-							            	<a class="dropdown-item" href="/group5/shopping">
-							            		<span class="item-text">iFit購物</span>
-							            	</a>
-							            	<div class="dropdown-items-divide-hr"></div>
-							         
-											<a class="dropdown-item" href="terms-conditions.html">
-											<span class="item-text">我的收藏</span></a>
-											<div class="dropdown-items-divide-hr"></div>
+							<a class="dropdown-item" href="/group5/shopping">
+								<span class="item-text" style="font-size: 1.2rem">iFit購物</span>
+							</a>
+							<div class="dropdown-items-divide-hr"></div>
 											
-											<a class="dropdown-item" href="privacy-policy.html">
-											<span class="item-text">訂單查詢</span></a>
-										</div>
+							<a class="dropdown-item" href="/group5/user/myorder">
+								<span class="item-text" style="font-size: 1.2rem">訂單查詢</span>
+							</a>
+						</div>
 						
-										</li>
-										<!-- end of dropdown menu -->
+					</li>
+					<!-- end of dropdown menu -->
 
-
-										<li class="nav-item dropdown"><a class="nav-link page-scroll"
-										href="#pricing" style="font-size: 17px;">貼文</a></li>
-										<li class="nav-item dropdown"><a class="nav-link page-scroll"
-										href="#pricing" style="font-size: 17px;">菜單</a></li>
+					<li class="nav-item dropdown"><a class="nav-link page-scroll"
+						href="/group5/UserPostAll" style="font-size: 1.4rem;">貼文</a></li>
+					<li class="nav-item dropdown"><a class="nav-link page-scroll"
+						href="#pricing" style="font-size: 1.4rem;">健身菜單</a></li>
 						
 						
 										<!-- 主選單購物車 -->	
 										<li class="nav-item dropdown" id="cart">
 											<a class="nav-link page-scroll" id="shoppingCartDropdown" role="button" aria-haspopup="true" aria-expanded="false"
-												href="/group5/user/shopping.cart" style="font-size: 17px;">購物車
+												href="/group5/user/shopping.cart" style="font-size: 1.4rem;">購物車
 											</a>
 						
 											<!--購物車選單顯示內容-->
@@ -172,100 +156,56 @@
 								</span>
 							</a>
 							
-								
-								
-								
-								
-							
 						</div>
 					</li>
 					
-						
-						
-				
-
-                                    
-                                               
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+					
+					
+					
 					<li class="nav-item dropdown" style="display: none;"
 						id="memberShow"><a
 						class="btn-outline-sm dropdown-toggle page-scroll"
 						id="navbarDropdown" role="button" aria-haspopup="true"
-						aria-expanded="false"> <img class="img-profile rounded-circle"
-							src="${loginMember.memberPhoto}" height=45px width=45px></a> <!-- Dropdown - User Information -->
+						aria-expanded="false"> 
+						<img class="img-profile rounded-circle"
+							src="" height=55px width=55px id="memberPic"></a> <!-- Dropdown - User Information -->
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 							<a class="dropdown-item" href="/group5/user/UserCenter"><span
-								class="item-text">會員中心</span></a>
+								class="item-text" style="font-size: 1.2rem">會員中心</span></a>
 							<div class="dropdown-items-divide-hr"></div>
-							<a class="dropdown-item" href="terms-conditions.html"><span
-								class="item-text">健友配對</span></a>
+							<a class="dropdown-item" href="/group5/user/pairing/pairedit"><span
+								class="item-text" style="font-size: 1.2rem">健友配對</span></a>
 							<div class="dropdown-items-divide-hr"></div>
 							<a class="dropdown-item" href="/logout" data-toggle="modal"
-								data-target="#logoutModal"><span class="item-text"><i
+								data-target="#logoutModal"><span class="item-text" style="font-size: 1.2rem"><i
 									class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>登出</span></a>
-						</div>
-					</li>
-					
+						</div></li>
 					<li class="nav-item dropdown" id="loginShow"><span
 						class="nav-item dropdown"> <a class="btn-outline-sm"
 							href="/group5/login"
-							style="border: 0.125rem solid #fff; padding: 0.875rem 1.5rem 0.875rem 1.5rem; font-size: 17px; border-radius: 2rem;">登入</a>
-					</span>
-					</li>
+							style="border: 0.125rem solid #fff; padding: 0.875rem 1.5rem 0.875rem 1.5rem; font-size: 1.4rem; border-radius: 2rem;">登入</a>
+					</span></li>
 
 
 				</ul>
-				
-				
-				
-				</div>
-				</nav>
-				</div>
 			</div>
-			</div>
-			</div>
-
-		
 			<!-- end of container -->
 	</nav>
 	<!-- end of navbar -->
 	<!-- end of navigation -->
 	<script type="text/javascript">
 		$().ready(function() {
-			console.log("${loginMember.id}");
 			var OneMember = "${loginMember.id}";
 			if (OneMember) {
 				$('#memberShow').attr('style', '');
 				$('#loginShow').attr('style', 'display:none;');
+				if('${loginMember.memberPhoto}'){
+				$('#memberPic').attr('src','${loginMember.memberPhoto}');
+					
+				}else{
+					$('#memberPic').attr('src','img/undraw_profile_3.svg');
+				}
+				
 			}
 		})
 	</script>

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,16 +14,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import net.sf.json.JSONObject;
+import tw.group5.commodity.service.CommodityService;
 import tw.group5.order.model.Order;
 import tw.group5.order.service.OrderService;
 
 @Controller
-@SessionAttributes(names = {"allOrders"})
+@SessionAttributes(names = {"allOrders","orderNo","myorder"})
 @RequestMapping(path = "/group5/admin")
 public class OrderAdministrationController {
 	
 	@Autowired
 	public OrderService oService;
+
 
 	//顯示出後台訂單管理頁面
 	@GetMapping(path = "/order_administration")
@@ -30,6 +33,7 @@ public class OrderAdministrationController {
 		
 		List<Order> allOrders = oService.findAllOrders();
 		m.addAttribute("allOrders", allOrders);
+		
 		
 		return "order/order_administration";
 	}
@@ -51,5 +55,19 @@ public class OrderAdministrationController {
 		
 		return "更新成功";
 	}
+	
+	//顯示出後台查看訂單詳情
+	@GetMapping(path = "/order_administration/{orderNo}")
+	public String processCheckOrderDetail(@PathVariable("orderNo")String orderNo, Model m) {
+			
+		m.addAttribute("orderNo", orderNo);
+		
+		Order myorder = oService.findOrder(orderNo);
+		m.addAttribute("myorder", myorder);
+			
+			
+		return "order/order_administration_orderDetail";
+	}
+	
 	
 }
