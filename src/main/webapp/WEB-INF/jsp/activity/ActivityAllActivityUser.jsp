@@ -116,6 +116,7 @@
 										<c:otherwise>${aqa.startTime}~${aqa.endTime}</c:otherwise>
 									</c:choose>
                             	</p>
+                            	<p id="count"><i class="fa-solid fa-user-plus"></i> 報名至 ${aqa.signUpDeadline}</p>
                             	<!-- <p id="count"><i class="fa-solid fa-user"></i> 已報名人數: ${activity_countMember[aqa.activityId]}</p> -->
                             	<p id="count"><i class="fa-solid fa-user"></i> 已報名人數: ${aqa.totalSignUp}</p>
                         	</div>
