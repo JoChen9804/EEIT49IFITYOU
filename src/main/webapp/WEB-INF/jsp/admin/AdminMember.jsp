@@ -121,6 +121,7 @@ tr.active {
 	</div>
 	<script>
 		$('#table_id').dataTable({
+			"lengthMenu": [15, 25, 50, 100],
 			responsive: {
 		        details: {
 		            type: 'column'

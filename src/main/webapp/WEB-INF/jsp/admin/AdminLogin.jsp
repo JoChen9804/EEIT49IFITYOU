@@ -231,6 +231,7 @@
 		$('#uname').val('adam');
 		$('#exampleInputPassword').val('adam1234');
 		
+		
 	}
 	function inputDataAdmin2(){
 		$('#uname').val('kelly');
