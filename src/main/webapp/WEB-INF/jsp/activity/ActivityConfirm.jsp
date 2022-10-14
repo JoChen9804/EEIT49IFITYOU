@@ -74,6 +74,12 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
                             <li class="media">
                                 <i class="fas fa-square"></i>
                                 <div class="media-body">
+										報名截止日期: ${query_activity.signUpDeadline}
+									</div>
+                            </li>
+                            <li class="media">
+                                <i class="fas fa-square"></i>
+                                <div class="media-body">
 										活動開始日: ${query_activity.startTime}
 									</div>
                             </li>
