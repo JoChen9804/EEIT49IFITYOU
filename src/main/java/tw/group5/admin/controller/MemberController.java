@@ -117,6 +117,7 @@ public class MemberController {
 		String randomCode = RandomString.make(64);
 
 		MemberBean mBean = new MemberBean(account, bcEncode, authority, name, email, mDetail);
+		mBean.setMemberPhoto("/upload" + "/" + "DefaultImage.png");
 		mBean.setVerificationCode(randomCode);
 
 		MemberBean mBean1 = adminService.updateOne(mBean);
