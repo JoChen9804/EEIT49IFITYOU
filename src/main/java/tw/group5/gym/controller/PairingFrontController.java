@@ -70,6 +70,7 @@ public class PairingFrontController {
 	
 	@PostMapping("/start2pair")
 	public String processMatching(Integer mainPid,Model m) {
+		System.err.println("controller");
 		if(mainPid==null) {
 			return "redirect:/group5/user/pairing/want2pair";
 		}

@@ -84,6 +84,9 @@ $(function(){
 			success:function(data){
 				$("#mPdId").val(data.pdId);
 				$("#goPairForm").submit();
+			},
+			error:function(){
+				$("#goPairForm").submit();
 			}
 		})
 	});
