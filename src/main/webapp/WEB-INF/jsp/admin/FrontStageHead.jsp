@@ -92,19 +92,24 @@
 
 					<!-- Dropdown Menu dropdown-toggle下拉紐-->
 					<li class="nav-item dropdown"><a
-						class="nav-link page-scroll" href="#video"
+						class="nav-link page-scroll" href="/group5/shopping"
 						id="navbarDropdown" role="button" aria-haspopup="true"
 						aria-expanded="false" style="font-size: 1.4rem;">商品</a>
-						<!-- <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<a class="dropdown-item" href="article-details.html"><span
-								class="item-text">ARTICLE DETAILS</span></a>
+						
+						<!-- Dropdown Menu dropdown-toggle下拉選單\-->
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+										
+							<a class="dropdown-item" href="/group5/shopping">
+								<span class="item-text" style="font-size: 1.2rem">iFit購物</span>
+							</a>
 							<div class="dropdown-items-divide-hr"></div>
-							<a class="dropdown-item" href="terms-conditions.html"><span
-								class="item-text">TERMS CONDITIONS</span></a>
-							<div class="dropdown-items-divide-hr"></div>
-							<a class="dropdown-item" href="privacy-policy.html"><span
-								class="item-text">PRIVACY POLICY</span></a>
-						</div>--></li>
+											
+							<a class="dropdown-item" href="/group5/user/myorder">
+								<span class="item-text" style="font-size: 1.2rem">訂單查詢</span>
+							</a>
+						</div>
+						
+					</li>
 					<!-- end of dropdown menu -->
 
 					<li class="nav-item dropdown"><a class="nav-link page-scroll"
