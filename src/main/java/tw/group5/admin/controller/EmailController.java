@@ -51,4 +51,19 @@ public class EmailController {
 
 		return "email";
 	}
+	
+	
+	@PostMapping("/email3")
+	public String sendMail3(String name) {
+		String fromEmail = "eeit49group5@gmail.com";
+		List<String> toEmail = new ArrayList<>();
+		toEmail.add("ke62lly@outlook.com"); 
+		String subject = "模板測試信";
+		Map<String, String> params = new HashMap<>();
+		params.put("name", name);
+		String html = templateService.render("pair1Mailtemplete", params);
+		System.out.println(html);
+		mailService.mimeMail(fromEmail, toEmail, subject, html);
+		return "mail";
+	}
 }

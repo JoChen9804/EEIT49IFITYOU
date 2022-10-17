@@ -14,7 +14,7 @@ $(function(){
 	//顯示其先查詢配對進度----------------------------------
 	if('${already}'!=''){
 		console.log('今天配對過囉，幫你看對方進度!')
-		theAns('${already}')
+		theAns('${already}');
 	}
 	let workoutTime=['02:01-10:00','10:01-18:00','18:01-02:00'];
 	let wF=['一週少於1天','一週1天','一週2天','一週3天','一週4天','一週5天','一週6天','一週7天'];
@@ -67,6 +67,12 @@ $(function(){
 						+'<li class="media"><i class="fas fa-square"></i><div class="media-body">想對健友說的話：${matching.member.memberDetail.pairInfo}</div></li>';
 			$("#lastitem").append(textadd);
 			successPair();
+			if(data=="show"){
+				console.log("接通了")
+				console.log("對方：${matching.member.email}")
+				console.log("自己：${mainPD.member.email}")
+				sendMail();
+			}
 		}else if(data==0||data=="end"){
 			$(".form-container").empty();
 			$(".form-container").append("<img src='/group5/images/undraw_missed_chances_k3cq.png' style='width:100%'><div style='margin-top:20px'>健友今天與您擦肩而過！</div>");
@@ -82,12 +88,23 @@ $(function(){
 			data:JSON.stringify(thePair),
 			contentType:'application/json',
 			dataType:'json',
-			sucess:function(){
+			success:function(){
 				console.log("yes");
 			}
 		})
 	}
-
+	
+	function sendMail(){
+		$.ajax({
+			type:'post',
+			url:'/email3',
+			dataType:'json',
+			data:{"name":"${matching.member.memberAccount}"},
+			success:function(){
+				console.log("yesemail");
+			}
+		})
+	}
 </script>
 </head>
 <body>
