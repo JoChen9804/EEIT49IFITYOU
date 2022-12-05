@@ -286,6 +286,6 @@ function preDelete(reason){
 			}
 		</script>
 		<script async
-			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQvR9v8XyZl476ki2PsDcJZtLwpo023gs&libraries=places&callback=initMap&region=TW&language=zh-TW"></script>
+			src="https://maps.googleapis.com/maps/api/js?key=GOOGLEMAPS_KEY&libraries=places&callback=initMap&region=TW&language=zh-TW"></script>
 </body>
 </html>
