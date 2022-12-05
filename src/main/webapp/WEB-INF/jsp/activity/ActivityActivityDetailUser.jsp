@@ -65,7 +65,7 @@
 		<hr>
 		<iframe width="900px" height="300px" frameborder="0" class="map"
 			style="border: 0; border-radius: 20px;"
-			src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAebEgcRugex4c_DH0B8HVeB0qwwpuA6DI&q=${query_activity.location}"
+			src="https://www.google.com/maps/embed/v1/place?key=GOOGLE_MAPS_KEY=${query_activity.location}"
 			allowfullscreen>
 		</iframe>
 		
